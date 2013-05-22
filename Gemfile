@@ -11,6 +11,7 @@ end
 
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'datamapper'
 
 #production gems
 group :production do

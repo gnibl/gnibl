@@ -10,6 +10,7 @@ gem 'sqlite3', '1.3.5'
 end
 
 gem 'omniauth'
+gem 'omniauth-facebook'
 
 #production gems
 group :production do
