@@ -2,10 +2,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_user
-begin
-  @current_user ||=User.find_by_id(session[:user_id])
-rescue
-end 
+_id = session[:user_id]
+ @current_user ||=User.find(:conditions => ["user_id = ?",_id])
+ # @current_user ||=User.find_by_id(session[:user_id])
+ 
  end
   
   def signed_in?
