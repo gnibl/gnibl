@@ -1,0 +1,13 @@
+<% provide(:title,'About') %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Gnibl  </title>
+  </head>
+  <body> 
+    <p>
+      Gnibl just hit the streets
+    </p>
+  </body>
+</html>
+ 
