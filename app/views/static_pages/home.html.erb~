@@ -1,4 +1,10 @@
-<h1>Sample App</h1>
-<p>
-This is the home page for my application
-</p>
+<% provide(:title,'Home') %>
+<div class = "center hero-unit">
+<h1>  Gnibl just hit the streets </h1>
+<h2> The world as you see it </h2>
+<%= link_to("Join ","/signup",class: "btn btn-large btn-primary")%>
+<%= link_to("Join with FB","/auth/facebook",class: "btn btn-large btn-primary")%>
+</div>
+ 
+<%= link_to(image_tag("rails.png",alt: "gnibl"), "#")%>
+  

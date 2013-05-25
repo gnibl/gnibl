@@ -1,13 +1,10 @@
 <% provide(:title,'Home') %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title> Gnibl <%=yield(:title) %> </title>
-  </head>
-  <body> 
-    <p>
-      Gnibl just hit the streets
-    </p>
-  </body>
-</html>
+<div class = "center hero-unit">
+<h1>  Gnibl just hit the streets </h1>
+<h2> The world as you see it </h2>
+<%= link_to("Join ","/signup",class: "btn btn-large btn-primary")%>
+<%= link_to("FB","/auth/facebook",class: "btn btn-large btn-primary")%>
+</div>
  
+<%= link_to(image_tag("rails.png",alt: "gnibl"), "#")%>
+  

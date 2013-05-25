@@ -1,24 +1,24 @@
 class ApplicationController < ActionController::Base
   protected
+include SessionsHelper
+#  def current_user
+#_id = session[:user_id]
 
-  def current_user
-_id = session[:user_id]
+# #@current_user ||=User.find_by_id(1)
 
- @current_user ||=User.find_by_id(1)
+#  @current_user ||=User.find_by_id(session[:user_id])
 
- # @current_user ||=User.find_by_id(session[:user_id])
-
- end
+# end
   
-  def signed_in?
-  !!current_user
-  end
+#  def signed_in?
+#  !!current_user
+#  end
  
-  helper_method :current_user, :signed_in?
+#  helper_method :current_user, :signed_in?
 
-  def current_user=(user)
-  @current_user = user
-  session[:user_id] = user.id
-  end
+#  def current_user=(user)
+#  @current_user = user
+#  session[:user_id] = user.id
+#  end
 
 end
