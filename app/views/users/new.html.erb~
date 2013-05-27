@@ -1,25 +1,30 @@
 <% provide(:title,"Sign Up") %>
-<h1> Sign up </h1>
-<div class = "row">
-<div class = "span6 offset3">
+
+<div align="center" class="login-main-panel">
+  <div align="center" class="login-main">
+    <%= image_tag(image_path('FINALE-FINALE!!-_03.gif'), :class => 'gnibl-logo')%>
+   <div style="width: 100%">
+
 <%= form_for(@user) do |f| %>
 
 <%= render 'shared/error_messages' %>
 
-<%= f.label :name %>
-<%= f.text_field :name %>
+<%= f.text_field :name, :class => 'input-option', :placeholder => 'Full name'%>
 
-<%= f.label :email %>
-<%= f.text_field :email %>
 
-<%= f.label :password %>
-<%= f.text_field :password %>
+<%= f.text_field :email , :class => 'input-option', :placeholder => 'Email' %>
 
-<%= f.label :password_confirmation %>
-<%= f.text_field :password_confirmation %>
+
+<%= f.text_field :password , :class => 'input-option', :placeholder => 'password'%>
+
+<%= f.text_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
 
 <%= f.submit("Join Gnibl",class: "btn btn-large btn-primary" ) %>
 
 <% end %>
 </div>
 </div>
+</div>
+
+
+

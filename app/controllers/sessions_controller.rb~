@@ -8,12 +8,13 @@ def create
     @auth = Authorization.create_from_hash(auth,current_user,data)
     end
 sign_in(@auth.user)
+redirect_to @auth.user
 else
 #sign in normally via email/password
  user = User.find_by_email(params[:session][:email])
  if user && user.authenticate(params[:session][:password])
 sign_in(user)
-redirect_to user
+redirect_to "/users/#{user.name}"
  else
  flash.now[:error] = "Invalid email/password combination"
  render("new")

@@ -1,3 +1,166 @@
-// Place all the styles related to the Users controller here.
+// Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.odd_line{
+ background: tomato;
+}
+.even_line{
+ background: blue;
+}
+table, td, th{
+ border-spacing: 0px;
+ text-align: left;
+}
+.header {
+ background: linear-gradient(#232323, #787878, #aaaaaa);
+ background: -webkit-linear-gradient(#232323, #787878, #aaaaaa);
+ background: -moz-linear-gradient('#232323', '#787878', '#aaaaaa');
+}
+
+body{
+ background: url(image_path('background!!.gif')) repeat;
+ color: white;
+ padding: 0px;
+ margin: 0px;
+ font-family: 'Avenir Light';
+ overflow: auto;
+}
+
+td.border-right{
+ border-right: thin solid white;
+ vertical-align: middle;
+ text-align: center;
+}
+
+td.centered{
+ text-align: center;
+ vertical-align: middle;
+}
+
+.profile-image{
+ border-radius: 15px;
+ background-image: url(image_path('maress.jpg'));
+ background-size: 100% 100%;
+ width: 130px;
+ height: 130px;
+}
+
+td.current_selected_header{
+ opacity: 0.6;
+ background: #0f0f0f;
+ color: white;
+}
+
+.gnib{
+ width: 16.33%;
+ height: 170px;
+}
+
+td.dot{
+ vertical-align: middle;
+ top: 20px;
+}
+
+textarea.profile-status{
+  text-align: left !important; 
+  width: 300px; 
+  color: #777777;
+  background: #dddddd;
+  border-radius: 5px;
+}
+
+div.circle{
+ background: #aaaaaa;
+ width: 6px;
+ height: 6px;
+ border-radius: 6px;
+}
+
+td.prof-not-bd {
+ color: blue;
+ text-align: center;
+ vertical-align: middle;
+}
+
+.login-main-panel{
+ height: 100%;
+ width: 100%;
+ margin-top: 30px;
+vertical-align: middle;
+}
+.login-main{
+ width: 33%;
+ height: 80%;
+ padding: 40px;
+ border-radius: 100%;
+ background: #DEE6E6;
+ color: #aaaaaa;
+}
+form, table{
+background: transparent;
+}
+.submit-button{
+ background: -webkit-linear-gradient(#cccccc, #dddddd, #cccccc);
+ width: 80%;
+ border-radius: 15px;
+ border: 0px;
+ height: 25px;
+ padding: 5px;
+}
+td.centered{
+ text-align: center;
+}
+.input-option, input-option-hidden{
+ border-radius: 15px;
+ padding: 5px;
+ text-align: left;
+ width: 80%;
+}
+
+.input-option-hidden{
+ display: none;
+ margin-top: 10px;
+ margin-bottom: 10px;
+}
+.social-image-option{
+ width: 20px;
+ height: 20px;
+ padding: 0px;
+ margin: 0px;
+ border: 0px;
+}
+.gnibl-logo{
+ width: 30%;
+ margin-bottom: 40px;
+}
+.footer{
+ background: url(image_path('footer.gif')) repeat;
+ position: fixed;
+ bottom: 0px;
+ width:100%;
+ margin-left: 0px;
+ margin-right: 0px;
+ padding: 0px;
+}
+.profile_header{
+ background: url(image_path('header.gif')) repeat;
+ padding: 0px;
+ margin: 0px;
+ top:0px;
+ position: fixed;
+ max-height: 100px;
+ opacity: 0.4;
+}
+a{
+ color: white;
+ text-decoration: none;
+}
+a:visited{
+ color: #dddddd;
+}
+
+a:hover{
+ background: transparent;
+ color: #888888;
+}

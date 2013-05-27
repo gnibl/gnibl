@@ -1,2 +1,75 @@
-<% provide(:title, @user.name) %>
-<h1> <%= @user.name %> %></h1>
+<div class="profile_header" style="width: 100%; background: #666666">
+  <table style="width: 100%">
+    <tbody>
+      <tr>
+        <td class="current_selected_header border-right">
+	  <a>
+	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 40px')%>
+	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
+	  </a>
+	</td>
+  	<td class="border-right">
+          <span style="font-weight: bold; font-size: 16px; color: #aaaaaa">GNIB</span>
+          <span style="font-weight: bold; font-size: 15px; color: white">picks</span>
+        </td> 
+	<td class="border-right">
+          <span style="font-weight: bold; font-size: 16px; color: #bbbbbb">GNIB</span>
+          <span style="font-weight: bold; font-size: 15px; color: white">stream</span>
+        </td> 
+	<td class="border-right"/>
+	<td class="centered">search</td>
+	<td><div class="circle"></div></td>
+	<td class="centered">gnib something</td>
+	<td><div class="circle"></div></td>
+ 	<td class="centered">Settings</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div style="width: 98%; margin: 50px 1%">
+<table>
+ <tbody>
+  <tr>
+   <td><div class="profile-image"/></td>
+   <td style="width: 98%; padding: 1%">
+    <table>
+     <tr>
+      <td><span style="font-size: 16px; color: blue; font-weight: bold"><%=@user.full_name%></span></td>
+      <td class="border-right"/>
+      <td><span style="font-size:15px; color: blue"><%=@user.current_city%></span></td>
+     </tr>
+    </table>
+    <textarea rows="3" columns="30" class="profile-status">I am an easy plonker. Love life, eat well. Life gnibl.</textarea>
+    <table style="bottom: 0px; margin-top: 30px; width: 100%">
+     <tbody>
+ 	<tr >
+	 <td class="prof-not-bd">notifications</td>
+	 <td class="prof-not-bd"><div class="circle"></div></td>
+	 <td class="prof-not-bd">gniblers(50)</td>
+	 <td class="prof-not-bd"><div class="circle"></div></td>
+	 <td class="prof-not-bd">my gnibls(300)</td>
+	 <td class="prof-not-bd"><div class="circle"></div></td>
+	 <td class="prof-not-bd">gnibmarks(48)</td>
+	</tr>
+     </tbody>
+    </table>
+   </td>
+  </tr>
+ </tbody>
+</table>
+<div style="width:100%; margin-top: 1%">
+<%= image_tag(image_path('gnib pics (1)_img0.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img1.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img2.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img3.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img4.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img5.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img6.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img7.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img8.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img9.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img10.png'), :class => 'gnib')%>
+<%= image_tag(image_path('gnib pics (1)_img11.png'), :class => 'gnib')%>
+</div>
+
+</div>
