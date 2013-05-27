@@ -1,0 +1,20 @@
+ <%= form_for(:session, url: sessions_path) do |f| %>
+
+ 
+  <div align="center" style="width: 50%">
+    <%= f.text_field :email, :class => 'input-option', :placeholder => 'Enter your email' %>
+    <br/>
+  
+    <%= f.password_field :password, :class => 'input-option', :placeholder => 'Enter your password' %>
+    <br/>
+    <br/>
+    <div align="center" style="width: 100%" class="actions">
+      <%= f.submit :class => 'btn btn-primary', :value => 'login'%>
+	<%= link_to("Sign up","/signup", :class => 'btn btn-primary')%>
+    </div>
+    <div>
+      <%= link_to(image_tag(image_path('facebook.jpg'), :class => 'social-image-option'),"/auth/facebook")%>
+      <%= image_tag(image_path('twitter.jpg'), :class => 'social-image-option')%>
+    </div>
+  </div>
+<% end %>
