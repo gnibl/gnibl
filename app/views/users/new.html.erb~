@@ -6,7 +6,7 @@
    <div style="width: 100%">
 
 <%= form_for(@user) do |f| %>
-
+ 
 <%= render 'shared/error_messages' %>
 
 <%= f.text_field :name, :class => 'input-option', :placeholder => 'Full name'%>
@@ -15,10 +15,12 @@
 <%= f.text_field :email , :class => 'input-option', :placeholder => 'Email' %>
 
 
-<%= f.text_field :password , :class => 'input-option', :placeholder => 'password'%>
+<%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
 
-<%= f.text_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
+<%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
 
+<%= f.file_field :avatar %>
+<br>
 <%= f.submit("Join Gnibl",class: "btn btn-large btn-primary" ) %>
 
 <% end %>

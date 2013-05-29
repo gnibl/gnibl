@@ -15,6 +15,9 @@ gem 'datamapper'
 gem 'rspec'
 gem 'bootstrap-sass','2.1'
 gem 'bcrypt-ruby', '3.0.1'
+gem 'carrierwave'
+gem 'fog','~> 1.3.1'
+gem 'rmagick'
 
 group :development, :test do
 gem 'rspec-rails'

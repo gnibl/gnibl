@@ -5,6 +5,7 @@
         <td class="current_selected_header border-right">
 	  <a>
 	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 40px')%>
+
 	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
 	  </a>
 	</td>
@@ -30,13 +31,16 @@
 <table>
  <tbody>
   <tr>
-   <td><div class="profile-image"/></td>
+   <td><%=image_tag(image_path(@user.avatar_url),:style => 'width: 170px; height: 150px' )%>
+<!-- For MAREMBO you can access the thumbnail as follows, its 80 * 40 -->
+<!-- <%=image_tag(image_path(@user.avatar_url(:thumb))) --> 
+</td>
    <td style="width: 98%; padding: 1%">
     <table>
      <tr>
-      <td><span style="font-size: 16px; color: blue; font-weight: bold"><%=@user.full_name%></span></td>
+      <td><span style="font-size: 16px; color: blue; font-weight: bold"><%=@user.name %>  </span></td>
       <td class="border-right"/>
-      <td><span style="font-size:15px; color: blue"><%=@user.current_city%></span></td>
+      <td><span style="font-size:15px; color: blue"><%=@user.city%></span></td>
      </tr>
     </table>
     <textarea rows="3" columns="30" class="profile-status">I am an easy plonker. Love life, eat well. Life gnibl.</textarea>
@@ -58,7 +62,7 @@
  </tbody>
 </table>
 <div style="width:100%; margin-top: 1%">
-<%= image_tag(image_path('gnib pics (1)_img0.png'), :class => 'gnib')%>
+<%=image_tag(image_path(@user.avatar_url), :class =>'gnib' )%>
 <%= image_tag(image_path('gnib pics (1)_img1.png'), :class => 'gnib')%>
 <%= image_tag(image_path('gnib pics (1)_img2.png'), :class => 'gnib')%>
 <%= image_tag(image_path('gnib pics (1)_img3.png'), :class => 'gnib')%>

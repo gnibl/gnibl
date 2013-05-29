@@ -4,7 +4,7 @@ require 'rails/all'
 require 'carrierwave'
 require 'carrierwave/orm/activerecord'
 require 'rubygems'
-#require 'rmagick'
+require 'rmagick'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line

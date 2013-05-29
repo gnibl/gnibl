@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
  def create
      @user = User.new(params[:user])
+     @user.avatar = params[:file]
      if @user.save
         redirect_to "/users/#{@user.name}"
      else
