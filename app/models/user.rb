@@ -25,8 +25,10 @@ class User < ActiveRecord::Base
 
   validates :password, presence: true, length: {minimum: 6}
   validates :password_confirmation, presence: true
-  has_many :authorizations
+ 
 
+  has_many :authorizations
+  has_many :gnibs, dependent: :destroy
 
 
 def self.create_from_hash!(hash,data)

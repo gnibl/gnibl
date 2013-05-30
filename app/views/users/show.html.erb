@@ -42,7 +42,7 @@
       <td><span style="font-size:15px; color: blue"><%=@user.city%></span></td>
      </tr>
     </table>
-    <textarea rows="3" columns="30" class="profile-status">I am an easy plonker. Love life, eat well. Life gnibl.</textarea>
+
     <table style="bottom: 0px; margin-top: 30px; width: 100%">
      <tbody>
  	<tr >
@@ -60,8 +60,24 @@
   </tr>
  </tbody>
 </table>
+
+
+<div class = "gnib">
+  <%= render 'shared/gnibpost_form'%>
+
+</div>
+<br><br>
 <div style="width:100%; margin-top: 1%">
-<%=image_tag(image_path(@user.avatar_url), :class =>'gnib' )%>
+
+<% if @user.gnibs.any? %>
+MyGnibs <%= @user.gnibs.count %>
+<br>
+ <%= render @gnibs %>
+
+<% end %>
+
+</div>
+<div style="width:100%; margin-top: 1%">
 <%= image_tag(image_path('gnib pics (1)_img1.png'), :class => 'gnib')%>
 <%= image_tag(image_path('gnib pics (1)_img2.png'), :class => 'gnib')%>
 <%= image_tag(image_path('gnib pics (1)_img3.png'), :class => 'gnib')%>

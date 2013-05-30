@@ -38,15 +38,12 @@ class UsersController < ApplicationController
 
   def show
       @user = User.find_by_name(params[:id])
+      @gnibs = @user.gnibs
+      @gnib = @user.gnibs.build
   end
 
 private
-  def signed_in_user
-     unless signed_in?
-            store_location
-            redirect_to signin_url, notice: "please  sign in" unless signed_in?
-      end
-   end
+  
   
   def correct_user
        @user = User.find(params[:id])
