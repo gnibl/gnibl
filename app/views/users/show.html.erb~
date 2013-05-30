@@ -71,7 +71,7 @@
 
 <% if @user.gnibs.any? %>
 MyGnibs <%= @user.gnibs.count %>
-
+<br>
  <%= render @gnibs %>
 
 <% end %>
