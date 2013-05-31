@@ -50,7 +50,7 @@
 	 <td class="prof-not-bd"><div class="circle"></div></td>
 	 <td class="prof-not-bd">gniblers(50)</td>
 	 <td class="prof-not-bd"><div class="circle"></div></td>
-	 <td class="prof-not-bd">my gnibls(300)</td>
+	 <td class="prof-not-bd">my gnibls(<%=@user.gnibs.count%>)</td>
 	 <td class="prof-not-bd"><div class="circle"></div></td>
 	 <td class="prof-not-bd">gnibmarks(48)</td>
 	</tr>
@@ -68,14 +68,8 @@
 </div>
 <br><br>
 <div style="width:100%; margin-top: 1%">
-
-<% if @user.gnibs.any? %>
-MyGnibs <%= @user.gnibs.count %>
-<br>
- <%= render @gnibs %>
-
-<% end %>
-
-</div>
-
+ <% if @user.gnibs.any? %>
+  <%= render @gnibs %>
+ <% end %>
+ </div>
 </div>
