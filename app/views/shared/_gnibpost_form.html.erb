@@ -1,9 +1,9 @@
 <%= form_for(@gnib) do |f|%>
 
-<%= f.text_field :title, placeholder: "title" %>
-<%= f.text_field :description, placeholder: "description, less than 77 characters" %>
-<%= f.text_field :landmark, placeholder: "landmark" %>
-<%= f.file_field :image, placeholder: "image" %>
+<%= f.text_field :title, placeholder: "Enter the gnibl title here" %>
+<%= f.text_field :description, placeholder: "Gnibl description, less than 77 characters", id: "gnibl_description" %>
+<%= f.text_field :landmark, placeholder: "Associate this gnibl with a landmark, e.g. ocean, cinema" %>
+<%= f.file_field :image, placeholder: "Upload the gnibl image." %>
 
 <%= f.submit "Gnibl",class:"btn btn-large btn-primary" %>
 <% end %>

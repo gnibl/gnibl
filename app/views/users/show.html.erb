@@ -1,3 +1,15 @@
+<script type="text/javascript">
+ function gniblsomething(){
+  var dialog = document.getElementById('gnibl_something_dialog');
+  if(dialog) {
+   dialog.style.display = 'block';
+   var width = window.innerWidth;
+   var height = window.innerHeight;
+   dialog.style.width = width+'px';
+   dialog.style.height = height+'px';
+  }
+ }
+</script>
 <div class="profile_header" style="width: 100%; background: #666666">
   <table style="width: 100%">
     <tbody>
@@ -20,7 +32,7 @@
 	<td class="border-right"/>
 	<td class="centered">search</td>
 	<td><div class="circle"></div></td>
-	<td class="centered">gnib something</td>
+	<td class="centered"><input type="button" class="flat-style" value="gnible something" onclik="gnibSomething(); return false;"/></td>
 	<td><div class="circle"></div></td>
  	<td class="centered">Settings</td>
       </tr>
@@ -73,3 +85,9 @@
  <% end %>
  </div>
 </div>
+<div align="center" id="gnibl_something_dialog" style="display: none; background: transparent;">
+  <div style="background: #dddddd; opacity: 0.5">
+   <%= render 'shared/gniblpost_form' %>
+  </div>
+</div>
+
