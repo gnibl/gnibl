@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
- before_filter :signed_in_user, only: [:edit,:update,:index]
- before_filter :correct_user, only: [:edit,:update]
+ before_filter :signed_in_user, :only => [:edit,:update,:index]
+ before_filter :correct_user, :only => [:edit,:update]
   
   def index
       @users = User.all
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
      @user = User.new(params[:user])
      @user.avatar = params[:file]
      if @user.save
-        redirect_to "/users/#{@user.name}"
+        redirect_to "/users/#{@user.username}"
      else
         render 'new'
     end
@@ -26,18 +26,20 @@ class UsersController < ApplicationController
   end
 
   def update
-      @user = User.find(params[:id])
-      if @user.update_attributes(params[:user])
+      @user = User.find_by_username(params[:id])
+      p "current user: #{@user.username}"
+      @user.profile_summary = params[:user][:profile_summary]
+      if (@user.save)
+	 puts "saved current user profile"
          flash[:success] = "Profile Updated"
-         sign_in @user
-         redirect_to @user
-      else
-          render 'edit'
       end
+      @user.save
+      puts "user summary: #{@user.profile_summary}"
+      redirect_to "/users/#{@user.username}"
   end
 
   def show
-      @user = User.find_by_name(params[:id])
+      @user = User.find_by_username(params[:id])
       @gnibs = @user.gnibs
       @gnib = @user.gnibs.build
   end
@@ -46,7 +48,7 @@ private
   
   
   def correct_user
-       @user = User.find(params[:id])
+       @user = User.find_by_username(params[:id])
       redirect_to(root_path) unless current_user?(@user)
   end
 end

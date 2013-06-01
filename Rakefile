@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-GniblApp::Application.load_tasks
+Gnibl::Application.load_tasks
