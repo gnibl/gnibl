@@ -23,7 +23,13 @@
 	<td><div class="circle"></div></td>
 	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: white">gnib something</button></td>
 	<td><div class="circle"></div></td>
- 	<td class="centered">Settings</td>
+ 	<td class="centered">
+	 <button class="flat-style" onclick="showOptions()" style="color: white">Settings</button>
+	 <div style="display: block; position:relative; z-index: 10002; top: 20px">
+	  <%= link_to "Log out", "/signout"%>
+	 </div>
+	 <div 
+	</td>
    	<% end %>
       </tr>
     </tbody>
@@ -47,10 +53,10 @@
      <% if(current_user?(@user)) %>
       <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
        <td colspan="1" style="min-width: 200px">
-	<%= f.text_area :profile_summary, :maxlength => "77",
+	<%= f.text_area :description, :maxlength => "255",
 	:id => "profileSummary", :rows => "3", :cols => "8", 
 	:placeholder => "Describe yourself here briefly", 
-	:onkeypress => "return enforceMaxlength('profileSummary', 76);" %>
+	:onkeypress => "return enforceMaxlength('profileSummary', 254);" %>
        </td>
        <td style="vertical-align: top">
 	<%= f.submit :value => "update profile", :class => "btn btn-primary", :style => "float: right"%>
@@ -58,8 +64,8 @@
       <% end %>
      <% else %>
       <td colspan="2">
-	<div style="background: #black; color: white; opacity: 0.8">
-	 <%= @user.profile_summary %>
+	<div style="background: #black; color: white; opacity: 0.8; max-width: 400px">
+	 <%= @user.description %>
 	</div>
       </td>
      <% end %>

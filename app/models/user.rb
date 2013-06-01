@@ -9,7 +9,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :city, :avatar, :username, :profile_summary
+  attr_accessible :name, :email, :password, :password_confirmation, :city, :avatar, :username, :description
  
   has_secure_password
   

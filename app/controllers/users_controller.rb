@@ -15,6 +15,7 @@ class UsersController < ApplicationController
      @user = User.new(params[:user])
      @user.avatar = params[:file]
      if @user.save
+	sign_in(@user)
         redirect_to "/users/#{@user.username}"
      else
         render 'new'
@@ -27,14 +28,11 @@ class UsersController < ApplicationController
 
   def update
       @user = User.find_by_username(params[:id])
-      p "current user: #{@user.username}"
-      @user.profile_summary = params[:user][:profile_summary]
-      if (@user.save)
-	 puts "saved current user profile"
+      if (@user.update_attribute(:description, params[:user][:description]))
+	puts "updated user: #{@user.description}"
          flash[:success] = "Profile Updated"
       end
-      @user.save
-      puts "user summary: #{@user.profile_summary}"
+	puts "updated user: #{@user.description}"
       redirect_to "/users/#{@user.username}"
   end
 

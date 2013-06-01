@@ -21,7 +21,7 @@ Gnibl::Application.routes.draw do
 
  match '/signin', :to => 'static_pages#home'
 
- match '/signout', :to => 'sessions#destroy', :via => :delete
+ match '/signout', :to => 'sessions#destroy'
 
  match '/users/{username}', :to => 'users#show' 
 

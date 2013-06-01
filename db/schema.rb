@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20130601300234) do
     t.string   "email"
     t.string   "city"
     t.string   "avatar"
-    t.string   "profile_summary"
+    t.string   "description"
     t.string   "username"
   end
 
