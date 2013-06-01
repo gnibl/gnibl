@@ -1,3 +1,37 @@
+<style type="text/css">
+#profile-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+#profile-image .wrapper {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+
+#profile-image .wrapper:hover {
+    opacity: 0.5;
+}
+
+#profile-image .gnibl-button {
+    background: url(<%=image_path(@user.avatar_url)%>);
+    background-size: 100% 100%;
+    width: 150px;
+    height: 150px;
+    border: none;
+    color: #666;
+    padding: 3px 5px;
+    border-radius: 5px;
+    position: relative;
+    top: 0;
+    z-index: 1;
+}
+</style>
+
 <div class="profile_header" style="width: 100%; background: #666666">
   <table style="width: 100%">
     <tbody>
@@ -24,22 +58,39 @@
 	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: white">gnib something</button></td>
 	<td><div class="circle"></div></td>
  	<td class="centered">
-	 <button class="flat-style" onclick="showOptions()" style="color: white">Settings</button>
-	 <div style="display: block; position:relative; z-index: 10002; top: 20px">
-	  <%= link_to "Log out", "/signout"%>
-	 </div>
+	 <button class="flat-style" onclick="showOptions()" style="color: white;">Settings</button>
 	 <div 
 	</td>
    	<% end %>
       </tr>
     </tbody>
   </table>
+ <div style="display: block; position:fixed; z-index: 10002; width: 100px;top:30px; right: 43px; background: #dddddd; padding: 10px; display: none">
+    <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
+    <br/>
+    <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
+    <br/>
+    <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
+ </div>
 </div>
 <div style="width: 98%; margin: 50px 1%">
 <table>
  <tbody>
   <tr>
-   <td style="width: 11%; min-width: 150px; vertical-align:top"><%=image_tag(image_path(@user.avatar_url),:style => 'width: 150px; height: 150px' )%></td>
+   <td style="width: 11%; min-width: 150px; vertical-align:top">
+     <% if current_user?(@user) %>
+      <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
+      <div id="profile-image">
+	<div class="wrapper">
+	 <%= f.file_field :avatar_url %>
+	</div>
+	<button type="submit" class="gnibl-button"/>
+      </div>
+      <% end %>
+     <% else %>
+      <%=image_tag(image_path(@user.avatar_url),:style => 'width: 150px; height: 150px' )%>
+     <% end %>
+   </td>
    <td style="width: 87%; padding: 1%">
     <table>
      <tr>

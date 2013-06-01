@@ -5,7 +5,7 @@
 	:id => "gnibl_description",:rows => "2", :onkeypress => "return enforceMaxlength('gniblDescription', 76);",
 	:maxlength => "77" %>
 <%= f.text_field :landmark, :placeholder => "Associate this gnibl with a landmark, e.g. ocean, cinema" %>
-<%= f.file_field :image, :placeholder => "Upload the gnibl image." %>
+<%= f.file_field :image, :placeholder => "Upload the gnibl image.", :style=>"color: black; border: 0px" %>
 <br/>
 <%= f.submit "Gnibl",:class => "btn btn-large btn-primary" %>
 <% end %>

@@ -28,11 +28,13 @@ class UsersController < ApplicationController
 
   def update
       @user = User.find_by_username(params[:id])
-      if (@user.update_attribute(:description, params[:user][:description]))
-	puts "updated user: #{@user.description}"
-         flash[:success] = "Profile Updated"
+      if params[:user] && params[:user][:description]
+	@user.update_attribute(:description, params[:user][:description]);         
+      elsif params[:user] && params[:user][:avatar_url]
+        @user.update_attribute(:avatar, params[:user][:avatar_url])
       end
-	puts "updated user: #{@user.description}"
+      puts "updated user: #{@user.description}"
+      puts "updated user: #{@user.avatar_url}"
       redirect_to "/users/#{@user.username}"
   end
 
