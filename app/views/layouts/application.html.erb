@@ -5,13 +5,18 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+ <script type="text/javascript">
+  function init(){
+   //include all init functions here
+  }
+ </script>
 </head>
-<body>
-<div style="width: 100%; height: 100%; overflow: auto;">
+<body onload="init();">
+<div style="width: 100%; padding: 0px; margin: 0px">
 <%= yield %>
 </div>
-<div align="center" class="footer">
-<table style="width: 100%; padding: 20px; bottom:10px; position:fixed; opacity: 0.8;">
+<div align="center" id="footer">
+<table style="width: 100%; padding: 20px; bottom:10px;">
 <tbody>
  <tr>
   <td class="centered"><a href="#">About us</a></td>

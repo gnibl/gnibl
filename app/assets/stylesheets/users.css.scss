@@ -18,13 +18,14 @@ table, td, th{
  background: -moz-linear-gradient('#232323', '#787878', '#aaaaaa');
 }
 
-body{
+html, body{
  background: url(image_path('background!!.gif')) repeat;
  color: white;
  padding: 0px;
  margin: 0px;
  font-family: 'Avenir Light';
  overflow: auto;
+ width: 100%;
 }
 
 td.border-right{
@@ -36,34 +37,35 @@ td.border-right{
 td.centered{
  text-align: center;
  vertical-align: middle;
+ margin: auto;
 }
 
 .profile-image{
- border-radius: 15px;
- background-image: url(image_path('maress.jpg'));
- background-size: 100% 100%;
- width: 130px;
- height: 130px;
+  border-radius: 15px;
+  background-image: url(image_path('maress.jpg'));
+  background-size: 100% 100%;
+  width: 130px;
+  height: 130px;
 }
 
 td.current_selected_header{
- opacity: 0.6;
- background: #0f0f0f;
+ background: rgba(15, 15, 15, 0.6);
  color: white;
 }
 
 .gnib{
- width: 255px;
- height: 215px;
- top: 0px;
+ width: 100%;
+ height: 260px;
 }
 
 .gnib-thumbnail{
- width: 255px;
- height: 255px;
+ width: 24.7%;
+ height: auto;
  padding: 0px;
  background: transparent;
  border: 0px;
+ margin-bottom: 10px;
+ display: table-cell;
 }
 
 td.dot{
@@ -84,6 +86,7 @@ div.circle{
  width: 6px;
  height: 6px;
  border-radius: 6px;
+ margin: auto;
 }
 
 td.prof-not-bd {
@@ -96,15 +99,18 @@ td.prof-not-bd {
  height: 100%;
  width: 100%;
  margin-top: 30px;
-vertical-align: middle;
+ vertical-align: middle;
 }
-.login-main{
- width: 33%;
- height: 80%;
- padding: 40px;
- border-radius: 100%;
- background: #DEE6E6;
- color: #aaaaaa;
+.login-main, .signup-main{
+  width: 30%;
+  height: auto;
+  padding: 40px;
+  border-radius: 1000px;
+  background: #DEE6E6;
+  color: #aaaaaa;
+}
+.signup-main{
+  width: 35% !important;
 }
 form, table{
 background: transparent;
@@ -141,25 +147,25 @@ td.centered{
 }
 .gnibl-logo{
  width: 30%;
+ height: auto;
  margin-bottom: 40px;
 }
-.footer{
+#footer{
  background: url(image_path('footer.gif')) repeat;
- position: fixed;
- bottom: 0px;
  width:100%;
  margin-left: 0px;
  margin-right: 0px;
- padding: 0px;
+ padding: 0px 0px 30px;
+ margin-top: 50px;
+ position: relative;
+ height: 40px;
 }
 .profile_header{
- background: url(image_path('header.gif')) repeat;
+ background: url(image_path('background!!.gif')) repeat;
  padding: 0px;
  margin: 0px;
  top:0px;
  position: fixed;
- max-height: 100px;
- opacity: 0.4;
 }
 a{
  color: white;
@@ -182,9 +188,10 @@ a:hover{
 #gnib_something_dialog{
   position: absolute;
   display: none; 
-  background: transparent;
+  background: rgba(255, 255, 255, 0.3);
   padding-top: 10%;
   top: 0px;
+  z-index: 4546;
 }
 
 .dialog-title{

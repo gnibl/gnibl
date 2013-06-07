@@ -17,11 +17,19 @@
     opacity: 0.5;
 }
 
+.gnibl-button, wrapper{
+ width: 150px !important;
+ height: 150px !important;
+}
+
+.wrapper .file-upload{
+ width: 150px !important;
+ height: 150px !important;
+}
+
 #profile-image .gnibl-button {
     background: url(<%=image_path(@user.avatar_url)%>);
     background-size: 100% 100%;
-    width: 150px;
-    height: 150px;
     border: none;
     color: #666;
     padding: 3px 5px;
@@ -30,86 +38,90 @@
     top: 0;
     z-index: 1;
 }
+
+.profile_header table td{
+ background: transparent;
+ text-align: center;
+}
 </style>
 
-<div class="profile_header" style="width: 100%; background: #666666">
+<div class="profile_header" style="width: 100%; z-index: 3455">
   <table style="width: 100%">
     <tbody>
       <tr>
         <td class="current_selected_header border-right">
 	  <a>
-	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 40px')%>
+	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 60px')%>
 
 	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
 	  </a>
 	</td>
   	<td class="border-right">
-          <span style="font-weight: bold; font-size: 16px; color: #aaaaaa">
+          <span style="font-weight: bold; font-size: 17px; color: #aaaaaa">
 	GNIB<span style="font-weight: bold; font-size: 15px; color: white">picks</span></span>
         </td> 
 	<td class="border-right">
-          <span style="font-weight: bold; font-size: 16px; color: #bbbbbb">
+          <span style="font-weight: bold; font-size: 17px; color: #bbbbbb">
 	GNIB<span style="font-weight: bold; font-size: 15px; color: white">feeds</span></span>
         </td> 
-	<td class="border-right"/>
-	<td class="centered">search</td>
+	<td class="centered" style="width: 10%; color: #bbb">search</td>
         <% if(current_user?(@user)) %>
 	<td><div class="circle"></div></td>
-	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: white">gnib something</button></td>
+	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
 	<td><div class="circle"></div></td>
  	<td class="centered">
-	 <button class="flat-style" onclick="showOptions()" style="color: white;">Settings</button>
+	 <button class="flat-style" onclick="showOptions()" style="color: #bbb;">Settings</button>
 	 <div 
 	</td>
    	<% end %>
       </tr>
     </tbody>
   </table>
- <div style="display: block; position:fixed; z-index: 10002; width: 100px;top:30px; right: 43px; background: #dddddd; padding: 10px; display: none">
+  <div style="display: block; position:fixed; z-index: 10002; width: 100px;top:30px; right: 43px; 
+    background: #dddddd; padding: 10px; display: block">
     <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
     <br/>
     <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
     <br/>
     <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
- </div>
+  </div>
 </div>
-<div style="width: 98%; margin: 50px 1%">
-<table>
- <tbody>
-  <tr>
-   <td style="width: 11%; min-width: 150px; vertical-align:top">
-     <% if current_user?(@user) %>
-      <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
-      <div id="profile-image">
-	<div class="wrapper">
-	 <%= f.file_field :avatar_url %>
-	</div>
-	<button type="submit" class="gnibl-button"/>
-      </div>
+<div style="width: 100%; margin-top: 70px">
+ <table>
+  <tbody>
+   <tr>
+    <td style="width: 11%; min-width: 150px; vertical-align:top">
+      <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
+       <div id="profile-image">
+        <% if current_user?(@user) %>
+         <div class="wrapper">
+	  <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload" %>
+	 </div>
+        <% end %>
+	<div class="gnibl-button"></div>
+       </div>
       <% end %>
-     <% else %>
-      <%=image_tag(image_path(@user.avatar_url),:style => 'width: 150px; height: 150px' )%>
-     <% end %>
-   </td>
-   <td style="width: 87%; padding: 1%">
-    <table>
-     <tr>
-      <td>
-	<span style="font-size: 16px; color: blue; font-weight: bold">
-	 <%=@user.name %><span style="color: white"> | </span> <span style="font-size: 14px"><%=@user.city%></span>
-        </span>
-      </td>
+    </td>
+    <td style="width: 87%; padding: 1%">
+     <table>
+      <tr>
+       <td>
+        <div style="font-size: 20px; color: blue; font-weight: bold">
+	 <%=@user.name %><span style="color: white; border-right: 1px solid white; margin-left: 5px;"></span> <span style="font-size: 16px"><%=@user.city%></span>
+        </div>
+       </td>
      </tr>
      <tr>
      <% if(current_user?(@user)) %>
       <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
-       <td colspan="1" style="min-width: 200px">
+       <td colspan="1" style="width: 400px; padding-top: 10px">
 	<%= f.text_area :description, :maxlength => "255",
-	:id => "profileSummary", :rows => "3", :cols => "8", 
+	:id => "profileSummary", :rows => "2", :cols => "14", 
 	:placeholder => "Describe yourself here briefly", 
-	:onkeypress => "return enforceMaxlength('profileSummary', 254);" %>
+	:onkeypress => "return enforceMaxlength('profileSummary', 254);", 
+        :style=>"overflow: hidden; border-radius: 10px; padding 10px;" %>
        </td>
-       <td style="vertical-align: top">
+       <td style="vertical-align: top; padding-top: 10px">
 	<%= f.submit :value => "update profile", :class => "btn btn-primary", :style => "float: right"%>
        </td>
       <% end %>
@@ -132,22 +144,22 @@
 	 <% end %>
 	 <td class="prof-not-bd">gniblers(50)</td>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-	 <td class="prof-not-bd">my gnibls(<%=@user.gnibs.count%>)</td>
+	 <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
          <% if(current_user?(@user)) %>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-	 <td class="prof-not-bd">gnibmarks(48)</td>
+	 <td class="prof-not-bd">gnibfeeds</td>
 	 <% end %>
 	</tr>
-     </tbody>
-    </table>
-   </td>
-  </tr>
- </tbody>
-</table>
-<div align="center" style="width:100%; margin-top: 10px">
- <% if @gnibs.any? %>
-  <%= render @gnibs %>
- <% end %>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <div align="center" style="width:100%; margin-top: 10px">
+  <% if @gnibs.any? %>
+   <%= render @gnibs %>
+  <% end %>
  </div>
 </div>
 <div align="center" id="gnib_something_dialog" >
@@ -182,5 +194,26 @@
      return obj.value.length <= maxlength;
    }
   }
+  <% if current_user? @user %>
+  document.getElementById("current_user_file_upload").onchange = function() {
+    console.log('submitting form');
+    document.getElementById("current_user_form").submit();
+  }
+  <% end %>
+  function rectifyGnibs(){
+   //set the sizes of the thumbnail, four per page.
+   var className = 'gnib-thumbnail';
+   //find all the thumnails
+   var width = window.innerWidth;
+   var gt_width = Math.floor((width - 30) / 4);
+   //get the buttons themselves
+   var thumbnails = document.getElementsByTagName('*'), i;
+   for (i in thumbnails) {
+     var btn = thumbnails[i];
+     if((btn.className+'').indexOf(className) !== -1) {
+       btn.style.height = (gt_width)+'px';
+       btn.style.width = (gt_width)+'px';
+     }
+   }
+  }
  </script>
-
