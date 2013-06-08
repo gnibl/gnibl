@@ -172,12 +172,12 @@ td.centered{
  margin-bottom: 40px;
 }
 #footer{
- background: url(image_path('footer.gif')) repeat;
- width:100%;
+ background: url(image_path('header.gif')) repeat;
  margin-left: 0px;
  margin-right: 0px;
- padding: 0px 0px 30px;
  margin-top: 50px;
+ padding-top: 20px;
+ background-size: 100% 100%;
  position: relative;
  height: 40px;
 }
@@ -270,13 +270,22 @@ input[type="file"]{
  height: 80px !important;
 }
 
-
-.profile_header{
- background: url(image_path('background!!.gif')) repeat;
+.profile_header, .setting-header{
+ background: url(image_path('header.gif')) repeat;
+ background-size: 100% 100%;
  padding: 0px;
  margin: 0px;
  top:0px;
  position: fixed;
+}
+.setting-header{
+ z-index: 10002; 
+ width: 200px;
+ top:60px; 
+ right: 0px; 
+ text-align: right; 
+ padding: 10px 5px;
+ display: none;
 }
 a{
  color: white;

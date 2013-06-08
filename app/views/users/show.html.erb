@@ -72,10 +72,31 @@
   if(div){
    div.style.display = "none";
   }
+ }i
+ var show_setting = false;
+ function handleSettingOptions(){
+  show_setting = !show_setting;
+  if(show_setting) {
+   showSettings();
+  } else {
+   hideSettings();
+  }
+ }
+ function showSettings(){
+  var st = document.getElementById('setting-header');
+  if(st) {
+    st.style.display = 'block';
+  }
+ }
+ function hideSettings(){
+  var st = document.getElementById('setting-header');
+  if(st) {
+    st.style.display = 'none';
+  }
  }
 </script>
 <div class="profile_header" style="width: 100%; z-index: 3455">
-  <table style="width: 100%">
+  <table style="width: 100%;">
     <tbody>
       <tr>
         <td class="current_selected_header border-right">
@@ -99,21 +120,15 @@
 	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
 	<td><div class="circle"></div></td>
  	<td class="centered">
-	 <button class="flat-style" onclick="showOptions()" style="color: #bbb;">Settings</button>
-	 <div 
+	 <button class="flat-style" style="color: #bbb;" onclick="handleSettingOptions(); return false;">Settings</button>
+         <div id="setting-header" class="setting-header" >
+           <%= link_to "Log out", "/signout", :style => "color: #17aeff; font-size: 12px; font-weight: bold"%>
+         </div>
 	</td>
    	<% end %>
       </tr>
     </tbody>
   </table>
-  <div style="display: block; position:fixed; z-index: 10002; width: 100px;top:30px; right: 43px; 
-    background: #dddddd; padding: 10px; display: block">
-    <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
-    <br/>
-    <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
-    <br/>
-    <%= link_to "Log out", "/signout", :style => "color: red; font-size: 16px; font-weight: bold"%>
-  </div>
 </div>
 <div style="width: 100%; margin-top: 70px">
  <table>
@@ -174,20 +189,20 @@
      </td>
      </tr>
     </table>
-    <table style="bottom: 0px; width: 100%">
+    <table style="bottom: 0px; width: 100%; margin-top: 10px">
      <tbody>
  	<tr >
          <% if(current_user?(@user)) %>
-	 <td class="prof-not-bd">notifications</td>
+	 <td class="prof-not-bd">gnibfeeds</td>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <% end %>
-	 <td class="prof-not-bd">gniblers(50)</td>
-	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
+	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
+	 <td class="prof-not-bd">gniblers(50)</td>
          <% if(current_user?(@user)) %>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-	 <td class="prof-not-bd">gnibfeeds</td>
 	 <% end %>
+	 <td class="prof-not-bd">notifications</td>
 	</tr>
       </tbody>
      </table>
