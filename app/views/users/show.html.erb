@@ -39,12 +39,41 @@
     z-index: 1;
 }
 
+.gnibl-icon:hover{
+ 
+}
+
 .profile_header table td{
  background: transparent;
  text-align: center;
 }
+
+.update-profile{
+ position: absolute; 
+ top: 0px; 
+ background: rgba(0, 0, 0, 0.5); 
+ width: 100%; 
+ height: 100%; 
+ text-align: center; 
+ display: none; 
+ vertical-align: middle;
+}
 </style>
 
+<script type="text/javascript">
+ function showGnibThumbnailControl(id){
+  var div = document.getElementById(id);
+  if(div){
+   div.style.display = "table-cell";
+  }
+ }
+ function hideGnibThumbnailControl(id){
+  var div = document.getElementById(id);
+  if(div){
+   div.style.display = "none";
+  }
+ }
+</script>
 <div class="profile_header" style="width: 100%; z-index: 3455">
   <table style="width: 100%">
     <tbody>
@@ -95,7 +124,7 @@
        <div id="profile-image">
         <% if current_user?(@user) %>
          <div class="wrapper">
-	  <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload" %>
+	  <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
 	 </div>
         <% end %>
 	<div class="gnibl-button"></div>
@@ -106,8 +135,9 @@
      <table>
       <tr>
        <td>
-        <div style="font-size: 20px; color: blue; font-weight: bold">
-	 <%=@user.name %><span style="color: white; border-right: 1px solid white; margin-left: 5px;"></span> <span style="font-size: 16px"><%=@user.city%></span>
+        <div style="font-size: 20px; color: #17aeff; font-weight: bold">
+	 <%=@user.name %><span style="color: white; border-right: 1px solid white; margin-left: 5px;"></span> 
+         <span style="font-size: 16px"><%=@user.city%></span>
         </div>
        </td>
      </tr>
@@ -115,14 +145,23 @@
      <% if(current_user?(@user)) %>
       <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
        <td colspan="1" style="width: 400px; padding-top: 10px">
+        <div style="width: 100%; position: relative;">
 	<%= f.text_area :description, :maxlength => "255",
 	:id => "profileSummary", :rows => "2", :cols => "14", 
 	:placeholder => "Describe yourself here briefly", 
 	:onkeypress => "return enforceMaxlength('profileSummary', 254);", 
-        :style=>"overflow: hidden; border-radius: 10px; padding 10px;" %>
+        :style=>"overflow: hidden; border-radius: 10px; padding 10px; z-index: 23",
+        :title=>"Double click to update", :ondblclick=>"updateProfile();" %>
+        <div id="update-profile" class="update-profile">
+	 <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 40px !important; height: 40px !important; margin:auto"%>
+         <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display='none';return false;"
+                style="float: right"></button>
+         <br/>
+         <span style="color: #17aeff; margin:auto">Update profile</span>
+        </div>
+        </div>
        </td>
        <td style="vertical-align: top; padding-top: 10px">
-	<%= f.submit :value => "update profile", :class => "btn btn-primary", :style => "float: right"%>
        </td>
       <% end %>
      <% else %>
@@ -163,12 +202,16 @@
  </div>
 </div>
 <div align="center" id="gnib_something_dialog" >
-  <div style="background: white; width: 50%; margin: 1% 10%; padding: 1% 1%; opacity: 1.0">
+  <div id="dialog-content" style="background: rgba(0, 61, 102,1.0) ; width: 45%; 
+   margin: 5% 10% 0%; border-radius: 1000px; padding: 1% 1%; height: 90%;
+   display: table-cell; vertical-align: middle">
    <div class="dialog-title">
-    <span style="margin: 3px">Gnib Something</span>
+    <span style="margin: 3px; color: white">gnib something</span>
     <button class="dialog-close-icon" onclick="cancelGnibSomething()"></button>
   </div>
+  <div class="dialog-content">
    <%= render 'shared/gnibpost_form' %>
+  </div>
   </div>
 </div>
  <script type="text/javascript">
@@ -176,7 +219,7 @@
    var dialog = document.getElementById('gnib_something_dialog');
    console.log(dialog);
    if(dialog) {
-    dialog.style.display = 'block';
+    dialog.style.display = 'table-cell';
     var width = window.innerWidth;
     var height = window.innerHeight;
     dialog.style.width = width+'px';
@@ -205,15 +248,31 @@
    var className = 'gnib-thumbnail';
    //find all the thumnails
    var width = window.innerWidth;
-   var gt_width = Math.floor((width - 30) / 4);
+   var gt_width = Math.floor(0.245 * width);
    //get the buttons themselves
    var thumbnails = document.getElementsByTagName('*'), i;
    for (i in thumbnails) {
      var btn = thumbnails[i];
      if((btn.className+'').indexOf(className) !== -1) {
        btn.style.height = (gt_width)+'px';
-       btn.style.width = (gt_width)+'px';
+       btn.style.minWidth = (gt_width)+'px';
+     } else if((btn.className+'').indexOf('thumbnail-desc')!==-1){
+       btn.style.width = (gt_width - 90)+'px';
+     } else if((btn.className+'').indexOf('thumbnail-msg')!==-1){
+       btn.style.width = (gt_width - 90)+'px';
      }
    }
+  }
+  var dlg = document.getElementById('dialog-content');
+  var width = Math.floor(0.4 * window.innerWidth);
+  if(dlg) {
+   dlg.style.width = width+'px';
+   dlg.style.height = width+'px';
+  }
+
+  function updateProfile(){
+   console.log('updateprofile.....');
+   var v =  document.getElementById('update-profile');
+   v.style.display = 'table-cell';
   }
  </script>

@@ -6,5 +6,5 @@ class Gnib < ActiveRecord::Base
 
   default_scope :order => 'gnibs.created_at DESC'
 
-    mount_uploader :image, GnibUploader
+  mount_uploader :image, GnibUploader
 end
