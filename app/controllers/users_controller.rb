@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
- before_filter :signed_in_user, :only => [:edit,:update,:index]
+ before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
  before_filter :correct_user, :only => [:edit,:update]
   
   def index
@@ -10,6 +10,26 @@ class UsersController < ApplicationController
   def new
       @user = User.new
   end
+
+
+def feed
+  @user = User.find_by_username(params[:id])
+      @gnibs = @user.feed
+      @gnib = @user.gnibs.build
+end
+
+ def following
+ @user = User.find_by_username(params[:id])
+ @users = @user.followed_users
+ render "show_follow"
+ end
+
+ def followers
+    @user =  User.find_by_username(params[:id])
+ @users = @user.followers
+    render "show_follow"
+ end
+
 
  def create
      @user = User.new(params[:user])

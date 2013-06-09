@@ -198,7 +198,7 @@
 	 <% end %>
 	 <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-	 <td class="prof-not-bd">gniblers(<%=@user.followers.count%>)</td>
+	 <td class="prof-not-bd">gniblers(50)</td>
          <% if(current_user?(@user)) %>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <% end %>
@@ -236,7 +236,9 @@
 <div style="width:100%; margin-top: 1%">
 
 <% if @user.gnibs.any? %>
+MyGnibs <%= @user.gnibs.count %>
 <br>
+<%= render "shared/stats"%>
 <%= render "follow_form" if signed_in?%>
 <% end %>
 

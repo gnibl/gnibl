@@ -4,10 +4,14 @@ Gnibl::Application.routes.draw do
   root :to => 'static_pages#home'
   get "static_pages/home"
 
- resources :users
+resources :users do
+    member do
+      get :following, :followers, :feed
+    end
+ end
  resources :sessions, :only => [:new, :create, :destroy]
  resources :gnibs
-
+ resources :relationships
 
  match "/signup", :to => "users#new"
 

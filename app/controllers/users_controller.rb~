@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
- before_filter :signed_in_user, only: [:edit,:update,:index]
- before_filter :correct_user, only: [:edit,:update]
+ before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
+ before_filter :correct_user, :only => [:edit,:update]
   
   def index
       @users = User.all
@@ -11,10 +11,31 @@ class UsersController < ApplicationController
       @user = User.new
   end
 
+
+def feed
+  @user = User.find_by_name(params[:id])
+      @gnibs = @user.feed
+      @gnib = @user.gnibs.build
+end
+
+ def following
+ @user = User.find_by_name(params[:id])
+ @users = @user.followed_users
+ render "show_follow"
+ end
+
+ def followers
+    @user =  User.find_by_name(params[:id])
+ @users = @user.followers
+    render "show_follow"
+ end
+
+
  def create
      @user = User.new(params[:user])
      @user.avatar = params[:file]
      if @user.save
+	sign_in(@user)
         redirect_to "/users/#{@user.name}"
      else
         render 'new'
@@ -26,26 +47,28 @@ class UsersController < ApplicationController
   end
 
   def update
-      @user = User.find(params[:id])
-      if @user.update_attributes(params[:user])
-         flash[:success] = "Profile Updated"
-         sign_in @user
-         redirect_to @user
-      else
-          render 'edit'
+      @user = User.find_by_name(params[:id])
+      if params[:user] && params[:user][:description]
+	@user.update_attribute(:description, params[:user][:description]);         
+      elsif params[:user] && params[:user][:avatar_url]
+        @user.update_attribute(:avatar, params[:user][:avatar_url])
       end
+      puts "updated user: #{@user.description}"
+      puts "updated user: #{@user.avatar_url}"
+      redirect_to "/users/#{@user.name}"
   end
 
   def show
       @user = User.find_by_name(params[:id])
       @gnibs = @user.gnibs
+      @gnib = @user.gnibs.build
   end
 
 private
   
   
   def correct_user
-       @user = User.find(params[:id])
+       @user = User.find_by_name(params[:id])
       redirect_to(root_path) unless current_user?(@user)
   end
 end

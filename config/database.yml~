@@ -12,7 +12,7 @@
 development:
   adapter: postgresql
   host: localhost
-  username: user
+  username: postgres
   database: gnibldb
   pool: 5
   timeout: 5000
@@ -28,8 +28,8 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-#database: postgres://fzsgnegsmsilqz:t-#GLr2nvks3zLVRv36sXNoJfKB@ec2-54-227-255-156.compute-1.amazonaws.com:5432/d6ceodu8ata20f
+  adapter: postgresql
+  username: postgre
+  database: gnibldb
   pool: 5
   timeout: 5000
