@@ -72,7 +72,7 @@
   if(div){
    div.style.display = "none";
   }
- }i
+ }
  var show_setting = false;
  function handleSettingOptions(){
   show_setting = !show_setting;
@@ -94,15 +94,21 @@
     st.style.display = 'none';
   }
  }
+ function showOption(id){
+  var option = document.getElementById(id);
+  if(option) {
+   option.style.display = 'table-cell';
+  }
+ }
 </script>
 <div class="profile_header" style="width: 100%; z-index: 3455">
   <table style="width: 100%;">
     <tbody>
       <tr>
-        <td class="current_selected_header border-right">
-	  <a>
-	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 60px')%>
-
+        <td class="current_selected_header border-right" style="vertical-align: bottom; position: relative">
+	    <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 60px; height: 60px')%>
+	    <%=image_tag(image_path('gnibl-text.png'), :style => 'width: 60px; height: 50px')%>
+	  <a style="bottom: 10px; position: absolute">
 	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
 	  </a>
 	</td>
@@ -114,7 +120,18 @@
           <span style="font-weight: bold; font-size: 17px; color: #bbbbbb">
 	GNIB<span style="font-weight: bold; font-size: 15px; color: white">feeds</span></span>
         </td> 
-	<td class="centered" style="width: 10%; color: #bbb">search</td>
+	<td class="centered" style="width: 10%; color: #bbb">
+         <table>
+         <tr>
+          <td>
+            <button class="flat-style" style="color: #bbb;" onclick="showOption('searchBox'); return false;">Search</button>
+          </td>
+          <td id ="searchBox" style="display: none">
+           <input type="text" placeholder="Search gniblers" style="min-width: 300px; margin:auto"/>
+          </td>
+         </tr>
+         </table>
+        </td>
         <% if(current_user?(@user)) %>
 	<td><div class="circle"></div></td>
 	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
@@ -172,7 +189,7 @@
          <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display='none';return false;"
                 style="float: right"></button>
          <br/>
-         <span style="color: #17aeff; margin:auto">Update profile</span>
+         <span style="color: #17aeff; margin: auto">Update profile</span>
         </div>
         </div>
        </td>

@@ -3,10 +3,16 @@
    background-size: 100% 100%;
    height: auto;
   }
+  html, body{
+   background: url(<%=image_path('grass_dark_wallpaper-HD.jpg')%>);
+  }
 </style>
 <div id="login-main-panel" align="center" class="login-main-panel">
-  <div id="login-main" align="center" class="login-main">
+  <div id="login-main" align="center" class="login-main" style="position: relative">
     <%= image_tag(image_path('FINALE-FINALE!!-_03.png'), :class => 'gnibl-logo')%>
+    <%= image_tag(image_path('Three boxes on login.png'), :style=>"position: absolute; right: -350px; top: -20px")%>
+    <br/>
+    <%= image_tag(image_path('gnibl-text.png'), :style => 'width: 70px; height: 70px')%>
     <%= render 'form_login' %>
   </div>
   <div class="round" style="width: 440px; position: absolute; top: 0px; right: 0px; height: 80px; display: none">
