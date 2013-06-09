@@ -105,12 +105,18 @@
   <table style="width: 100%;">
     <tbody>
       <tr>
-        <td class="current_selected_header border-right" style="vertical-align: bottom; position: relative">
-	    <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 60px; height: 60px')%>
-	    <%=image_tag(image_path('gnibl-text.png'), :style => 'width: 60px; height: 50px')%>
-	  <a style="bottom: 10px; position: absolute">
+        <td class="current_selected_header border-right" style="vertical-align: bottom; position: relative; margin: auto">
+          <div style="width: 100%">
+	  <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 60px; height: 60px')%>
+	  <%=image_tag(image_path('gnibl-text.png'), :style => 'width: 60px; height: 50px')%>
+          <% if (signed_in? and not current_user?@user) %>
+	   <a href="/users/<%=current_user.username%>" style="bottom: 10px; position: absolute">
 	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
-	  </a>
+	   </a>
+          <% else %>
+	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0; bottom: 10px; position: absolute">profile</span>
+          <% end %>
+         </div>
 	</td>
   	<td class="border-right">
           <span style="font-weight: bold; font-size: 17px; color: #aaaaaa">
@@ -213,7 +219,11 @@
 	 <td class="prof-not-bd">gnibfeeds</td>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <% end %>
-	 <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
+         <% if current_user?@user %>
+	  <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
+         <% else %>
+	  <td class="prof-not-bd">gnibs(<%=@user.gnibs.count%>)</td>
+         <% end %>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <td class="prof-not-bd">gniblers(50)</td>
          <% if(current_user?(@user)) %>
