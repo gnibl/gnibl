@@ -6,7 +6,8 @@ class Gnib < ActiveRecord::Base
 
   default_scope order: 'gnibs.created_at DESC'
 
-    mount_uploader :image, GnibUploader
+  mount_uploader :image, GnibUploader
+ has_many :gniblings
 
 def self.from_users_followed_by(user)
 ids = "SELECT followed_id from relationships WHERE follower_id = :user_id"

@@ -11,6 +11,14 @@ class UsersController < ApplicationController
       @user = User.new
   end
 
+def search
+#search for users by user name - obviously
+uname = params[:uid]
+@users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'");
+render 'index'
+end
+
+
 
 def feed
   @user = User.find_by_username(params[:id])

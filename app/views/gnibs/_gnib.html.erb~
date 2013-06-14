@@ -1,2 +1,25 @@
- <!-- hello -->
-<%= image_tag(image_path(gnib.image.url), :class => 'gnib')%>
+ <!-- you can obtain stuff like gnib.title, gnib.description, gnib.landmark -->
+  <!-- button class="gnib-icon" title="gnib this gnibl">4</button -->
+ <% if(gnib.image && gnib.image.url) %> 
+  <div onmouseover="showGnibThumbnailControl('thumbnail-control_<%=gnib.hash%>');"
+    onmouseout="hideGnibThumbnailControl('thumbnail-control_<%=gnib.hash%>');" 
+    class="gnib-thumbnail" style="margin-bottom: 5px">
+    <div id="thumbnail-control_<%=gnib.hash%>" class="thumbnail-control">
+     <div class="gnib-count" style="font-size: 20px" >67</div>
+
+     <button class="gnib-gnib-button" title="gnib this gnib"></button>
+    <%= render 'like' %>
+    </div>
+    <%= image_tag(image_path(gnib.image.url), :class => 'gnib')%>
+    <div class="thumbnail-view" style="overflow: hidden">
+      <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
+      <div id="thumbnail-desc_<%=gnib.hash%>" class="thumbnail-desc">
+       <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=gnib.user.name%></span>
+       <br/>
+       <div id="thumbnail-desc-msg_<%=gnib.hash%>" class="thumbnail-msg" >
+       <%= gnib.description%>
+       </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -6,12 +6,24 @@ Gnibl::Application.routes.draw do
 
 resources :users do
     member do
-      get :following, :followers, :feed
+      get :following, :followers, :feed, :search
     end
+
+   collection do
+   get 'search'
+   end
  end
+
+
  resources :sessions, :only => [:new, :create, :destroy]
- resources :gnibs
+ resources :gnibs do
+     collection do
+   get 'search'
+   end
+ end
+
  resources :relationships
+ resources :gniblings
 
  match "/signup", :to => "users#new"
 
@@ -27,7 +39,9 @@ resources :users do
 
  match '/signout', :to => 'sessions#destroy'
 
- match '/users/{username}', :to => 'users#show' 
+# match '/search/:uid', :to => 'users#search' 
+
+# match '/users/{username}', :to => 'users#show' 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

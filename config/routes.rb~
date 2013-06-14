@@ -4,10 +4,26 @@ Gnibl::Application.routes.draw do
   root :to => 'static_pages#home'
   get "static_pages/home"
 
- resources :users
- resources :sessions, :only => [:new, :create, :destroy]
- resources :gnibs
+resources :users do
+    member do
+      get :following, :followers, :feed, :search
+    end
 
+   collection do
+   get 'search'
+   end
+ end
+
+
+ resources :sessions, :only => [:new, :create, :destroy]
+ resources :gnibs do
+     collection do
+   get 'search'
+   end
+ end
+
+ resources :relationships
+# resources :gniblings
 
  match "/signup", :to => "users#new"
 
@@ -23,7 +39,9 @@ Gnibl::Application.routes.draw do
 
  match '/signout', :to => 'sessions#destroy'
 
- match '/users/{username}', :to => 'users#show' 
+# match '/search/:uid', :to => 'users#search' 
+
+# match '/users/{username}', :to => 'users#show' 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

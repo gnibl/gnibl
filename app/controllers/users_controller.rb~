@@ -11,21 +11,27 @@ class UsersController < ApplicationController
       @user = User.new
   end
 
+def search
+#search for users by user name - obviously
+uname = params[:uid]
+@users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'");
+render 'index'
+end
 
 def feed
-  @user = User.find_by_name(params[:id])
+  @user = User.find_by_username(params[:id])
       @gnibs = @user.feed
       @gnib = @user.gnibs.build
 end
 
  def following
- @user = User.find_by_name(params[:id])
+ @user = User.find_by_username(params[:id])
  @users = @user.followed_users
  render "show_follow"
  end
 
  def followers
-    @user =  User.find_by_name(params[:id])
+    @user =  User.find_by_username(params[:id])
  @users = @user.followers
     render "show_follow"
  end
@@ -36,7 +42,7 @@ end
      @user.avatar = params[:file]
      if @user.save
 	sign_in(@user)
-        redirect_to "/users/#{@user.name}"
+        redirect_to "/users/#{@user.username}"
      else
         render 'new'
     end
@@ -47,7 +53,7 @@ end
   end
 
   def update
-      @user = User.find_by_name(params[:id])
+      @user = User.find_by_username(params[:id])
       if params[:user] && params[:user][:description]
 	@user.update_attribute(:description, params[:user][:description]);         
       elsif params[:user] && params[:user][:avatar_url]
@@ -55,11 +61,11 @@ end
       end
       puts "updated user: #{@user.description}"
       puts "updated user: #{@user.avatar_url}"
-      redirect_to "/users/#{@user.name}"
+      redirect_to "/users/#{@user.username}"
   end
 
   def show
-      @user = User.find_by_name(params[:id])
+      @user = User.find_by_username(params[:id])
       @gnibs = @user.gnibs
       @gnib = @user.gnibs.build
   end
@@ -68,7 +74,7 @@ private
   
   
   def correct_user
-       @user = User.find_by_name(params[:id])
+       @user = User.find_by_username(params[:id])
       redirect_to(root_path) unless current_user?(@user)
   end
 end

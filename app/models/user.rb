@@ -40,6 +40,8 @@ class User < ActiveRecord::Base
                                     class_name: "Relationship",
                                     dependent: :destroy
   has_many :followers, through: :reverse_relationships , source: :follower
+ 
+  has_many :gniblings, foreign_key: "user_id", dependent: :destroy
 
 def feed
     Gnib.from_users_followed_by(self)
@@ -47,6 +49,15 @@ end
 
 def following?(other_user)
    relationships.find_by_followed_id(other_user.id)
+end
+
+def like(gnib_id)
+@liking = gniblings.find_by_gnib_id(gnib_id)
+if @liking
+@liking.update_attribute("count", @liking.count + 1) 
+else
+gniblings.create(:gnib_id => gnib_id, :count => 1)
+end
 end
 
 def follow!(other_user)

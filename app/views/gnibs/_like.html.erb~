@@ -1,0 +1,4 @@
+<%= form_for(current_user.gniblings.like(gnib_id: 40)) do |f| %>
+   <div> <%= f.hidden_field :gnib_id %> </div>
+   <%= f.submit "Like", class "gnib-gnib-button" %>
+<% end %>
