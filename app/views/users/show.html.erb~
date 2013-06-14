@@ -1,94 +1,306 @@
-<div class="profile_header" style="width: 100%; background: #666666">
-  <table style="width: 100%">
+<style type="text/css">
+#profile-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+#profile-image .wrapper {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+
+#profile-image .wrapper:hover {
+    opacity: 0.5;
+}
+
+.gnibl-button, wrapper{
+ width: 150px !important;
+ height: 150px !important;
+}
+
+.wrapper .file-upload{
+ width: 150px !important;
+ height: 150px !important;
+}
+
+#profile-image .gnibl-button {
+    background: url(<%=image_path(@user.avatar_url)%>);
+    background-size: 100% 100%;
+    border: none;
+    color: #666;
+    padding: 3px 5px;
+    border-radius: 5px;
+    position: relative;
+    top: 0;
+    z-index: 1;
+}
+
+.gnibl-icon:hover{
+ 
+}
+
+.profile_header table td{
+ background: transparent;
+ text-align: center;
+}
+
+.update-profile{
+ position: absolute; 
+ top: 0px; 
+ background: rgba(0, 0, 0, 0.5); 
+ width: 100%; 
+ height: 100%; 
+ text-align: center; 
+ display: none; 
+ vertical-align: middle;
+}
+</style>
+
+<script type="text/javascript">
+ function showGnibThumbnailControl(id){
+  var div = document.getElementById(id);
+  if(div){
+   div.style.display = "table-cell";
+  }
+ }
+ function hideGnibThumbnailControl(id){
+  var div = document.getElementById(id);
+  if(div){
+   div.style.display = "none";
+  }
+ }i
+ var show_setting = false;
+ function handleSettingOptions(){
+  show_setting = !show_setting;
+  if(show_setting) {
+   showSettings();
+  } else {
+   hideSettings();
+  }
+ }
+ function showSettings(){
+  var st = document.getElementById('setting-header');
+  if(st) {
+    st.style.display = 'block';
+  }
+ }
+ function hideSettings(){
+  var st = document.getElementById('setting-header');
+  if(st) {
+    st.style.display = 'none';
+  }
+ }
+</script>
+<div class="profile_header" style="width: 100%; z-index: 3455">
+  <table style="width: 100%;">
     <tbody>
       <tr>
         <td class="current_selected_header border-right">
 	  <a>
-	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 40px')%>
+	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 60px')%>
 
 	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
 	  </a>
 	</td>
   	<td class="border-right">
-          <span style="font-weight: bold; font-size: 16px; color: #aaaaaa">GNIB</span>
-          <span style="font-weight: bold; font-size: 15px; color: white">picks</span>
+          <span style="font-weight: bold; font-size: 17px; color: #aaaaaa">
+	GNIB<span style="font-weight: bold; font-size: 15px; color: white">picks</span></span>
         </td> 
 	<td class="border-right">
-          <span style="font-weight: bold; font-size: 16px; color: #bbbbbb">GNIB</span>
-          <span style="font-weight: bold; font-size: 15px; color: white">stream</span>
+          <span style="font-weight: bold; font-size: 17px; color: #bbbbbb">
+	GNIB<span style="font-weight: bold; font-size: 15px; color: white">feeds</span></span>
         </td> 
-	<td class="border-right"/>
-	<td class="centered">search</td>
+	<td class="centered" style="width: 10%; color: #bbb">search</td>
+        <% if(current_user?(@user)) %>
 	<td><div class="circle"></div></td>
-	<td class="centered">gnib something</td>
+	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
 	<td><div class="circle"></div></td>
- 	<td class="centered">Settings</td>
+ 	<td class="centered">
+	 <button class="flat-style" style="color: #bbb;" onclick="handleSettingOptions(); return false;">Settings</button>
+         <div id="setting-header" class="setting-header" >
+           <%= link_to "Log out", "/signout", :style => "color: #17aeff; font-size: 12px; font-weight: bold"%>
+         </div>
+	</td>
+   	<% end %>
       </tr>
     </tbody>
   </table>
 </div>
-<div style="width: 98%; margin: 50px 1%">
-<table>
- <tbody>
-  <tr>
-   <td><%=image_tag(image_path(@user.avatar_url),:style => 'width: 170px; height: 150px' )%>
-
-</td>
-   <td style="width: 98%; padding: 1%">
-    <table>
+<div style="width: 100%; margin-top: 70px">
+ <table>
+  <tbody>
+   <tr>
+    <td style="width: 11%; min-width: 150px; vertical-align:top">
+      <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
+       <div id="profile-image">
+        <% if current_user?(@user) %>
+         <div class="wrapper">
+	  <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
+	 </div>
+        <% end %>
+	<div class="gnibl-button"></div>
+       </div>
+      <% end %>
+    </td>
+    <td style="width: 87%; padding: 1%">
+     <table>
+      <tr>
+       <td>
+        <div style="font-size: 20px; color: #17aeff; font-weight: bold">
+	 <%=@user.name %><span style="color: white; border-right: 1px solid white; margin-left: 5px;"></span> 
+         <span style="font-size: 16px"><%=@user.city%></span>
+        </div>
+       </td>
+     </tr>
      <tr>
-      <td><span style="font-size: 16px; color: blue; font-weight: bold"><%=@user.name %>  </span></td>
-      <td class="border-right"/>
-      <td><span style="font-size:15px; color: blue"><%=@user.city%></span></td>
+     <% if(current_user?(@user)) %>
+      <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
+       <td colspan="1" style="width: 400px; padding-top: 10px">
+        <div style="width: 100%; position: relative;">
+	<%= f.text_area :description, :maxlength => "255",
+	:id => "profileSummary", :rows => "2", :cols => "14", 
+	:placeholder => "Describe yourself here briefly", 
+	:onkeypress => "return enforceMaxlength('profileSummary', 254);", 
+        :style=>"overflow: hidden; border-radius: 10px; padding 10px; z-index: 23",
+        :title=>"Double click to update", :ondblclick=>"updateProfile();" %>
+        <div id="update-profile" class="update-profile">
+	 <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 40px !important; height: 40px !important; margin:auto"%>
+         <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display='none';return false;"
+                style="float: right"></button>
+         <br/>
+         <span style="color: #17aeff; margin:auto">Update profile</span>
+        </div>
+        </div>
+       </td>
+       <td style="vertical-align: top; padding-top: 10px">
+       </td>
+      <% end %>
+     <% else %>
+      <td colspan="2">
+	<div style="background: #black; color: white; opacity: 0.8; max-width: 400px">
+	 <%= @user.description %>
+	</div>
+      </td>
+     <% end %>
+     </td>
      </tr>
     </table>
-
-    <table style="bottom: 0px; margin-top: 30px; width: 100%">
+    <table style="bottom: 0px; width: 100%; margin-top: 10px">
      <tbody>
  	<tr >
-	 <td class="prof-not-bd">notifications</td>
-	 <td class="prof-not-bd"><div class="circle"></div></td>
+         <% if(current_user?(@user)) %>
+	 <td class="prof-not-bd">gnibfeeds</td>
+	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
+	 <% end %>
+	 <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
+	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <td class="prof-not-bd">gniblers(50)</td>
-	 <td class="prof-not-bd"><div class="circle"></div></td>
-	 <td class="prof-not-bd">my gnibls(300)</td>
-	 <td class="prof-not-bd"><div class="circle"></div></td>
-	 <td class="prof-not-bd">gnibmarks(48)</td>
+         <% if(current_user?(@user)) %>
+	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
+	 <% end %>
+	 <td class="prof-not-bd">notifications</td>
 	</tr>
-     </tbody>
-    </table>
-   </td>
-  </tr>
- </tbody>
-</table>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <div align="center" style="width:100%; margin-top: 10px">
+  <% if @gnibs.any? %>
+   <%= render @gnibs %>
+  <% end %>
+ </div>
+</div>
+<div align="center" id="gnib_something_dialog" >
+  <div id="dialog-content" style="background: rgba(0, 61, 102,1.0) ; width: 45%; 
+   margin: 5% 10% 0%; border-radius: 1000px; padding: 1% 1%; height: 90%;
+   display: table-cell; vertical-align: middle">
+   <div class="dialog-title">
+    <span style="margin: 3px; color: white">gnib something</span>
+    <button class="dialog-close-icon" onclick="cancelGnibSomething()"></button>
+  </div>
+  <div class="dialog-content">
+   <%= render 'shared/gnibpost_form' %>
+  </div>
 
-
-<div class = "gnib">
-  <%= render 'shared/gnibpost_form'%>
+  </div>
 
 </div>
+
 <br><br>
 <div style="width:100%; margin-top: 1%">
 
 <% if @user.gnibs.any? %>
-MyGnibs <%= @user.gnibs.count %>
 <br>
- <%= render @gnibs %>
-
+<%= render "follow_form" if signed_in?%>
 <% end %>
 
 </div>
-<div style="width:100%; margin-top: 1%">
-<%= image_tag(image_path('gnib pics (1)_img1.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img2.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img3.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img4.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img5.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img6.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img7.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img8.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img9.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img10.png'), :class => 'gnib')%>
-<%= image_tag(image_path('gnib pics (1)_img11.png'), :class => 'gnib')%>
-</div>
 
-</div>
+ <script type="text/javascript">
+  function gnibSomething(){
+   var dialog = document.getElementById('gnib_something_dialog');
+   console.log(dialog);
+   if(dialog) {
+    dialog.style.display = 'table-cell';
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    dialog.style.width = width+'px';
+    dialog.style.height = height+'px';
+   }
+  }
+  function cancelGnibSomething(){
+   var dialog = document.getElementById('gnib_something_dialog');
+   dialog.style.display = 'none';
+  }
+  function enforceMaxlength(id, maxlength){
+   var obj = document.getElementById(id);
+	console.log('id:'+id);
+   if(obj){
+     return obj.value.length <= maxlength;
+   }
+  }
+  <% if current_user? @user %>
+  document.getElementById("current_user_file_upload").onchange = function() {
+    console.log('submitting form');
+    document.getElementById("current_user_form").submit();
+  }
+  <% end %>
+  function rectifyGnibs(){
+   //set the sizes of the thumbnail, four per page.
+   var className = 'gnib-thumbnail';
+   //find all the thumnails
+   var width = window.innerWidth;
+   var gt_width = Math.floor(0.245 * width);
+   //get the buttons themselves
+   var thumbnails = document.getElementsByTagName('*'), i;
+   for (i in thumbnails) {
+     var btn = thumbnails[i];
+     if((btn.className+'').indexOf(className) !== -1) {
+       btn.style.height = (gt_width)+'px';
+       btn.style.minWidth = (gt_width)+'px';
+     } else if((btn.className+'').indexOf('thumbnail-desc')!==-1){
+       btn.style.width = (gt_width - 90)+'px';
+     } else if((btn.className+'').indexOf('thumbnail-msg')!==-1){
+       btn.style.width = (gt_width - 90)+'px';
+     }
+   }
+  }
+  var dlg = document.getElementById('dialog-content');
+  var width = Math.floor(0.4 * window.innerWidth);
+  if(dlg) {
+   dlg.style.width = width+'px';
+   dlg.style.height = width+'px';
+  }
+
+  function updateProfile(){
+   console.log('updateprofile.....');
+   var v =  document.getElementById('update-profile');
+   v.style.display = 'table-cell';
+  }
+ </script>

@@ -5,9 +5,17 @@
     onmouseout="hideGnibThumbnailControl('thumbnail-control_<%=gnib.hash%>');" 
     class="gnib-thumbnail" style="margin-bottom: 5px">
     <div id="thumbnail-control_<%=gnib.hash%>" class="thumbnail-control">
+<<<<<<< .merge_file_6IapiW
      <div class="gnib-count" style="float: left; width: 70%; display: table-cell; vertical-align: middle"><%=gnib.title%></div>
      <div class="gnib-count" style="font-size: 20px" >67</div>
+=======
+     <div class="gnib-count" style="font-size: 20px" >
+     <%= gnib.gniblings.count%>
+</div>
+
+>>>>>>> .merge_file_ZEXKXX
      <button class="gnib-gnib-button" title="gnib this gnib"></button>
+    <%= render 'like' %>
     </div>
     <%= image_tag(image_path(gnib.image.url), :class => 'gnib')%>
     <div class="thumbnail-view" style="overflow: hidden">

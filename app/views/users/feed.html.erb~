@@ -6,16 +6,15 @@
 }
 
 #profile-image .wrapper {
-    background: #000;
     opacity: 0;
     cursor: pointer;
     position: absolute;
     top: 0;
-    z-index: 100;
+    z-index: 2;
 }
 
 #profile-image .wrapper:hover {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .gnibl-button, wrapper{
@@ -26,19 +25,6 @@
 .wrapper .file-upload{
  width: 150px !important;
  height: 150px !important;
- opacity: 0;
-}
-
-.wrapper .gnibl-file-logo{
-  width: 30px; 
-  height: 30px; 
-  position: absolute; 
-  top: 50px; 
-  left: 60px;
-}
-
-.wrapper .gnibl-file-logo:hover{
-  opacity: 1;
 }
 
 #profile-image .gnibl-button {
@@ -46,6 +32,7 @@
     background-size: 100% 100%;
     border: none;
     color: #666;
+    padding: 3px 5px;
     border-radius: 5px;
     position: relative;
     top: 0;
@@ -63,8 +50,8 @@
 
 .update-profile{
  position: absolute; 
- top: 60px; 
- background: rgba(0, 0, 0, 0.7); 
+ top: 0px; 
+ background: rgba(0, 0, 0, 0.5); 
  width: 100%; 
  height: 100%; 
  text-align: center; 
@@ -85,7 +72,7 @@
   if(div){
    div.style.display = "none";
   }
- }
+ }i
  var show_setting = false;
  function handleSettingOptions(){
   show_setting = !show_setting;
@@ -107,29 +94,17 @@
     st.style.display = 'none';
   }
  }
- function showOption(id){
-  var option = document.getElementById(id);
-  if(option) {
-   option.style.display = 'table-cell';
-  }
- }
 </script>
 <div class="profile_header" style="width: 100%; z-index: 3455">
   <table style="width: 100%;">
     <tbody>
       <tr>
-        <td class="current_selected_header border-right" style="vertical-align: bottom; position: relative; margin: auto">
-          <div style="width: 100%">
-	  <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 60px; height: 60px')%>
-	  <%=image_tag(image_path('gnibl-text.png'), :style => 'width: 60px; height: 50px')%>
-          <% if (signed_in? and not current_user?@user) %>
-	   <a href="/users/<%=current_user.username%>" style="bottom: 10px; position: absolute">
+        <td class="current_selected_header border-right">
+	  <a>
+	    <%=image_tag(image_path('FINALE-FINALE!!-_03.gif'), :style => 'width: 80px; height: 60px')%>
+
 	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0">profile</span>
-	   </a>
-          <% else %>
-	    <span style="font-weight: bold; font-size: 16px; opacity: 1.0; bottom: 10px; position: absolute">profile</span>
-          <% end %>
-         </div>
+	  </a>
 	</td>
   	<td class="border-right">
           <span style="font-weight: bold; font-size: 17px; color: #aaaaaa">
@@ -139,18 +114,7 @@
           <span style="font-weight: bold; font-size: 17px; color: #bbbbbb">
 	GNIB<span style="font-weight: bold; font-size: 15px; color: white">feeds</span></span>
         </td> 
-	<td class="centered" style="width: 10%; color: #bbb">
-         <table>
-         <tr>
-          <td>
-            <button class="flat-style" style="color: #bbb;" onclick="showOption('searchBox'); return false;">Search</button>
-          </td>
-          <td id ="searchBox" style="display: none">
-           <input type="text" placeholder="Search gniblers" style="min-width: 300px; margin:auto"/>
-          </td>
-         </tr>
-         </table>
-        </td>
+	<td class="centered" style="width: 10%; color: #bbb">search</td>
         <% if(current_user?(@user)) %>
 	<td><div class="circle"></div></td>
 	<td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
@@ -174,12 +138,8 @@
       <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
        <div id="profile-image">
         <% if current_user?(@user) %>
-         <div class="wrapper" >
-          <div style="width: 100%; height: 100%; position:relative;" id="upload_user_image">
-	    <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
-            <%= image_tag(image_path('FINALE-FINALE!!-_03.png'), :class=>"gnibl-file-logo") %>
-            <div class="gnibl-file-logo" style="left: 5px; top: 90px; width: 100%; height: 100%">Update profile photo</div>
-          </div>
+         <div class="wrapper">
+	  <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
 	 </div>
         <% end %>
 	<div class="gnibl-button"></div>
@@ -198,7 +158,7 @@
      </tr>
      <tr>
      <% if(current_user?(@user)) %>
-      <%= form_for(@user, :url => "/users/#{@user.username}", :remote=>true) do |f| %>
+      <%= form_for(@user, :url => "/users/#{@user.username}") do |f| %>
        <td colspan="1" style="width: 400px; padding-top: 10px">
         <div style="width: 100%; position: relative;">
 	<%= f.text_area :description, :maxlength => "255",
@@ -206,13 +166,13 @@
 	:placeholder => "Describe yourself here briefly", 
 	:onkeypress => "return enforceMaxlength('profileSummary', 254);", 
         :style=>"overflow: hidden; border-radius: 10px; padding 10px; z-index: 23",
-        :title=>"Double click to update",:onkeyup=>"updateProfile();" %>
-        <div id="update-profile" class="update-profile" style="border-radius: 50px; height: 40px; padding-top: 5px; margin-top: 3px">
-	 <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto", 
-		:onclick=>"document.getElementById('update-profile').style.display='none';"%>
+        :title=>"Double click to update", :ondblclick=>"updateProfile();" %>
+        <div id="update-profile" class="update-profile">
+	 <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 40px !important; height: 40px !important; margin:auto"%>
          <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display='none';return false;"
-                style="float: right; margin-right: 30px"></button>
-         <span style="color: #17aeff; margin-right: 65px">Update profile</span>
+                style="float: right"></button>
+         <br/>
+         <span style="color: #17aeff; margin:auto">Update profile</span>
         </div>
         </div>
        </td>
@@ -236,13 +196,9 @@
 	 <td class="prof-not-bd">gnibfeeds</td>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <% end %>
-         <% if current_user?@user %>
-	  <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
-         <% else %>
-	  <td class="prof-not-bd">gnibs(<%=@user.gnibs.count%>)</td>
-         <% end %>
+	 <td class="prof-not-bd">my gnibs(<%=@user.gnibs.count%>)</td>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-	 <td class="prof-not-bd">gniblers(<%=@user.followers.count%>)</td>
+	 <td class="prof-not-bd">gniblers(50)</td>
          <% if(current_user?(@user)) %>
 	 <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
 	 <% end %>
@@ -254,42 +210,35 @@
    </tr>
   </tbody>
  </table>
- <div style="width:100%; margin-top: 10px">
+ <div align="center" style="width:100%; margin-top: 10px">
   <% if @gnibs.any? %>
    <%= render @gnibs %>
   <% end %>
  </div>
 </div>
 <div align="center" id="gnib_something_dialog" >
- <div id="main_gnib_something_dialog">
   <div id="dialog-content" style="background: rgba(0, 61, 102,1.0) ; width: 45%; 
-   margin: auto; border-radius: 1000px; padding: 1% 1%; height: 90%;
+   margin: 5% 10% 0%; border-radius: 1000px; padding: 1% 1%; height: 90%;
    display: table-cell; vertical-align: middle">
    <div class="dialog-title">
     <span style="margin: 3px; color: white">gnib something</span>
     <button class="dialog-close-icon" onclick="cancelGnibSomething()"></button>
-   </div>
-   <div class="dialog-content">
-    <%= render 'shared/gnibpost_form' %>
-   </div>
   </div>
-<<<<<<< .merge_file_sA67c9
- </div>
-=======
   <div class="dialog-content">
    <%= render 'shared/gnibpost_form' %>
   </div>
 
   </div>
 
->>>>>>> .merge_file_K9jhQ6
 </div>
 
 <br><br>
 <div style="width:100%; margin-top: 1%">
 
 <% if @user.gnibs.any? %>
+MyGnibs <%= @user.gnibs.count %>
 <br>
+<%= render "shared/stats"%>
 <%= render "follow_form" if signed_in?%>
 <% end %>
 
@@ -298,7 +247,6 @@
  <script type="text/javascript">
   function gnibSomething(){
    var dialog = document.getElementById('gnib_something_dialog');
-   var main_dialog = document.getElementById('main_gnib_something_dialog');
    console.log(dialog);
    if(dialog) {
     dialog.style.display = 'table-cell';
@@ -306,8 +254,6 @@
     var height = window.innerHeight;
     dialog.style.width = width+'px';
     dialog.style.height = height+'px';
-    main_dialog.style.height = height + 'px';
-    main_dialog.style.width = width + 'px';
    }
   }
   function cancelGnibSomething(){
@@ -355,10 +301,8 @@
   }
 
   function updateProfile(){
+   console.log('updateprofile.....');
    var v =  document.getElementById('update-profile');
-console.log(v.style.display);
-   if(!v.style.display || v.style.display === 'none') {
-    v.style.display = 'table-cell';
-   }
+   v.style.display = 'table-cell';
   }
  </script>
