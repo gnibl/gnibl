@@ -51,7 +51,13 @@
    <tr>
     <td class="align" style="padding-right: 20px"><div class="circular" >4.</div></td>
     <td class="align">
-      <%= f.submit "", :class=>"gnibl-icon"%>
+      <script type="text/javascript">
+ 	function submitForm(btn) {
+		btn.disabled = true;
+		btn.form.submit();
+        }
+      </script>
+      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :onclick=>"submitForm(this);"%>
     </td>
     <td class="align" style="padding-left: 20px"><div class="blue-circular" >?</div></td>
    </tr>
