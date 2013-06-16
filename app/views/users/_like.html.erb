@@ -1,4 +1,5 @@
-<%= form_for(@user.gniblings.build(gnib_id: 2)) do |f| %>
-   <div> <%= f.hidden_field :gnib_id  %> </div>
-   <%= f.submit "",title: "Like", class: "gnib-gnib-button" %>
+<%= form_for(@user.gniblings.build(:gnib_id => gnib.id)) do |f| %>
+  <div> <%= f.hidden_field :gnib_id  %> </div>
+  <%= f.submit "",:title => "gnib", :class => "gnib-gnib-button", :id => "gnib.id" %>
 <% end %>
+

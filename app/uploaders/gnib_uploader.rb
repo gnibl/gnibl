@@ -11,7 +11,7 @@ class GnibUploader < CarrierWave::Uploader::Base
   # include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
- # storage :file
+# storage :file
    storage :fog
 #process :resize_to_fit => [200,200]
 

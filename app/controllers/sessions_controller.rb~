@@ -8,17 +8,17 @@ def create
           @auth = Authorization.create_from_hash(auth,current_user,data)
         end
         sign_in(@auth.user)
-        redirect_to "/users/#{user.name}"
+        redirect_to "/users/#{user.username}"
     else
         #sign in normally via email/password
         user = User.find_by_email(params[:session][:email])
-        puts "user #{user.name}"
+        puts "user #{user.username}"
         puts "enteredpassword #{params[:session][:password]}"
         if user && user.authenticate(params[:session][:password])
           sign_in(user)
-          puts "signing in user: #{user.name}"
-          puts "Username: #{user.name}"
-          redirect_to "/users/#{user.name}"
+          puts "signing in user: #{user.username}"
+          puts "Username: #{user.username}"
+          redirect_to "/users/#{user.username}"
         else
           puts "failed to authenticate:................"
           flash.now[:error] = "Invalid email/password combination"

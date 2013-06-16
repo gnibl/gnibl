@@ -1,29 +1,4 @@
-<div class = "row">
-  <aside class = "span4">
-     <section>
-     my picture
-     <h1> <%= @user.name %> </h1>
-     <span><b>Gnibs <%= @user.gnibs.count %></b></span>
-     </section>
-     <section>
-       <%= render "shared/stats"%>
-       <% if @users.any? %>
-           <div class="user_displays">
-<ul>
-		<%= render @users %>
-</ul>    
-        </div>
-        <% end %>
-     </section>
-  </aside>
-
-  <div class="span8">
-     <% if @users.any?  %> 
-       <ul class "users">
-       <%= render @users %>
-       </ul>
-       <% end %>
-  </div>
-
+<div style="width: 100%; height: 100%">
+  <%= render "gnibler_view"%>
 </div>
 

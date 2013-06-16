@@ -16,14 +16,14 @@ resources :users do
 
 
  resources :sessions, :only => [:new, :create, :destroy]
- resources :gnibs do
-     collection do
-   get 'search'
-   end
- end
+# resources :gnibs do
+   #  collection do
+  # get 'search'
+ #  end
+# end
 
  resources :relationships
-# resources :gniblings
+ resources :gniblings
 
  match "/signup", :to => "users#new"
 
