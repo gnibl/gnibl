@@ -1,0 +1,28 @@
+
+<div align="center" style="width: 100%; padding: 10px; padding-top: 0px">
+  <table style="background: rgba(23, 174, 255, 0.3); bottom: 0px; width: 40%; margin-top: 10px; border-radius: 20px; min-width: 490px">
+    <tbody>
+      <tr style="background: rgba(0, 0, 0, 0.3); border-radius: 20px">
+        <td class="prof-not-bd left-radius" >
+          <a href="/users/<%=current_user.username%>/feed">Gnibfeeds</a>
+        </td>
+        <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
+        <% if(current_user?(@user)) %>
+          <td class="prof-not-bd">Notifications</td>
+          <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
+        <% end %>
+        <td class="prof-not-bd">
+          <a href="/users/<%=@user.username%>/following">
+            Gniblers(<%=@user.followed_users.count%>)
+          </a>
+        </td>
+        <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
+        <td class="prof-not-bd" >
+          <a href="/users/<%=current_user.username%>">
+            My gnibs(<%=current_user.gnibs.count%>)
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

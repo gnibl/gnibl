@@ -51,169 +51,22 @@
     var modal = document.getElementById('gnibl-modal-mp');
     if(modal) {
       modal.style.display = 'block';
+      pageScrollTo('gnibl-view');
     }
   }
+
+  function pageScrollTo(id) {
+    console.log('top id: '+id);
+    var element = document.getElementById(id);
+    element.scrollTo = 0;
+  }
 </script>
-<div class="profile_header" style="width: 100%; z-index: 3455">
-  <table style="width: 100%;">
-    <tbody>
-      <tr>
-        <td class="border-right">
-          <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 50px; height: 50px;')%>
-          <span style="font-size: 25px; color: #17aeff; line-height: 100%">gnibl</span>
-        </td>
-        <td class="border-right">
-          <a href="/users/<%=current_user.username%>" >
-            <span style="font-weight: bold; font-size: 15px; color: #17aeff">
-              gnib<span style="font-weight: bold; font-size: 15px; color: white">file</span></span>
-          </a>
-        </td>
-        <td class="border-right">
-          <span style="font-weight: bold; font-size: 15px; color: #17aeff">
-            gnib<span style="font-weight: bold; font-size: 15px; color: white">picks</span></span>
-        </td>
-        <td class="border-right">
-          <span style="font-weight: bold; font-size: 15px; color: #17aeff">
-            gnib<span style="font-weight: bold; font-size: 15px; color: white">streams</span></span>
-        </td>
-        <% if(current_user?(@user)) %>
-          <td class="centered"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
-          <td><div class="circle"></div></td>
-          <td class="centered">
-            <button class="flat-style" style="color: #bbb;">Settings</button>
-          </td>
-          <td><div class="circle"></div></td>
-          <td class="centered">
-            <div id="setting-header" class="setting-header" style="display: block">
-              <%= link_to "logout", "/signout", :style => "color: #17aeff; font-size: 12px; font-weight: bold"%>
-            </div>
-          </td>
-        <% end %>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div style="width: 100%; margin-top: 70px">
-  <table>
-    <tbody>
-      <tr>
-        <td style="width: 11%; min-width: 150px; vertical-align:top">
-          <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
-            <div id="profile-image">
-              <% if current_user?(@user) %>
-                <div class="wrapper" >
-                  <div style="width: 100%; height: 100%; position:relative;" id="upload_user_image">
-                    <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
-                    <%= image_tag(image_path('FINALE-FINALE!!-_03.png'), :class=>"gnibl-file-logo") %>
-                    <div class="gnibl-file-logo" style="left: 5px; top: 90px; width: 100%;">Update profile photo</div>
-                  </div>
-                </div>
-              <% end %>
-              <div class="gnibl-button"></div>
-            </div>
-          <% end %>
-        </td>
-        <td style=" padding: 1%; vertical-align: top">
-          <table>
-            <tr>
-              <td>
-                <div class="profile-title">
-                  <%=@user.name %><span style="color: white; border-right: 1px solid white; margin-left: 5px;"></span>
-                  <span ><%=@user.city%></span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <% if(current_user?(@user)) %>
-                <%= form_for(@user, :url => "/users/#{@user.username}", :remote=>true) do |f| %>
-                  <td colspan="1" style="width: 400px; padding-top: 10px">
-                    <div style="width: 100%; position: relative;">
-                      <%= f.text_area :description, :maxlength => "255",
-                        :id => "profileSummary", :rows => "2", :cols => "14",
-                        :placeholder => "Describe yourself here briefly",
-                        :onkeypress => "return enforceMaxlength('profileSummary', 254);",
-                        :style=>"overflow: hidden; border-radius: 10px; padding 10px; z-index: 23",
-                        :title=>"Double click to update",:onkeyup=>"updateProfile();" %>
-                      <div id="update-profile" class="update-profile" style="border-radius: 50px; height: 40px; padding-top: 5px; margin-top: 3px">
-                        <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
-                          :onclick=>"document.getElementById('update-profile').style.display='none';"%>
-                        <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display='none';return false;"
-                                style="float: right; margin-right: 30px"></button>
-                        <span style="color: #17aeff; margin-right: 65px">Update profile</span>
-                      </div>
-                    </div>
-                  </td>
-                <% end %>
-              <% else %>
-                <td colspan="2">
-                  <div style="color: white; opacity: 0.8; max-width: 400px">
-                    <%= @user.description %>
-                    <div style="width:100%;">
-                      <% if @user.gnibs.any? %>
-                        <br>
-                        <%= render "/users/follow_form" if signed_in?%>
-                      <% end %>
-                    </div>
-                  </div>
-                </td>
-              <% end %>
-              </td>
-            </tr>
-          </table>
-        </td>
-        <td style="vertical-align: top; padding: 1%; text-align: center; margin-right: 2%">
-          <form action="/gnibs/search" method="get">
-            <table style="width: 100%;">
-              <tr>
-                <td>
-                  <input class="search-box" name="term" type="text" placeholder="Search gnibs" style="min-width: 150px; margin:auto; float: left" onkeypress=""/>
-                </td>
-                <td>
-                  <div style="width: 20px; height: 20px; border-radius: 40px; background: rgba(23, 174, 255, 0.5); float: right; text-align: center">?</div>
-                </td>
-              </tr>
-            </table>
-            <br/>
-            <br/>
-            <input value="" type="submit" class="gnibl-file-log" title="search gnibs"
-                   style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
-          </form>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div style="width:100%; margin-top: 10px; background: rgba(0, 0, 0, 0.5);">
-    <div align="center" style="width: 100%; padding: 10px">
-      <table style="background: rgba(23, 174, 255, 0.5); bottom: 0px; width: 40%; margin-top: 10px; border-radius: 20px; min-width: 490px">
-        <tbody>
-          <tr style="background: rgba(0, 0, 0, 0.3); border-radius: 20px">
-            <td class="prof-not-bd left-radius" >
-              <a href="/users/<%=current_user.username%>/feed">Gnibfeeds</a>
-            </td>
-            <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-            <td class="prof-not-bd" >
-              <a href="/users/<%=current_user.username%>">
-                My gnibs(<%=current_user.gnibs.count%>)
-              </a>
-            </td>
-            <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-            <td class="prof-not-bd">
-              <a href="/users/<%=@user.username%>/following">
-                Gniblers(<%=@user.followed_users.count%>)
-              </a>
-            </td>
-            <% if(current_user?(@user)) %>
-              <td class="prof-not-bd" style="max-width: 60px"><div class="circle"></div></td>
-            <% end %>
-            <td class="prof-not-bd">Notifications</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <% if @gnibs.any? %>
-      <%= render @gnibs %>
-    <% end %>
-  </div>
+<%= render "header" %>
+<div style="width:100%; margin-top: 10px; background: rgba(0, 0, 0, 0.5);">
+  <%= render "gnib_header" %>
+  <% if @gnibs.any? %>
+    <%= render @gnibs %>
+  <% end %>
 </div>
 <%= render "/users/gnib_modal" %>
 <div align="center" id="gnib_something_dialog" >
