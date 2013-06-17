@@ -8,10 +8,6 @@
 .even_line{
  background: blue;
 }
-table, td, th{
- border-spacing: 10px !important;
- text-align: left;
-}
 .header {
  background: linear-gradient(#232323, #787878, #aaaaaa);
  background: -webkit-linear-gradient(#232323, #787878, #aaaaaa);
@@ -542,7 +538,7 @@ div, div.round {
     color: #17aeff;
     font-weight: bold;
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
+    border-radius: 5px;
     width: 100%;
     padding: 3px;
     font-size: 13px;
@@ -558,4 +554,10 @@ div, div.round {
    background: rgba(0, 0, 0, 0.5);
    height: 30px;
    border-radius: 20px
+  }
+
+  table, td, th{
+    :-webkit-border-vertical-spacing: 0px;
+    border-spacing: 3px;
+    border-collapse: separate;
   }

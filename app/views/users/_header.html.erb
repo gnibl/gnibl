@@ -1,6 +1,6 @@
 
 <div class="profile_header" style="width: 100%; z-index: 3455">
-  <table style="width: 100%;">
+  <table style="width: 100%;" cellspacing="10">
     <tbody>
       <tr>
         <td class="border-right" style="width: 14.3%; vertical-align: bottom">
@@ -22,11 +22,13 @@
             gnib<span style="font-weight: bold; color: white">streams</span></span>
         </td>
         <% if(current_user?(@user)) %>
-        <td id="gnib-something" class="centered border" style="width: 14.3%"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
-          <td class="centered border" style="width: 14.3%">
-            <button class="flat-style" style="color: #bbb;">Settings</button>
+          <td id="gnib-something" class="centered border" style="width: 14.3%;">
+            <button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button>
           </td>
-          <td class="centered border" style="width: 14.3%">
+          <td id="settings" class="centered border-right" style="width: 14.3%">
+            <button class="flat-style" style="color: #bbb;">settings</button>
+          </td>
+          <td class="centered" style="width: 14.3%">
             <div id="setting-header" class="setting-header" style="display: block">
               <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold"%>
             </div>
@@ -109,7 +111,7 @@
             <table style="width: 100%;">
               <tr>
                 <td>
-                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs/gniblers"
+                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"
                          style="min-width: 150px; margin:auto; float: left; text-align: center"/>
                 </td>
                 <td>
@@ -132,14 +134,17 @@
             console.log(currentUrl);
             var input = document.getElementById('search-box');
             var gnibSomething = document.getElementById('gnib-something');
+            var settings = document.getElementById('settings');
             if(currentUrl.endsWith('following') || currentUrl.contains('users/search')){
               if(input){
                 input.name = 'uid';
                 input.form.action = '/users/search';
+                input.placeholder = 'search gniblers';
               }
               if(gnibSomething){
                 gnibSomething.style.display = 'none';
               }
+              settings.className = 'centered border';
             }
           </script>
         </td>
