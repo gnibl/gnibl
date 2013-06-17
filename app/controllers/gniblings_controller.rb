@@ -3,8 +3,9 @@ class GniblingsController < ApplicationController
   def create
     gid = params[:gnibling][:gnib_id]
     current_url = params[:gnibling][:current_url]
-    puts "Current url: #{current_url}"
     @current_user.like(gid)
-    redirect_to current_url
+    respond_to do |format|
+      format.js
+    end
   end
 end

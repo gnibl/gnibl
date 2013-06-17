@@ -22,7 +22,7 @@
             gnib<span style="font-weight: bold; color: white">streams</span></span>
         </td>
         <% if(current_user?(@user)) %>
-          <td class="centered border" style="width: 14.3%"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
+        <td id="gnib-something" class="centered border" style="width: 14.3%"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
           <td class="centered border" style="width: 14.3%">
             <button class="flat-style" style="color: #bbb;">Settings</button>
           </td>
@@ -109,7 +109,7 @@
             <table style="width: 100%;">
               <tr>
                 <td>
-                  <input class="search-box" name="term" type="text" placeholder="Search gnibs"
+                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs/gniblers"
                          style="min-width: 150px; margin:auto; float: left; text-align: center"/>
                 </td>
                 <td>
@@ -118,9 +118,30 @@
               </tr>
             </table>
             <br/>
-            <input value="" type="submit" class="gnibl-file-log" title="search gnibs"
+            <input value="" type="submit" class="gnibl-file-log" title="search gnibs/gniblers"
                    style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
           </form>
+          <script type="text/javascript">
+            String.prototype.endsWith = function(suffix) {
+              return this.indexOf(suffix, this.length - suffix.length) !== -1;
+            };
+            String.prototype.contains = function(suffix) {
+              return this.indexOf(suffix) !== -1;
+            };
+            var currentUrl = location.href;
+            console.log(currentUrl);
+            var input = document.getElementById('search-box');
+            var gnibSomething = document.getElementById('gnib-something');
+            if(currentUrl.endsWith('following') || currentUrl.contains('users/search')){
+              if(input){
+                input.name = 'uid';
+                input.form.action = '/users/search';
+              }
+              if(gnibSomething){
+                gnibSomething.style.display = 'none';
+              }
+            }
+          </script>
         </td>
       </tr>
     </tbody>

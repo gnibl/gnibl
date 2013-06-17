@@ -549,3 +549,13 @@ div, div.round {
     padding-left: 10px;
     border: 0px none;
   }
+
+  .messages{
+   z-index: 34555;
+   position: absolute;
+   top: 0px;
+   right: 10px;
+   background: rgba(0, 0, 0, 0.5);
+   height: 30px;
+   border-radius: 20px
+  }

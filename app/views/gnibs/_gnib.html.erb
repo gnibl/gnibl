@@ -8,7 +8,7 @@
       <div class="gnib-count" style="font-size: 20px;"  align="center">
         <div id="gnib_count_<%=gnib.id%>" style="width: 100%; height:100%; padding-top:5px" align="center"><%=gnib.gniblings.count%></div>
       </div>
-      <%= form_for(@user.gniblings.build(:gnib_id => gnib.id)) do |f| %>
+      <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true) do |f| %>
         <div>
           <%= f.hidden_field :gnib_id  %>
           <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
