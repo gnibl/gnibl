@@ -11,7 +11,7 @@
 
 development:
   adapter: postgresql
-  username: posgres
+  username: postgres
   database: gnibldb
   pool: 5
   timeout: 5000
