@@ -1,13 +1,38 @@
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<title>jQuery UI Autocomplete - Default functionality</title>
+<% provide(:title,"Sign Up") %>
+<div align="center" class="login-main-panel">
+  <div align="center" class="signup-main" id="signup-main">
+    <%= image_tag(image_path('FINALE-FINALE!!-_03.gif'), :class => 'gnibl-logo', :style => "height: 60px")%>
+    <div style="width: 100%">
+      <%= form_for(@user) do |f| %>
+        <%= render 'shared/error_messages' %>
+        <%= f.text_field :name, :class => 'input-option', :placeholder => 'Full name'%>
+        <%= f.text_field :city , :class => 'input-option', :placeholder => 'Your Currenty City' %>
+        <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
+        <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
+        <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
+        <br/>
+        
+        
+        <%= f.submit("Join Gnibl",:class => "btn btn-large btn-primary" ) %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  //we try to make the height and width of the gnibl login page the same
+  var loginMain = document.getElementById('signup-main');
+  if(loginMain) {
+    var width = Math.floor(0.345 * window.innerWidth);
+    console.log('login-main width: '+width);
+    loginMain.style.height = width+'px';
+  }
+</script>
 
 <script>
 var renderList = function (ul, item) {
         return $("<li></li>")
                 .data("item.autocomplete", item)
-                .append("<a>" + item.name + "</a>")
+                .append("<a>" + item.city_name+", "+item.country_name + "</a>")
                 .appendTo(ul);
     };
 
@@ -18,13 +43,14 @@ return null;
  var autoc = {
      source: '/users',
      focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item.name);
-            $('#tags').val(ui.item.name);
+            var de = "tr  " + JSON.stringify(ui.item.city_name);
+            $('#user_city').val(ui.item.city_name+", "+ui.item.country_name);
+            $('#city_id').val(ui.item.id);
             return false;
           },
 
     select: function(event,ui){
-          $('#tags').val(ui.item.name);
+          $('#user_city').val(ui.item.city_name+","+ui.item.country_name);
           return false;
           },    
     beforeRetrieve: hashFilter,
@@ -33,16 +59,8 @@ return null;
    };
 
 $(function() {
-$("#tags").autocomplete(autoc)
+$("#user_city").autocomplete(autoc)
 .data("uiAutocomplete")._renderItem = renderList;
 
 });
 </script>
-</head>
-<body>
-<div class="ui-widget">
-<label for="tags">Tags: </label>
-<input id="tags" name="tags" class = "trclass" />
-</div>
-</body>
-</html>

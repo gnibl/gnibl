@@ -6,13 +6,13 @@ class UsersController < ApplicationController
   def index
 #    @users = User.all #This is no longer supported
     if params[:term]
-       @users = User.find(:all, :conditions => ['name LIKE ?', "%#{params[:term]}%"])
+       @cities = City.find(:all, :conditions => ['city_name LIKE ?', "%#{params[:term]}%"])
     else
-        @users = User.all #"Nairobi, Mombasa, Kisumu, Malindi, Alego, Meru, Busia"
+        @cities = City.all #"Nairobi, Mombasa, Kisumu, Malindi, Alego, Meru, Busia"
     end
     respond_to do |format|
        format.html { render action: "new" }
-       format.json { render :json => @users.to_json}
+       format.json { render :json => @cities.to_json}
     end
 end
 
