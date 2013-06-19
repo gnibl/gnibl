@@ -4,69 +4,14 @@
     background-size: 100% 100%;
   }
 </style>
-
-<script type="text/javascript">
-  function showGnibThumbnailControl(id){
-    var div = document.getElementById(id);
-    if(div){
-      div.style.display = "table-cell";
-    }
-  }
-  function hideGnibThumbnailControl(id){
-    var div = document.getElementById(id);
-    if(div){
-      div.style.display = "none";
-    }
-  }
-  var show_setting = false;
-  function handleSettingOptions(){
-    show_setting = !show_setting;
-    if(show_setting) {
-      showSettings();
-    } else {
-      hideSettings();
-    }
-  }
-  function showSettings(){
-    var st = document.getElementById('setting-header');
-    if(st) {
-      st.style.display = 'block';
-    }
-  }
-  function hideSettings(){
-    var st = document.getElementById('setting-header');
-    if(st) {
-      st.style.display = 'none';
-    }
-  }
-  function showOption(id){
-    var option = document.getElementById(id);
-    if(option) {
-      option.style.display = 'table-cell';
-    }
-  }
-  function updateGnibCounts(e, gnibCount, gnibCountId){
-  }
-  function showGnibModal(){
-    var modal = document.getElementById('gnibl-modal-mp');
-    if(modal) {
-      modal.style.display = 'block';
-      pageScrollTo('gnibl-view');
-    }
-  }
-
-  function pageScrollTo(id) {
-    console.log('top id: '+id);
-    var element = document.getElementById(id);
-    element.scrollTo = 0;
-  }
-</script>
 <%= render "/users/header" %>
 <div style="width:100%; margin-top: 10px; background: rgba(0, 0, 0, 0.5);">
   <%= render "/users/gnib_header" %>
-  <% if @gnibs.any? %>
-    <%= render @gnibs %>
-  <% end %>
+  <div id="gnib_panel" style="width: 100%; background: transparent; position: relative">
+    <% if @gnibs.any? %>
+      <%= render @gnibs %>
+    <% end %>
+  </div>
 </div>
 <%= render "/users/gnib_modal" %>
 <div align="center" id="gnib_something_dialog" >
@@ -85,70 +30,3 @@
   </div>
   <br><br>
 </div>
-<script type="text/javascript">
-  function gnibSomething(){
-    var dialog = document.getElementById('gnib_something_dialog');
-    var main_dialog = document.getElementById('main_gnib_something_dialog');
-    console.log(dialog);
-    if(dialog) {
-      dialog.style.display = 'table-cell';
-      var width = window.innerWidth;
-      var height = window.innerHeight;
-      dialog.style.width = width+'px';
-      dialog.style.height = height+'px';
-      main_dialog.style.height = height + 'px';
-      main_dialog.style.width = width + 'px';
-    }
-  }
-  function cancelGnibSomething(){
-    var dialog = document.getElementById('gnib_something_dialog');
-    dialog.style.display = 'none';
-  }
-  function enforceMaxlength(id, maxlength){
-    var obj = document.getElementById(id);
-    console.log('id:'+id);
-    if(obj){
-      return obj.value.length <= maxlength;
-    }
-  }
-<% if current_user? @user %>
-    document.getElementById("current_user_file_upload").onchange = function() {
-      console.log('submitting form');
-      document.getElementById("current_user_form").submit();
-    }
-<% end %>
-  function rectifyGnibs(){
-    //set the sizes of the thumbnail, four per page.
-    var className = 'gnib-thumbnail';
-    //find all the thumnails
-    var width = window.innerWidth;
-    var gt_width = Math.floor(0.245 * width);
-    //get the buttons themselves
-    var thumbnails = document.getElementsByTagName('*'), i;
-    for (i in thumbnails) {
-      var btn = thumbnails[i];
-      if((btn.className+'').indexOf(className) !== -1) {
-        btn.style.height = (gt_width)+'px';
-        btn.style.minWidth = (gt_width)+'px';
-      } else if((btn.className+'').indexOf('thumbnail-desc')!==-1){
-        btn.style.width = (gt_width - 90)+'px';
-      } else if((btn.className+'').indexOf('thumbnail-msg')!==-1){
-        btn.style.width = (gt_width - 90)+'px';
-      }
-    }
-  }
-  var dlg = document.getElementById('dialog-content');
-  var width = Math.floor(0.4 * window.innerWidth);
-  if(dlg) {
-    dlg.style.width = width+'px';
-    dlg.style.height = width+'px';
-  }
-
-  function updateProfile(){
-    var v =  document.getElementById('update-profile');
-    console.log(v.style.display);
-    if(!v.style.display || v.style.display === 'none') {
-      v.style.display = 'table-cell';
-    }
-  }
-</script>
