@@ -13,21 +13,21 @@ class GnibsController < ApplicationController
   end
 
   def retcomment
-gnib_id = params[:gnib_id]
-  @comments = Comment.find_by_gnib_id(gnib_id)
-  respond_to do |format|
-       format.html {redirect_to current_url}
-      format.js { @comments.to_json}
-     end
+      gnib_id = params[:gnib_id]
+      @comments = Comment.find_by_gnib_id(gnib_id)
+      respond_to do |format|
+          format.html {redirect_to current_url}
+          format.js { @comments.to_json}
+      end
   end
 
   def search
     term = params[:term]
+    page = params[:page]
     @user = current_user
     @gnib = @user.gnibs.build
     @gnibs = Gnib.where(
-             "to_tsvector(description) @@ plainto_tsquery('"+term+"')",
-              :limit => 10)
+             "to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(page).limit(10)
   end
 
   def create

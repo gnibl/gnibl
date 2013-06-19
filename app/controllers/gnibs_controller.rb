@@ -23,11 +23,13 @@ class GnibsController < ApplicationController
 
   def search
     term = params[:term]
+    page = params[:page]
     @user = current_user
     @gnib = @user.gnibs.build
     @gnibs = Gnib.where(
-             "to_tsvector(description) @@ plainto_tsquery('"+term+"')",
-              :limit => 10)
+             "to_tsvector(description) @@ plainto_tsquery('"+term+"')")
+             .offset(page)
+             .limit(10)
   end
 
   def create
