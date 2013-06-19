@@ -11,8 +11,7 @@
         <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
         <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
         <br/>
-        <span style="width: 100%; font-size: 16px; font-weight: bold; text-align: left"> Profile Image:</span>
-        <br/>
+        
         
         <%= f.submit("Join Gnibl",:class => "btn btn-large btn-primary" ) %>
       <% end %>
@@ -41,21 +40,38 @@ var hashFilter = function(string){
 return null;
 };
 
+var triggerChar = "@";
  var autoc = {
      source: '/users',
      focus: function(event, ui){
             var de = "tr  " + JSON.stringify(ui.item.city_name);
-            $('#user_city').val(ui.item.city_name+", "+ui.item.country_name);
+		var city_identi = ui.item.city_name+", "+ui.item.country_name;
+		var prev = $('#user_city').val();
+		var pos = prev.lastIndexOf(triggerChar);
+		if (pos !== -1){
+		   var content = prev.substring(0,pos+1);
+		$('#user_city').val( content + city_identi);			
+		}
+            
             $('#city_id').val(ui.item.id);
             return false;
           },
 
     select: function(event,ui){
-          $('#user_city').val(ui.item.city_name+","+ui.item.country_name);
+var city_identi = ui.item.city_name+", "+ui.item.country_name;
+		var prev = $('#user_city').val();
+		var pos = prev.lastIndexOf(triggerChar);
+		if (pos !== -1){
+		   var content = prev.substring(0,pos+1);
+		$('#user_city').val( content + city_identi);			
+		}
+
           return false;
           },    
     beforeRetrieve: hashFilter,
     minLength: 2,
+    triggerOnSpecial: true,
+    specialChar: triggerChar,
     delay: 250
    };
 
