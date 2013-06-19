@@ -4,8 +4,17 @@ class UsersController < ApplicationController
   before_filter :correct_user, :only => [:edit,:update]
 
   def index
-    @users = User.all
-  end
+#    @users = User.all #This is no longer supported
+    if params[:term]
+       @users = User.find(:all, :conditions => ['name LIKE ?', "%#{params[:term]}%"])
+    else
+        @users = User.all #"Nairobi, Mombasa, Kisumu, Malindi, Alego, Meru, Busia"
+    end
+    respond_to do |format|
+       format.html { render action: "new" }
+       format.json { render :json => @users.to_json}
+    end
+end
 
   def new
     @user = User.new

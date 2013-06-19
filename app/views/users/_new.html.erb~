@@ -1,0 +1,23 @@
+<script type = "text/javascript">
+$(function() {
+$('#city_text_field').autocomplete({
+minLength: 3,
+source: '<%=user_path(:json) %>',
+focus: function(event, ui){
+$('#city_text_field').val(ui.item.person.city);
+return false;
+},
+//
+select: function(event,ui){
+$('#city_text_field').val(ui.item.city.name);
+$('#city_id').val(ui.item.city.id);
+return false;
+}
+})
+.data("autocomplete"._renderItem = function(ul, item){
+return $("<li> </li>").data("item.autocomplete",item)
+.append("<a>"+item.city.name+"</a>")
+.appendTo(ul);
+};
+});
+</script>

@@ -1,32 +1,48 @@
-<% provide(:title,"Sign Up") %>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>jQuery UI Autocomplete - Default functionality</title>
 
-<div align="center" class="login-main-panel">
-  <div align="center" class="login-main">
-    <%= image_tag(image_path('FINALE-FINALE!!-_03.gif'), :class => 'gnibl-logo')%>
-   <div style="width: 100%">
+<script>
+var renderList = function (ul, item) {
+        return $("<li></li>")
+                .data("item.autocomplete", item)
+                .append("<a>" + item.name + "</a>")
+                .appendTo(ul);
+    };
 
-<%= form_for(@user) do |f| %>
- 
-<%= render 'shared/error_messages' %>
+var hashFilter = function(string){
+return "";
+};
 
-<%= f.text_field :name, :class => 'input-option', :placeholder => 'Full name'%>
+ var autoc = {
+     source: '/users',
+     focus: function(event, ui){
+            var de = "tr  " + JSON.stringify(ui.item.name);
+            $('#tags').val(ui.item.name);
+            return false;
+          },
 
+    select: function(event,ui){
+          $('#tags').val(ui.item.name);
+          return false;
+          },    
+    beforeRetrieve: hashFilter,
+    minLength: 2,
+    delay: 250
+   };
 
-<%= f.text_field :email , :class => 'input-option', :placeholder => 'Email' %>
+$(function() {
+$("#tags").autocomplete(autoc)
+.data("uiAutocomplete")._renderItem = renderList;
 
-
-<%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
-
-<%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
-
-<%= f.file_field :avatar %>
-<br>
-<%= f.submit("Join Gnibl",class: "btn btn-large btn-primary" ) %>
-
-<% end %>
+});
+</script>
+</head>
+<body>
+<div class="ui-widget">
+<label for="tags">Tags: </label>
+<input id="tags" name="tags" class = "trclass" />
 </div>
-</div>
-</div>
-
-
-
+</body>
+</html>

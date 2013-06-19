@@ -20,8 +20,10 @@ gem 'fog'
 gem 'aws-sdk'
 gem 'rmagick'
 
+gem 'jquery-rails','2.0.2'
+
 group :development, :test do
-gem 'rspec-rails'
+       gem 'rspec-rails'
 end
 
 group :test do

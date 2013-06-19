@@ -4,44 +4,44 @@ Gnibl::Application.routes.draw do
   root :to => 'static_pages#home'
   get "static_pages/home"
 
-resources :users do
+  resources :users do
     member do
-      get :following, :followers, :feed, :search
+      get :following, :followers, :feed
     end
 
-   collection do
-   get 'search'
-   end
- end
+    collection do
+      get 'search'
+    end
+  end
 
 
- resources :sessions, :only => [:new, :create, :destroy]
-# resources :gnibs do
-   #  collection do
-  # get 'search'
- #  end
-# end
+  resources :sessions, :only => [:new, :create, :destroy]
+  resources :gnibs do
+    collection do
+      get 'search'
+    end
+  end
 
- resources :relationships
- resources :gniblings
+  resources :relationships
+  resources :gniblings
 
- match "/signup", :to => "users#new"
+  match "/signup", :to => "users#new"
 
- match "/help", :to => "static_pages#help"
+  match "/help", :to => "static_pages#help"
 
- match "/about", :to => "static_pages#about"
+  match "/about", :to => "static_pages#about"
 
- match "/contact", :to => "static_pages#contact"
+  match "/contact", :to => "static_pages#contact"
 
- match '/auth/:provider/callback', :to => 'sessions#create'
+  match '/auth/:provider/callback', :to => 'sessions#create'
 
- match '/signin', :to => 'static_pages#home'
+  match '/signin', :to => 'static_pages#home'
 
- match '/signout', :to => 'sessions#destroy'
+  match '/signout', :to => 'sessions#destroy'
 
-# match '/search/:uid', :to => 'users#search' 
+  # match '/search/:uid', :to => 'users#search'
 
-# match '/users/{username}', :to => 'users#show' 
+  # match '/users/{username}', :to => 'users#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
