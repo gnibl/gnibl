@@ -6,7 +6,7 @@ Gnibl::Application.routes.draw do
 
   resources :users do
     member do
-      get :following, :followers, :feed
+      get :following, :followers, :feed, :next_gnibs
     end
 
     collection do

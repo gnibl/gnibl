@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   def next_gnibs
     @user = User.find_by_username(params[:id])
     page = params[:page]
+    puts "Current page: #{page}"
     #get the gnibs for the page
     @gnibs = @user.feed
     @gnib = @user.gnibs.build

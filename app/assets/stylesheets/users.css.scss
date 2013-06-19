@@ -20,7 +20,7 @@ html, body{
  padding: 0px;
  margin: 0px;
  font-family: 'avenir-light' !important;
- overflow: auto;
+ overflow-y: auto;
  width: 100%;
  height: 100%;
  overflow-x: hidden;
@@ -342,23 +342,25 @@ a:hover{
  background: transparent !important;
  border: 0px;
 }
-
+#gnib_something_dialog{
+  top: -240px;
+}
 #gnib_something_dialog, #main_gnib_something_dialog{
   position: absolute;
   display: none;
   background: rgba(0, 0, 0, 0.9);
-  top: 0px;
-  z-index: 4546;
+  z-index: 343565;
   vertical-align: middle;
 }
 
 #gnib_something_dialog #main_gnib_something_dialog{
- position: relative;
+ position: absolute;
  vertical-align: middle;
  width: 100%;
  display: table-cell;
  background: transparent;
  height: 100%;
+margin-top: 30px;
 }
 .dialog-title{
  width: 50%;
@@ -599,4 +601,33 @@ display: none;
  text-align: center;
  top: -300px;
  display: block;
+}
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255, 0.5);
+  }
+
+.previous_gnibs, .next_gnibs{
+  width: 60px;
+  height: 60px;
+  float: left;
+  margin-top: 25%;
+  position: fixed;
+  z-index: 3254;
+  background: transparent;
+  border: 0px none;
+}
+
+.next_gnibs{
+  right: 1%;
 }

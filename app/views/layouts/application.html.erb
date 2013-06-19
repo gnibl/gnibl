@@ -9,6 +9,34 @@
       function init() {
         //include all init functions here
         rectifyGnibs();
+        $(function() {
+          $('#gnib_panel_paginator').pagination({
+            items: <%= @gnib_counts %>,
+            itemsOnPage: 10,
+            cssStyle: 'dark-theme',
+            onPageClick: function(pageNumber){
+              <% if current_user %>
+              //we need to send a get form here using ajax.
+              console.log("page: "+pageNumber);
+              //create a form to submit with a hidden field
+              var form =
+                '<form id="gnib_request_images_'+pageNumber+'" action="/users/<%=current_user.username%>/next_gnibs"><input type="hidden" name="page" value="'+pageNumber+'"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
+              $(form).appendTo('body');
+              $.ajax({
+                type: 'GET',
+                url: '/users/<%=current_user.username%>/next_gnibs',
+                data: $('#gnib_request_images_'+pageNumber).serialize(),
+                success: function(data){
+                  //we update the gnib_panel
+                  console.log(data);
+                }
+              });
+              <% end  %>
+            }
+          });
+        });
+        var h = window.innerHeight;
+        document.getElementById('footer').style.bottom = '-' + h + 'px';
       }
     </script>
   </head>
@@ -16,17 +44,17 @@
     <div id="main">
       <div id="messages" style="display: none; vertical-align: middle">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
-        <button class="dialog-close-icon" onclick="jQuery('div#messages').hide();
-        return false;" style="float: right; margin-right: 3px;"></button>
+              <button class="dialog-close-icon" onclick="jQuery('div#messages').hide();
+          return false;" style="float: right; margin-right: 3px;"></button>
         <div id="messagePanel" style="width: 60%; display: table-cell; vertical-align: middle; height: 100%; margin: auto">Message here</div>
       </div>
       <div id="indicator" style="display: block">
         Please wait.....
       </div>
-      <div style="width: 100%; padding: 0px; margin: 0px;">
+      <div style="width: 100%; padding: 0px; margin: 0px; position: absolute; top: 0px;">
         <%= yield %>
       </div>
-      <div align="center" id="footer">
+      <div align="center" id="footer" style="position: absolute;">
         <table style="width: 100%; padding: 5px;">
           <tbody>
             <tr>
@@ -138,46 +166,63 @@
         }
       }
 <% if current_user? @user %>
-        document.getElementById("current_user_file_upload").onchange = function() {
-          console.log('submitting form');
-          document.getElementById("current_user_form").submit();
-        }
+    document.getElementById("current_user_file_upload").onchange = function() {
+      console.log('submitting form');
+      document.getElementById("current_user_form").submit();
+    }
 <% end %>
-      function rectifyGnibs() {
-        //set the sizes of the thumbnail, four per page.
-        var className = 'gnib-thumbnail';
-        //find all the thumnails
-        var width = window.innerWidth;
-        var gt_width = Math.floor(0.195 * width);
-        //get the buttons themselves
-        var thumbnails = document.getElementsByTagName('*'), i;
-        for (i in thumbnails) {
-          var btn = thumbnails[i];
-          if ((btn.className + '').indexOf(className) !== -1) {
-            btn.style.height = (gt_width) + 'px';
-            btn.style.width = (gt_width) + 'px';
-            btn.style.minWidth = (gt_width) + 'px';
-          } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
-            btn.style.width = (gt_width - 90) + 'px';
-          } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {
-            btn.style.width = (gt_width - 90) + 'px';
-          }
-        }
+  function rectifyGnibs() {
+    //set the sizes of the thumbnail, four per page.
+    var className = 'gnib-thumbnail';
+    //find all the thumnails
+    var width = window.innerWidth;
+    var gt_width = Math.floor(0.195 * width);
+    //get the buttons themselves
+    var thumbnails = document.getElementsByTagName('*'), i;
+    for (i in thumbnails) {
+      var btn = thumbnails[i];
+      if ((btn.className + '').indexOf(className) !== -1) {
+        btn.style.height = (gt_width) + 'px';
+        btn.style.width = (gt_width) + 'px';
+        btn.style.minWidth = (gt_width) + 'px';
+      } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
+        btn.style.width = (gt_width - 90) + 'px';
+      } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {
+        btn.style.width = (gt_width - 90) + 'px';
       }
-      var dlg = document.getElementById('dialog-content');
-      var width = Math.floor(0.4 * window.innerWidth);
-      if (dlg) {
-        dlg.style.width = width + 'px';
-        dlg.style.height = width + 'px';
-      }
+    }
+  }
+  function rectifyGnib(id) {
+    //set the sizes of the thumbnail, four per page.
+    var className = 'gnib-thumbnail';
+    //find all the thumnails
+    var width = window.innerWidth;
+    var gt_width = Math.floor(0.195 * width);
+    var btn = document.getElementById(id);
+    if ((btn.className + '').indexOf(className) !== -1) {
+      btn.style.height = (gt_width) + 'px';
+      btn.style.width = (gt_width) + 'px';
+      btn.style.minWidth = (gt_width) + 'px';
+    } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
+      btn.style.width = (gt_width - 90) + 'px';
+    } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {
+      btn.style.width = (gt_width - 90) + 'px';
+    }
+  }
+  var dlg = document.getElementById('dialog-content');
+  var width = Math.floor(0.4 * window.innerWidth);
+  if (dlg) {
+    dlg.style.width = width + 'px';
+    dlg.style.height = width + 'px';
+  }
 
-      function updateProfile() {
-        var v = document.getElementById('update-profile');
-        console.log(v.style.display);
-        if (!v.style.display || v.style.display === 'none') {
-          v.style.display = 'table-cell';
-        }
-      }
+  function updateProfile() {
+    var v = document.getElementById('update-profile');
+    console.log(v.style.display);
+    if (!v.style.display || v.style.display === 'none') {
+      v.style.display = 'table-cell';
+    }
+  }
     </script>
   </body>
 </html>
