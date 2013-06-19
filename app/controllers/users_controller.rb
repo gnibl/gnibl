@@ -24,7 +24,8 @@ end
     #search for users by user name - obviously
     uname = params[:uid]
     @user = current_user
-    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'");
+    start = params[:offset]
+    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").offset(start).limit(10);
     render 'index'
   end
 
@@ -32,7 +33,7 @@ end
     @user = User.find_by_username(params[:id])
     page = params[:page]
     #get the gnibs for the page
-    @gnibs = @user.feed
+    @gnibs = @user.feed.offset(page).limit(10)
     @gnib = @user.gnibs.build
     respond_to do |format|
       format.js {render "shared/gnibs"}
@@ -40,7 +41,7 @@ end
   end
   def feed
     @user = User.find_by_username(params[:id])
-    @gnibs = @user.feed
+    @gnibs = @user.feed.limit(10)
     @gnib_counts = @gnibs.count
     @gnib_pages = (@gnib_counts / 10).ceil;
     @gnib = @user.gnibs.build
@@ -48,13 +49,15 @@ end
 
   def following
     @user = User.find_by_username(params[:id])
-    @users = @user.followed_users
+    page = params[:page]    
+    @users = @user.followed_users.offset(page).limit(10)
     render "show_follow"
   end
 
   def followers
     @user =  User.find_by_username(params[:id])
-    @users = @user.followers
+    page = params[:page] 
+    @users = @user.followers.offset(page).limit(10)
     render "show_follow"
   end
 
@@ -91,7 +94,8 @@ end
 
   def show
     @user = User.find_by_username(params[:id])
-    @gnibs = @user.gnibs
+page = params[:page] 
+    @gnibs = @user.gnibs.offset(page).limit(10)
     @gnib = @user.gnibs.build
   end
 

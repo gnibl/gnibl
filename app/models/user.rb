@@ -9,7 +9,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :city, :avatar, :username, :description
+  attr_accessible :name, :email, :password, :password_confirmation,:avatar, :username, :description
 
   has_secure_password
 
@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
 
   validates :password, :presence => true, :length => {:minimum => 6}
   validates :password_confirmation, :presence => true
-
+  validates :city, :presence => true
 
   has_many :authorizations
   has_many :gnibs, :dependent => :destroy
@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
   has_many :followers, :through => :reverse_relationships , :source => :follower
 
   has_many :gniblings, :foreign_key => "user_id", :dependent => :destroy
+
+  belongs_to :city
 
   def feed
     Gnib.from_users_followed_by(self)

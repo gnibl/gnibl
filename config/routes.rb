@@ -19,6 +19,7 @@ Gnibl::Application.routes.draw do
   resources :gnibs do
     collection do
       get 'search'
+      get 'comment'
     end
   end
 
