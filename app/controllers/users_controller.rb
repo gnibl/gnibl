@@ -28,9 +28,21 @@ end
     render 'index'
   end
 
+  def next_gnibs
+    @user = User.find_by_username(params[:id])
+    page = params[:page]
+    #get the gnibs for the page
+    @gnibs = @user.feed
+    @gnib = @user.gnibs.build
+    respond_to do |format|
+      format.js {render "shared/gnibs"}
+    end
+  end
   def feed
     @user = User.find_by_username(params[:id])
     @gnibs = @user.feed
+    @gnib_counts = @gnibs.count
+    @gnib_pages = (@gnib_counts / 10).ceil;
     @gnib = @user.gnibs.build
   end
 
@@ -71,6 +83,9 @@ end
     end
     puts "updated user: #{@user.description}"
     puts "updated user: #{@user.avatar_url}"
+    respond_to do |format|
+
+    end
     redirect_to "/users/#{@user.username}"
   end
 

@@ -4,8 +4,10 @@ class GniblingsController < ApplicationController
     gid = params[:gnibling][:gnib_id]
     current_url = params[:gnibling][:current_url]
     @current_user.like(gid)
+    @success  = "Successfully gnibed."
     respond_to do |format|
-      format.js
+      format.html {redirect_to current_url}
+      format.js {render "shared/messages"}
     end
   end
 end

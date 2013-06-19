@@ -8,10 +8,6 @@
 .even_line{
  background: blue;
 }
-table, td, th{
- border-spacing: 10px !important;
- text-align: left;
-}
 .header {
  background: linear-gradient(#232323, #787878, #aaaaaa);
  background: -webkit-linear-gradient(#232323, #787878, #aaaaaa);
@@ -41,7 +37,7 @@ font-family: 'avenir-light' !important;
 }
 
 div.line{
- background: rgba(255, 255, 255, 0.5);
+ background: rgba(255, 255, 255, 0.3);
  width: 2px;
  background-size: 100% 100%;
  height: 50%;
@@ -322,6 +318,7 @@ input[type="file"]{
  margin: 0px;
  top:0px;
  position: fixed;
+ font-weight: normal;
 }
 .setting-header{
  right: 0px;
@@ -515,7 +512,7 @@ div, div.round {
     position: relative;
     top: 0;
     z-index: 1;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.2);
   }
 
   .gnibl-icon:hover{
@@ -542,12 +539,19 @@ div, div.round {
     color: #17aeff;
     font-weight: bold;
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
+    border-radius: 5px;
     width: 100%;
     padding: 3px;
     font-size: 13px;
     padding-left: 10px;
     border: 0px none;
+  }
+
+  form .search-box{
+   min-width: 5%;
+   margin:auto;
+   float: left;
+   text-align: center
   }
 
   .messages{
@@ -559,3 +563,40 @@ div, div.round {
    height: 30px;
    border-radius: 20px
   }
+
+  table, td, th{
+    :-webkit-border-vertical-spacing: 0px;
+    border-spacing: 3px;
+    border-collapse: separate;
+  }
+
+.what{
+ display: table-cell;
+ vertical-align: middle;
+ width: 20px;
+ height: 20px;
+ border-radius: 40px;
+ background: rgba(23, 174, 255, 0.5);
+ float: right;
+ text-align: center;
+ padding-top: 2px;
+}
+
+#messages, #indicator{
+position: absolute;
+top: 2px;
+right: 2px;
+border-radius: 12px;
+width: 180px;
+background: rgb(23, 123, 255);
+padding: 10px;
+z-index: 455532;
+display: none;
+}
+
+#indicator{
+ right: 45%;
+ text-align: center;
+ top: -300px;
+ display: block;
+}

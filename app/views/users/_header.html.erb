@@ -1,32 +1,34 @@
 
 <div class="profile_header" style="width: 100%; z-index: 3455">
-  <table style="width: 100%;">
+  <table style="width: 100%;" cellspacing="10">
     <tbody>
       <tr>
         <td class="border-right" style="width: 14.3%; vertical-align: bottom">
           <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 50px; height: 50px; float: left')%>
-          <span style="font-size: 40px; color: #17aeff; line-height: 100%; bottom: 0px; position: absolute; margin-bottom: 3px; left: 53px">gnibl</span>
+          <span style="font-size: 40px; color: #17aeff; line-height: 100%; bottom: 0px; position: absolute; margin-bottom: 3px; left: 55px">gnibl</span>
         </td>
         <td class="border-right" style="width: 14.3%">
           <a href="/users/<%=current_user.username%>" >
-            <span style="font-weight: bold; color: #17aeff">
-              gnib<span style="font-weight: bold; color: white">file</span></span>
+            <span style="color: #17aeff">
+              gnib<span style="color: white">file</span></span>
           </a>
         </td>
         <td class="border-right" style="width: 14.3%">
-          <span style="font-weight: bold; color: #17aeff">
-            gnib<span style="font-weight: bold; color: white">picks</span></span>
+          <span style="color: #17aeff">
+            gnib<span style="color: white">picks</span></span>
         </td>
         <td class="border-right" style="width: 14.3%">
-          <span style="font-weight: bold;  color: #17aeff;">
-            gnib<span style="font-weight: bold; color: white">streams</span></span>
+          <span style="color: #17aeff;">
+            gnib<span style="color: white">streams</span></span>
         </td>
         <% if(current_user?(@user)) %>
-        <td id="gnib-something" class="centered border" style="width: 14.3%"><button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button></td>
-          <td class="centered border" style="width: 14.3%">
-            <button class="flat-style" style="color: #bbb;">Settings</button>
+          <td id="gnib-something" class="centered border" style="width: 14.3%;">
+            <button class="flat-style" onclick="gnibSomething()" style="color: #bbb">gnib something</button>
           </td>
-          <td class="centered border" style="width: 14.3%">
+          <td id="settings" class="centered border-right" style="width: 14.3%">
+            <button class="flat-style" style="color: #bbb;">settings</button>
+          </td>
+          <td class="centered" style="width: 14.3%">
             <div id="setting-header" class="setting-header" style="display: block">
               <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold"%>
             </div>
@@ -109,11 +111,10 @@
             <table style="width: 100%;">
               <tr>
                 <td>
-                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs/gniblers"
-                         style="min-width: 150px; margin:auto; float: left; text-align: center"/>
+                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"/>
                 </td>
                 <td>
-                  <div style="width: 20px; height: 20px; border-radius: 40px; background: rgba(23, 174, 255, 0.5); float: right; text-align: center">?</div>
+                  <div class="what">?</div>
                 </td>
               </tr>
             </table>
@@ -132,14 +133,17 @@
             console.log(currentUrl);
             var input = document.getElementById('search-box');
             var gnibSomething = document.getElementById('gnib-something');
+            var settings = document.getElementById('settings');
             if(currentUrl.endsWith('following') || currentUrl.contains('users/search')){
               if(input){
                 input.name = 'uid';
                 input.form.action = '/users/search';
+                input.placeholder = 'search gniblers';
               }
               if(gnibSomething){
                 gnibSomething.style.display = 'none';
               }
+              settings.className = 'centered border';
             }
           </script>
         </td>
