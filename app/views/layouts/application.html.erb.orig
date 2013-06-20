@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<<<<<<< HEAD
+<head>
+  <title>Gnibl</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+
+ <%= javascript_include_tag "jquery-1.9.1.js", "jquery-autocomplete.js" %>
+
+  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
+  <%= csrf_meta_tags %>
+ <script type="text/javascript">
+  function init(){
+   //include all init functions here
+   rectifyGnibs();
+||||||| merged common ancestors
+<head>
+  <title>Gnibl</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+ <%= javascript_include_tag "jquery-1.9.1.js", "jquery-ui-1.10.3.custom.min.js" %>
+  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
+  <%= csrf_meta_tags %>
+ <script type="text/javascript">
+  function init(){
+   //include all init functions here
+   rectifyGnibs();
+=======
+  <head>
+    <title>Gnibl</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <script type="text/javascript">
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+      function paginate(){
+        $(function() {
+          try{
+            console.log(location.href);
+            console.log(getParameterByName("term"));
+            $('#gnib_panel_paginator').pagination({
+              items: <%= @counts %>,
+              itemsOnPage: 10,
+              cssStyle: 'dark-theme',
+              onPageClick: function(pageNumber){
+<% if current_user %>
+              //we need to send a get form here using ajax.
+              console.log("page: "+pageNumber);
+              //create a form to submit with a hidden field
+              var current_url = '<%= request.path %>';
+              var gnibs = current_url.endsWith('<%=current_user.username%>');
+              var search = !gnibs && current_url.contains('gnibs/search');
+              var user_search = !search &&  current_url.contains('users/search');
+              var action;
+              if(gnibs){
+                action = '/users/<%=current_user.username%>/next_gnibs';
+              } else if(search){
+                action = "/gnibs/next_search?term="+getParameterByName("term");
+              }else if(user_search){
+                action = "/users/next_search?uid="+getParameterByName("uid");
+              }else {
+                action = '/users/<%=current_user.username%>/next_feed'
+              }
+              var form =
+                '<form id="gnib_request_images_'+pageNumber+'" action="'+action+'"><input type="hidden" name="page" value="'+pageNumber+'"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
+              $(form).appendTo('body');
+              $.ajax({
+                type: 'GET',
+                url: action,
+                data: $('#gnib_request_images_'+pageNumber).serialize()
+              });
+<% end  %>
+          }
+        });
+      }catch(e){
+        console.log(e);
+      }
+    });
+>>>>>>> marembo2
+  }
+  function init() {
+    //include all init functions here
+    rectifyGnibs();
+    paginate();
+    var h = window.innerHeight - 300;
+    document.getElementById('footer').style.bottom = '-' + h + 'px';
+  }
+    </script>
+  </head>
+  <body id="body" onload="init();">
+    <div id="main">
+      <div id="messages" style="display: none; vertical-align: middle">
+        <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
+              <button class="dialog-close-icon" onclick="jQuery('div#messages').hide();
+          return false;" style="float: right; margin-right: 3px;"></button>
+        <div id="messagePanel" style="width: 60%; display: table-cell; vertical-align: middle; height: 100%; margin: auto">Message here</div>
+      </div>
+      <div id="indicator" style="display: block">
+        Please wait.....
+      </div>
+      <div style="width: 100%; padding: 0px; margin: 0px; position: absolute; top: 0px;">
+        <%= yield %>
+      </div>
+      <div align="center" id="footer" style="position: absolute; bottom:0px">
+        <table style="width: 100%; padding: 5px;">
+          <tbody>
+            <tr>
+              <td class="centered"><a href="#">About us</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Contacts</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Jobs</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Terms</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Privacy</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Advertisers</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Businesses</a></td>
+              <td class="centered"><div class="circle"></div></td>
+              <td class="centered"><a href="#">Media</a></td>
+              <td class="centered">Gnibl Site Copyright 2013 &copy;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script type="text/javascript">
+      function showGnibThumbnailControl(id) {
+        var div = document.getElementById(id);
+        if (div) {
+          div.style.display = "table-cell";
+        }
+      }
+      function hideGnibThumbnailControl(id) {
+        var div = document.getElementById(id);
+        if (div) {
+          div.style.display = "none";
+        }
+      }
+      var show_setting = false;
+      function handleSettingOptions() {
+        show_setting = !show_setting;
+        if (show_setting) {
+          showSettings();
+        } else {
+          hideSettings();
+        }
+      }
+      function showSettings() {
+        var st = document.getElementById('setting-header');
+        if (st) {
+          st.style.display = 'block';
+        }
+      }
+      function hideSettings() {
+        var st = document.getElementById('setting-header');
+        if (st) {
+          st.style.display = 'none';
+        }
+      }
+      function showOption(id) {
+        var option = document.getElementById(id);
+        if (option) {
+          option.style.display = 'table-cell';
+        }
+      }
+      function updateGnibCounts(e, gnibCount, gnibCountId) {
+        if (gnibCount > 0) {
+          alert("You've already gnibed this gnib");
+          return false;
+        }
+        var gc = document.getElementById(gnibCountId);
+        console.log(gc);
+        if (gc) {
+          var gnibs = gc.innerText;
+          console.log('fd:' + gnibs);
+          var counts = +gnibs;
+          counts = counts + 1;
+          gc.innerText = counts;
+        }
+      }
+      function showGnibModal() {
+        var modal = document.getElementById('gnibl-modal-mp');
+        if (modal) {
+          modal.style.display = 'block';
+        }
+      }
+      function gnibSomething() {
+        var dialog = document.getElementById('gnib_something_dialog');
+        var main_dialog = document.getElementById('main_gnib_something_dialog');
+        console.log(dialog);
+        if (dialog) {
+          dialog.style.display = 'table-cell';
+          var width = window.innerWidth;
+          var height = window.innerHeight;
+          dialog.style.width = width + 'px';
+          dialog.style.height = height + 'px';
+          main_dialog.style.height = height + 'px';
+          main_dialog.style.width = width + 'px';
+        }
+      }
+      function cancelGnibSomething() {
+        var dialog = document.getElementById('gnib_something_dialog');
+        dialog.style.display = 'none';
+      }
+      function enforceMaxlength(id, maxlength) {
+        var obj = document.getElementById(id);
+        console.log('id:' + id);
+        if (obj) {
+          return obj.value.length <= maxlength;
+        }
+      }
+<% if current_user? @user %>
+    document.getElementById("current_user_file_upload").onchange = function() {
+      console.log('submitting form');
+      document.getElementById("current_user_form").submit();
+    }
+<% end %>
+  function rectifyGnibs() {
+    //set the sizes of the thumbnail, four per page.
+    var className = 'gnib-thumbnail';
+    //find all the thumnails
+    var width = window.innerWidth;
+    var gt_width = Math.floor(0.195 * width);
+    //get the buttons themselves
+    var thumbnails = document.getElementsByTagName('*'), i;
+    for (i in thumbnails) {
+      var btn = thumbnails[i];
+      if ((btn.className + '').indexOf(className) !== -1) {
+        btn.style.height = (gt_width) + 'px';
+        btn.style.width = (gt_width) + 'px';
+        btn.style.minWidth = (gt_width) + 'px';
+        //find the child of this div with the specified id
+        var gnibImage = document.getElementById('gnib_'+btn.id);
+        if(gnibImage){
+          gnibImage.style.height = (gt_width) + 'px';
+          gnibImage.style.width = (gt_width) + 'px';
+        }
+      } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
+        btn.style.width = (gt_width - 90) + 'px';
+      } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {
+        btn.style.width = (gt_width - 90) + 'px';
+      }
+    }
+  }
+  function rectifyGnib(id) {
+    //set the sizes of the thumbnail, four per page.
+    var className = 'gnib-thumbnail';
+    //find all the thumnails
+    var width = window.innerWidth;
+    var gt_width = Math.floor(0.195 * width);
+    var btn = document.getElementById(id);
+    if ((btn.className + '').indexOf(className) !== -1) {
+      btn.style.height = (gt_width) + 'px';
+      btn.style.width = (gt_width) + 'px';
+      btn.style.minWidth = (gt_width) + 'px';
+    } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
+      btn.style.width = (gt_width - 90) + 'px';
+    } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {
+      btn.style.width = (gt_width - 90) + 'px';
+    }
+  }
+  var dlg = document.getElementById('dialog-content');
+  var width = Math.floor(0.4 * window.innerWidth);
+  if (dlg) {
+    dlg.style.width = width + 'px';
+    dlg.style.height = width + 'px';
+  }
+
+  function updateProfile() {
+    var v = document.getElementById('update-profile');
+    console.log(v.style.display);
+    if (!v.style.display || v.style.display === 'none') {
+      v.style.display = 'table-cell';
+    }
+  }
+    </script>
+  </body>
+</html>
