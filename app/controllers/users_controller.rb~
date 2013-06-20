@@ -6,13 +6,13 @@ class UsersController < ApplicationController
   def index
 #    @users = User.all #This is no longer supported
     if params[:term]
-       @users = User.find(:all, :conditions => ['name LIKE ?', "%#{params[:term]}%"])
+       @cities = City.find(:all, :conditions => ['city_name LIKE ?', "%#{params[:term]}%"])
     else
-        @users = User.all #"Nairobi, Mombasa, Kisumu, Malindi, Alego, Meru, Busia"
+        @cities = City.all #"Nairobi, Mombasa, Kisumu, Malindi, Alego, Meru, Busia"
     end
     respond_to do |format|
        format.html { render action: "new" }
-       format.json { render :json => @users.to_json}
+       format.json { render :json => @cities.to_json}
     end
 end
 
@@ -63,6 +63,11 @@ end
 
 
   def create
+#    params[:city] ||= params[:city].inject({}) do |h,(k,v)|
+#	h[k] = v.to_i
+#	h
+#	end
+   params[:user]['city'] = 1
     @user = User.new(params[:user])
     @user.avatar = params[:file]
     if @user.save

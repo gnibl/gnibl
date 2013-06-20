@@ -6,13 +6,13 @@
       <%= form_for(@user) do |f| %>
         <%= render 'shared/error_messages' %>
         <%= f.text_field :name, :class => 'input-option', :placeholder => 'Full name'%>
-        <%= f.text_field :city , :class => 'input-option', :placeholder => 'Your Currenty City' %>
+        <%= f.hidden_field :city , :class => 'input-option'%>
+	 <input class="input-option" id="city" name="city" placeholder="City" size="30" type="text" />
         <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
         <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
         <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
         <br/>
-        <span style="width: 100%; font-size: 16px; font-weight: bold; text-align: left"> Profile Image:</span>
-        <br/>
+        
         
         <%= f.submit("Join Gnibl",:class => "btn btn-large btn-primary" ) %>
       <% end %>
@@ -41,26 +41,63 @@ var hashFilter = function(string){
 return null;
 };
 
+var triggerChar = "#";
  var autoc = {
      source: '/users',
      focus: function(event, ui){
             var de = "tr  " + JSON.stringify(ui.item.city_name);
-            $('#user_city').val(ui.item.city_name+", "+ui.item.country_name);
-            $('#city_id').val(ui.item.id);
+		var city_identi = ui.item.city_name+", "+ui.item.country_name;
+		var prev = $('#city').val();
+		var pos = prev.lastIndexOf(triggerChar);
+		if (pos !== -1){
+		   var content = prev.substring(0,pos+1);
+		$('#city').val( content + city_identi);			
+		}
+            
+            $('#user_city').val(ui.item.id);
             return false;
           },
 
     select: function(event,ui){
-          $('#user_city').val(ui.item.city_name+","+ui.item.country_name);
+var city_identi = ui.item.city_name+", "+ui.item.country_name;
+		var prev = $('#city').val();
+		var pos = prev.lastIndexOf(triggerChar);
+		if (pos !== -1){
+		   var content = prev.substring(0,pos+1);
+		$('#city').val( content + city_identi);			
+		}
+
           return false;
           },    
     beforeRetrieve: hashFilter,
     minLength: 2,
+    triggerOnSpecial: true,
+    specialChar: triggerChar,
+    delay: 250
+   };
+
+var simpleAutocomplete =  {
+     source: '/users',
+     focus: function(event, ui){
+            var de = "tr  " + JSON.stringify(ui.item.city_name);
+		var city_identi = ui.item.city_name+", "+ui.item.country_name;		
+		$('#city').val(city_identi);					
+            
+            $('#user_city').val(parseInt(ui.item.id));
+            return false;
+          },
+
+    select: function(event,ui){
+var city_identi = ui.item.city_name+", "+ui.item.country_name;		
+		$('#city').val(  city_identi);					
+          return false;
+          },        
+    specialChar: triggerChar,
     delay: 250
    };
 
 $(function() {
-$("#user_city").autocomplete(autoc)
+$("#city").autocomplete(simpleAutocomplete)
 .data("uiAutocomplete")._renderItem = renderList;
 
 });

@@ -1,5 +1,5 @@
 class Gnib < ActiveRecord::Base
-  attr_accessible :description, :image, :landmark, :title, :visibility
+  attr_accessible :description, :image, :landmark, :title, :visibility, :city
   belongs_to :user
   validates :user_id, :presence => true
   validates :description, :presence => true, :length => { :maximum => 77}

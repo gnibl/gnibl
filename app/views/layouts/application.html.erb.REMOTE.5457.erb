@@ -1,31 +1,5 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-<head>
-  <title>Gnibl</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-
- <%= javascript_include_tag "jquery-1.9.1.js", "jquery-autocomplete.js" %>
-
-  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
-  <%= csrf_meta_tags %>
- <script type="text/javascript">
-  function init(){
-   //include all init functions here
-   rectifyGnibs();
-||||||| merged common ancestors
-<head>
-  <title>Gnibl</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
- <%= javascript_include_tag "jquery-1.9.1.js", "jquery-ui-1.10.3.custom.min.js" %>
-  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
-  <%= csrf_meta_tags %>
- <script type="text/javascript">
-  function init(){
-   //include all init functions here
-   rectifyGnibs();
-=======
   <head>
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -81,7 +55,6 @@
         console.log(e);
       }
     });
->>>>>>> marembo2
   }
   function init() {
     //include all init functions here
@@ -280,35 +253,6 @@
     if (!v.style.display || v.style.display === 'none') {
       v.style.display = 'table-cell';
     }
-  }
-
-  function onGnibModalLoaded(){
-    $(function(){
-      try{
-        console.log('onGnibModalLoaded')
-        $('#gnib-comments').slidesjs({
-          height: 100,
-          navigation:false,
-          pagination: false,
-          effect: {
-            slide: {
-              // Slide effect settings.
-              speed: 200
-              // [number] Speed in milliseconds of the slide animation.
-            },
-            fade: {
-              speed: 300,
-              // [number] Speed in milliseconds of the fade animation.
-              crossfade: true
-              // [boolean] Cross-fade the transition.
-            }
-          }
-        });
-      }catch(e){
-        console.log('error occured')
-        console.log(e);
-      }
-    });
   }
     </script>
   </body>
