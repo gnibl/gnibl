@@ -1,0 +1,2 @@
+$('#follow-option-panel').html('<%= escape_javascript(render :partial=>"users/follow_form") %>');
+$('#gnibler_count').html('Gniblers(<%=@user.followed_users.count%>)');

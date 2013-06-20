@@ -1,34 +1,21 @@
 <!-- you can obtain stuff like gnib.title, gnib.description, gnib.landmark -->
 <!-- button class="gnib-icon" title="gnib this gnibl">4</button -->
 <% if(user.avatar_url ) %>
-  <div onmouseover="showGnibThumbnailControl('thumbnail-control_<%=user.id%>');"
-       onmouseout="hideGnibThumbnailControl('thumbnail-control_<%=user.id%>');"
+  <div onmouseover="showGnibThumbnailControl('thumbnail-control_<%=user.id%>'); showGnibThumbnailControl('thumbnail-view_<%=user.id%>');"
+       onmouseout="hideGnibThumbnailControl('thumbnail-control_<%=user.id%>'); hideGnibThumbnailControl('thumbnail-view_<%=user.id%>');"
        class="gnib-thumbnail" style="margin-bottom: 5px;">
     <div id="thumbnail-control_<%=user.id%>" class="thumbnail-control">
       <div class="gnib-count" style="font-size: 20px;"  align="center">
         <div id="gnib_count_<%=user.id%>" style="width: 100%; height:100%; padding-top:5px" align="center"><%=user.gniblings.count%></div>
       </div>
       <% if (!current_user?user) %>
-        <div id="follow-option" class="gnib-gnib-button" style="height: 40px; background: none; padding-top: 5px; margin-right: 20px">
-          <% if current_user.following?(user) %>
-            <%= form_for(current_user.relationships.find_by_followed_id(user), :html => {:method => :delete}) do |f| %>
-              <%= f.hidden_field :current_url, :value => "#{request.fullpath}" %>
-              <%= f.submit "Unfollow", :class => "btn btn-large btn-primary", :style =>"font-size: 10px; height: 20px; padding: 2px" %>
-            <% end %>
-          <% else %>
-            <%= form_for(current_user.relationships.build(:followed_id => user.id)) do |f| %>
-              <div>
-                <%= f.hidden_field :followed_id %>
-                <%= f.hidden_field :current_url, :value => "#{request.fullpath}" %>
-              </div>
-              <%= f.submit "Follow", :class => "btn btn-large btn-primary", :style =>"font-size: 10px; height: 20px; padding: 2px" %>
-            <% end %>
-          <% end %>
+        <div id="follow-option_<%= user.id %>" class="gnib-gnib-button" style="height: 40px; background: none; padding-top: 5px; margin-right: 20px">
+          <%= render :partial => "users/inn_follow", :locals => {:user => user} %>
         </div>
       <%end%>
     </div>
-    <%= image_tag(image_path(user.avatar_url), :class => 'gnib', :onclick=>"location.href = '/users/#{user.username}'")%>
-    <div class="thumbnail-view" style="overflow: hidden; min-height: 60px">
+    <%= image_tag(image_path(user.avatar_url), :class => 'gnib', :id=>"gnib_#{user.id}", :onclick=>"location.href = '/users/#{user.username}'")%>
+    <div class="thumbnail-view_<%=user.id%>" style="overflow: hidden; min-height: 60px; display: none">
       <%=image_tag(image_path(user.avatar_url), :class=>"thumbnail-user-profile")%>
       <div id="thumbnail-desc_<%=user.id%>" class="thumbnail-desc">
         <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=user.name%></span>

@@ -5,7 +5,13 @@
   }
 </style>
 <%= render "/users/header" %>
-<div style="width:100%; margin-top: 10px; background: rgba(0, 0, 0, 0.5);">
+<div style="width:100%; margin-top: 10px; background: rgba(0, 0, 0, 0.5); padding-bottom: 30px">
   <%= render "/users/gnib_header" %>
-  <%= render @users%>
+  <div id="gnib_main_panel" style="width: 100%; background: transparent; position: relative">
+    <div align="center" id="gnib_panel_paginator" style="width: 100%">
+    </div>
+    <div id="gnib_panel" style="width: 100%; background: transparent;">
+      <%= render @users%>
+    </div>
+  </div>
 </div>

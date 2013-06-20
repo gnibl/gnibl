@@ -1,0 +1,14 @@
+<% if current_user.following?(user) %>
+  <%= form_for(current_user.relationships.find_by_followed_id(user), :html => {:method => :delete}, :remote => true) do |f| %>
+    <%= f.hidden_field :current_url, :value => "#{request.fullpath}" %>
+    <%= f.submit "Unfollow", :class => "btn btn-large btn-primary", :style =>"font-size: 10px; height: 20px; padding: 2px" %>
+  <% end %>
+<% else %>
+  <%= form_for(current_user.relationships.build(:followed_id => user.id), :remote => true) do |f| %>
+    <div>
+      <%= f.hidden_field :followed_id %>
+      <%= f.hidden_field :current_url, :value => "#{request.fullpath}" %>
+    </div>
+    <%= f.submit "Follow", :class => "btn btn-large btn-primary", :style =>"font-size: 10px; height: 20px; padding: 2px" %>
+  <% end %>
+<% end %>

@@ -20,7 +20,7 @@ html, body{
  padding: 0px;
  margin: 0px;
  font-family: 'avenir-light' !important;
- overflow: auto;
+ overflow-y: auto;
  width: 100%;
  height: 100%;
  overflow-x: hidden;
@@ -244,8 +244,9 @@ td.centered{
 .thumbnail-view{
  position: absolute;
  bottom: 0px;
- height: 50px;
+ height: 80px;
  width: 100%;
+ display: none;
 }
 
 .thumbnail-desc, .thumbnail-user-profile{
@@ -292,10 +293,11 @@ input[type="file"]{
  background: rgba(200, 200, 200, 0.3);
  width: 220px;
  border-radius: 5px;
- height: 25px;
+ height: 55px;
  display: table-cell;
  vertical-align: middle;
  padding-left: 5px;
+ font-size: 11px;
 }
 
 .thumbnail-control .gnib-gnib-button{
@@ -342,23 +344,25 @@ a:hover{
  background: transparent !important;
  border: 0px;
 }
-
+#gnib_something_dialog{
+  top: -240px;
+}
 #gnib_something_dialog, #main_gnib_something_dialog{
   position: absolute;
   display: none;
   background: rgba(0, 0, 0, 0.9);
-  top: 0px;
-  z-index: 4546;
+  z-index: 343565;
   vertical-align: middle;
 }
 
 #gnib_something_dialog #main_gnib_something_dialog{
- position: relative;
+ position: absolute;
  vertical-align: middle;
  width: 100%;
  display: table-cell;
  background: transparent;
  height: 100%;
+margin-top: 30px;
 }
 .dialog-title{
  width: 50%;
@@ -600,3 +604,81 @@ display: none;
  top: -300px;
  display: block;
 }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255, 0.5);
+  }
+
+.previous_gnibs, .next_gnibs{
+  width: 60px;
+  height: 60px;
+  float: left;
+  margin-top: 25%;
+  position: fixed;
+  z-index: 3254;
+  background: transparent;
+  border: 0px none;
+}
+
+.next_gnibs{
+  right: 1%;
+}
+
+
+  div.gnibl-modal-mp{
+    background: rgba(0, 0, 0, 0.97);
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    top: -250px;
+    z-index: 343565;
+    display: none;
+  }
+  .gnibl-modal{
+    background: url(image_path('background!!.gif')) repeat;
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    position: relative;
+    vertical-align:  middle;
+    text-align: center;
+    display: table-cell;
+  }
+
+  .gnibl-view{
+    width: 40%;
+    background: rgba(10,10, 10, 0.97);
+    height: 50%;
+    margin: auto;
+    margin-top: 40px;
+  }
+  .table-modal{
+    width: 100%;
+    height: 100%;
+    max-height: 450px;
+  }
+  .add-gnib-photo, .comment-on-gnib{
+    background: url(image_path('round_add.png')) no-repeat;
+    width: 30px;
+    height: 30px;
+    background-size: 100% 100%;
+    border: 0px none;
+    float:right;
+  }
+  .comment-on-gnib{
+    background: url(image_path('comment_check.png')) no-repeat;
+    background-size: 100% 100%;
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
+  }

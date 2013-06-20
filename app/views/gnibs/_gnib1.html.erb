@@ -1,0 +1,34 @@
+<!-- you can obtain stuff like @gnib.title, @gnib.description, @gnib.landmark -->
+<!-- button class="@gnib-icon" title="@gnib this gnibl">4</button -->
+<% if(@gnib.image && @gnib.image.url) %>
+<div id="gnib_view_<%=@gnib.id%>" onmouseover="showGnibThumbnailControl('thumbnail-control_<%=@gnib.id%>');"
+       onmouseout="hideGnibThumbnailControl('thumbnail-control_<%=@gnib.id%>');"
+       class="gnib-thumbnail" style="margin-bottom: 5px;">
+    <div id="thumbnail-control_<%=@gnib.id%>" class="thumbnail-control">
+      <div class="gnib-count" style="width: 100px; float: left; display: none"><%= image_tag(image_path('busy.png')) %></div>
+      <div class="gnib-count" style="font-size: 20px;"  align="center">
+        <div id="gnib_count_<%=@gnib.id%>" style="width: 100%; height:100%; padding-top:5px" align="center"><%=@gnib.gniblings.count%></div>
+      </div>
+      <%= form_for(@user.gniblings.build(:gnib_id => @gnib.id), :remote => true, :update=>"indicator") do |f| %>
+        <div>
+          <%= f.hidden_field :gnib_id  %>
+          <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
+        </div>
+        <%= f.submit "",:title => "@gnib", :class => "@gnib-@gnib-button", :id => "gnib_#{@gnib.id}"%>
+      <% end %>
+    </div>
+    <%=form_for(@gnib) do |f|%>
+      <%= image_tag(image_path(@gnib.image.url), :class => '@gnib', :onclick=>"showGnibModal();")%>
+    <% end %>
+    <div id="thumbnail-view_<%=@gnib.id%>" class="thumbnail-view" style="overflow: hidden">
+      <%=image_tag(image_path(@gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
+      <div id="thumbnail-desc_<%=@gnib.id%>" class="thumbnail-desc">
+        <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=@gnib.user.name%></span>
+        <br/>
+        <div id="thumbnail-desc-msg_<%=@gnib.id%>" class="thumbnail-msg" >
+          <%= @gnib.description%>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

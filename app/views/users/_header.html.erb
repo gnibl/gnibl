@@ -1,5 +1,5 @@
 
-<div class="profile_header" style="width: 100%; z-index: 3455">
+<div class="profile_header" style="width: 98%; z-index: 3455; margin-left: 12px">
   <table style="width: 100%;" cellspacing="10">
     <tbody>
       <tr>
@@ -93,11 +93,8 @@
                 <td colspan="2">
                   <div style="color: white; opacity: 0.8; max-width: 400px">
                     <%= @user.description %>
-                    <div style="width:100%;">
-                      <% if @user.gnibs.any? %>
-                        <br>
-                        <%= render "/users/follow_form" if signed_in?%>
-                      <% end %>
+                    <div id="follow-option-panel" style="width:100%;">
+                      <%= render "/users/follow_form" if signed_in?%>
                     </div>
                   </div>
                 </td>

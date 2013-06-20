@@ -1,117 +1,58 @@
-<style type="text/css">
-  div.gnibl-modal-mp{
-    background: rgba(0, 0, 0, 0.97);
-    width: 100%;
-    height: 100%;
-    position:absolute;
-    top: -15px;
-    z-index: 3435;
-    display: none;
-  }
-  .gnibl-modal{
-    background: url(<%=image_path('background!!.gif')%>) repeat;
-    width: 98%;
-    height: 98%;
-    margin: 1%;
-    position: relative;
-    vertical-align:  middle;
-    text-align: center;
-    display: table-cell;
-  }
-
-  .gnibl-view{
-    width: 40%;
-    background: rgba(10,10, 10, 0.97);
-    height: 50%;
-    margin: auto;
-    margin-top: 40px;
-  }
-  .table-modal{
-    width: 100%;
-    height: 100%;
-    max-height: 450px;
-  }
-  ::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.3);
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255, 0.5);
-  }
-  .add-gnib-photo, .comment-on-gnib{
-    background: url(<%=image_path('round_add.png')%>) no-repeat;
-    width: 30px;
-    height: 30px;
-    background-size: 100% 100%;
-    border: 0px none;
-    float:right;
-  }
-  .comment-on-gnib{
-    background: url(<%=image_path('comment_check.png')%>) no-repeat;
-    background-size: 100% 100%;
-    width: 25px;
-    height: 25px;
-    margin-top: 5px;
-  }
-</style>
-<div id="gnibl-modal-mp" class="gnibl-modal-mp">
-  <div style="background: rgba(255, 255, 255, 0.5); float: right; margin: 40px; border-radius: 15px;" title="close">
-    <button class="dialog-close-icon" onclick="getElementById('gnibl-modal-mp').style.display = 'none';" style="border: 0px none"></button>
-  </div>
-  <div id="gnibl-view" class="gnibl-view">
-    <table class="table-modal">
-      <tr style="padding:0px; margin: 0px; width: 100%">
-        <td colspan="3" style="width: 100%; height: 60px; background: #eee; padding:0px; margin:0px; color: #17aeff; text-align: center">
-          Starbacks <span style="color: #888">|</span> The mailbox <span style="color: #888">|</span> Birmingham
-        </td>
-      </tr>
-      <tr>
-        <td class="centered" style="width: 50px"><%=image_tag(image_path('arrow_left.png'), :style=>"width: 50px; height: 30px")%></td>
-        <td class="centered">
-          <%=image_tag(image_path('gnib pics (1)_img10.png'), :style=>"width: 300px; height: auto")%>
-          <br/>
-          <div style="width: 100%; padding-bottom: 10px">
-            <%=image_tag(image_path('maress.jpg'), :style=>"margin-bottom: 10px; width: 15%; height: auto; border-radius: 100px; float: left; margin-left: 30px;margin-top: 5px")%>
-            <div style="float:left; margin-left: 1%; margin-top: 5px; width: 65%; text-align: left">
-              <span style="color: #17aeff"> Alvin Katto {59 comments} </span>
-              <br/>
-              <div style="background: rgba(40, 40, 40, 0.8); width: 100%; height: 30px; color: black; border-radius: 5px;padding-left: 5px">
-                This is awesome men!!
-                <button title="Add a gnib photo" class="add-gnib-photo"></button>
-                <button title="Comment on this gnib" class="comment-on-gnib"></button>
-              </div>
+<div style="background: rgba(255, 255, 255, 0.5); float: right; margin: 40px; border-radius: 15px;" title="close">
+  <button class="dialog-close-icon" onclick="getElementById('gnibl-modal-mp').style.display = 'none';" style="border: 0px none"></button>
+</div>
+<div id="gnibl-view" class="gnibl-view" style="height: auto">
+  <table class="table-modal">
+    <tr style="padding:0px; margin: 0px; width: 100%">
+      <td colspan="3" style="width: 100%; height: 60px; background: #eee; padding:0px; margin:0px; color: #17aeff; text-align: center">
+        <%= gnib.user.city %> <span style="color: #888">|</span> <%= gnib.title %> <span style="color: #888">|</span> Birmingham
+      </td>
+    </tr>
+    <tr>
+      <td class="centered" style="width: 50px"><%=image_tag(image_path('arrow_left.png'), :style=>"width: 50px; height: 30px")%></td>
+      <td class="centered" style="background: rgba(255, 255, 255, 0.1 ); padding: 10px">
+        <%=image_tag(image_path(gnib.image.url), :style=>"width: 300px; height: 250px")%>
+        <div style="width: 100%; padding-bottom: 10px; position: relative">
+          <%=image_tag(image_path(gnib.user.avatar_url), :style=>"margin-bottom: 10px; width: 50px; height: 50px; border-radius: 100px; float: left; margin-left: 30px;margin-top: 5px")%>
+          <div style="float:left; margin-left: 1%; margin-top: 5px; width: 65%; text-align: left; ">
+            <span style="color: #17aeff"> <%= gnib.user.name %> {<%= counts %> comments} </span>
+            <br/>
+            <div style="background: rgba(255,255,255, 0.2); width: 100%; height: auto; min-height: 40px; color: black; border-radius: 5px;padding-left: 5px">
+              <div style="width: 70%; float: left"><%= gnib.description %></div>
+              <button title="Add a gnib photo" class="add-gnib-photo"></button>
+              <button title="Comment on this gnib" class="comment-on-gnib"></button>
             </div>
-            <div style="float:right;">
+            <br/>
+            <div id="gnib-comment-panel" style="background: transparent; width: 100%">
+              <%= form_for(gnib, :remote => true, :url => {:action => "comment", :controller => "gnibs"}, :method => "get") do |f| %>
+                <input type="text" name="comment" placeholder="What do you like about this gnib"/>
+                <%=f.hidden_field :gnib_id, :value=>"#{gnib.id}"%>
+                <%=f.submit "Comment", :style => "display: none"%>
+              <% end %>
             </div>
           </div>
-        </td>
-        <td class="centered" style="width: 50px"><%=image_tag(image_path('arrow_right.png'), :style=>"width: 50px; height: 30px")%></td>
-      </tr>
-      <tr style="padding-top: 10px">
-        <td colspan="3" style="background: rgba(40, 40, 40, 0.8); height: 60px; text-align: center">
-          <table style="width: 100%; height: 40px; max-height: 40px; overflow-y: auto">
-            <tr>
-              <td>
-                <div style="width: 100%; height: 60px; max-height: 60px; overflow-y: auto">
-                  <div style="width: 75%; padding-bottom: 10px; margin:auto; max-height: 68px; height: 68px">
-                    <%=image_tag(image_path('maress.jpg'), :style=>"margin-bottom: 10px; width: 15%; height: auto; border-radius: 100px; float: left; margin-left: 30px;margin-top: 5px")%>
-                    <div style="float:left; margin-left: 1%; margin-top: 5px; width: 65%; text-align: left;">
-                      <span style="color: #17aeff">Kennedy Munene</span>
-                      <br/>
-                      <div style="background: rgba(100, 100, 100, 0.6); width: 96%; height: 25px; color: black; border-radius: 5px;padding-left: 5px">This is awesome men!!</div>
-                    </div>
+        </div>
+      </td>
+      <td class="centered" style="width: 50px"><%=image_tag(image_path('arrow_right.png'), :style=>"width: 50px; height: 30px")%></td>
+    </tr>
+    <tr style="padding-top: 10px">
+      <td colspan="3" style="background: rgba(40, 40, 40, 0.8); height: 60px; text-align: center">
+        <table style="width: 100%; height: 40px; max-height: 40px; overflow-y: auto">
+          <tr>
+            <td>
+              <div style="width: 100%; height: 60px; max-height: 60px; overflow-y: auto">
+                <div style="width: 75%; padding-bottom: 10px; margin:auto; max-height: 68px; height: 68px">
+                  <%=image_tag(image_path('maress.jpg'), :style=>"margin-bottom: 10px; width: 15%; height: auto; border-radius: 100px; float: left; margin-left: 30px;margin-top: 5px")%>
+                  <div style="float:left; margin-left: 1%; margin-top: 5px; width: 65%; text-align: left;">
+                    <span style="color: #17aeff">Kennedy Munene</span>
+                    <br/>
+                    <div style="background: rgba(100, 100, 100, 0.6); width: 96%; height: 25px; color: black; border-radius: 5px;padding-left: 5px">This is awesome men!!</div>
                   </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-  </div>
+                </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </div>

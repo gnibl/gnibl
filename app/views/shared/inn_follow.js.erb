@@ -1,0 +1,2 @@
+$('#follow-option_<%= @user.id %>').html('<%= escape_javascript(render :partial=>"users/inn_follow", :locals =>{:user => @user}) %>');
+$('#gnibler_count').html('Gniblers(<%=current_user.followed_users.count%>)');
