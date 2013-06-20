@@ -9,7 +9,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation,:avatar, :username, :description
+  attr_accessible :name, :email, :password, :city, :password_confirmation,:avatar, :username, :description
 
   has_secure_password
 
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 
   has_many :gniblings, :foreign_key => "user_id", :dependent => :destroy
 
-  belongs_to :city
+ # belongs_to :city
 
   def feed
     Gnib.from_users_followed_by(self)

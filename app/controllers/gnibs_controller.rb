@@ -1,6 +1,25 @@
 class GnibsController < ApplicationController
   before_filter :signed_in_user
 
+def gnibstream
+page = params[:page]
+@gnibs = Gnib.find_by_city(current_user.city).offset(page).limit(10)
+end
+
+def gnibpicks
+page = params[:page]
+@gnibs = Gnib.find_by_city(current_user.city).offset(page).limit(10)
+end
+
+def titles
+term = params[:term]
+@gnibs = Gnib.where(
+             "to_tsvector(title) @@ plainto_tsquery('"+term+"')")
+respond_to do |format|
+          format.js { @gnibs.to_json}
+      end
+end
+
   def comment
      @gnib_id = params[:gnib_id]
      @user_id = current_user.id
@@ -33,7 +52,19 @@ class GnibsController < ApplicationController
   end
 
   def create
-    @gnib = current_user.gnibs.build(params[:gnib])
+    city_id = current_user.city
+    title = ''
+	comment = params[:gnib][:description]
+        unless(comment.nil?)
+	pos = -1
+	title = ""
+	len = comment.length
+	while pos = comment.index('#',pos+1)	
+	title = title+" "+ comment[pos+1..len].split(" ")[0]	
+	end	     
+	params[:gnib][:title] = title
+	end
+    @gnib = current_user.gnibs.build(params[:gnib], :city => city_id)
     @gnib.image = params[:image]
     if @gnib.save
       flash[:success] = "gnib posted"

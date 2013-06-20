@@ -63,6 +63,11 @@ end
 
 
   def create
+#    params[:city] ||= params[:city].inject({}) do |h,(k,v)|
+#	h[k] = v.to_i
+#	h
+#	end
+   params[:user]['city'] = params[:user]['city'].to_i
     @user = User.new(params[:user])
     @user.avatar = params[:file]
     if @user.save
