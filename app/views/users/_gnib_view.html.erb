@@ -5,11 +5,12 @@
   }
 </style>
 <%= render "/users/header" %>
-<div style="position: relative; margin-top: 10px; background: rgba(0, 0, 0, 0.5); height: 100%">
+<div style="position: relative; margin-top: 10px; background: rgba(0, 0, 0, 0.5); height: 100%; padding-bottom: 30px">
   <div style="width:100%;">
     <%= render "/users/gnib_header" %>
     <div id="gnib_main_panel" style="width: 100%; background: transparent; position: relative">
-      <div align="center" id="gnib_panel_paginator" style="width: 100%"></div>
+      <div align="center" id="gnib_panel_paginator" style="width: 100%">
+      </div>
       <div id="gnib_panel" style="width: 100%; background: transparent;">
         <% if @gnibs.any? %>
           <%= render @gnibs %>
@@ -17,7 +18,8 @@
       </div>
     </div>
   </div>
-  <%= render "/users/gnib_modal" %>
+  <div id="gnibl-modal-mp" class="gnibl-modal-mp">
+  </div>
   <div align="center" id="gnib_something_dialog" >
     <div id="main_gnib_something_dialog">
       <div id="dialog-content" style="background: rgba(0, 61, 102,1.0) ; width: 45%;

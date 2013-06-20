@@ -23,7 +23,7 @@ development:
 test:
   adapter: postgresql
   username: marembo
-  database: gnibl_dev_test
+  database: gnibldb
   pool: 5
   timeout: 5000
 production:

@@ -6,7 +6,7 @@ Gnibl::Application.routes.draw do
 
   resources :users do
     member do
-      get :following, :followers, :feed, :next_gnibs
+      get :following, :followers, :feed, :next_gnibs, :next_feed
     end
 
     collection do
@@ -17,8 +17,12 @@ Gnibl::Application.routes.draw do
 
   resources :sessions, :only => [:new, :create, :destroy]
   resources :gnibs do
+    member do
+      get :retcomment, :comment
+    end
     collection do
       get 'search'
+      get 'comment'
     end
   end
 

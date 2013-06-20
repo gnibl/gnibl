@@ -12,6 +12,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.simplePagination
-//=require bootstrap
-//=require bootstrap-dropdown
+//= require bootstrap
+//= require bootstrap-dropdown
 //= require_tree .

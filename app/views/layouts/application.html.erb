@@ -6,38 +6,63 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <script type="text/javascript">
-      function init() {
-        //include all init functions here
-        rectifyGnibs();
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+      function paginate(){
         $(function() {
-          $('#gnib_panel_paginator').pagination({
-            items: <%= @gnib_counts %>,
-            itemsOnPage: 10,
-            cssStyle: 'dark-theme',
-            onPageClick: function(pageNumber){
-              <% if current_user %>
+          try{
+            console.log(location.href);
+            console.log(getParameterByName("term"));
+            $('#gnib_panel_paginator').pagination({
+              items: <%= @counts %>,
+              itemsOnPage: 10,
+              cssStyle: 'dark-theme',
+              onPageClick: function(pageNumber){
+<% if current_user %>
               //we need to send a get form here using ajax.
               console.log("page: "+pageNumber);
               //create a form to submit with a hidden field
+              var current_url = '<%= request.path %>';
+              var gnibs = current_url.endsWith('<%=current_user.username%>');
+              var search = !gnibs && current_url.contains('gnibs/search');
+              var user_search = !search &&  current_url.contains('users/search');
+              var action;
+              if(gnibs){
+                action = '/users/<%=current_user.username%>/next_gnibs';
+              } else if(search){
+                action = "/gnibs/next_search?term="+getParameterByName("term");
+              }else if(user_search){
+                action = "/users/next_search?uid="+getParameterByName("uid");
+              }else {
+                action = '/users/<%=current_user.username%>/next_feed'
+              }
               var form =
-                '<form id="gnib_request_images_'+pageNumber+'" action="/users/<%=current_user.username%>/next_gnibs"><input type="hidden" name="page" value="'+pageNumber+'"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
+                '<form id="gnib_request_images_'+pageNumber+'" action="'+action+'"><input type="hidden" name="page" value="'+pageNumber+'"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
               $(form).appendTo('body');
               $.ajax({
                 type: 'GET',
-                url: '/users/<%=current_user.username%>/next_gnibs',
-                data: $('#gnib_request_images_'+pageNumber).serialize(),
-                success: function(data){
-                  //we update the gnib_panel
-                  console.log(data);
-                }
+                url: action,
+                data: $('#gnib_request_images_'+pageNumber).serialize()
               });
-              <% end  %>
-            }
-          });
+<% end  %>
+          }
         });
-        var h = window.innerHeight;
-        document.getElementById('footer').style.bottom = '-' + h + 'px';
+      }catch(e){
+        console.log(e);
       }
+    });
+  }
+  function init() {
+    //include all init functions here
+    rectifyGnibs();
+    paginate();
+    var h = window.innerHeight - 300;
+    document.getElementById('footer').style.bottom = '-' + h + 'px';
+  }
     </script>
   </head>
   <body id="body" onload="init();">
@@ -54,7 +79,7 @@
       <div style="width: 100%; padding: 0px; margin: 0px; position: absolute; top: 0px;">
         <%= yield %>
       </div>
-      <div align="center" id="footer" style="position: absolute;">
+      <div align="center" id="footer" style="position: absolute; bottom:0px">
         <table style="width: 100%; padding: 5px;">
           <tbody>
             <tr>
@@ -185,6 +210,12 @@
         btn.style.height = (gt_width) + 'px';
         btn.style.width = (gt_width) + 'px';
         btn.style.minWidth = (gt_width) + 'px';
+        //find the child of this div with the specified id
+        var gnibImage = document.getElementById('gnib_'+btn.id);
+        if(gnibImage){
+          gnibImage.style.height = (gt_width) + 'px';
+          gnibImage.style.width = (gt_width) + 'px';
+        }
       } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
         btn.style.width = (gt_width - 90) + 'px';
       } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {

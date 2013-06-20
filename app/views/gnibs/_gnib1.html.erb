@@ -20,7 +20,7 @@
     <%=form_for(@gnib) do |f|%>
       <%= image_tag(image_path(@gnib.image.url), :class => '@gnib', :onclick=>"showGnibModal();")%>
     <% end %>
-    <div class="thumbnail-view" style="overflow: hidden">
+    <div id="thumbnail-view_<%=@gnib.id%>" class="thumbnail-view" style="overflow: hidden">
       <%=image_tag(image_path(@gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
       <div id="thumbnail-desc_<%=@gnib.id%>" class="thumbnail-desc">
         <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=@gnib.user.name%></span>

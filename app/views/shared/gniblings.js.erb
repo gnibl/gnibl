@@ -1,0 +1,7 @@
+var id = 'gnib_count_<%=@gid%>';
+$('#'+id).html('<%= @gnib.gniblings.count %>');
+$('#messagePanel').html("<%= @success %>");
+jQuery('div#messages').show();
+setTimeout(function(){
+jQuery('div#messages').hide();
+}, 10000);
