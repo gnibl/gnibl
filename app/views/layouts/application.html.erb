@@ -254,6 +254,35 @@
       v.style.display = 'table-cell';
     }
   }
+
+  function onGnibModalLoaded(){
+    $(function(){
+      try{
+        console.log('onGnibModalLoaded')
+        $('#gnib-comments').slidesjs({
+          height: 100,
+          navigation:false,
+          pagination: false,
+          effect: {
+            slide: {
+              // Slide effect settings.
+              speed: 200
+              // [number] Speed in milliseconds of the slide animation.
+            },
+            fade: {
+              speed: 300,
+              // [number] Speed in milliseconds of the fade animation.
+              crossfade: true
+              // [boolean] Cross-fade the transition.
+            }
+          }
+        });
+      }catch(e){
+        console.log('error occured')
+        console.log(e);
+      }
+    });
+  }
     </script>
   </body>
 </html>

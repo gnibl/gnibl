@@ -11,7 +11,7 @@ class GnibsController < ApplicationController
     if @comments
       @counts = @comments.count
     end
-    @gnib = Gnib.find(gnib_id)
+    @gnib = Gnib.find(@gnib_id)
     respond_to do |format|
       format.js {render "shared/gnib_modal"}
     end
@@ -21,9 +21,9 @@ class GnibsController < ApplicationController
     gnib_id = params[:gnib][:gnib_id]
     @comments = Comment.find_by_gnib_id(gnib_id)
     @counts = 0
-    if @comments
-      @counts = @comments.count
-    end
+#    if @comments
+#      @counts = @comments.count
+#    end
     @gnib = Gnib.find(gnib_id)
     respond_to do |format|
       format.js {render "shared/gnib_modal" }
