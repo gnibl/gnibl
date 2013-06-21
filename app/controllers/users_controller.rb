@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     page = params[:page]
     page = page.to_i - 1;
     page *= 10;
-    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").offset(page).limit(10);
+    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").offset(page).limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
     respond_top do |format|
       format.js {render "shared/user"}
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     #search for users by user name - obviously
     uname = params[:uid]
     @user = current_user
-    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(10);
+    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
     render 'index'
   end
@@ -49,9 +49,9 @@ class UsersController < ApplicationController
     page *= 10;
     puts "Current page: #{page}"
     #get the gnibs for the page
-    @gnibs = @user.gnibs.offset(page).limit(10)
+    @gnibs = @user.gnibs.offset(page).limit(9)
     @counts = @user.gnibs.count
-    @gnib_pages = (@counts / 10).ceil;
+    @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     respond_to do |format|
       format.js {render "shared/gnibs"}
@@ -64,9 +64,9 @@ class UsersController < ApplicationController
     page *= 10;
     puts "Current page: #{page}"
     #get the gnibs for the page
-    @gnibs = @user.feed.offset(page).limit(10)
+    @gnibs = @user.feed.offset(page).limit(9)
     @counts = @user.feed.count
-    @gnib_pages = (@counts / 10).ceil;
+    @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     respond_to do |format|
       format.js {render "shared/gnibs"}
@@ -74,15 +74,15 @@ class UsersController < ApplicationController
   end
   def feed
     @user = User.find_by_username(params[:id])
-    @gnibs = @user.feed.limit(10)
+    @gnibs = @user.feed.limit(9)
     @counts = @user.feed.count
-    @gnib_pages = (@counts / 10).ceil;
+    @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
   end
 
   def following
     @user = User.find_by_username(params[:id])
-    @users = @user.followed_users.limit(10)
+    @users = @user.followed_users.limit(9)
     @counts = @user.followed_users.count
     render "show_follow"
   end
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
     page = params[:page]
     page = page.to_i - 1;
     page *= 10;
-    @users = @user.followed_users.offset(page).limit(10)
+    @users = @user.followed_users.offset(page).limit(9)
     @counts = @user.followed_users.count
     respond_top do |format|
       format.js {render "shared/user"}
@@ -103,18 +103,18 @@ class UsersController < ApplicationController
     page = params[:page]
     page = page.to_i - 1;
     page *= 10;
-    @users = @user.followers.offset(page).limit(10)
+    @users = @user.followers.offset(page).limit(9)
     @counts = @user.followers.count
     render "show_follow"
   end
 
 
   def create
-#    params[:city] ||= params[:city].inject({}) do |h,(k,v)|
-#	h[k] = v.to_i
-#	h
-#	end
-   params[:user]['city'] = params[:user]['city'].to_i
+    #    params[:city] ||= params[:city].inject({}) do |h,(k,v)|
+    #	h[k] = v.to_i
+    #	h
+    #	end
+    params[:user]['city'] = params[:user]['city'].to_i
     @user = User.new(params[:user])
     @user.avatar = params[:file]
     if @user.save
@@ -136,20 +136,18 @@ class UsersController < ApplicationController
     elsif params[:user] && params[:user][:avatar_url]
       @user.update_attribute(:avatar, params[:user][:avatar_url])
     end
-    puts "updated user: #{@user.description}"
-    puts "updated user: #{@user.avatar_url}"
+    @success = "You have successfully updated your profile"
     respond_to do |format|
-
+      format.js {render "shared/messages"}
     end
-    redirect_to "/users/#{@user.username}"
   end
 
   def show
     @user = User.find_by_username(params[:id])
     page = params[:page]
-    @gnibs = @user.gnibs.offset(page).limit(10)
+    @gnibs = @user.gnibs.offset(page).limit(9)
     @counts = @user.gnibs.count
-    @gnib_pages = (@counts / 10).ceil;
+    @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
   end
 

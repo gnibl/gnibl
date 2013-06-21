@@ -1,3 +1,2 @@
-console.log('from ajax response');
-$('#gnib_panel').html('<%= escape_javascript(render  @gnibs) %>');
+$('#gnib_panel').html('<%= escape_javascript(render  :partial=>"gnibs/new_gnib") %> <%= escape_javascript(render  @gnibs) %>');
 rectifyGnibs();

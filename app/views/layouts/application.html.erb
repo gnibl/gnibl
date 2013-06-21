@@ -1,37 +1,12 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-<head>
-  <title>Gnibl</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-
- <%= javascript_include_tag "jquery-1.9.1.js", "jquery-autocomplete.js" %>
-
-  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
-  <%= csrf_meta_tags %>
- <script type="text/javascript">
-  function init(){
-   //include all init functions here
-   rectifyGnibs();
-||||||| merged common ancestors
-<head>
-  <title>Gnibl</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
- <%= javascript_include_tag "jquery-1.9.1.js", "jquery-ui-1.10.3.custom.min.js" %>
-  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
-  <%= csrf_meta_tags %>
- <script type="text/javascript">
-  function init(){
-   //include all init functions here
-   rectifyGnibs();
-=======
   <head>
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <script type="text/javascript">
+      var current_page = 0; //this is a global variable used to track the current gnib page
       function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -44,7 +19,7 @@
             console.log(location.href);
             console.log(getParameterByName("term"));
             $('#gnib_panel_paginator').pagination({
-              items: <%= @counts %>,
+              items: <%= @counts + 1 %>,
               itemsOnPage: 10,
               cssStyle: 'dark-theme',
               onPageClick: function(pageNumber){
@@ -52,6 +27,7 @@
               //we need to send a get form here using ajax.
               console.log("page: "+pageNumber);
               //create a form to submit with a hidden field
+              current_page = pageNumber;
               var current_url = '<%= request.path %>';
               var gnibs = current_url.endsWith('<%=current_user.username%>');
               var search = !gnibs && current_url.contains('gnibs/search');
@@ -81,7 +57,6 @@
         console.log(e);
       }
     });
->>>>>>> marembo2
   }
   function init() {
     //include all init functions here
@@ -94,13 +69,13 @@
   </head>
   <body id="body" onload="init();">
     <div id="main">
-      <div id="messages" style="display: none; vertical-align: middle">
+      <div id="messages" style="display: none; vertical-align: middle; position: fixed; top: 5px">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
               <button class="dialog-close-icon" onclick="jQuery('div#messages').hide();
-          return false;" style="float: right; margin-right: 3px;"></button>
+                return false;" style="float: right; margin-right: 3px;"></button>
         <div id="messagePanel" style="width: 60%; display: table-cell; vertical-align: middle; height: 100%; margin: auto">Message here</div>
       </div>
-      <div id="indicator" style="display: block">
+      <div id="indicator" style="display: block; position: fixed; top: -100px">
         Please wait.....
       </div>
       <div style="width: 100%; padding: 0px; margin: 0px; position: absolute; top: 0px;">
@@ -234,14 +209,21 @@
     for (i in thumbnails) {
       var btn = thumbnails[i];
       if ((btn.className + '').indexOf(className) !== -1) {
-        btn.style.height = (gt_width) + 'px';
-        btn.style.width = (gt_width) + 'px';
-        btn.style.minWidth = (gt_width) + 'px';
-        //find the child of this div with the specified id
-        var gnibImage = document.getElementById('gnib_'+btn.id);
-        if(gnibImage){
-          gnibImage.style.height = (gt_width) + 'px';
-          gnibImage.style.width = (gt_width) + 'px';
+        if(btn.id.contains('new_gnib_727272727_')){
+          //the new gnib has border of width 2px
+          btn.style.height = (gt_width - 4) + 'px';
+          btn.style.width = (gt_width - 8) + 'px';
+          btn.style.minWidth = (gt_width - 6) + 'px';
+        }else{
+          btn.style.height = (gt_width) + 'px';
+          btn.style.width = (gt_width) + 'px';
+          btn.style.minWidth = (gt_width) + 'px';
+          //find the child of this div with the specified id
+          var gnibImage = document.getElementById('gnib_'+btn.id);
+          if(gnibImage){
+            gnibImage.style.height = (gt_width) + 'px';
+            gnibImage.style.width = (gt_width+15) + 'px';
+          }
         }
       } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
         btn.style.width = (gt_width - 90) + 'px';
@@ -310,6 +292,28 @@
       }
     });
   }
+  jQuery.fn.extend({
+    slideRightShow: function() {
+      return this.each(function() {
+        $(this).show('slide', {direction: 'right'}, 1000);
+      });
+    },
+    slideLeftHide: function() {
+      return this.each(function() {
+        $(this).hide('slide', {direction: 'left'}, 1000);
+      });
+    },
+    slideRightHide: function() {
+      return this.each(function() {
+        $(this).hide('slide', {direction: 'right'}, 1000);
+      });
+    },
+    slideLeftShow: function() {
+      return this.each(function() {
+        $(this).show('slide', {direction: 'left'}, 1000);
+      });
+    }
+  });
     </script>
   </body>
 </html>

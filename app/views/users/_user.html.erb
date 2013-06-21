@@ -15,12 +15,11 @@
       <%end%>
     </div>
     <%= image_tag(image_path(user.avatar_url), :class => 'gnib', :id=>"gnib_#{user.id}", :onclick=>"location.href = '/users/#{user.username}'")%>
-    <div class="thumbnail-view_<%=user.id%>" style="overflow: hidden; min-height: 60px; display: none">
-      <%=image_tag(image_path(user.avatar_url), :class=>"thumbnail-user-profile")%>
-      <div id="thumbnail-desc_<%=user.id%>" class="thumbnail-desc">
+    <div id="thumbnail-view_<%=user.id%>" class="thumbnail-view" style="overflow: hidden; min-height: 60px; ">
+      <div id="thumbnail-desc_<%=user.id%>" class="thumbnail-desc" style="width: 100%">
         <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=user.name%></span>
         <br/>
-        <div id="thumbnail-desc-msg_<%=user.id%>" class="thumbnail-msg" >
+        <div id="thumbnail-desc-msg_<%=user.id%>" class="thumbnail-msg" style="width: 100%">
           <%= user.description%>
         </div>
       </div>

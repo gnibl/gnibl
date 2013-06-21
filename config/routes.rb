@@ -8,21 +8,20 @@ Gnibl::Application.routes.draw do
     member do
       get :following, :followers, :feed, :next_gnibs, :next_feed
     end
-
     collection do
       get 'search'
     end
   end
 
-
   resources :sessions, :only => [:new, :create, :destroy]
   resources :gnibs do
     member do
-      get :retcomment, :comment
+      get :retcomment, :comment, :gnibpicks, :gnibstream
     end
     collection do
       get 'search'
       get 'comment'
+      get 'retcomment'
     end
   end
 

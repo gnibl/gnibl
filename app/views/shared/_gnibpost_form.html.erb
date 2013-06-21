@@ -33,14 +33,14 @@
     </tr>
   </table>
   </table>
-  <table style="text-align: center; display: inline-block; margin: 10px 2px">
+  <table style="text-align: center; display: inline-block; margin: 0px 2px">
     <tr>
       <td class="align"><div class="circular" >3.</div></td>
       <td class="align">
         <div class="upload">
           <input type="text" placeholder="Paste content url..." style="border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px"/>
           <div class="fakeupload">
-            <input type="text" value=" (OR) upload an image" name="fakeupload" style="color: #17aeff; height: 40px; width: 240px" />
+            <input type="text" value=" (OR) upload an image" name="fakeupload" style="color: #17aeff; height: 50px !important; width: 240px" />
           </div>
           <%= f.file_field :image, :class=>"realupload", :style=>"color: black; border: 0px",
             :onchange=>"this.form.fakeupload.value = this.value;"%>

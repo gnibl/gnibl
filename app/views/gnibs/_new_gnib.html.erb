@@ -1,0 +1,27 @@
+<div id="new_gnib_727272727_<%=@gnib.id%>"  class="gnib-thumbnail" style="margin-bottom: 5px; float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px ">
+  <%= form_for(@gnib, :remote=>true) do |f| %>
+    <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
+    <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
+    <div id="gnib_description" style="width: 90%; margin: auto; background: rgba(255, 255, 255, 0.2); margin-top: 10px">
+      <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
+        :style=>"background: transparent; font-size: 12px; border: 0px none; margin: auto; color: #17aeff",
+        :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
+    </div>
+    <div id="gnib_file_upload" style="width: 80%; margin: auto; background: rgba(255, 255, 255, 0.9); margin-top: 10px" class="upload">
+      <input type="text" placeholder="Paste content url..." style="border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px"/>
+      <div class="fakeupload">
+        <input type="text" value=" (OR) upload an image" name="fakeupload" style="color: #17aeff; height: 50px !important; width: 100% !important" />
+      </div>
+      <%= f.file_field :image, :class=>"realupload", :style=>"color: black; border: 0px",
+        :onchange=>"this.form.fakeupload.value = this.value;"%>
+    </div>
+    <div id="gnib_description" style="width: 90%; margin: auto; background: rgba(0, 0, 0, 0.5);margin-top: 10px; height: 42px; text-align: center">
+      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 40px; height: 40px", :onclick=>"sanitize();"%>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  document.getElementById('current_page_3447384734883').value = current_page;
+  document.getElementById('current_url_34783784980').value = location.pathname;
+</script>

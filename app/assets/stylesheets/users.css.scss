@@ -86,7 +86,8 @@ td.current_selected_header{
  width: 100%;
  height: 100%;
  border-radius: 10px;
- margin: 1px;
+ margin: 0px;
+ padding: 0px;
  margin-top: 3px;
  cursor: pointer;
 }
@@ -309,8 +310,8 @@ input[type="file"]{
  background: url(image_path('FINALE-FINALE!!-_03.png'));
  background-size: 100% 100%;
  border-radius: 100px;
- width: 80px !important;
- height: 80px !important;
+ width: 80px;
+ height: 80px;
 }
 
 .profile_header{
@@ -345,10 +346,10 @@ a:hover{
  border: 0px;
 }
 #gnib_something_dialog{
-  top: -240px;
+  top: 0px;
+  position: fixed;
 }
 #gnib_something_dialog, #main_gnib_something_dialog{
-  position: absolute;
   display: none;
   background: rgba(0, 0, 0, 0.9);
   z-index: 343565;
@@ -432,7 +433,6 @@ margin-top: 30px;
     width:auto;
 }
 form .fakeupload {
-    background:url(image_path('FINALE-FINALE!!-_03.png')) no-repeat;
     background-size: 100% 100%;
 }
 form .fakeupload input {
@@ -474,7 +474,6 @@ div, div.round {
   #profile-image .wrapper {
     background: #000;
     opacity: 0;
-    cursor: pointer;
     position: absolute;
     top: 0;
     z-index: 100;
@@ -493,7 +492,7 @@ div, div.round {
     width: 150px !important;
     height: 150px !important;
     opacity: 0;
-    z-index: 34553;
+    z-index: 345534;
   }
 
   .wrapper .gnibl-file-logo{
@@ -639,8 +638,8 @@ display: none;
     background: rgba(0, 0, 0, 0.97);
     width: 100%;
     height: 100%;
-    position:absolute;
-    top: -250px;
+    position: fixed;
+    top: 0px;
     z-index: 343565;
     display: none;
   }

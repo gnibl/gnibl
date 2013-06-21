@@ -1,3 +1,2 @@
-$('#gnibl-modal-mp').html('<%= escape_javascript(render :partial=>"users/gnib_modal", :locals =>{:gnib => @gnib, :comments => @comments, :counts => @counts}) %>');
+$('#gnibl-modal-mp').html('<%= escape_javascript(render :partial=>"users/gnib_modal", :locals =>{:gnib => @gnib, :comment => @comment, :counts => @counts}) %>');
 showGnibModal();
-onGnibModalLoaded();
