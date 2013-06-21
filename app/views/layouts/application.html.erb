@@ -18,41 +18,43 @@
           try{
             console.log(location.href);
             console.log(getParameterByName("term"));
-            $('#gnib_panel_paginator').pagination({
-              items: <%= @counts + 1 %>,
-              itemsOnPage: 10,
-              cssStyle: 'dark-theme',
-              onPageClick: function(pageNumber){
-<% if current_user %>
-              //we need to send a get form here using ajax.
-              console.log("page: "+pageNumber);
-              //create a form to submit with a hidden field
-              current_page = pageNumber;
-              var current_url = '<%= request.path %>';
-              var gnibs = current_url.endsWith('<%=current_user.username%>');
-              var search = !gnibs && current_url.contains('gnibs/search');
-              var user_search = !search &&  current_url.contains('users/search');
-              var action;
-              if(gnibs){
-                action = '/users/<%=current_user.username%>/next_gnibs';
-              } else if(search){
-                action = "/gnibs/next_search?term="+getParameterByName("term");
-              }else if(user_search){
-                action = "/users/next_search?uid="+getParameterByName("uid");
-              }else {
-                action = '/users/<%=current_user.username%>/next_feed'
-              }
-              var form =
-                '<form id="gnib_request_images_'+pageNumber+'" action="'+action+'"><input type="hidden" name="page" value="'+pageNumber+'"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
-              $(form).appendTo('body');
-              $.ajax({
-                type: 'GET',
-                url: action,
-                data: $('#gnib_request_images_'+pageNumber).serialize()
-              });
-<% end  %>
-          }
-        });
+<% unless @counts.nil? %>
+          $('#gnib_panel_paginator').pagination({
+            items: <%= @counts + 1 %>,
+            itemsOnPage: 10,
+            cssStyle: 'dark-theme',
+            onPageClick: function(pageNumber){
+  <% if current_user %>
+                //we need to send a get form here using ajax.
+                console.log("page: "+pageNumber);
+                //create a form to submit with a hidden field
+                current_page = pageNumber;
+                var current_url = '<%= request.path %>';
+                var gnibs = current_url.endsWith('<%=current_user.username%>');
+                var search = !gnibs && current_url.contains('gnibs/search');
+                var user_search = !search &&  current_url.contains('users/search');
+                var action;
+                if(gnibs){
+                  action = '/users/<%=current_user.username%>/next_gnibs';
+                } else if(search){
+                  action = "/gnibs/next_search?term="+getParameterByName("term");
+                }else if(user_search){
+                  action = "/users/next_search?uid="+getParameterByName("uid");
+                }else {
+                  action = '/users/<%=current_user.username%>/next_feed'
+                }
+                var form =
+                  '<form id="gnib_request_images_'+pageNumber+'" action="'+action+'"><input type="hidden" name="page" value="'+pageNumber+'"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
+                $(form).appendTo('body');
+                $.ajax({
+                  type: 'GET',
+                  url: action,
+                  data: $('#gnib_request_images_'+pageNumber).serialize()
+                });
+  <% end  %>
+            }
+          });
+<% end %>
       }catch(e){
         console.log(e);
       }
@@ -72,7 +74,7 @@
       <div id="messages" style="display: none; vertical-align: middle; position: fixed; top: 5px">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
               <button class="dialog-close-icon" onclick="jQuery('div#messages').hide();
-                return false;" style="float: right; margin-right: 3px;"></button>
+          return false;" style="float: right; margin-right: 3px;"></button>
         <div id="messagePanel" style="width: 60%; display: table-cell; vertical-align: middle; height: 100%; margin: auto">Message here</div>
       </div>
       <div id="indicator" style="display: block; position: fixed; top: -100px">
@@ -264,33 +266,97 @@
     }
   }
 
-  function onGnibModalLoaded(){
-    $(function(){
-      try{
-        console.log('onGnibModalLoaded')
-        $('#gnib-comments').slidesjs({
-          height: 100,
-          navigation:false,
-          pagination: false,
-          effect: {
-            slide: {
-              // Slide effect settings.
-              speed: 200
-              // [number] Speed in milliseconds of the slide animation.
-            },
-            fade: {
-              speed: 300,
-              // [number] Speed in milliseconds of the fade animation.
-              crossfade: true
-              // [boolean] Cross-fade the transition.
-            }
+  function CommentSlider(){
+    this.className = "gnib_comment_737373737";
+    this.comments = new Array();
+    this.current_index = -1;
+    this.init = function(){
+      var documents = document.getElementsByTagName('*'), j;
+      var i = 0;
+      for(j in documents){
+        var doc = documents[j];
+        if(doc && doc.className){
+          if(doc.className.indexOf(this.className) !== -1){
+            this.comments[i] = doc;
+            i += 1;
           }
-        });
-      }catch(e){
-        console.log('error occured')
-        console.log(e);
+        }
       }
+      this.next();
+    }
+    this.closeLast = function(){
+      var currentDoc = this.comments[this.current_index];
+      //close it
+      if(currentDoc){
+        currentDoc.style.display='none';
+      }
+    }
+    this.next = function(){
+      this.closeLast();
+      var size = this.comments.length;
+      this.current_index += 1;
+      this.current_index = this.current_index % size;
+      var currentDoc = this.comments[this.current_index];
+      if(currentDoc){
+        //show the current one and then slides down
+        currentDoc.style.display='block';
+      }
+    }
+    this.previous = function(){
+      this.closeLast();
+      var size = this.comments.length;
+      if(this.current_index === 0){
+        this.current_index = size;
+      }
+      this.current_index -= 1;
+      this.current_index = this.current_index % size;
+      var currentDoc = this.comments[this.current_index];
+      if(currentDoc){
+        //show the current one and then slides down
+        currentDoc.style.display='block';
+      }
+    }
+
+    this.hasNext = function(){
+      return this.current_index < (this.comments.length - 1);
+    }
+    this.hasPrevious = function(){
+      return this.current_index > 0;
+    }
+  }
+
+  function slideDocuments(documents, current_i){
+    var size = documents.length;
+    var i = current_i % size;
+    var currentDoc = documents[i];
+    //show the current one and then slides down
+    $(currentDoc.id).slideDown(600, function(){
+      this.show();
     });
+    //close it
+    currentDoc.style.display = 'none';
+  }
+
+  function onGnibModalLoaded(numberOfItems){
+    try{
+      //get all the documents with class name
+      var className = 'gnib_comment_737373737';
+      var i = 0; //the current comment
+      var comments = new Array();
+      var documents = document.getElementsByTagName('*'), j;
+      for(j in documents){
+        var doc = documents[j];
+        if(doc && doc.className){
+          if(doc.className.indexOf(className) !== -1){
+            comments[i] = doc;
+            i += 1;
+          }
+        }
+      }
+    }catch(e){
+      console.log('error occured')
+      console.log(e.message);
+    }
   }
   jQuery.fn.extend({
     slideRightShow: function() {

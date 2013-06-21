@@ -681,3 +681,31 @@ display: none;
     height: 25px;
     margin-top: 5px;
   }
+
+#gnib-comments{
+ width: 100% !important;
+ height: 100% !important;
+}
+
+.gnib_comment_737373737{
+ width: 100%;
+ padding-bottom: 10px;
+ position: absolute;
+ top: 0px;
+}
+
+.arrow_left, .arrow_right{
+  opacity: 0.3;
+  width: 50px;
+  height: 50px;
+  border: 0px none;
+}
+
+.arrow_left{
+  background: url(image_path('arrow_left.png')) no-repeat;
+  background-size: 100% 100%;
+}
+.arrow_right{
+  background: url(image_path('arrow_right.png')) no-repeat;
+  background-size: 100% 100%;
+}

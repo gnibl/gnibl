@@ -45,8 +45,7 @@ class GnibsController < ApplicationController
     @user_id = current_user.id
     @descr = params[:comment]
     Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
-    @comment = Comment.find_by_gnib_id(@gnib_id)
-    @comments = [@comment]
+    @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
     @counts = 0
     if @comments
       @counts = @comments.length
@@ -59,8 +58,7 @@ class GnibsController < ApplicationController
 
   def retcomment
     gnib_id = params[:gnib][:gnib_id]
-    @comment = Comment.find_by_gnib_id(gnib_id)
-    @comments = [@comment]
+    @comments = Comment.where("gnib_id = #{gnib_id}").order("created_at DESC")
     @counts = 0
     if @comments
       @counts = @comments.length
