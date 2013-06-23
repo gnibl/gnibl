@@ -49,109 +49,139 @@
   </table>
 </div>
 <div style="width: 100%; margin-top: 70px">
-  <table>
+  <table style="width: 100%">
     <tbody>
       <tr>
-        <td style="width: 12%; min-width: 170px">
-          <div id="profile-image" style="top: 0px">
-            <% if current_user?(@user) %>
-              <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
-            <div class="wrapper">
-                <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
+        <% if (request.path != "/gnibs/#{@user.username}/gnibpicks" && request.path != "/gnibs/#{@user.username}/gnibstream") %>
+          <td style="width: 12%; min-width: 170px">
+            <div id="profile-image" style="top: 0px">
+              <% if current_user?(@user) %>
+                <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
+                  <div class="wrapper">
+                    <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
+                  </div>
+                <% end %>
+              <% end %>
+              <div class="gnibl-button"></div>
+            </div>
+          </td>
+          <td style=" padding: 1%; vertical-align: top">
+            <table>
+              <tr>
+                <td>
+                  <div class="profile-title" style="width: 100%;">
+                    <%=@user.name %><span style="color: white; border-right: 2px solid rgba(255, 255, 255, 0.2); margin-left: 5px;"></span>
+                    <span ><%=@user.city%></span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <% if(current_user?(@user)) %>
+                  <%= form_for(@user, :url => "/users/#{@user.username}", :remote=>true) do |f| %>
+                    <td colspan="1" style="width: 300px; padding-top: 10px">
+                      <div style="width: 100%; position: relative;">
+                        <%= f.text_area :description, :maxlength => "255",
+                          :id => "profileSummary", :rows => "3", :cols => "14",
+                          :placeholder => "Describe yourself here briefly",
+                          :onkeypress => "return enforceMaxlength('profileSummary', 254);",
+                          :style=>"overflow: hidden; border-radius: 10px; padding 10px; z-index: 23",
+                          :title=>"Double click to update",:onkeyup=>"updateProfile();" %>
+                        <div id="update-profile" class="update-profile" style="border-radius: 50px; height: 40px; padding-top: 5px; margin-top: 3px">
+                          <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
+                            :onclick=>"document.getElementById('update-profile').style.display='none';"%>
+                          <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';
+                                    return false;"
+                                  style="float: right; margin-right: 30px"></button>
+                          <span style="color: #17aeff; margin-right: 65px">Update profile</span>
+                        </div>
+                      </div>
+                    </td>
+                  <% end %>
+                <% else %>
+                  <td colspan="2">
+                    <div style="color: white; opacity: 0.8; max-width: 400px">
+                      <%= @user.description %>
+                      <div id="follow-option-panel" style="width:100%;">
+                        <%= render "/users/follow_form" if signed_in?%>
+                      </div>
+                    </div>
+                  </td>
+                <% end %>
+                </td>
+              </tr>
+            </table>
+          </td>
+        <% else %>
+          <td>
+            <% if request.path == "/gnibs/#{@user.username}/gnibpicks" %>
+              <div align="center" style="width: 100%">
+                <div id="gnibpicksTitle">
+                  <span style="color: #17aeff; font-size: 50px">
+                    gnib<span style="color: white">picks</span></span>
+                </div>
+                <div style="padding-top: 20px; font-size: 20px">Today's most highly rated gnibs</div>
+              </div>
+            <% else %>
+              <div align="center" style="width: 100%">
+                <div id="gnibpicksTitle">
+                  <span style="color: #17aeff; font-size: 50px">
+                    gnib<span style="color: white">stream</span></span>
+                </div>
+                <div style="padding-top: 20px; font-size: 20px">Live gnibstream from your gniblers</div>
               </div>
             <% end %>
-          <% end %>
-          <div class="gnibl-button"></div>
-        </div>
-      </td>
-      <td style=" padding: 1%; vertical-align: top">
-        <table>
-          <tr>
-            <td>
-              <div class="profile-title" style="width: 100%;">
-                <%=@user.name %><span style="color: white; border-right: 2px solid rgba(255, 255, 255, 0.2); margin-left: 5px;"></span>
-                <span ><%=@user.city%></span>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <% if(current_user?(@user)) %>
-              <%= form_for(@user, :url => "/users/#{@user.username}", :remote=>true) do |f| %>
-                <td colspan="1" style="width: 300px; padding-top: 10px">
-                  <div style="width: 100%; position: relative;">
-                    <%= f.text_area :description, :maxlength => "255",
-                      :id => "profileSummary", :rows => "3", :cols => "14",
-                      :placeholder => "Describe yourself here briefly",
-                      :onkeypress => "return enforceMaxlength('profileSummary', 254);",
-                      :style=>"overflow: hidden; border-radius: 10px; padding 10px; z-index: 23",
-                      :title=>"Double click to update",:onkeyup=>"updateProfile();" %>
-                    <div id="update-profile" class="update-profile" style="border-radius: 50px; height: 40px; padding-top: 5px; margin-top: 3px">
-                      <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
-                        :onclick=>"document.getElementById('update-profile').style.display='none';"%>
-                      <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';
-                          return false;"
-                              style="float: right; margin-right: 30px"></button>
-                      <span style="color: #17aeff; margin-right: 65px">Update profile</span>
+          </td>
+        <% end %>
+        <td style="vertical-align: top; padding: 1%; text-align: center">
+          <form action="/gnibs/search" method="get" style="float: right; margin-right: 20px; ">
+            <table style="min-width: 200px">
+              <tr>
+                <td>
+                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"/>
+                </td>
+                <td>
+                  <div style="position: relative">
+                    <div class="what">?</div>
+                    <div style="position: absolute; background: #17aeff; color: white">
+
                     </div>
                   </div>
                 </td>
-              <% end %>
-            <% else %>
-              <td colspan="2">
-                <div style="color: white; opacity: 0.8; max-width: 400px">
-                  <%= @user.description %>
-                  <div id="follow-option-panel" style="width:100%;">
-                    <%= render "/users/follow_form" if signed_in?%>
-                  </div>
-                </div>
-              </td>
-            <% end %>
-            </td>
-          </tr>
-        </table>
-      </td>
-      <td style="vertical-align: top; padding: 1%; text-align: center; margin-right: 2%">
-        <form action="/gnibs/search" method="get">
-          <table style="width: 100%;">
-            <tr>
-              <td>
-                <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"/>
-              </td>
-              <td>
-                <div class="what">?</div>
-              </td>
-            </tr>
-          </table>
-          <br/>
-          <input value="" type="submit" class="gnibl-file-log" title="search gnibs/gniblers"
-                 style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
-        </form>
-        <script type="text/javascript">
-                    String.prototype.endsWith = function(suffix) {
-                      return this.indexOf(suffix, this.length - suffix.length) !== -1;
-                    };
-                    String.prototype.contains = function(suffix) {
-                      return this.indexOf(suffix) !== -1;
-                    };
-                    var currentUrl = location.href;
-                    console.log(currentUrl);
-                    var input = document.getElementById('search-box');
-                    var gnibSomething = document.getElementById('gnib-something');
-                    var settings = document.getElementById('settings');
-                    if (currentUrl.endsWith('following') || currentUrl.contains('users/search')) {
-                      if (input) {
-                        input.name = 'uid';
-                        input.form.action = '/users/search';
-                        input.placeholder = 'search gniblers';
-                      }
-                      if (gnibSomething) {
-                        gnibSomething.style.display = 'none';
-                      }
-                      settings.className = 'centered border';
-                    }
-        </script>
-      </td>
-    </tr>
-  </tbody>
-</table>
+              </tr>
+            </table>
+            <br/>
+            <input value="" type="submit" class="gnibl-file-log" title="search gnibs/gniblers"
+                   style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
+          </form>
+          <script type="text/javascript">
+                            String.prototype.endsWith = function(suffix) {
+                              return this.indexOf(suffix, this.length - suffix.length) !== -1;
+                            };
+                            String.prototype.contains = function(suffix) {
+                              return this.indexOf(suffix) !== -1;
+                            };
+                            var currentUrl = location.href;
+                            console.log(currentUrl);
+                            var input = document.getElementById('search-box');
+                            var gnibSomething = document.getElementById('gnib-something');
+                            var settings = document.getElementById('settings');
+                            if (currentUrl.endsWith('following') || currentUrl.contains('users/search')) {
+                              if (input) {
+                                input.name = 'uid';
+                                input.form.action = '/users/search';
+                                input.placeholder = 'search gniblers';
+                              }
+                              if (gnibSomething) {
+                                gnibSomething.style.display = 'none';
+                              }
+                              settings.className = 'centered border';
+                            }
+                            function onWhatOver() {
+                              var info = document.getElementById('whatInfo');
+                            }
+          </script>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

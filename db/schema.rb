@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(:version => 20130620091953) do
     t.string   "image"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "city"
   end
 
   add_index "gnibs", ["user_id", "created_at"], :name => "index_gnibs_on_user_id_and_created_at"

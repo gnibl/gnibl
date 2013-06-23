@@ -2,34 +2,47 @@ class GnibsController < ApplicationController
   before_filter :signed_in_user
 
   def gnibstream
-    @gnibs = Gnib.find_by_city(current_user.city).limit(9)
+    @city_id = current_user.city
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
     @user = current_user
-    @counts = Gnib.find_by_city(current_user.city).count
+    @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
+    @gnib = @user.gnibs.build
     render "users/gnibstream"
   end
 
   def gnibpicks
-    @gnibs = Gnib.find_by_city(current_user.city)
+    @city_id = current_user.city
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
     @user = current_user
-    @counts = 0
+    @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
+    @gnib = @user.gnibs.build
     render "users/gnibpicks"
   end
   def next_gnibstream
     page = params[:page]
     page = page.to_i - 1;
     page *= 10;
-    @gnibs = Gnib.find_by_city(current_user.city).offset(page).limit(9)
+    @gnib = @user.gnibs.build
+    @city_id = current_user.city
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offest(page).limit(9)
     @user = current_user
-    @counts = Gnib.find_by_city(current_user.city).count
+    @counts = Gnib.where("city = :city_id", :city_id => @city_id)
+    respond_to do |format|
+      format.js {render "shared/gnibs"}
+    end
   end
 
   def next_gnibpicks
     page = params[:page]
     page = page.to_i - 1;
     page *= 10;
-    @gnibs = Gnib.find_by_city(current_user.city).offset(page).limit(9)
+    @gnib = @user.gnibs.build
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(page).limit(9)
     @user = current_user
-    @counts = Gnib.find_by_city(current_user.city).count
+    @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
+    respond_to do |format|
+      format.js {render "shared/gnibs"}
+    end
   end
 
   def titles
