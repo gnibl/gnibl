@@ -15,7 +15,8 @@
 }
 
 html, body{
- background: url(image_path('background!!.gif')) repeat;
+ background: url(image_path('profile_background.png')) no-repeat;
+ background-size: 100% 100%;
  color: white;
  padding: 0px;
  margin: 0px;
@@ -439,32 +440,6 @@ form .fakeupload input {
     width:auto;
 }
 
-div.round {
-    background:
-        -moz-radial-gradient(0 100%, circle, rgba(204,0,0,0) 14px, #c00 15px),
-        -moz-radial-gradient(100% 100%, circle, rgba(204,0,0,0) 14px, #c00 15px),
-        -moz-radial-gradient(100% 0, circle, rgba(204,0,0,0) 14px, #c00 15px),
-        -moz-radial-gradient(0 0, circle, rgba(204,0,0,0) 14px, #c00 15px);
-    background:
-         -o-radial-gradient(0 100%, circle, rgba(204,0,0,0) 14px, #c00 15px),
-         -o-radial-gradient(100% 100%, circle, rgba(204,0,0,0) 14px, #c00 15px),
-         -o-radial-gradient(100% 0, circle, rgba(204,0,0,0) 14px, #c00 15px),
-         -o-radial-gradient(0 0, circle, rgba(204,0,0,0) 14px, #c00 15px);
-    background:
-         -webkit-radial-gradient(0 100%, circle, rgba(204,0,0,0) 14px, #c00 15px),
-         -webkit-radial-gradient(100% 100%, circle, rgba(204,0,0,0) 14px, #c00 15px),
-         -webkit-radial-gradient(100% 0, circle, rgba(204,0,0,0) 14px, #c00 15px),
-         -webkit-radial-gradient(0 0, circle, rgba(204,0,0,0) 14px, #c00 15px);
-}
-div, div.round {
-    background-position: bottom left;
-    -moz-background-size: 50% 50%;
-    -webkit-background-size: 50% 50%;
-    background-size: 50% 50%;
-    background-repeat: no-repeat;
-}
-
-
   #profile-image {
     position: relative;
     width: 150px;
@@ -484,14 +459,13 @@ div, div.round {
   }
 
   .gnibl-button, wrapper{
-    width: 150px !important;
-    height: 150px !important;
+    width: 150px;
+    height: 150px;
   }
 
   .wrapper .file-upload{
-    width: 150px !important;
-    height: 150px !important;
-    opacity: 0;
+    width: 150px;
+    height: 150px;
     z-index: 345534;
   }
 
@@ -708,4 +682,38 @@ display: none;
 .arrow_right{
   background: url(image_path('arrow_right.png')) no-repeat;
   background-size: 100% 100%;
+}
+
+.login-button, login-button:hover{
+  background: #17aeff;
+  border: 0px none;
+  color: white;
+  height: auto !important;
+  font-size: 12px;
+  display: inline-block;
+  padding: 4px 4px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  width: 100px !important;
+  border-radius: 4px;
+  font-size: 20px;
+}
+
+.gnibl-logo{
+    background-size: 100% 100%;
+    height: auto;
+  }
+
+.gnibl-login-banner{
+  background: url(image_path('Three boxes on login.png'));
+  background-size: 100% 100%;
+  position: absolute;
+  right: 14%;
+  top: 6%;
+  height: 94%;
+  width: 43%
 }

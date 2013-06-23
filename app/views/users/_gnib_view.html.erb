@@ -1,15 +1,8 @@
-<style type="text/css">
-  #profile-image .gnibl-button {
-    background: url(<%=image_path(@user.avatar_url)%>);
-    background-size: 100% 100%;
-  }
-</style>
 <%= render "/users/header" %>
-<div style="position: relative; margin-top: 10px; background: rgba(0, 0, 0, 0.5); height: 100%; padding-bottom: 30px">
+<div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); height: 100%; padding-bottom: 30px">
   <div style="width:100%;">
     <%= render "/users/gnib_header" %>
     <div id="gnib_main_panel" style="width: 100%; background: transparent; position: relative">
-      <div align="center" id="gnib_panel_paginator" style="width: 100%"></div>
       <div id="gnib_panel" style="width: 100%; background: transparent; display: table-cell; vertical-align: top">
         <% unless @gnibs.nil? %>
           <%= render :partial=>"gnibs/new_gnib" %>
@@ -17,6 +10,9 @@
         <% if @gnibs.any? %>
           <%= render @gnibs %>
         <% end %>
+      </div>
+      <div align="center" style="width: 100%; margin-top: 10px">
+      <div align="center" id="gnib_panel_paginator" ></div>
       </div>
     </div>
   </div>

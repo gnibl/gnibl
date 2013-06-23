@@ -1,0 +1,21 @@
+<%= render 'shared/error_messages' %>
+<div style="width: 80%">
+  <%= form_for(@user) do |f| %>
+    <div>
+      <%= f.text_field :name, :class => 'input-option', :placeholder => 'First name', :style=>"width: 40%"%>
+      <%= f.text_field :name, :class => 'input-option', :placeholder => 'Last name', :style=>"width: 40%"%>
+    </div>
+  <div align="center" style="width: 100%">
+      <%= f.text_field :name, :class => 'input-option', :placeholder => 'dd', :style=>"width: 20%; text-align: center"%>
+      <%= f.text_field :name, :class => 'input-option', :placeholder => 'mm', :style=>"width: 20%; text-align: center"%>
+      <%= f.text_field :name, :class => 'input-option', :placeholder => 'yy', :style=>"width: 20%; text-align: center"%>
+    </div>
+    <%= f.hidden_field :city , :class => 'input-option'%>
+    <input class="input-option" id="city_name" name="city_name" placeholder="City" size="30" type="text" />
+    <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
+    <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
+    <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
+    <br/>
+    <%= f.submit("Join Gnibl",:class => "login-button" ) %>
+  <% end %>
+</div>
