@@ -123,6 +123,7 @@ respond_to do |format|
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     if @gnib.save
+      current_user.like(@gnib.id)
       redirect_to current_url
     else
       redirect_to "/users/#{current_user.username}"

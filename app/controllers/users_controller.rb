@@ -145,8 +145,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_username(params[:id])
     page = params[:page]
-    @gnibs = @user.gnibs.offset(page).limit(9)
-    @counts = @user.gnibs.count
+   # @gnibs = @user.gnibs.offset(page).limit(9)
+ @gnibs = @user.redefgnibs.offset(page).limit(9)
+    @counts = @user.redefgnibs.count
     @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
   end

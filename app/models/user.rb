@@ -42,8 +42,16 @@ validates :birthday, :presence => true
   has_many :followers, :through => :reverse_relationships , :source => :follower
 
   has_many :gniblings, :foreign_key => "user_id", :dependent => :destroy
+  
+  has_many :redefgnibs, :through => :gniblings, :source => :gnib
 
  # belongs_to :city
+
+  def redefined_mygnibs
+  #my gnibs include all gnibs I gnibbed and also mine
+#select all gnibs where id is in select gnib_id from gniblings where user_id = me
+
+  end
 
   def feed
     Gnib.from_users_followed_by(self)

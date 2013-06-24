@@ -47,10 +47,10 @@ class GnibsController < ApplicationController
 
   def titles
     term = params[:term]
-    @gnibs = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')")
-    respond_to do |format|
-      format.js { @gnibs.to_json}
-    end
+@gnibs = Gnib.where("title ILIKE '%"+term+"%'") 
+respond_to do |format|
+          format.js { render :json => @gnibs.to_json}
+      end
   end
 
   def comment
