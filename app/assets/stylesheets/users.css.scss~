@@ -2,15 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+select{
+  border: 1px solid #bbb;
+  width: 150;
+  float: left;
+  padding: 10px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
 .odd_line{
  background: tomato;
 }
 .even_line{
  background: blue;
-}
-table, td, th{
- border-spacing: 0px;
- text-align: left;
 }
 .header {
  background: linear-gradient(#232323, #787878, #aaaaaa);
@@ -18,43 +23,100 @@ table, td, th{
  background: -moz-linear-gradient('#232323', '#787878', '#aaaaaa');
 }
 
-body{
- background: url(image_path('background!!.gif')) repeat;
+html, body{
+ background: url(image_path('profile_background.png')) no-repeat;
+ background-size: 100% 100%;
  color: white;
  padding: 0px;
  margin: 0px;
- font-family: 'Avenir Light';
- overflow: auto;
+ font-family: 'avenir-light' !important;
+ overflow-y: auto;
+ width: 100%;
+ height: 100%;
+ overflow-x: hidden;
+}
+
+html, body, div, table, tbody, tr, td, span, input, textarea, button, select{
+font-family: 'avenir-light' !important;
+}
+
+#main{
+ position: relative;
+ min-height: 100%;
+ width: 100%;
+}
+
+div.line{
+ background: rgba(255, 255, 255, 0.3);
+ width: 2px;
+ background-size: 100% 100%;
+ height: 50%;
+}
+
+#profileSummary{
+ background: rgba(255, 255, 255, 0.4);
+ color: black;
+ border: 0px none;
 }
 
 td.border-right{
- border-right: thin solid white;
+ border-right: 2px solid rgba(255, 255, 255, 0.1);
  vertical-align: middle;
  text-align: center;
+ font-size: 15px;
+}
+td.border{
+ border-left: 2px solid rgba(255, 255, 255, 0.1);
+ border-right: 2px solid rgba(255, 255, 255, 0.1);
+ vertical-align: middle;
+ text-align: center;
+ font-size: 15px;
 }
 
 td.centered{
  text-align: center;
  vertical-align: middle;
+ margin: auto;
 }
 
 .profile-image{
- border-radius: 15px;
- background-image: url(image_path('maress.jpg'));
- background-size: 100% 100%;
- width: 130px;
- height: 130px;
+  border-radius: 15px;
+  background-image: url(image_path('maress.jpg'));
+  background-size: 100% 100%;
+  width: 130px;
+  height: 130px;
 }
 
 td.current_selected_header{
- opacity: 0.6;
- background: #0f0f0f;
+ background: rgba(15, 15, 15, 0.6);
  color: white;
 }
 
 .gnib{
- width: 16.33%;
- height: 170px;
+ width: 100%;
+ height: 100%;
+ border-radius: 10px;
+ margin: 0px;
+ padding: 0px;
+ margin-top: 3px;
+ cursor: pointer;
+}
+
+.align{
+ vertical-align: top;
+ text-align: center;
+ padding: 1px 5px;
+}
+
+.gnib-thumbnail{
+ width: 24.7%;
+ padding: 0px;
+ background: transparent;
+ border: 0px;
+ margin-bottom: 10px;
+ display: inline-block;
+ position: relative;
+ margin-top: 1px;
 }
 
 td.dot{
@@ -63,39 +125,67 @@ td.dot{
 }
 
 textarea.profile-status{
-  text-align: left !important; 
-  width: 300px; 
+  text-align: left !important;
+  width: 300px;
   color: #777777;
   background: #dddddd;
   border-radius: 5px;
 }
 
-div.circle{
+div.circle, .circular{
  background: #aaaaaa;
  width: 6px;
  height: 6px;
  border-radius: 6px;
+ margin: auto;
+}
+
+.circular, .blue-circular{
+ width: 30px;
+ background: rgba(10, 10, 10, 0.5);
+ height: 30px;
+ border-radius: 30px;
+ display: table-cell;
+ vertical-align: middle;
+}
+
+.blue-circular{
+ background: rgb(40, 80, 160);
 }
 
 td.prof-not-bd {
- color: blue;
+ color: white;
  text-align: center;
+ height: 30px;
  vertical-align: middle;
+}
+
+td.left-radius{
+ border-top-left-radius: 20px;
+ border-bottom-left-radius: 20px;
+}
+td.right-radius{
+ border-top-right-radius: 20px;
+ border-bottom-right-radius: 20px;
 }
 
 .login-main-panel{
  height: 100%;
  width: 100%;
  margin-top: 30px;
-vertical-align: middle;
+ position: relative;
+ vertical-align: middle;
 }
-.login-main{
- width: 33%;
- height: 80%;
- padding: 40px;
- border-radius: 100%;
- background: #DEE6E6;
- color: #aaaaaa;
+.login-main, .signup-main{
+  width: 30%;
+  height: auto;
+  padding: 40px;
+  border-radius: 1000px;
+  background: #DEE6E6;
+  color: #aaaaaa;
+}
+.signup-main{
+  width: 35% !important;
 }
 form, table{
 background: transparent;
@@ -114,7 +204,7 @@ td.centered{
 .input-option, input-option-hidden{
  border-radius: 15px;
  padding: 5px;
- text-align: center;
+ text-align: left;
  width: 80%;
 }
 
@@ -132,25 +222,119 @@ td.centered{
 }
 .gnibl-logo{
  width: 30%;
- margin-bottom: 40px;
+ height: auto;
 }
-.footer{
- background: url(image_path('footer.gif')) repeat;
+#footer{
  position: fixed;
- bottom: 0px;
- width:100%;
- margin-left: 0px;
- margin-right: 0px;
- padding: 0px;
+ bottom:0px;
+ width: 99%;
+ z-index: 3455;
+ background: rgba(0, 0, 0, 0.8);
+ background-size: 100% 100%;
+ height: 40px;
 }
+
+.thumbnail-control, .thumbnail-view{
+ background: rgba(0, 0, 0, 0.5);
+ height:  40px;
+ padding: 0px;
+ margin: 0px;
+ width: 100%;
+ vertical-align: middle;
+ z-index: 100;
+}
+
+.thumbnail-control{
+ top: 0px;
+ display: none;
+ position: absolute;
+}
+
+.thumbnail-view{
+ position: absolute;
+ bottom: 0px;
+ height: 80px;
+ width: 100%;
+ display: none;
+}
+
+.thumbnail-desc, .thumbnail-user-profile{
+ display: inline-block;
+ background: transparent;
+}
+
+.thumbnail-desc{
+ width: 240px;
+ float:left;
+ margin: 2px 10px;
+ text-align: left;
+}
+
+.thumbnail-user-profile{
+ border-radius: 100px;
+ width: 50px;
+ height: 50px;
+ float: left;
+}
+
+input[type="file"]{
+ height: 50px;
+ border: 0px;
+}
+
+.thumbnail-control .gnib-count, .thumbnail-control .gnib-gnib-button{
+ background: rgba(200, 200, 200, 0.5);
+ float: right;
+ margin: 5px;
+ width: 30px;
+ height: 30px;
+ border-radius: 5px;
+ zoom: 1;
+ z-index: 100;
+ display: table-cell;
+ vertical-align: middle;
+ color: black;
+ border: 0px;
+ font-size: 14px;
+}
+
+.thumbnail-desc .thumbnail-msg {
+ background: rgba(200, 200, 200, 0.3);
+ width: 220px;
+ border-radius: 5px;
+ height: 55px;
+ display: table-cell;
+ vertical-align: middle;
+ padding-left: 5px;
+ font-size: 11px;
+}
+
+.thumbnail-control .gnib-gnib-button{
+ background: url(image_path('FINALE-FINALE!!-_03.png')) no-repeat;
+ background-size: 100% 80%;
+}
+
+.gnibl-icon{
+ background: url(image_path('FINALE-FINALE!!-_03.png'));
+ background-size: 100% 100%;
+ border-radius: 100px;
+ width: 80px;
+ height: 80px;
+}
+
 .profile_header{
  background: url(image_path('header.gif')) repeat;
+ background-size: 100% 100%;
  padding: 0px;
  margin: 0px;
  top:0px;
  position: fixed;
- max-height: 100px;
- opacity: 0.4;
+ font-weight: normal;
+}
+.setting-header{
+ right: 0px;
+ text-align: center;
+ padding: 10px 5px;
 }
 a{
  color: white;
@@ -163,4 +347,381 @@ a:visited{
 a:hover{
  background: transparent;
  color: #888888;
+}
+
+.flat-style{
+ background: transparent !important;
+ border: 0px;
+}
+#gnib_something_dialog{
+  top: 0px;
+  position: fixed;
+}
+#gnib_something_dialog, #main_gnib_something_dialog{
+  display: none;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 343565;
+  vertical-align: middle;
+}
+
+#gnib_something_dialog #main_gnib_something_dialog{
+ position: absolute;
+ vertical-align: middle;
+ width: 100%;
+ display: table-cell;
+ background: transparent;
+ height: 100%;
+margin-top: 30px;
+}
+.dialog-title{
+ width: 50%;
+ background: transparent;
+ margin: auto;
+ height: 30px;
+ vertical-align: middle;
+ text-align: center;
+ font-size: 20px;
+ font-weight: bold;
+ color: black;
+}
+.dialog-content{
+ width: 80%;
+ margin: auto;
+}
+.dialog-close-icon{
+ background: url(image_path('x-icon.png'));
+ background-size: 100% 100%;
+ float: right;
+ width: 24px;
+ margin: 3px;
+ height: 24px;
+ border: 0px;
+}
+.gnib-icon{
+ background: url(image_path('x-gnib.png'));
+ background-size: 100% 20px;
+ background-position: left;
+ width: 40px;
+ position: relative;
+ height: 20px;
+ margin: 3px;
+ border: 0px;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #17aeff;
+}
+:-webkit-placeholder { /* WebKit browsers */
+    color:    #17aeff;
+}
+:-webkit-input-placeholder { /* WebKit browsers */
+    color:    #17aeff;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #17aeff;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #17aeff;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #17aeff;
+}
+
+.upload {
+    position:relative;
+    width:auto;
+}
+.realupload {
+    position:absolute;
+    top:30px;
+    right:0;
+    opacity:0;
+    -moz-opacity:0;
+    z-index:2;
+    width:auto;
+}
+form .fakeupload {
+    background-size: 100% 100%;
+}
+form .fakeupload input {
+    width:auto;
+}
+
+  #profile-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+  }
+
+  #profile-image .wrapper {
+    background: #000;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+  }
+
+  #profile-image .wrapper:hover {
+    opacity: 0.5;
+  }
+
+  .gnibl-button, wrapper{
+    width: 150px;
+    height: 150px;
+  }
+
+  .wrapper .file-upload{
+    width: 150px;
+    height: 150px;
+    z-index: 345534;
+  }
+
+  .wrapper .gnibl-file-logo{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50px;
+    left: 60px;
+  }
+
+  .wrapper .file-upload:hover{
+    opacity: 1;
+  }
+
+  #profile-image .gnibl-button {
+    background-size: 100% 100%;
+    border: none;
+    color: #666;
+    border-radius: 10px;
+    position: relative;
+    top: 0;
+    z-index: 1;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .gnibl-icon:hover{
+
+  }
+
+  .profile_header table td{
+    background: transparent;
+    text-align: center;
+  }
+
+  .update-profile{
+    position: absolute;
+    top: 60px;
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: none;
+    vertical-align: middle;
+  }
+  .profile-title, form .search-box{
+    font-size: 20px;
+    color: #17aeff;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    width: 100%;
+    padding: 3px;
+    font-size: 13px;
+    padding-left: 10px;
+    border: 0px none;
+  }
+
+  form .search-box{
+   min-width: 5%;
+   margin:auto;
+   float: left;
+   text-align: center
+  }
+
+  .messages{
+   z-index: 34555;
+   position: absolute;
+   top: 0px;
+   right: 10px;
+   background: rgba(0, 0, 0, 0.5);
+   height: 30px;
+   border-radius: 20px
+  }
+
+  table, td, th{
+    :-webkit-border-vertical-spacing: 0px;
+    border-spacing: 3px;
+    border-collapse: separate;
+  }
+
+.what{
+ display: table-cell;
+ vertical-align: middle;
+ width: 20px;
+ height: 20px;
+ border-radius: 40px;
+ background: rgba(23, 174, 255, 0.5);
+ float: right;
+ text-align: center;
+ padding-top: 2px;
+ cursor: pointer;
+}
+
+#messages, #indicator{
+position: absolute;
+top: 2px;
+right: 2px;
+border-radius: 12px;
+width: 180px;
+background: rgb(23, 123, 255);
+padding: 10px;
+z-index: 455532;
+display: none;
+}
+
+#indicator{
+ right: 45%;
+ text-align: center;
+ top: -300px;
+ display: block;
+}
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(255,255,255, 0.5);
+  }
+
+.previous_gnibs, .next_gnibs{
+  width: 60px;
+  height: 60px;
+  float: left;
+  margin-top: 25%;
+  position: fixed;
+  z-index: 3254;
+  background: transparent;
+  border: 0px none;
+}
+
+.next_gnibs{
+  right: 1%;
+}
+
+
+  div.gnibl-modal-mp{
+    background: rgba(0, 0, 0, 0.97);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 343565;
+    display: none;
+  }
+  .gnibl-modal{
+    background: url(image_path('background!!.gif')) repeat;
+    width: 98%;
+    height: 98%;
+    margin: 1%;
+    position: relative;
+    vertical-align:  middle;
+    text-align: center;
+    display: table-cell;
+  }
+
+  .gnibl-view{
+    width: 40%;
+    background: rgba(10,10, 10, 0.97);
+    height: 50%;
+    margin: auto;
+    margin-top: 40px;
+  }
+  .table-modal{
+    width: 100%;
+    height: 100%;
+    max-height: 450px;
+  }
+  .add-gnib-photo, .comment-on-gnib{
+    background: url(image_path('round_add.png')) no-repeat;
+    width: 30px;
+    height: 30px;
+    background-size: 100% 100%;
+    border: 0px none;
+    float:right;
+  }
+  .comment-on-gnib{
+    background: url(image_path('comment_check.png')) no-repeat;
+    background-size: 100% 100%;
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
+  }
+
+#gnib-comments{
+ width: 100% !important;
+ height: 100% !important;
+}
+
+.gnib_comment_737373737{
+ width: 100%;
+ padding-bottom: 10px;
+ position: absolute;
+ top: 0px;
+}
+
+.arrow_left, .arrow_right{
+  opacity: 0.3;
+  width: 50px;
+  height: 50px;
+  border: 0px none;
+}
+
+.arrow_left{
+  background: url(image_path('arrow_left.png')) no-repeat;
+  background-size: 100% 100%;
+}
+.arrow_right{
+  background: url(image_path('arrow_right.png')) no-repeat;
+  background-size: 100% 100%;
+}
+
+.login-button, login-button:hover{
+  background: #17aeff;
+  border: 0px none;
+  color: white;
+  height: auto !important;
+  font-size: 12px;
+  display: inline-block;
+  padding: 4px 4px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  width: 100px !important;
+  border-radius: 4px;
+  font-size: 20px;
+}
+
+.gnibl-logo{
+    background-size: 100% 100%;
+    height: auto;
+  }
+
+.gnibl-login-banner{
+  background: url(image_path('Three boxes on login.png'));
+  background-size: 100% 100%;
+  position: absolute;
+  right: 14%;
+  top: 6%;
+  height: 94%;
+  width: 43%
 }

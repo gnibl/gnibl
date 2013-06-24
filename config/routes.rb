@@ -22,6 +22,8 @@ Gnibl::Application.routes.draw do
       get 'search'
       get 'comment'
       get 'retcomment'
+get 'titles'
+	get 'test'
     end
   end
 

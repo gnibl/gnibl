@@ -1,34 +1,4 @@
 <%= render 'shared/error_messages' %>
-<script>
-var renderList = function (ul, item) {
-        return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append("<a>" + item.city_name+", "+item.country_name + "</a>")
-                .appendTo(ul);
-    };
-var simpleAutocomplete = {
-     source: '/users',
-     focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item.city_name);
-            $('#city_name').val(ui.item.city_name+", "+ui.item.country_name);
-            $('#user_city').val(ui.item.id);
-            return false;
-          },
-
-    select: function(event,ui){
-        $('#city_name').val(ui.item.city_name+", "+ui.item.country_name);
-          return false;
-          },    
-    minLength: 2,
-    delay: 250
-   };
-$(function() {
-$("#city_name").autocomplete(simpleAutocomplete)
-.data("uiAutocomplete")._renderItem = renderList;
-
-});
-</script>
-
 <div style="width: 80%">
   <%= form_for(@user) do |f| %>
     <div>

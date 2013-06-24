@@ -9,7 +9,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :city, :password_confirmation,:avatar, :username, :description
+  attr_accessible :name,:surname,:birthday, :email, :password, :city, :password_confirmation,:avatar, :username, :description
 
   has_secure_password
 
@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
     user.username = user.email
     user.username = user.username.gsub(/(@.+)/, "")
   end
-
+validates :birthday, :presence => true
   validates :name, :presence => true, :length => { :maximum => 80 }
-
+ validates :surname, :presence => true, :length => { :maximum => 80 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, :presence => true,
     :format =>     { :with => VALID_EMAIL_REGEX },

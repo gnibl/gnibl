@@ -11,8 +11,8 @@
 
 development:
   adapter: postgresql
-  username: posgres
-  database: gnibldb
+  username: marembo
+  database: gnibl_dev
   pool: 5
   timeout: 5000
 
@@ -23,12 +23,13 @@ development:
 test:
   adapter: postgresql
   username: marembo
-  database: gnibl_dev_test
+  database: gnibldb
   pool: 5
   timeout: 5000
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgresql
+  username: postgres
+  database: gnibldb
 #database: postgres://fzsgnegsmsilqz:t-#GLr2nvks3zLVRv36sXNoJfKB@ec2-54-227-255-156.compute-1.amazonaws.com:5432/d6ceodu8ata20f
   pool: 5
   timeout: 5000
