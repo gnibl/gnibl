@@ -73,24 +73,7 @@ end
     end
 
     return final_comment.html_safe
-    #    term = self.description[/#[\w\d]+\b/i]
-    #    if term
-    #      term = term[1..-1]
-    #    end
-    #    uid = self.description[/\@[\w\d]+\b/i]
-    #    if uid
-    #      uid = uid[1..-1]
-    #    end
-    #    puts "terms and uid #{term} #{uid}"
-    #    parsed_description = self.description
-    #    if(term)
-    #      parsed_description = parsed_description.gsub(/#[\w\d]+\b/i, '<a href="/gnibs/search?term='+term+'" style="color: #17aeff">\0</a>')
-    #    end
-    #    if uid
-    #     parsed_description = parsed_description.gsub(/\@[\w\d]+\b/i, '<a href="/users/search?uid='+uid+'" style="color: #17aeff">\0</a>')
-    #    end
-    #    puts "parsed_description #{parsed_description}"
-    #    parsed_description.html_safe
+
 >>>>>>> 8a3810469d6f0b5f66c91f3ba69301d77b01c47d
   end
 end

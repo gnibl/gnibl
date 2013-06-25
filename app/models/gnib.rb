@@ -16,7 +16,6 @@ class Gnib < ActiveRecord::Base
   end
 
   def parsed_description
-<<<<<<< HEAD
 comment = self.description
 final_comment = ""
 len = comment.length
@@ -45,35 +44,6 @@ pos = comment.index('@',pos+1)
 end
 end
  return final_comment.html_safe
-=======
-    comment = self.description
-    pos = -1
-    final_comment = ""
-    len = comment.length
-    lastpos = 0
-    while (pos = comment.index('@',pos+1))
-      tag =  comment[pos+1 ..len].split(" ")[0]
-      replacement_string = "<a style='color: #17aeff' href = '/users/search?uid="+tag+"'>"+tag+"</a>"
-      final_comment += comment[lastpos..pos] + replacement_string
-      lastpos = pos +1+tag.length
-      if t = tag.index('@',0) # cater for @address@gmail.com
-        pos = comment.index('@',pos+1)
-      end
-    end
-    lastpos = 0
-    pos = -1
-    while (pos = comment.index('#',pos+1))
-      tag =  comment[pos+1 ..len].split(" ")[0]
-      replacement_string = "<a style='color: #17aeff' href = '/gnibs/search?term="+tag+"'>"+tag+"</a>"
-      final_comment += comment[lastpos..pos] + replacement_string
-      lastpos = pos +1+tag.length
-      if t = tag.index('@',0) # cater for @address@gmail.com
-        pos = comment.index('@',pos+1)
-      end
-    end
 
-    return final_comment.html_safe
-
->>>>>>> 8a3810469d6f0b5f66c91f3ba69301d77b01c47d
   end
 end
