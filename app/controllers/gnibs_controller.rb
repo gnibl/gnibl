@@ -1,6 +1,57 @@
 class GnibsController < ApplicationController
   before_filter :signed_in_user
 
+def valid?(url)
+  uri = URI.parse(url)
+  uri.kind_of?(URI::HTTP)
+rescue URI::InvalidURIError
+  false
+end
+
+def test
+url = params[:url]
+uri = URI.parse(url)
+baseurl = uri.scheme+"://"+uri.host
+@urls = ['']
+doc = Nokogiri::HTML(open(uri))
+sfinder = "/html/body//img"
+count = 0;
+doc.xpath(sfinder).each do |node|
+    parturl = node.xpath("@src[not(contains(.,'footer') 
+		or contains(.,'logo')
+		or contains(.,'spinners')
+		)]").text #this is the url of an image avoid footers, ads etc
+    #find if the part url is full or not
+    fullurl = ""
+    if valid?(parturl)
+       fullurl= parturl
+    else
+       fullurl = baseurl+parturl
+       end
+    unless parturl.nil? or parturl.blank? or parturl.empty? # or valid?(fullurl)
+	   @urls[count] = fullurl
+	count = count + 1
+    end
+   
+   end
+
+@image_sources = ['']
+#return
+count = count -1
+upcount = 0 #limit to 3 images This will be kept in a method that 
+while count > -1
+#	begin
+      locate =URI.parse(@urls[count]) 
+     file = open(locate,'rb').read
+     @image_sources[count]  = Base64.encode64(file)       
+#	rescue Exception => e
+	@error = "some error"
+#	end
+count = count -1
+ end
+
+end
+
   def gnibstream
     @city_id = current_user.city
     @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
@@ -47,10 +98,10 @@ class GnibsController < ApplicationController
 
   def titles
     term = params[:term]
-    @gnibs = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')")
-    respond_to do |format|
-      format.js { @gnibs.to_json}
-    end
+@gnibs = Gnib.where("title ILIKE '%"+term+"%'") 
+respond_to do |format|
+          format.js { render :json => @gnibs.to_json}
+      end
   end
 
   def comment
@@ -68,6 +119,14 @@ class GnibsController < ApplicationController
       format.js {render "shared/gnib_modal"}
     end
   end
+
+def upvotecomment
+    @comment_id = params[:comment_id]
+    @comment.update_attribute("votes",@comment.votes + 1)
+    respond_to do |format|
+       format.js {render "shared/gnib_modal"}
+    end
+end
 
   def retcomment
     gnib_id = params[:gnib][:gnib_id]
@@ -105,7 +164,7 @@ class GnibsController < ApplicationController
   end
 
   def create
-    city_id = current_user.city
+    city_id = current_user.city.id
     title = ''
     comment = params[:gnib][:description]
     unless(comment.nil?)
@@ -122,7 +181,9 @@ class GnibsController < ApplicationController
     @gnib.image = params[:image]
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
+    flash[:notice] = @success
     if @gnib.save
+      current_user.like(@gnib.id)
       redirect_to current_url
     else
       redirect_to "/users/#{current_user.username}"
