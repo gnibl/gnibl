@@ -23,6 +23,7 @@ Gnibl::Application.routes.draw do
     collection do
       get 'search'
       get 'comment'
+      get 'reportgnib'
       get 'retcomment'
       get 'titles'
       get 'test'

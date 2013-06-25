@@ -8,6 +8,7 @@ class Gnib < ActiveRecord::Base
 
   mount_uploader :image, GnibUploader
   has_many :gniblings, :foreign_key => "gnib_id"
+  has_many :reporteds, :foreign_key => "gnib_id"
 
   def self.from_users_followed_by(user)
    ids = "SELECT followed_id from relationships WHERE follower_id = :user_id"
