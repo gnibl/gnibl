@@ -1,9 +1,24 @@
 <% if(gnib.image && gnib.image.url) %>
-  <div id="<%=gnib.id%>" onmouseover="showGnibThumbnailControl('thumbnail-control_<%=gnib.id%>');
-        showGnibThumbnailControl('thumbnail-view_<%=gnib.id%>');"
-       onmouseout="hideGnibThumbnailControl('thumbnail-control_<%=gnib.id%>');
-        hideGnibThumbnailControl('thumbnail-view_<%=gnib.id%>');"
+  <div id="<%=gnib.id%>"
        class="gnib-thumbnail" style="margin-bottom: 5px;">
+    <script type="text/javascript">
+      $('#<%= gnib.id %>').hover(function() {
+        $('#thumbnail-control_<%=gnib.id%>').slideDown(1200, function() {
+          $(this).show();
+        });
+        $('#thumbnail-view_<%=gnib.id%>').slideUp(1200, function() {
+          $(this).show();
+        });
+      },
+              function() {
+                $('#thumbnail-control_<%=gnib.id%>').slideUp(1200, function() {
+                  $(this).hide();
+                });
+                $('#thumbnail-view_<%=gnib.id%>').slideDown(1200, function() {
+                  $(this).hide();
+                });
+              });
+    </script>
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control">
       <table>
         <tbody>
@@ -53,7 +68,7 @@
         <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
       </button>
     <% end %>
-    <div id="thumbnail-view_<%=gnib.id%>" class="thumbnail-view" style="overflow: hidden;">
+    <div id="thumbnail-view_<%=gnib.id%>" class="thumbnail-view" style="overflow: hidden; bottom: 0px">
       <table>
         <tbody>
           <tr>
