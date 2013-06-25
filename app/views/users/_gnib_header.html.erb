@@ -3,7 +3,7 @@
   <table style="background: rgba(23, 174, 255, 0.3); bottom: 0px; width: 40%; margin-top: 10px; border-radius: 5px; min-width: 490px">
     <tbody>
       <tr style="background: transparent;">
-        <td class="prof-not-bd left-radius" >
+        <td class="prof-not-bd left-radius" <% if request.path == "/users/#{current_user.username}/feed" %> style="background: rgba(0, 0, 0, 0.2)" <% end %> >
           <a href="/users/<%=current_user.username%>/feed">Gnibfeeds(<%=current_user.feed.count%>)</a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
@@ -11,13 +11,13 @@
           <td class="prof-not-bd">Notifications</td>
           <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <% end %>
-        <td class="prof-not-bd">
+        <td class="prof-not-bd" <% if request.path == "/users/#{@user.username}/following" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
           <a id="gnibler_count" href="/users/<%=@user.username%>/following">
             Gniblers(<%=@user.followed_users.count%>)
           </a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
-        <td class="prof-not-bd" >
+        <td class="prof-not-bd right-radius" <% if request.path == "/users/#{current_user.username}" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
           <a href="/users/<%=current_user.username%>">
             My gnibs(<%=current_user.gnibs.count%>)
           </a>
