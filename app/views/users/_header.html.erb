@@ -70,8 +70,18 @@
               <tr>
                 <td>
                   <div class="profile-title" style="width: 100%;">
-                    <%=@user.name %><span style="color: white; border-right: 2px solid rgba(255, 255, 255, 0.2); margin-left: 5px;"></span>
-                    <span ><%=@user.city%></span>
+                    <%=  @user.name%>
+                    <% if @user.surname %>
+                      <%=' '+@user.surname %>
+                    <% end %>
+                    <% if @user.city %>
+                      <span style="color: white; border-right: 2px solid rgba(255, 255, 255, 0.2); margin: 5px;"></span>
+                      <span ><%=@user.city.city_name%></span>
+                      <% if @user.city.country_name%>
+                        <span style="color: white; border-right: 2px solid rgba(255, 255, 255, 0.2); margin: 5px;"></span>
+                        <span ><%=@user.city.country_name%></span>
+                      <% end %>
+                    <% end %>
                   </div>
                 </td>
               </tr>
