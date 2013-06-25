@@ -13,9 +13,9 @@
 			:prompt=> { month: 'mm', day: 'dd', year: 'yy' }		
 	%>
   </div>
-    <%= f.hidden_field :city , :class => 'input-option'%>
-    <input class="input-option" id="city_name" name="city_name" placeholder="City" size="30" type="text" />
-    <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
+
+   <%= f.collection_select :city, @cities, :id, :city_name, :prompt => "City" %>
+     <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
     <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
     <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
     <br/>

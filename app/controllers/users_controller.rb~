@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+@cities = City.all
   end
 
   def next_search
@@ -110,13 +111,11 @@ class UsersController < ApplicationController
 
 
   def create
-    #    params[:city] ||= params[:city].inject({}) do |h,(k,v)|
-    #	h[k] = v.to_i
-    #	h
-    #	end
-    params[:user]['city'] = params[:user]['city'].to_i
+#    params[:user]['city'] = params[:user]['city'].to_i
+city_id = params[:user]['city'].to_i
+@city = City.find(city_id)
+params[:user]['city'] = @city
     @user = User.new(params[:user])
-    @user.avatar = params[:file]
     if @user.save
       sign_in(@user)
       redirect_to "/users/#{@user.username}/feed"
@@ -145,8 +144,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_username(params[:id])
     page = params[:page]
-    @gnibs = @user.gnibs.offset(page).limit(9)
-    @counts = @user.gnibs.count
+   # @gnibs = @user.gnibs.offset(page).limit(9)
+ @gnibs = @user.redefgnibs.offset(page).limit(9)
+    @counts = @user.redefgnibs.count
     @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
   end

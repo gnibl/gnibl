@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624080734) do
+ActiveRecord::Schema.define(:version => 20130625081521) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20130624080734) do
     t.integer  "city"
     t.string   "surname"
     t.datetime "birthday"
+    t.integer  "city_id"
   end
 
 end

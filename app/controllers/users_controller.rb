@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+@cities = City.all
   end
 
   def next_search
@@ -82,8 +83,11 @@ class UsersController < ApplicationController
 
   def following
     @user = User.find_by_username(params[:id])
-    @users = @user.followed_users.limit(9)
-    @counts = @user.followed_users.count
+    #@users = @user.followed_users.limit(9)
+#    @counts = @user.followed_users.count
+#TEMPORARY 
+@users = User.all
+@counts = @users.count
     render "show_follow"
   end
   def next_following
@@ -110,13 +114,11 @@ class UsersController < ApplicationController
 
 
   def create
-    #    params[:city] ||= params[:city].inject({}) do |h,(k,v)|
-    #	h[k] = v.to_i
-    #	h
-    #	end
-    params[:user]['city'] = params[:user]['city'].to_i
+#    params[:user]['city'] = params[:user]['city'].to_i
+city_id = params[:user]['city'].to_i
+@city = City.find(city_id)
+params[:user]['city'] = @city
     @user = User.new(params[:user])
-    @user.avatar = params[:file]
     if @user.save
       sign_in(@user)
       redirect_to "/users/#{@user.username}/feed"

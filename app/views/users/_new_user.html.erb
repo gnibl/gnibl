@@ -1,34 +1,4 @@
 <%= render 'shared/error_messages' %>
-<script>
-var renderList = function (ul, item) {
-        return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append("<a>" + item.city_name+", "+item.country_name + "</a>")
-                .appendTo(ul);
-    };
-var simpleAutocomplete = {
-     source: '/users',
-     focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item.city_name);
-            $('#city_name').val(ui.item.city_name+", "+ui.item.country_name);
-            $('#user_city').val(ui.item.id);
-            return false;
-          },
-
-    select: function(event,ui){
-        $('#city_name').val(ui.item.city_name+", "+ui.item.country_name);
-          return false;
-          },    
-    minLength: 2,
-    delay: 250
-   };
-$(function() {
-$("#city_name").autocomplete(simpleAutocomplete)
-.data("uiAutocomplete")._renderItem = renderList;
-
-});
-</script>
-
 <div style="width: 80%">
   <%= form_for(@user) do |f| %>
     <div>
@@ -43,9 +13,9 @@ $("#city_name").autocomplete(simpleAutocomplete)
 			:prompt=> { month: 'mm', day: 'dd', year: 'yy' }		
 	%>
   </div>
-    <%= f.hidden_field :city , :class => 'input-option'%>
-    <input class="input-option" id="city_name" name="city_name" placeholder="City" size="30" type="text" />
-    <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
+
+   <%= f.collection_select :user, :city, @cities, :id, :city_name, :prompt => "City" %>
+     <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
     <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
     <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
     <br/>

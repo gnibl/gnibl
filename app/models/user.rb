@@ -9,7 +9,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name,:surname,:birthday, :email, :password, :city, :password_confirmation,:avatar, :username, :description
+  attr_accessible :name,:surname, :city, :birthday, :email, :password,  :password_confirmation,:avatar, :username, :description
 
   has_secure_password
 
@@ -45,7 +45,7 @@ validates :birthday, :presence => true
   
   has_many :redefgnibs, :through => :gniblings, :source => :gnib
 
- # belongs_to :city
+  belongs_to :city
 
   def redefined_mygnibs
   #my gnibs include all gnibs I gnibbed and also mine
