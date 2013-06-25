@@ -14,7 +14,7 @@
 	%>
   </div>
 
-   <%= f.collection_select :user, :city, @cities, :id, :city_name, :prompt => "City" %>
+   <%= f.collection_select  :city, @cities, :id, :city_name, :prompt => "City" %>
      <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
     <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
     <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
