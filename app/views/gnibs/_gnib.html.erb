@@ -5,17 +5,47 @@
         hideGnibThumbnailControl('thumbnail-view_<%=gnib.id%>');"
        class="gnib-thumbnail" style="margin-bottom: 5px;">
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control">
-      <div class="gnib-count" style="width: 100px; float: left; display: none"><%= image_tag(image_path('busy.png')) %></div>
-      <div class="gnib-count" style="font-size: 20px;"  align="center">
-        <div id="gnib_count_<%=gnib.id%>" style="width: 100%; height:100%; padding-top:5px" align="center"><%=gnib.gniblings.count%></div>
-      </div>
-      <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true, :update=>"indicator") do |f| %>
-        <div>
-          <%= f.hidden_field :gnib_id  %>
-          <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
-        </div>
-        <%= f.submit "",:title => "gnib", :class => "gnib-gnib-button"%>
-      <% end %>
+      <table>
+        <tbody>
+          <tr>
+            <td style="width: 60%; font-size: 25px; border-right: 2px solid #aaaaaa; text-align: center; color: #17aeff">
+              <%= gnib.title %>
+            </td>
+            <td style="text-align: left; padding: 0px">
+              <div class="gnib-controll">
+                <style type="text/css">
+                  form {
+                    margin: 0px;
+                  }
+                </style>
+                <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true, :update=>"indicator") do |f| %>
+                  <div >
+                    <%= f.hidden_field :gnib_id  %>
+                    <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
+                  </div>
+                  <table>
+                    <tr style="border-spacing: 0px">
+                      <td style="text-align: left; padding: 0px">
+                        <%= f.submit "",:title => "gnib", :class => "gnib-gnib-button", :style=>"margin: 0px; margin-top: 5px"%>
+                      </td>
+                      <td style="text-align: left">
+                        <div style="color: #17aeff; font-size: 15px">Gnib it!</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <div class="gnib-count" style="font-size: 20px; width: 100%; height: 30px; color: white"  align="center">
+                          <div id="gnib_count_<%=gnib.id%>" style="width: 100%; padding:5px" align="center"><%=gnib.gniblings.count%> gnibs</div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <%=form_for(gnib, :remote=>true, :url => {:action => "retcomment", :controller => "gnibs"}, :method => "get") do |f|%>
       <%= f.hidden_field :gnib_id, :value => "#{gnib.id}" %>

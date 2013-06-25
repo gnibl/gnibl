@@ -5,19 +5,17 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
 
- <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
-  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
+    <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
+    <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
 
     <%= csrf_meta_tags %>
     <script type="text/javascript">
-
-
       var current_page = 0; //this is a global variable used to track the current gnib page
       function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
       function paginate() {
         $(function() {
@@ -126,10 +124,9 @@
     </div>
     <script type="text/javascript">
       function showGnibThumbnailControl(id) {
-        var div = document.getElementById(id);
-        if (div) {
-          div.style.display = "table-cell";
-        }
+        $('#' + id).slideDown(600, function() {
+          this.show();
+        });
       }
       function hideGnibThumbnailControl(id) {
         var div = document.getElementById(id);

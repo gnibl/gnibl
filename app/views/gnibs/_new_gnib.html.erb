@@ -1,49 +1,48 @@
 
 <script type="text/javascript">
 
-var renderTitles= function (ul, item) {	
-        return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append("<a>" + item.title+"</a>")
-                .appendTo(ul);
-    };
+  var renderTitles = function(ul, item) {
+    return $("<li></li>")
+            .data("item.autocomplete", item)
+            .append("<a>" + item.title + "</a>")
+            .appendTo(ul);
+  };
 
-var triggerChar = "#";
- var autoc = {
-     source: '/gnibs/titles',
-     focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item);
-		var city_identi = ui.item.title;
-		var prev = $('#gnib_description').val();
-		var pos = prev.lastIndexOf(triggerChar);
-		if (pos !== -1){
-		   var content = prev.substring(0,pos+1);
-		$('#gnib_description').val( content+city_identi);			
-		}
-            return false;
-          },
+  var triggerChar = "#";
+  var autoc = {
+    source: '/gnibs/titles',
+    focus: function(event, ui) {
+      var de = "tr  " + JSON.stringify(ui.item);
+      var city_identi = ui.item.title;
+      var prev = $('#gnib_description').val();
+      var pos = prev.lastIndexOf(triggerChar);
+      if (pos !== -1) {
+        var content = prev.substring(0, pos + 1);
+        $('#gnib_description').val(content + city_identi);
+      }
+      return false;
+    },
+    select: function(event, ui) {
+      var city_identi = ui.item.title;
+      var prev = $('#gnib_description').val();
+      var pos = prev.lastIndexOf(triggerChar);
+      if (pos !== -1) {
+        var content = prev.substring(0, pos + 1);
+        $('#gnib_description').val(content + city_identi);
+      }
 
-    select: function(event,ui){
-            var city_identi = ui.item.title;
-		var prev = $('#gnib_description').val();
-		var pos = prev.lastIndexOf(triggerChar);
-		if (pos !== -1){
-		   var content = prev.substring(0,pos+1);
-		$('#gnib_description').val( content + city_identi);			
-		}
-
-          return false;
-          },    
+      return false;
+    },
     minLength: 2,
     triggerOnSpecial: true,
     specialChar: triggerChar,
     delay: 250
-   };
+  };
 
-$(function() {
-$("#gnib_description").autocomplete(autoc)
-.data("uiAutocomplete")._renderItem = renderTitles;
-});
+  $(function() {
+    $("#gnib_description").autocomplete(autoc)
+            .data("uiAutocomplete")._renderItem = renderTitles;
+  });
 
 ///
 </script>
@@ -51,6 +50,8 @@ $("#gnib_description").autocomplete(autoc)
 <div id="new_gnib_727272727_<%=@gnib.id%>"  class="gnib-thumbnail" style="margin-bottom: 5px; float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px ">
   <%= form_for(@gnib, :remote=>true) do |f| %>
     <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
+    <input id="current_term_34783784980" type="hidden" name="term" value=""/>
+    <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
     <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
     <div id="gnib_description_1" style="width: 90%; margin: auto; background: rgba(255, 255, 255, 0.2); margin-top: 10px">
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
@@ -75,4 +76,7 @@ $("#gnib_description").autocomplete(autoc)
 <script type="text/javascript">
   document.getElementById('current_page_3447384734883').value = current_page;
   document.getElementById('current_url_34783784980').value = location.pathname;
+  document.getElementById('current_term_34783784980').value = getParameterByName("term");
+  document.getElementById('current_uid_34783784980').value = getParameterByName("uid");
+  ;
 </script>
