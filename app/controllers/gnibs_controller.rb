@@ -195,7 +195,7 @@ end
     flash[:notice] = @success
     if @gnib.save
 #handle tagged people
-   inform_tagged_gniblers(current_user, @gnib)
+#   inform_tagged_gniblers(current_user, @gnib)
       current_user.like(@gnib.id)
       redirect_to current_url
     else

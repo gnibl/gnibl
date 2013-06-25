@@ -24,7 +24,7 @@
     %>
     </div>
 <<<<<<< HEAD
-    <%= f.collection_select  :city, @cities, :id, :city_name, :prompt => "City" %>
+    <%= f.collection_select :city, @cities, :id, :city_name, :prompt => "City" %>
 =======
     <%= f.collection_select :city, @cities, :id, :city_name, :prompt => "City" %>
 >>>>>>> d40502cd904afc7af568a2b323f63993a47c45a0
