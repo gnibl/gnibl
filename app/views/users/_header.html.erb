@@ -7,7 +7,7 @@
   }
 </style>
 <div class="profile_header" style="width: 99%; z-index: 3455; background: rgba(0, 0, 0, 0.8)">
-  <table style="width: 100%;" cellspacing="10">
+  <table style="width: 100%; font-size: 16px" cellspacing="10">
     <tbody>
       <tr>
         <td class="border-right" style="width: 14.3%;">
@@ -35,12 +35,12 @@
           </a>
         </td>
         <% if(current_user?(@user)) %>
-          <td id="settings" class="centered border" style="width: 14.3%">
-            <button class="flat-style" style="color: #bbb;">settings</button>
+          <td id="settings" class="border" style="width: 14.3%">
+            <button class="flat-style" style="color: #bbb; font-size: 20px">settings</button>
           </td>
           <td class="centered" style="width: 14.3%">
             <div id="setting-header" class="setting-header" style="display: block">
-              <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold"%>
+              <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold; font-size: 20px"%>
             </div>
           </td>
         <% end %>

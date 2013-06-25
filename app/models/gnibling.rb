@@ -5,5 +5,6 @@ class Gnibling < ActiveRecord::Base
 
   validates :gnib_id, :presence => true
   validates :user_id, :presence => true
+ 
 
 end

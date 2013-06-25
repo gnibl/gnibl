@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-@cities = City.all
+    @cities = City.all
   end
 
   def next_search
@@ -84,10 +84,10 @@ class UsersController < ApplicationController
   def following
     @user = User.find_by_username(params[:id])
     #@users = @user.followed_users.limit(9)
-#    @counts = @user.followed_users.count
-#TEMPORARY 
-@users = User.all
-@counts = @users.count
+    #    @counts = @user.followed_users.count
+    #TEMPORARY
+    @users = User.all
+    @counts = @users.count
     render "show_follow"
   end
   def next_following
@@ -114,10 +114,10 @@ class UsersController < ApplicationController
 
 
   def create
-#    params[:user]['city'] = params[:user]['city'].to_i
-city_id = params[:user]['city'].to_i
-@city = City.find(city_id)
-params[:user]['city'] = @city
+    #    params[:user]['city'] = params[:user]['city'].to_i
+    city_id = params[:user]['city'].to_i
+    @city = City.find(city_id)
+    params[:user]['city'] = @city
     @user = User.new(params[:user])
     if @user.save
       sign_in(@user)
@@ -147,8 +147,8 @@ params[:user]['city'] = @city
   def show
     @user = User.find_by_username(params[:id])
     page = params[:page]
-   # @gnibs = @user.gnibs.offset(page).limit(9)
- @gnibs = @user.redefgnibs.offset(page).limit(9)
+    # @gnibs = @user.gnibs.offset(page).limit(9)
+    @gnibs = @user.redefgnibs.offset(page).limit(9)
     @counts = @user.redefgnibs.count
     @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
