@@ -7,14 +7,28 @@
     </div>
     <div>
       <%= f.date_select :birthday,
+ 			:class => 'input-option',
+        :start_year => 1970,
+        :order => [ :day, :month, :year],
+        :prompt=> { :month => 'mm', :day => 'dd', :year => 'yy' }
+    %>
+    </div>
+    <%= f.collection_select  :city, @cities, :id, :city_name, :prompt => "City" %>
+    <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
+
         :class => 'input-option',
         :start_year => 1970,
         :order => [ :day, :month, :year],
         :prompt=> { :month => 'mm', :day => 'dd', :year => 'yy' }
     %>
     </div>
+<<<<<<< HEAD
     <%= f.collection_select :city, @cities, :id, :city_name, :prompt => "City" %>
+=======
+    <%= f.collection_select :city, @cities, :id, :city_name, :prompt => "City" %>
+>>>>>>> d40502cd904afc7af568a2b323f63993a47c45a0
     <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
+
     <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
     <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
     <br/>

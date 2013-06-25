@@ -104,6 +104,16 @@ class GnibsController < ApplicationController
     end
   end
 
+def reportgnib
+    @gnib_id = params[:gnib][:gnib_id]
+    @user_id = current_user.id   
+    Reported.create(:reporter_id => @user_id, :gnib_id => @gnib_id)    
+    @gnib = Gnib.find(@gnib_id)
+    respond_to do |format|
+      format.js {render "shared/gnib_modal"}
+    end
+end
+
   def comment
     @gnib_id = params[:gnib][:gnib_id]
     @user_id = current_user.id
@@ -164,6 +174,7 @@ class GnibsController < ApplicationController
 
   def create
     city_id = current_user.city.id
+#retrieve title from # sign
     title = ''
     comment = params[:gnib][:description]
     unless(comment.nil?)
@@ -175,6 +186,7 @@ class GnibsController < ApplicationController
       end
       params[:gnib][:title] = title
     end
+
     params[:gnib][:city] = city_id
     @gnib = current_user.gnibs.build(params[:gnib])
     @gnib.image = params[:image]
@@ -182,6 +194,8 @@ class GnibsController < ApplicationController
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success
     if @gnib.save
+#handle tagged people
+#   inform_tagged_gniblers(current_user, @gnib)
       current_user.like(@gnib.id)
       redirect_to current_url
     else
