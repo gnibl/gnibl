@@ -181,6 +181,7 @@ end
     @gnib.image = params[:image]
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
+    flash[:notice] = @success
     if @gnib.save
       current_user.like(@gnib.id)
       redirect_to current_url

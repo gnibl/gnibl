@@ -164,7 +164,7 @@ end
   end
 
   def create
-    city_id = current_user.city
+    city_id = current_user.city.id
     title = ''
     comment = params[:gnib][:description]
     unless(comment.nil?)
