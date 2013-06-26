@@ -1,5 +1,4 @@
-module GniblingsHelper
-
+module GniblUtil
 def inform_tagged_gniblers(user, gnib)
 comment = gnib.description
 count_email = 0
@@ -25,7 +24,7 @@ emails = []
 while count_tagged > -1
 tag = tagged[count_tagged]
 text = "you were tagged"
-send_notifications(user,gnib, tag)
+#send_notifications(user,gnib, tag)
 count_tagged -= 1
 end
 
@@ -35,16 +34,16 @@ end
 while count_email > -1
 email = emails[count_email]
 text = "welcome to gnibl fellow"
-invite_by_mail(user, gnib, email)
+#invite_by_mail(user, gnib, email)
 count_email -= 1
 end
 
 end
 
 def send_notifications(from,gnib, to)
-target_user = User.find_by_username(to)
-message = from.name + " has tagged you "
-Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
+#target_user = User.find_by_username(to)
+#message = from.name + " has tagged you "
+#Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
 end
 
 def invite_by_mail(user, gnib, email)

@@ -19,8 +19,9 @@ gem 'carrierwave'
 gem 'fog'
 gem 'aws-sdk'
 gem 'rmagick'
+gem 'nokogiri
 
-gem 'jquery-rails',2.0.2'
+gem 'jquery-rails','2.0.2'
 
 group :development, :test do
        gem 'rspec-rails'

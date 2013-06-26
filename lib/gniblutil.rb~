@@ -1,5 +1,4 @@
-module GniblingsHelper
-
+module gniblutil
 def inform_tagged_gniblers(user, gnib)
 comment = gnib.description
 count_email = 0
