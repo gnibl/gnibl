@@ -19,6 +19,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'aws-sdk'
 gem 'rmagick'
+gem 'nokogiri'
 
 gem 'jquery-rails','2.0.2'
 

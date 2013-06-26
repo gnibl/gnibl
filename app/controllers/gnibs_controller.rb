@@ -1,4 +1,10 @@
 class GnibsController < ApplicationController
+  require 'base64'
+  require 'open-uri'
+  require 'nokogiri'
+  require 'gnibl_util'
+  include GniblUtil
+
   before_filter :signed_in_user
 
   def valid?(url)
@@ -33,19 +39,20 @@ class GnibsController < ApplicationController
         count = count + 1
       end
     end
-
     @image_sources = ['']
+    #return #DEBUG
+
     #return
     count = count -1
     upcount = 0 #limit to 3 images This will be kept in a method that
     while count > -1
-      #	begin
-      locate =URI.parse(@urls[count])
-      file = open(locate,'rb').read
-      @image_sources[count]  = Base64.encode64(file)
-      #	rescue Exception => e
-      @error = "some error"
-      #	end
+      begin
+        locate =URI.parse(@urls[count])
+        file = open(locate,'rb').read
+        @image_sources[count]  = Base64.encode64(file)
+      rescue Exception => e
+        @error = "some error"
+      end
       count = count -1
     end
 
@@ -195,6 +202,8 @@ class GnibsController < ApplicationController
     if @gnib.save
       #handle tagged people
       #   inform_tagged_gniblers(current_user, @gnib)
+      #handle tagged people
+      inform_tagged_gniblers(current_user, @gnib)
       current_user.like(@gnib.id)
       redirect_to current_url
     else

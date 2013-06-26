@@ -1,0 +1,14 @@
+image goes here
+<% @urls.each do |url| %>
+
+<br>
+<% end%>
+
+<% count = 0 %>
+<% @image_sources.each do |source| %>
+<%= @urls[count] %>
+<img src = "data:image/png;base64,<%=source%>" />
+<% count = count +1 %>
+<br>
+<% end%>
+<img src = "data:image/png;base64,<%=@imgsrc%>" />
