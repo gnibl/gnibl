@@ -1,4 +1,4 @@
-<div style="background: rgba(255, 255, 255, 0.5); float: right; margin: 40px; border-radius: 15px; overflow-y: auto" title="close">
+<div style="background: rgba(255, 255, 255, 0.5); float: right; margin: 40px; border-radius: 15px; " title="close">
   <button class="dialog-close-icon" onclick="getElementById('gnibl-modal-mp').style.display = 'none';" style="border: 0px none"></button>
 </div>
 <div id="gnibl-view" class="gnibl-view" style="height: auto">
@@ -9,10 +9,10 @@
       </td>
     </tr>
     <tr>
-      <td class="centered" style="width: 50px">
+      <td id="left_navigation" class="centered" style="width: 50px;display: none">
         <button onclick="commentSlider.next();" class="arrow_left"></button>
       </td>
-      <td class="centered" style="background: rgba(255, 255, 255, 0.1 ); padding: 10px">
+      <td id="gnibView" class="centered" style="background: rgba(255, 255, 255, 0.1 ); padding: 10px">
         <%=image_tag(image_path(gnib.image.url), :style=>"width: 300px; height: 250px")%>
         <div style="width: 100%; padding-bottom: 10px; position: relative">
           <%=image_tag(image_path(gnib.user.avatar_url), :style=>"margin-bottom: 10px; width: 50px; height: 50px; border-radius: 100px; float: left; margin-left: 30px;margin-top: 5px")%>
@@ -23,13 +23,6 @@
               <div style="width: 70%; float: left"><%= gnib.description %></div>
               <button title="Add a gnib photo" class="add-gnib-photo"></button>
               <button id="commentBtn" title="Comment on this gnib" class="comment-on-gnib" onclick="showComment();"></button>
-              <script type="text/javascript">
-                $('#commentBtn').click(function(){
-                  $('#gnib-comment-panel').slideDown(600, function(){
-                    this.show();
-                  });
-                });
-              </script>
             </div>
             <br/>
             <div id="gnib-comment-panel" style="background: transparent; width: 100%; display: none">
@@ -42,15 +35,15 @@
           </div>
         </div>
       </td>
-      <td class="centered" style="width: 50px">
+      <td id="right_navigation" class="centered" style="width: 50px;display: none">
         <button onclick="commentSlider.previous();" class="arrow_right"></button>
       </td>
     </tr>
     <% if comments.any? %>
-    <tr id="commentsBoxPanel" style="background: rgba(40, 40, 40, 0.8); text-align: center; height: 100px; display: none">
-        <td colspan="3" style="vertical-align: middle; padding: 0px; margin: 0px">
-          <button style="float: right" onclick="commentSlider.next();" class="arrow_right"></button>
-          <button style="float: left;" onclick="commentSlider.previous();" class="arrow_left"></button>
+      <tr id="commentsBoxPanel" style="background: rgba(40, 40, 40, 0.8); text-align: center; height: 100px; display: none">
+        <td  colspan="3" style="vertical-align: middle; padding: 0px; margin: 0px">
+          <button id="right_navigation_btn" style="float: right" onclick="commentSlider.next();" class="arrow_right"></button>
+          <button id="left_navigation_btn" style="float: left;" onclick="commentSlider.previous();" class="arrow_left"></button>
           <div id="gnib-main_panel_comments" style="width: 72%; margin-top: 0px; float: left">
             <div id="gnib-comments" style="position: relative;">
               <%= render :partial=>"shared/gnib_comment", :collection=>comments, :as=>:comment  %>
@@ -61,3 +54,40 @@
     <% end %>
   </table>
 </div>
+<script type="text/javascript">
+    $('#gnibView').hover(function() {
+      $('#left_navigation').slideRight(200, function() {
+        this.show();
+      });
+      $('#right_navigation').slideLeft(200, function() {
+        this.show();
+      });
+    }, function() {
+      $('#left_navigation').slideLeft(200, function() {
+        this.hide();
+      });
+      $('#right_navigation').slideRight(200, function() {
+        this.hide();
+      });
+    });
+    $('#gnib-comments').hover(function() {
+      $('#left_navigation_btn').slideRight(200, function() {
+        this.show();
+      });
+      $('#right_navigation_btn').slideLeft(200, function() {
+        this.show();
+      });
+    }, function() {
+      $('#left_navigation_btn').slideLeft(200, function() {
+        this.hide();
+      });
+      $('#right_navigation_btn').slideRight(200, function() {
+        this.hide();
+      });
+    });
+    $('#commentBtn').click(function() {
+      $('#gnib-comment-panel').slideDown(600, function() {
+        this.show();
+      });
+    });
+</script>
