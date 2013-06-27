@@ -213,6 +213,7 @@ class GnibsController < ApplicationController
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success
+    puts "Image: #{@gnib.image}, url: #{params[:url]}"
     if @gnib.save
       #handle tagged people
       inform_tagged_gniblers(@gnib)
