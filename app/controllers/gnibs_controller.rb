@@ -126,7 +126,7 @@ end
    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
 if @comm
 @gnib = params[:gnib]
-notify_gnibler(@gnib, @comm)
+notify_gnibler(@gnib_id, @comm)
 end
     @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
     @counts = 0
