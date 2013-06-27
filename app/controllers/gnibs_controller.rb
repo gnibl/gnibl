@@ -208,7 +208,7 @@ class GnibsController < ApplicationController
     @gnib = current_user.gnibs.build(params[:gnib])
     @gnib.image = params[:image]
     if params[:url]
-      @gnib.image = params[:url]
+      @gnib.image = open(params[:url]
     end
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
