@@ -68,9 +68,9 @@
     <input id="current_term_34783784980" type="hidden" name="term" value=""/>
     <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
     <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
-    <div id="gnib_description_1" style="width: 90%; margin: auto; background: rgba(255, 255, 255, 0.2); margin-top: 10px">
+    <div id="gnib_description_1" style="width: 90%; margin: auto; background: rgba(255, 255, 255, 0.2); margin-top: 10px;border-radius: 30px">
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
-        :style=>"background: transparent; font-size: 12px; border: 0px none; margin: auto; color: #17aeff",
+        :style=>"background: transparent; font-size: 12px; border: 0px none; margin: auto; color: #17aeff; height: 50px; border-radius: 30px",
         :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
     </div>
     <div id="gnib_file_upload" style="width: 80%; margin: auto; background: rgba(255, 255, 255, 0.9); margin-top: 10px" class="upload">
@@ -80,7 +80,7 @@
                onchange="return ajaxSubmit();" onkeypress="return onKeyPress(event);"/>
         <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto"/>
       </div>
-      <div id="content_url_images" style="width: 100%; display: none; height: 50px; max-height: 50px; overflow-y: auto">
+      <div id="content_url_images" style="width: 100%; display: none; height: 80px; max-height: 80px; overflow-y: scroll; background: rgba(0, 0, 0, 0.5)">
       </div>
       <div id="file_upload_option" style="width: 100%">
         <div class="fakeupload">
