@@ -1,9 +1,17 @@
 class GnibsController < ApplicationController
-require 'base64'
-require 'open-uri'
-require 'nokogiri'
-require 'gnibl_util'
-include GniblUtil
+<<<<<<< HEAD
+  require 'base64'
+  require 'open-uri'
+  require 'nokogiri'
+  require 'gnibl_util'
+  include GniblUtil
+=======
+  require 'base64'
+  require 'open-uri'
+  require 'nokogiri'
+  require 'gnibl_util'
+  include GniblUtil
+>>>>>>> 21c31b213f044346ad34a6d32c983f81f914df9a
 
   before_filter :signed_in_user
 
@@ -38,22 +46,24 @@ include GniblUtil
         @urls[count] = fullurl
         count = count + 1
       end
-
     end
     @image_sources = ['']
+<<<<<<< HEAD
+=======
+>>>>>>> 21c31b213f044346ad34a6d32c983f81f914df9a
 
     count = count -1
     upcount = 0 #limit to 3 images This will be kept in a method that
     while count > -1
       begin
-      locate =URI.parse(@urls[count])
-      file = open(locate,'rb').read
-      @image_sources[count]  = Base64.encode64(file)
+        locate =URI.parse(@urls[count])
+        file = open(locate,'rb').read
+        @image_sources[count]  = Base64.encode64(file)
       rescue Exception => e
-      @error = "some error"
+        @error = "some error"
       end
       count = count -1
-     end
+    end
 
   end
 
@@ -109,15 +119,15 @@ include GniblUtil
     end
   end
 
-def reportgnib
+  def reportgnib
     @gnib_id = params[:gnib][:gnib_id]
-    @user_id = current_user.id   
-    Reported.create(:reporter_id => @user_id, :gnib_id => @gnib_id)    
+    @user_id = current_user.id
+    Reported.create(:reporter_id => @user_id, :gnib_id => @gnib_id)
     @gnib = Gnib.find(@gnib_id)
     respond_to do |format|
       format.js {render "shared/gnib_modal"}
     end
-end
+  end
 
   def comment
     @gnib_id = params[:gnib][:gnib_id]
@@ -183,7 +193,7 @@ end
 
   def create
     city_id = current_user.city.id
-#retrieve title from # sign
+    #retrieve title from # sign
     title = ''
     comment = params[:gnib][:description]
     unless(comment.nil?)
@@ -203,8 +213,12 @@ end
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success
     if @gnib.save
+<<<<<<< HEAD
 #handle tagged people
    inform_tagged_gniblers(@gnib)
+=======
+   inform_tagged_gniblers(@gnib)
+>>>>>>> 21c31b213f044346ad34a6d32c983f81f914df9a
       current_user.like(@gnib.id)
       redirect_to current_url
     else
