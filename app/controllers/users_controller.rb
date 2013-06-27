@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+require 'gnibl_util'
+include GniblUtil
 
   before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
   before_filter :correct_user, :only => [:edit,:update]
@@ -15,6 +17,14 @@ class UsersController < ApplicationController
       format.json { render :json => @cities.to_json}
     end
   end
+
+def test
+#DEBUG remove this
+@gnib = Gnib.find(12)
+#m = UserMailer::invite_to_gnibl("here")
+#m.deliver
+inform_tagged_gniblers(@gnib)
+end
 
   def new
     @user = User.new

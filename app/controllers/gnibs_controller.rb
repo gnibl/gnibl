@@ -41,9 +41,6 @@ class GnibsController < ApplicationController
       end
     end
     @image_sources = ['']
-    #return #DEBUG
-
-    #return
     count = count -1
     upcount = 0 #limit to 3 images This will be kept in a method that
     while count > -1
@@ -130,7 +127,11 @@ class GnibsController < ApplicationController
     @gnib_id = params[:gnib][:gnib_id]
     @user_id = current_user.id
     @descr = params[:comment]
-    Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
+    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
+    if @comm
+      @gnib = params[:gnib]
+      notify_gnibler(@gnib_id, @comm)
+    end
     @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
     @counts = 0
     if @comments
@@ -207,9 +208,7 @@ class GnibsController < ApplicationController
     flash[:notice] = @success
     if @gnib.save
       #handle tagged people
-      #   inform_tagged_gniblers(current_user, @gnib)
-      #handle tagged people
-      inform_tagged_gniblers(current_user, @gnib)
+      inform_tagged_gniblers(@gnib)
       current_user.like(@gnib.id)
       redirect_to current_url
     else

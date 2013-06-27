@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css" media="screen">
+      h3 { color: #f00; }
+      ul { list-style: none; }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to gnibl,</h1>
+Hi <%= @name %>,
+<%=@gnib.user.name %> tagged you in this photo on gnibl </br></br>  
+<div style="position: inherit; height: 100%;">
+
+<%= image_tag(image_path(@gnib.image.url), :class => 'gnib', :id=>"gnib_#{@gnib.id}")%>
+</div>
+<br>
+<br>
+    <% @comments.each do |comment| %>
+
+ <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=comment.user.name%>:</span>
+ <%= comment.description%> <br>
+<%end%>
+<p>
+join gnibl to share your world as you see it.
+</p>
+  </body>
+</html>
