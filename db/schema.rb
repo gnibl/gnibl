@@ -68,10 +68,6 @@ ActiveRecord::Schema.define(:version => 20130625135558) do
     t.datetime "updated_at", :null => false
   end
 
- add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
-  add_index "notifications", ["user_id", "gnib_id"], :name => "index_notifications_on_user_id_and_gnib_id", :unique => true
-  add_index "notifications", ["gnib_id"], :name => "index_notifications_on_gnib_id"
-
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
     t.integer  "followed_id"

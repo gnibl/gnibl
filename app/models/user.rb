@@ -47,6 +47,9 @@ validates :birthday, :presence => true
 
   belongs_to :city
 
+  has_many :notifications, :foreign_key => "user_id", :dependent => :destroy
+  has_many :notification_gnibs, :through => :notifications, :source => :gnib
+
   def redefined_mygnibs
   #my gnibs include all gnibs I gnibbed and also mine
 #select all gnibs where id is in select gnib_id from gniblings where user_id = me
