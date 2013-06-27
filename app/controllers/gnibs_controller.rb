@@ -53,6 +53,7 @@ class GnibsController < ApplicationController
       end
       count = count -1
     end
+
     if count > 0
       @pasted_content_url = true
     end

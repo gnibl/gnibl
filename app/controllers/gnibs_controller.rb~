@@ -1,17 +1,9 @@
 class GnibsController < ApplicationController
-<<<<<<< HEAD
   require 'base64'
   require 'open-uri'
   require 'nokogiri'
   require 'gnibl_util'
   include GniblUtil
-=======
-  require 'base64'
-  require 'open-uri'
-  require 'nokogiri'
-  require 'gnibl_util'
-  include GniblUtil
->>>>>>> 21c31b213f044346ad34a6d32c983f81f914df9a
 
   before_filter :signed_in_user
 
@@ -22,8 +14,9 @@ class GnibsController < ApplicationController
     false
   end
 
-  def test
+  def paste_content_url
     url = params[:url]
+    puts "Request url content: #{url}"
     uri = URI.parse(url)
     baseurl = uri.scheme+"://"+uri.host
     @urls = ['']
@@ -48,11 +41,8 @@ class GnibsController < ApplicationController
       end
     end
     @image_sources = ['']
-<<<<<<< HEAD
-=======
->>>>>>> 21c31b213f044346ad34a6d32c983f81f914df9a
-
     count = count -1
+count = 3
     upcount = 0 #limit to 3 images This will be kept in a method that
     while count > -1
       begin
@@ -65,6 +55,12 @@ class GnibsController < ApplicationController
       count = count -1
     end
 
+    if count > 0
+      @pasted_content_url = true
+    end
+    respond_to do |format|
+      format.js {render "gnibs/ajax_content_url_images"}
+    end
   end
 
   def gnibstream
@@ -133,11 +129,11 @@ class GnibsController < ApplicationController
     @gnib_id = params[:gnib][:gnib_id]
     @user_id = current_user.id
     @descr = params[:comment]
-   @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
-if @comm
-@gnib = params[:gnib]
-notify_gnibler(@gnib_id, @comm)
-end
+    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
+    if @comm
+      @gnib = params[:gnib]
+      notify_gnibler(@gnib_id, @comm)
+    end
     @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
     @counts = 0
     if @comments
@@ -213,15 +209,8 @@ end
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success
     if @gnib.save
-<<<<<<< HEAD
-#handle tagged people
-   inform_tagged_gniblers(@gnib)
-=======
       #handle tagged people
-      #   inform_tagged_gniblers(current_user, @gnib)
-      #handle tagged people
-      inform_tagged_gniblers(current_user, @gnib)
->>>>>>> 21c31b213f044346ad34a6d32c983f81f914df9a
+      inform_tagged_gniblers(@gnib)
       current_user.like(@gnib.id)
       redirect_to current_url
     else
