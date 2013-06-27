@@ -41,9 +41,9 @@
     </tr>
     <% if comments.any? %>
       <tr id="commentsBoxPanel" style="background: rgba(40, 40, 40, 0.8); text-align: center; height: 100px; display: none">
-        <td colspan="3" style="vertical-align: middle; padding: 0px; margin: 0px">
-          <button style="float: right" onclick="commentSlider.next();" class="arrow_right"></button>
-          <button style="float: left;" onclick="commentSlider.previous();" class="arrow_left"></button>
+        <td  colspan="3" style="vertical-align: middle; padding: 0px; margin: 0px">
+          <button id="right_navigation_btn" style="float: right" onclick="commentSlider.next();" class="arrow_right"></button>
+          <button id="left_navigation_btn" style="float: left;" onclick="commentSlider.previous();" class="arrow_left"></button>
           <div id="gnib-main_panel_comments" style="width: 72%; margin-top: 0px; float: left">
             <div id="gnib-comments" style="position: relative;">
               <%= render :partial=>"shared/gnib_comment", :collection=>comments, :as=>:comment  %>
@@ -67,6 +67,21 @@
         this.hide();
       });
       $('#right_navigation').slideRight(200, function() {
+        this.hide();
+      });
+    });
+    $('#gnib-comments').hover(function() {
+      $('#left_navigation_btn').slideRight(200, function() {
+        this.show();
+      });
+      $('#right_navigation_btn').slideLeft(200, function() {
+        this.show();
+      });
+    }, function() {
+      $('#left_navigation_btn').slideLeft(200, function() {
+        this.hide();
+      });
+      $('#right_navigation_btn').slideRight(200, function() {
         this.hide();
       });
     });

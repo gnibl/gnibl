@@ -42,7 +42,7 @@ class GnibsController < ApplicationController
     end
     @image_sources = ['']
     count = count -1
-    upcount = 0 #limit to 3 images This will be kept in a method that
+    count = 3
     while count > -1
       begin
         locate =URI.parse(@urls[count])
@@ -186,7 +186,10 @@ class GnibsController < ApplicationController
   end
 
   def create
-    city_id = current_user.city.id
+    city_id = 0
+    if current_user.city
+      city_id = current_user.city.id
+    end
     #retrieve title from # sign
     title = ''
     comment = params[:gnib][:description]
@@ -203,6 +206,9 @@ class GnibsController < ApplicationController
     params[:gnib][:city] = city_id
     @gnib = current_user.gnibs.build(params[:gnib])
     @gnib.image = params[:image]
+    if params[:url]
+      @gnib.image = params[:url]
+    end
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success

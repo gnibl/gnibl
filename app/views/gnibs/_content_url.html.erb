@@ -1,6 +1,9 @@
+<% count = 0 %>
 <% @image_sources.each do |source| %>
-  <%= @urls[count] %>
-  <img src = "data:image/png;base64,<%=source%>" />
+<img id="content_url_image<%= count %>"
+     src = "data:image/png;base64,<%=source%>"
+     style="cursor: pointer; margin-bottom: 5px"
+     height="42" width="42" data-image-url="<%=@urls[count]%>"
+     onclick="return onImageClicked('content_url_image<%= count %>');"/>
   <% count = count +1 %>
-  <br>
 <% end%>
