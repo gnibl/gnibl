@@ -19,9 +19,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @cities = City.all
-#DEBUG remove this
-m = UserMailer::invite_to_gnibl("here")
-m.deliver
   end
 
   def next_search

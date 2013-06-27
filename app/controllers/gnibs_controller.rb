@@ -14,8 +14,9 @@ class GnibsController < ApplicationController
     false
   end
 
-  def test
+  def paste_content_url
     url = params[:url]
+    puts "Request url content: #{url}"
     uri = URI.parse(url)
     baseurl = uri.scheme+"://"+uri.host
     @urls = ['']
@@ -55,7 +56,12 @@ class GnibsController < ApplicationController
       end
       count = count -1
     end
-
+    if count > 0
+      @pasted_content_url = true
+    end
+    respond_to do |format|
+      format.js {render "gnibs/ajax_content_url_images"}
+    end
   end
 
   def gnibstream

@@ -44,6 +44,20 @@
             .data("uiAutocomplete")._renderItem = renderTitles;
   });
 
+  console.log('submitting form on change');
+  function ajaxSubmit() {
+    var action = '/gnibs/paste_content_url';
+    console.log($('#paste_content_url_input').val());
+    form = '<form id="new_gnib_form" action="' + action + '"><input id="232783278_new_gnib_url_content" type="hidden" name="url" value=""/></form>'
+    $(form).appendTo('body');
+    $('#232783278_new_gnib_url_content').val($('#paste_content_url_input').val());
+    $.ajax({
+      type: 'GET',
+      url: action,
+      data: $('#new_gnib_form').serialize()
+    });
+    return false;
+  }
 ///
 </script>
 
@@ -59,12 +73,23 @@
         :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
     </div>
     <div id="gnib_file_upload" style="width: 80%; margin: auto; background: rgba(255, 255, 255, 0.9); margin-top: 10px" class="upload">
-      <input type="text" placeholder="Paste content url..." style="border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px"/>
-      <div class="fakeupload">
-        <input type="text" value=" (OR) upload an image" name="fakeupload" style="color: #17aeff; height: 50px !important; width: 100% !important" />
+      <div id="content_url" style="width: 100%">
+        <input id="paste_content_url_input" type="text" name="url" placeholder="Paste content url..."
+               style="border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px; width: 70%"
+               onchange="return ajaxSubmit();"/>
+        <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 30%; height: auto"/>
       </div>
-      <%= f.file_field :image, :class=>"realupload", :style=>"color: black; border: 0px",
-        :onchange=>"this.form.fakeupload.value = this.value;"%>
+      <% if @pasted_content_url %>
+        <div id="content_url_images" style="width: 100%">
+          <%= render "gnibs/content_url" %>
+        </div>
+      <% else %>
+        <div class="fakeupload">
+          <input type="text" value=" (OR) upload an image" name="fakeupload" style="color: #17aeff; height: 50px !important; width: 100% !important" />
+        </div>
+        <%= f.file_field :image, :class=>"realupload", :style=>"color: black; border: 0px",
+          :onchange=>"this.form.fakeupload.value = this.value;"%>
+      <% end %>
     </div>
     <div id="gnib_description_submit" style="width: 90%; margin: auto; background: rgba(0, 0, 0, 0.5);margin-top: 10px; height: 42px; text-align: center">
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 40px; height: 40px", :onclick=>"sanitize();"%>

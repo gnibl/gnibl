@@ -27,6 +27,7 @@ Gnibl::Application.routes.draw do
       get 'retcomment'
       get 'titles'
       get 'test'
+      get 'paste_content_url'
     end
   end
 
