@@ -2,19 +2,13 @@ class UserMailer < ActionMailer::Base
 require 'base64'
   default from: "gniblteam@gmail.com"
 
-def invite_to_gnibl(user)
-@user = user
-safe_name = "fb.jpg"
-file =  File.read(Rails.root.join("app/assets/images/facebook.jpg"))
-attachments['fb.jpg'] = {
-:data => Base64.encode64(file),
-:encoding => "base64",
-:mime_type => "image/jpg",
-:content_disposition => "attachment; filename = 'fb.jpg'"
-}
-mail(:to => "kenn <kennmunenetest@gmail.com>", :subject=> "invite to gnibl no att")
-
-#:content => Base64.b64encode(File.read(Rails.root.join("app/assets/images/maress.jpg")))
-#:data =>File.read(Rails.root.join("app/assets/images/maress.jpg")),
+def invite_to_gnibl(gnib, recipient)
+@gnib = gnib #Gnib.find(1)
+@comments = Comment.where("gnib_id = #{@gnib.id}").order("created_at DESC").limit(4)
+@name = recipient.split("@")[0]
+to = @name +"<"+recipient+">"
+mail(:to => to,
+ :subject=> "invitation to gnibl", 
+:content_type => "text/html")
 end
 end

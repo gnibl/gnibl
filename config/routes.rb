@@ -12,6 +12,7 @@ Gnibl::Application.routes.draw do
     end
     collection do
       get 'search'
+      get 'test'
     end
   end
 
@@ -27,6 +28,7 @@ Gnibl::Application.routes.draw do
       get 'retcomment'
       get 'titles'
       get 'test'
+
     end
   end
 

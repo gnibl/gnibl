@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+require 'gnibl_util'
+include GniblUtil
 
   before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
   before_filter :correct_user, :only => [:edit,:update]
@@ -16,12 +18,17 @@ class UsersController < ApplicationController
     end
   end
 
+def test
+#DEBUG remove this
+@gnib = Gnib.find(1)
+#m = UserMailer::invite_to_gnibl("here")
+#m.deliver
+inform_tagged_gniblers(@gnib)
+end
+
   def new
     @user = User.new
     @cities = City.all
-#DEBUG remove this
-m = UserMailer::invite_to_gnibl("here")
-m.deliver
   end
 
   def next_search

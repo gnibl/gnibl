@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625081521) do
+ActiveRecord::Schema.define(:version => 20130625135558) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -54,10 +55,22 @@ ActiveRecord::Schema.define(:version => 20130625081521) do
     t.string   "image"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "city"
+    t.integer  "city"
   end
 
   add_index "gnibs", ["user_id", "created_at"], :name => "index_gnibs_on_user_id_and_created_at"
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "gnib_id"
+    t.string   "message"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+ add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
+  add_index "notifications", ["user_id", "gnib_id"], :name => "index_notifications_on_user_id_and_gnib_id", :unique => true
+  add_index "notifications", ["gnib_id"], :name => "index_notifications_on_gnib_id"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -70,16 +83,24 @@ ActiveRecord::Schema.define(:version => 20130625081521) do
   add_index "relationships", ["follower_id", "followed_id"], :name => "index_relationships_on_follower_id_and_followed_id", :unique => true
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
+  create_table "reporteds", :force => true do |t|
+    t.integer  "gnib_id"
+    t.integer  "reporter_id"
+    t.string   "status"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.string   "email"
-    t.string   "city"
     t.string   "avatar"
     t.string   "description"
     t.string   "username"
+    t.integer  "city"
     t.string   "surname"
     t.datetime "birthday"
     t.integer  "city_id"
