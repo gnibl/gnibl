@@ -1,6 +1,6 @@
 $('#content_url_images').html('<%= escape_javascript(render  :partial=>"gnibs/content_url") %>');
-$('#content_url_images').show();
 $('#373737_busy_image').hide();
 <% if @image_sources.length > 0 %>
+  $('#content_url_images').show();
   $('#file_upload_option').hide();
 <% end %>

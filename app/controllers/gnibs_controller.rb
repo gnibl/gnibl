@@ -15,11 +15,12 @@ class GnibsController < ApplicationController
   end
 
   def paste_content_url
+    @urls = ['']
+    @image_sources = ['']
     url = params[:url]
     puts "Request url content: #{url}"
     uri = URI.parse(url)
     baseurl = uri.scheme+"://"+uri.host
-    @urls = ['']
     doc = Nokogiri::HTML(open(uri))
     sfinder = "/html/body//img"
     count = 0;
@@ -40,7 +41,6 @@ class GnibsController < ApplicationController
         count = count + 1
       end
     end
-    @image_sources = ['']
     count = count -1
     count = 3
     while count > -1
@@ -57,6 +57,11 @@ class GnibsController < ApplicationController
     if count > 0
       @pasted_content_url = true
     end
+  rescue Exception => e
+    puts "Exception #{e}"
+    @is_error = true
+    @error_msg = e.to_s
+  ensure
     respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
     end
@@ -208,7 +213,11 @@ class GnibsController < ApplicationController
     @gnib = current_user.gnibs.build(params[:gnib])
     @gnib.image = params[:image]
     if params[:url]
+<<<<<<< HEAD
       @gnib.image = open(params[:url]
+=======
+      @gnib.image = open(params[:url]
+>>>>>>> b202b7ec5494f9942f3b81bf75c778c2b8e1df66
     end
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
