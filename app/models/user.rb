@@ -15,14 +15,14 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
-  before_save do |user| 
+  before_save do |user|
     user.email = email.downcase
     user.username = user.email
     user.username = user.username.gsub(/(@.+)/, "")
   end
-validates :birthday, :presence => true
+  validates :birthday, :presence => true
   validates :name, :presence => true, :length => { :maximum => 80 }
- validates :surname, :presence => true, :length => { :maximum => 80 }
+  validates :surname, :presence => true, :length => { :maximum => 80 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, :presence => true,
     :format =>     { :with => VALID_EMAIL_REGEX },
@@ -42,7 +42,7 @@ validates :birthday, :presence => true
   has_many :followers, :through => :reverse_relationships , :source => :follower
 
   has_many :gniblings, :foreign_key => "user_id", :dependent => :destroy
-  
+
   has_many :redefgnibs, :through => :gniblings, :source => :gnib
 
   belongs_to :city
@@ -51,8 +51,8 @@ validates :birthday, :presence => true
   has_many :notification_gnibs, :through => :notifications, :source => :gnib
 
   def redefined_mygnibs
-  #my gnibs include all gnibs I gnibbed and also mine
-#select all gnibs where id is in select gnib_id from gniblings where user_id = me
+    #my gnibs include all gnibs I gnibbed and also mine
+    #select all gnibs where id is in select gnib_id from gniblings where user_id = me
 
   end
 

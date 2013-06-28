@@ -1,11 +1,11 @@
 class StaticPagesController < ApplicationController
   def home
-#	if signed_in?
-#	  @user = current_user()
-#	  redirect_to "/users/#{@user.username}"
-#	  return
-#	end
-	@user = User.new 
+    puts "Current user#{current_user}"
+    if signed_in?
+      redirect_to "/users/#{current_user.username}/feed"
+      return
+    end
+    @user = User.new
   end
 
   def help

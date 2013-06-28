@@ -27,6 +27,10 @@ class UsersController < ApplicationController
   end
 
   def new
+    if signed_in?
+      redirect_to "/users/#{current_user.username}/feed"
+      return
+    end
     @user = User.new
     @cities = City.all
   end
