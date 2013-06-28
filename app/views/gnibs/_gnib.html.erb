@@ -3,18 +3,18 @@
        class="gnib-thumbnail" style="margin-bottom: 5px;">
     <script type="text/javascript">
       $('#<%= gnib.id %>').hover(function() {
-        $('#thumbnail-control_<%=gnib.id%>').slideDown(1200, function() {
+        $('#thumbnail-control_<%=gnib.id%>').slideDown(600, function() {
           $(this).show();
         });
-        $('#thumbnail-view_<%=gnib.id%>').slideUp(1200, function() {
+        $('#thumbnail-view_<%=gnib.id%>').slideUp(600, function() {
           $(this).show();
         });
       },
               function() {
-                $('#thumbnail-control_<%=gnib.id%>').slideUp(1200, function() {
+                $('#thumbnail-control_<%=gnib.id%>').slideUp(600, function() {
                   $(this).hide();
                 });
-                $('#thumbnail-view_<%=gnib.id%>').slideDown(1200, function() {
+                $('#thumbnail-view_<%=gnib.id%>').slideDown(600, function() {
                   $(this).hide();
                 });
               });

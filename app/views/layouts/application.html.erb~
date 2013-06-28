@@ -5,66 +5,17 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
 
- <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
-  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
+    <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
+    <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
 
     <%= csrf_meta_tags %>
     <script type="text/javascript">
-//This should not be here its just for testing
-
-var renderTitles= function (ul, item) {
-        return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append("<a>" + item.title+"</a>")
-                .appendTo(ul);
-    };
-
-var triggerChar = "#";
- var autoc = {
-     source: '/gnibs/titles',
-     focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item);
-		var city_identi = ui.item.title;
-		var prev = $('#gnib_description').val();
-		var pos = prev.lastIndexOf(triggerChar);
-		if (pos !== -1){
-		   var content = prev.substring(0,pos+1);
-		$('#gnib_description').val( content+city_identi);			
-		}
-            return false;
-          },
-
-    select: function(event,ui){
-            var city_identi = ui.item.title;
-		var prev = $('#gnib_description').val();
-		var pos = prev.lastIndexOf(triggerChar);
-		if (pos !== -1){
-		   var content = prev.substring(0,pos+1);
-		$('#gnib_description').val( content + city_identi);			
-		}
-
-          return false;
-          },    
-    minLength: 2,
-    triggerOnSpecial: true,
-    specialChar: triggerChar,
-    delay: 250
-   };
-
-$(function() {
-$("#gnib_description").autocomplete(autoc)
-.data("uiAutocomplete")._renderItem = renderTitles;
-$("#gnib_description").val("default comment")
-});
-
-///
-
       var current_page = 0; //this is a global variable used to track the current gnib page
       function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
       function paginate() {
         $(function() {
@@ -173,10 +124,9 @@ $("#gnib_description").val("default comment")
     </div>
     <script type="text/javascript">
       function showGnibThumbnailControl(id) {
-        var div = document.getElementById(id);
-        if (div) {
-          div.style.display = "table-cell";
-        }
+        $('#' + id).slideDown(600, function() {
+          this.show();
+        });
       }
       function hideGnibThumbnailControl(id) {
         var div = document.getElementById(id);
@@ -290,10 +240,6 @@ $("#gnib_description").val("default comment")
                 gnibImage.style.width = (gt_width + 15) + 'px';
               }
             }
-          } else if ((btn.className + '').indexOf('thumbnail-desc') !== -1) {
-            btn.style.width = (gt_width - 90) + 'px';
-          } else if ((btn.className + '').indexOf('thumbnail-msg') !== -1) {
-            btn.style.width = (gt_width - 90) + 'px';
           }
         }
       }
