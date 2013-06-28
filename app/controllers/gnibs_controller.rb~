@@ -135,8 +135,12 @@ class GnibsController < ApplicationController
     @descr = params[:comment]
     @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
     if @comm
-      @gnib = params[:gnib]
-      notify_gnibler(@gnib_id, @comm)
+      begin
+        @gnib = params[:gnib]
+        notify_gnibler(@gnib_id, @comm)
+      rescue Exception => e
+        puts "Exception #{e}"
+      end
     end
     @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
     @counts = 0
@@ -213,11 +217,7 @@ class GnibsController < ApplicationController
     @gnib = current_user.gnibs.build(params[:gnib])
     @gnib.image = params[:image]
     if params[:url]
-<<<<<<< HEAD
       @gnib.image = open(params[:url]
-=======
-      @gnib.image.url = params[:url]
->>>>>>> b202b7ec5494f9942f3b81bf75c778c2b8e1df66
     end
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"

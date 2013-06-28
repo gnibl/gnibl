@@ -214,15 +214,7 @@ class GnibsController < ApplicationController
     end
 
     params[:gnib][:city] = city_id
-    @gnib = current_user.gnibs.build(params[:gnib])
-    @gnib.image = params[:image]
-    if params[:url]
-<<<<<<< HEAD
-      @gnib.image = open(params[:url]
-=======
-      @gnib.image = open(params[:url]
->>>>>>> b202b7ec5494f9942f3b81bf75c778c2b8e1df66
-    end
+    @gnib = current_user.gnibs.build(params[:gnib])  
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success
