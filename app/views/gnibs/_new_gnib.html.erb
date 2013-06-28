@@ -80,7 +80,7 @@
                onchange="return ajaxSubmit();" onkeypress="return onKeyPress(event);"/>
         <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto"/>
       </div>
-      <div id="content_url_images" style="width: 100%; display: none; height: 80px; max-height: 80px; overflow-y: scroll; background: rgba(0, 0, 0, 0.5)">
+      <div id="content_url_images" style="width: 100%; display: none; height: auto; max-height: 90px; overflow-y: scroll; background: rgba(0, 0, 0, 0.5)">
       </div>
       <div id="file_upload_option" style="width: 100%">
         <div class="fakeupload">
@@ -90,8 +90,8 @@
           :onchange=>"this.form.fakeupload.value = this.value;"%>
       </div>
     </div>
-    <div id="gnib_description_submit" style="width: 90%; margin: auto; background: rgba(0, 0, 0, 0.5);margin-top: 10px; height: 42px; text-align: center">
-      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 40px; height: 40px", :onclick=>"sanitize();"%>
+    <div id="gnib_description_submit" style="width: 90%; margin: auto; background: rgba(0, 0, 0, 0.5);margin-top: 10px; height: 32px; text-align: center">
+      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 30px !important; height: 30px !important", :onclick=>"sanitize();"%>
     </div>
   <% end %>
 </div>
