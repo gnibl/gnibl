@@ -1,5 +1,10 @@
 class SessionsController < ApplicationController
   def create
+    puts "Current user#{current_user}"
+    if signed_in?
+      redirect_to "/users/#{current_user.username}/feed"
+      return
+    end
     auth = request.env['omniauth.auth']
     if auth
       #sign in normally via facebook
