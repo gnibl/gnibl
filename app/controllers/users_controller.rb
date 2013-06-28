@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-require 'gnibl_util'
-include GniblUtil
+  require 'gnibl_util'
+  include GniblUtil
 
   before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
   before_filter :correct_user, :only => [:edit,:update]
@@ -18,13 +18,13 @@ include GniblUtil
     end
   end
 
-def test
-#DEBUG remove this
-@gnib = Gnib.find(12)
-#m = UserMailer::invite_to_gnibl("here")
-#m.deliver
-inform_tagged_gniblers(@gnib)
-end
+  def test
+    #DEBUG remove this
+    @gnib = Gnib.find(12)
+    #m = UserMailer::invite_to_gnibl("here")
+    #m.deliver
+    inform_tagged_gniblers(@gnib)
+  end
 
   def new
     @user = User.new
@@ -86,6 +86,7 @@ end
   def feed
     @user = User.find_by_username(params[:id])
     @gnibs = @user.feed.limit(9)
+    puts "feed count: #{@gnibs.count} gnuibs: #{@gnibs}"
     @counts = @user.feed.count
     @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build

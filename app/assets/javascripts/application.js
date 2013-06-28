@@ -13,9 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.simplePagination
-//= require jquery.slides.min
 //= require jquery.carouFredSel-6.2.1
-//= require jquery.form
 //= require bootstrap
 //= require bootstrap-dropdown
 //= require_tree .

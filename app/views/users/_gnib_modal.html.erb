@@ -9,7 +9,7 @@
       </td>
     </tr>
     <tr>
-      <td id="left_navigation" class="centered" style="width: 50px;display: none">
+      <td id="left_navigation" class="centered" style="width: 50px;">
         <button onclick="commentSlider.next();" class="arrow_left"></button>
       </td>
       <td id="gnibView" class="centered" style="background: rgba(255, 255, 255, 0.1 ); padding: 10px">
@@ -22,25 +22,32 @@
             <div style="background: rgba(255,255,255, 0.2); width: 100%; height: auto; min-height: 40px; color: black; border-radius: 5px;padding-left: 5px">
               <div style="width: 70%; float: left"><%= gnib.description %></div>
               <button title="Add a gnib photo" class="add-gnib-photo"></button>
-              <button id="commentBtn" title="Comment on this gnib" class="comment-on-gnib" onclick="showComment();"></button>
+              <button id="commentBtn" title="Comment on this gnib" class="comment-on-gnib" ></button>
             </div>
             <br/>
-            <div id="gnib-comment-panel" style="background: transparent; width: 100%; display: none">
+            <div id="gnib-comment-panel" style="background: transparent; width: 100%; display: block">
               <%= form_for(gnib, :remote => true, :url => {:action => "comment", :controller => "gnibs"}, :method => "get") do |f| %>
                 <input type="text" name="comment" placeholder="What do you like about this gnib"/>
                 <%=f.hidden_field :gnib_id, :value=>"#{gnib.id}"%>
                 <%=f.submit "Comment", :style => "display: none"%>
               <% end %>
             </div>
+            <script type="text/javascript">
+              $('#commentBtn').click(function() {
+                $('#gnib-comment-panel').slideDown(600, function() {
+                  $(this).show();
+                });
+              });
+            </script>
           </div>
         </div>
       </td>
-      <td id="right_navigation" class="centered" style="width: 50px;display: none">
+      <td id="right_navigation" class="centered" style="width: 50px;">
         <button onclick="commentSlider.previous();" class="arrow_right"></button>
       </td>
     </tr>
     <% if comments.any? %>
-      <tr id="commentsBoxPanel" style="background: rgba(40, 40, 40, 0.8); text-align: center; height: 100px; display: none">
+      <tr id="commentsBoxPanel" style="background: rgba(40, 40, 40, 0.8); text-align: center; height: 100px;">
         <td  colspan="3" style="vertical-align: middle; padding: 0px; margin: 0px">
           <button id="right_navigation_btn" style="float: right" onclick="commentSlider.next();" class="arrow_right"></button>
           <button id="left_navigation_btn" style="float: left;" onclick="commentSlider.previous();" class="arrow_left"></button>
@@ -54,40 +61,3 @@
     <% end %>
   </table>
 </div>
-<script type="text/javascript">
-    $('#gnibView').hover(function() {
-      $('#left_navigation').slideRight(200, function() {
-        this.show();
-      });
-      $('#right_navigation').slideLeft(200, function() {
-        this.show();
-      });
-    }, function() {
-      $('#left_navigation').slideLeft(200, function() {
-        this.hide();
-      });
-      $('#right_navigation').slideRight(200, function() {
-        this.hide();
-      });
-    });
-    $('#gnib-comments').hover(function() {
-      $('#left_navigation_btn').slideRight(200, function() {
-        this.show();
-      });
-      $('#right_navigation_btn').slideLeft(200, function() {
-        this.show();
-      });
-    }, function() {
-      $('#left_navigation_btn').slideLeft(200, function() {
-        this.hide();
-      });
-      $('#right_navigation_btn').slideRight(200, function() {
-        this.hide();
-      });
-    });
-    $('#commentBtn').click(function() {
-      $('#gnib-comment-panel').slideDown(600, function() {
-        this.show();
-      });
-    });
-</script>
