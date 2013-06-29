@@ -1,61 +1,33 @@
 <% if(gnib) %>
   <div id="<%=gnib.id%>"
        class="gnib-thumbnail" style="margin-bottom: 5px;">
-    <script type="text/javascript">
-      $('#<%= gnib.id %>').hover(function() {
-        $('#thumbnail-control_<%=gnib.id%>').slideDown(1200, function() {
-          $(this).show();
-        });
-        $('#thumbnail-view_<%=gnib.id%>').slideUp(1200, function() {
-          $(this).show();
-        });
-      },
-              function() {
-                $('#thumbnail-control_<%=gnib.id%>').slideUp(1200, function() {
-                  $(this).hide();
-                });
-                $('#thumbnail-view_<%=gnib.id%>').slideDown(1200, function() {
-                  $(this).hide();
-                });
-              });
-    </script>
-    <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control">
+    <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control" style="margin-top: 6px">
       <table>
         <tbody>
           <tr>
-            <td style="width: 60%; font-size: 25px; border-right: 2px solid #aaaaaa; text-align: center; color: #17aeff">
-              <%= gnib.title %>
+            <% if gnib.title.length >12 %>
+              <td style="width: 60%; font-size: 20px; border-right: 2px solid #aaaaaa; text-align: center; color: #17aeff">
+                <%= gnib.title %>
+              </td>
+            <% else %>
+              <td style="width: 60%; font-size: 25px; border-right: 2px solid #aaaaaa; text-align: center; color: #17aeff">
+                <%= gnib.title %>
+              </td>
+            <% end %>
+            <td style="text-align: left; vertical-align: middle">
+              <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true, :update=>"indicator") do |f| %>
+                <%= f.hidden_field :gnib_id  %>
+                <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
+                <%= f.submit "",:title => "gnib it!", :class => "gnib-gnib-button", :style=>"margin: 0px; margin-top: 5px"%>
+              <% end %>
             </td>
-            <td style="text-align: left; padding: 0px">
-              <div class="gnib-controll">
-                <style type="text/css">
-                  form {
-                    margin: 0px;
-                  }
-                </style>
-                <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true, :update=>"indicator") do |f| %>
-                  <div >
-                    <%= f.hidden_field :gnib_id  %>
-                    <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
-                  </div>
-                  <table>
-                    <tr style="border-spacing: 0px">
-                      <td style="text-align: left; padding: 0px">
-                        <%= f.submit "",:title => "gnib", :class => "gnib-gnib-button", :style=>"margin: 0px; margin-top: 5px"%>
-                      </td>
-                      <td style="text-align: left">
-                        <div style="color: #17aeff; font-size: 15px">Gnib it!</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2">
-                        <div class="gnib-count" style="font-size: 20px; width: 100%; height: 30px; color: white"  align="center">
-                          <div id="gnib_count_<%=gnib.id%>" style="width: 100%; padding:5px" align="center"><%=gnib.gniblings.count%> gnibs</div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                <% end %>
+            <td>
+              <div class="gnib-count"
+                   style="font-size: 20px; width: 60px; height: 30px; color: white;"
+                   align="center">
+                <div id="gnib_count_<%=gnib.id%>" style="width: 100%; padding-top: 5px" align="center" title="Number of gnibs">
+                  <%=gnib.gniblings.count%>
+                </div>
               </div>
             </td>
           </tr>
@@ -89,4 +61,23 @@
       </table>
     </div>
   </div>
+
+  <script type="text/javascript">
+    $('#<%= gnib.id %>').hover(function() {
+      $('#thumbnail-view_<%=gnib.id%>').slideDown(1200, function() {
+        $(this).show();
+      });
+      $('#thumbnail-control_<%=gnib.id%>').slideDown(1200, function() {
+        $(this).show();
+      });
+    },
+            function() {
+              $('#thumbnail-control_<%=gnib.id%>').slideUp(1200, function() {
+                $(this).hide();
+              });
+              $('#thumbnail-view_<%=gnib.id%>').slideUp(1200, function() {
+                $(this).hide();
+              });
+            });
+  </script>
 <% end %>

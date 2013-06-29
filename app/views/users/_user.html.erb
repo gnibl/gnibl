@@ -1,29 +1,32 @@
 <!-- you can obtain stuff like gnib.title, gnib.description, gnib.landmark -->
 <!-- button class="gnib-icon" title="gnib this gnibl">4</button -->
 <% if(user.avatar_url ) %>
-  <div id="user_thumbnail_<%=user.id%>" 
+  <div id="user_thumbnail_<%=user.id%>"
        class="gnib-thumbnail" style="margin-bottom: 5px;">
     <script type="text/javascript">
-    $('#user_thumbnail_<%= user.id %>').hover(function() {
-      $('#thumbnail-control_<%= user.id%>').slideDown(1200, function() {
-        $(this).show();
-      });
-      $('#thumbnail-view_<%= user.id%>').slideUp(1200, function() {
-        $(this).show();
-      });
-    },
-            function() {
-              $('#thumbnail-control_<%=  user.id%>').slideUp(1200, function() {
-                $(this).hide();
+      $('#user_thumbnail_<%= user.id %>').hover(function() {
+        $('#thumbnail-control_<%= user.id%>').slideDown(1200, function() {
+          $(this).show();
+        });
+        $('#thumbnail-view_<%= user.id%>').slideDown(1200, function() {
+          $(this).show();
+        });
+      },
+              function() {
+                $('#thumbnail-control_<%=  user.id%>').slideUp(1200, function() {
+                  $(this).hide();
+                });
+                $('#thumbnail-view_<%=  user.id%>').slideUp(1200, function() {
+                  $(this).hide();
+                });
               });
-              $('#thumbnail-view_<%=  user.id%>').slideDown(1200, function() {
-                $(this).hide();
-              });
-            });
     </script>
     <div id="thumbnail-control_<%=user.id%>" class="thumbnail-control">
       <div class="gnib-count" style="font-size: 20px;"  align="center">
-        <div id="gnib_count_<%=user.id%>" style="width: 100%; height:100%; padding-top:5px" align="center"><%=user.gniblings.count%></div>
+        <div id="gnib_count_<%=user.id%>" title="My Gnibs!"
+             style="width: 100%; height:100%; padding-top:5px; cursor: pointer" align="center">
+          <%=user.gniblings.count%>
+        </div>
       </div>
       <% if (!current_user?user) %>
         <div id="follow-option_<%= user.id %>" class="gnib-gnib-button" style="height: 40px; background: none; padding-top: 5px; margin-right: 20px">
