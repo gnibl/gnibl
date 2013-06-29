@@ -11,10 +11,10 @@
         });
       },
               function() {
-                $('#thumbnail-control_<%=gnib.id%>').slideUp(1200, function() {
+                $('#thumbnail-control_<%=gnib.id%>').slideUp(600, function() {
                   $(this).hide();
                 });
-                $('#thumbnail-view_<%=gnib.id%>').slideDown(1200, function() {
+                $('#thumbnail-view_<%=gnib.id%>').slideDown(600, function() {
                   $(this).hide();
                 });
               });
@@ -68,7 +68,7 @@
         <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
       </button>
     <% end %>
-    <div id="thumbnail-view_<%=gnib.id%>" class="thumbnail-view" style="overflow: hidden; bottom: 0px">
+    <div id="thumbnail-view_<%=gnib.id%>" class="thumbnail-view" >
       <table>
         <tbody>
           <tr>
