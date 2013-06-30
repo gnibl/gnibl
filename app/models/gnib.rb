@@ -1,5 +1,5 @@
 class Gnib < ActiveRecord::Base
-  attr_accessible :description, :image, :landmark, :title, :visibility, :city
+  attr_accessible :description, :image, :landmark, :title, :visibility, :city, :imageurl, :link
   belongs_to :user
   validates :user_id, :presence => true
   validates :description, :presence => true, :length => { :maximum => 77}
@@ -17,34 +17,32 @@ class Gnib < ActiveRecord::Base
   end
 
   def parsed_description
-comment = self.description
-final_comment = ""
-len = comment.length
-
-lastpos = 0
-pos = -1
-while (pos = comment.index('#',pos+1))
- tag =  comment[pos+1 ..len].split(" ")[0]
- replacement_string = "<a style='color: #17aeff' href = '/gnibs/search?term="+tag+"'>"+tag+"</a>"
- final_comment += comment[lastpos..pos] + replacement_string
-lastpos = pos +1+tag.length
-if t = tag.index('@',0) # cater for @address@gmail.com
-pos = comment.index('@',pos+1)
-end
-end
-
-pos = -1
-lastpos = 0
-while (pos = comment.index('@',pos+1))
- tag =  comment[pos+1 ..len].split(" ")[0]
- replacement_string = "<a style='color: #17aeff' href = '/users/search?uid="+tag+"'>"+tag+"</a>"
- final_comment += comment[lastpos..pos] + replacement_string
-lastpos = pos +1+tag.length
-if t = tag.index('@',0) # cater for @address@gmail.com
-pos = comment.index('@',pos+1)
-end
-end
- return final_comment.html_safe
+    comment = self.description
+    final_comment = ""
+    len = comment.length
+    lastpos = 0
+    pos = -1
+    while (pos = comment.index('#',pos+1))
+      tag =  comment[pos+1 ..len].split(" ")[0]
+      replacement_string = "<a style='color: #17aeff' href = '/gnibs/search?term="+tag+"'>"+tag+"</a>"
+      final_comment += comment[lastpos..pos] + replacement_string
+      lastpos = pos +1+tag.length
+      if t = tag.index('#',0) # cater for @address@gmail.com
+        pos = comment.index('#',pos+1)
+      end
+    end
+    pos = -1
+    lastpos = 0
+    while (pos = comment.index('@',pos+1))
+      tag =  comment[pos+1 ..len].split(" ")[0]
+      replacement_string = "<a style='color: #17aeff' href = '/users/search?uid="+tag+"'>"+tag+"</a>"
+      final_comment += comment[lastpos..pos] + replacement_string
+      lastpos = pos +1+tag.length
+      if t = tag.index('@',0) # cater for @address@gmail.com
+        pos = comment.index('@',pos+1)
+      end
+    end
+    return final_comment.html_safe
 
   end
 end

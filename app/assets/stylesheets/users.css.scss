@@ -28,7 +28,7 @@ html, body{
 }
 
 html, body, div, table, tbody, tr, td, span, input, textarea, button, select{
-font-family: 'avenir-light','proxima-nova' !important;
+font-family: 'Open Sans', 'sans-serif','avenir-light','proxima-nova' !important;
 }
 
 #main{
@@ -222,7 +222,7 @@ td.centered{
 }
 
 .thumbnail-control, .thumbnail-view{
- background: rgba(0, 0, 0, 0.5);
+ background: rgba(0, 0, 0, 0.8);
  height:  40px;
  padding: 0px;
  margin: 0px;
@@ -259,9 +259,9 @@ height: auto;
 }
 
 .thumbnail-user-profile{
- border-radius: 100px;
- width: 70px;
- height: 70px;
+ border-radius: 7px;
+ width: 100px;
+ height: 90px;
  float: left;
 }
 
@@ -510,7 +510,7 @@ form .fakeupload input {
     font-size: 20px;
     color: #17aeff;
     font-weight: bold;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     width: 100%;
     padding: 3px;

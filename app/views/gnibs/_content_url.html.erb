@@ -7,7 +7,7 @@
   </div>
 <%else%>
   <% @image_sources.each do |source| %>
-    <input type="radio" name="url" value="<%=@urls[count]%>">
+    <input type="radio" name="gnib[imageurl]" value="<%=@urls[count]%>">
     <img id="content_url_image<%= count %>"
          src = "data:image/png;base64,<%=source%>"
          style="cursor: pointer; margin-bottom: 5px"

@@ -75,9 +75,9 @@
     </div>
     <div id="gnib_file_upload" style="width: 80%; margin: auto; background: rgba(255, 255, 255, 0.9); margin-top: 10px" class="upload">
       <div id="content_url" style="width: 100%">
-        <input id="paste_content_url_input" type="text" name="url" placeholder="Paste content url..."
-               style="border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px; width: 70%"
-               onchange="return ajaxSubmit();" onkeypress="return onKeyPress(event);"/>
+        <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"Paste content url...",
+               :style=>"border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px; width: 70%",
+               :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
         <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto"/>
       </div>
       <div id="content_url_images" style="width: 100%; display: none; height: auto; max-height: 90px; overflow-y: scroll; background: rgba(0, 0, 0, 0.5)">

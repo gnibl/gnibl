@@ -34,16 +34,14 @@
               gnib<span style="color: white">stream</span></span>
           </a>
         </td>
-        <% if(current_user?(@user)) %>
-          <td id="settings" class="border" style="width: 14.3%">
-            <button class="flat-style" style="color: #bbb; font-size: 20px">settings</button>
-          </td>
-          <td class="centered" style="width: 14.3%">
-            <div id="setting-header" class="setting-header" style="display: block">
-              <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold; font-size: 20px"%>
-            </div>
-          </td>
-        <% end %>
+        <td id="settings" class="border" style="width: 14.3%">
+          <button class="flat-style" style="color: #bbb; font-size: 20px">settings</button>
+        </td>
+        <td class="centered" style="width: 14.3%">
+          <div id="setting-header" class="setting-header" style="display: block">
+            <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold; font-size: 20px"%>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -159,7 +157,6 @@
                 </td>
               </tr>
             </table>
-            <br/>
             <input value="" type="submit" class="gnibl-file-log" title="search gnibs/gniblers"
                    style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
           </form>

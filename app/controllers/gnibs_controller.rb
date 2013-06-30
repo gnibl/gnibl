@@ -53,6 +53,7 @@ class GnibsController < ApplicationController
       end
       count = count -1
     end
+
     if count > 0
       @pasted_content_url = true
     end
@@ -213,11 +214,7 @@ class GnibsController < ApplicationController
     end
 
     params[:gnib][:city] = city_id
-    @gnib = current_user.gnibs.build(params[:gnib])
-    @gnib.image = params[:image]
-    if params[:url]
-      @gnib.image.url = params[:url]
-    end
+    @gnib = current_user.gnibs.build(params[:gnib])  
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success

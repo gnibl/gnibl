@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625135558) do
+ActiveRecord::Schema.define(:version => 20130629114640) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -55,7 +55,9 @@ ActiveRecord::Schema.define(:version => 20130625135558) do
     t.string   "image"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "city"
+    t.integer  "city"
+    t.string   "imageurl"
+    t.string   "link"
   end
 
   add_index "gnibs", ["user_id", "created_at"], :name => "index_gnibs_on_user_id_and_created_at"
@@ -93,10 +95,10 @@ ActiveRecord::Schema.define(:version => 20130625135558) do
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.string   "email"
-    t.string   "city"
     t.string   "avatar"
     t.string   "description"
     t.string   "username"
+    t.integer  "city"
     t.string   "surname"
     t.datetime "birthday"
     t.integer  "city_id"

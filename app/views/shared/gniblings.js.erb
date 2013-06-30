@@ -1,5 +1,5 @@
 var id = 'gnib_count_<%=@gid%>';
-$('#'+id).html('<%= @gnib.gniblings.count %> gnibs');
+$('#'+id).html('<%= @gnib.gniblings.count %>');
 $('#messagePanel').html("<%= @success %>");
 jQuery('div#messages').show();
 setTimeout(function(){

@@ -2,15 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-select{
-  border: 1px solid #bbb;
-  width: 150;
-  float: left;
-  padding: 10px;
-  height: auto;
-  margin-bottom: 15px;
-}
-
 .odd_line{
  background: tomato;
 }
@@ -37,7 +28,7 @@ html, body{
 }
 
 html, body, div, table, tbody, tr, td, span, input, textarea, button, select{
-font-family: 'avenir-light' !important;
+font-family: 'avenir-light','proxima-nova' !important;
 }
 
 #main{
@@ -59,18 +50,14 @@ div.line{
  border: 0px none;
 }
 
-td.border-right{
+td.border-right, td.border{
  border-right: 2px solid rgba(255, 255, 255, 0.1);
  vertical-align: middle;
  text-align: center;
- font-size: 15px;
+ font-size: 20px;
 }
 td.border{
  border-left: 2px solid rgba(255, 255, 255, 0.1);
- border-right: 2px solid rgba(255, 255, 255, 0.1);
- vertical-align: middle;
- text-align: center;
- font-size: 15px;
 }
 
 td.centered{
@@ -248,12 +235,13 @@ td.centered{
  top: 0px;
  display: none;
  position: absolute;
+height: auto;
 }
 
 .thumbnail-view{
  position: absolute;
  bottom: 0px;
- height: 80px;
+ height: 50%;
  width: 100%;
  display: none;
 }
@@ -272,8 +260,8 @@ td.centered{
 
 .thumbnail-user-profile{
  border-radius: 100px;
- width: 50px;
- height: 50px;
+ width: 70px;
+ height: 70px;
  float: left;
 }
 
