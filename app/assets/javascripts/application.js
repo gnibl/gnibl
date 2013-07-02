@@ -16,4 +16,5 @@
 //= require jquery.carouFredSel-6.2.1
 //= require bootstrap
 //= require bootstrap-dropdown
+//= require default.user
 //= require_tree .

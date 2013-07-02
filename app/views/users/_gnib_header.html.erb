@@ -7,7 +7,11 @@
           <a href="/users/<%=current_user.username%>/feed">Gnibfeeds(<%=current_user.feed.count%>)</a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
-        <td class="prof-not-bd">Notifications</td>
+        <td class="prof-not-bd" <% if request.path == "/users/#{current_user.username}/notifications" %> style="background: rgba(0, 0, 0, 0.2);" <% end %>>
+          <a href="/users/<%=current_user.username%>/notifications">
+            <div style="float: left; margin-left: 30px">Notifications</div><% if current_user.notifications.any? %><div class="gn-notifications">(<%=  current_user.notifications.count%>)</div><% end %>
+          </a>
+        </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <td class="prof-not-bd" <% if request.path == "/users/#{@user.username}/following" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
           <a id="gnibler_count" href="/users/<%=@user.username%>/following">

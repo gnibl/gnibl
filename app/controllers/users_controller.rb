@@ -142,6 +142,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def notifications
+    @user = User.find_by_username(params[:id])
+    page = params[:page]
+    # @gnibs = @user.gnibs.offset(page).limit(9)
+    @gnibs = @user.redefgnibs.offset(page).limit(9)
+    @counts = @user.redefgnibs.count
+    @gnib_pages = (@counts / 9).ceil;
+    @gnib = @user.gnibs.build
+    @notifications = @user.notifications
+    @notification = @notifications[0];
+    p "notification gnib: #{@notification.gnib.description}"
+    p "notification user: #{@notification.user.username}"
+    p "notifications #{@notifications}"
+  end
+
   def edit
     @user = User.find(params[:id])
   end

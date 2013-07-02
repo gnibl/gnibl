@@ -1,0 +1,33 @@
+<%= render "/users/header" %>
+<div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); height: 100%;">
+  <div style="width:100%;">
+    <%= render "/users/gnib_header" %>
+    <div id="notificationPanel" style="position: relative; top:0px;">
+      <% if @notifications.any? %>
+        <% @notifications.each do |notification| %>
+          <% if notification.gnib %>
+            <%= render notification.gnib %>
+          <% elsif notification.user%>
+            <%= render notification.user %>
+          <% end %>
+          <div align="center"
+               id="gnib-thumbnail"
+               class="gnib-thumbnail"
+               style="position: absolute; top: 0px; height: 100%; background: rgba(0, 0, 0, 0.95); display: table-cell; vertical-align: middle; z-index: 30000; border-radius: 10px; padding: 5px">
+            <table>
+              <tbody>
+                <tr>
+                  <td id="gnib-notification-overlay" class="gnib-thumbnail">
+    <%#*TODO(kennmunene@gmail.com): please parse the message to highlight the user's name within the message%>
+                    <div><%= notification.message %></div>
+                    <span style="margin-top: 20px">Click Anywhere to open</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
