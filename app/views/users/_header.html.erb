@@ -1,9 +1,16 @@
 <style type="text/css">
-  #profile-image .gnibl-button {
+  td.profile-column{
+    height: 210px;
+    width: 210px;
+    min-width: 210px;
+    max-width: 210px;
+    vertical-align: top;
+  }
+  #profile-image .gnibl-button{
+    height: 200px;
+    width: 200px;
     background: url(<%=image_path(@user.avatar_url)%>);
     background-size: 100% 100%;
-    width: 170px;
-    height: 170px;
   }
 </style>
 <div class="profile_header" style="width: 99%; z-index: 3455; background: rgba(0, 0, 0, 0.8)">
@@ -51,8 +58,8 @@
     <tbody>
       <tr>
         <% if (request.path != "/gnibs/#{@user.username}/gnibpicks" && request.path != "/gnibs/#{@user.username}/gnibstream") %>
-          <td style="width: 12%; min-width: 170px">
-            <div id="profile-image" style="top: 0px">
+          <td class="profile-column" >
+            <div id="profile-image" >
               <% if current_user?(@user) %>
                 <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
                   <div class="wrapper">
