@@ -151,10 +151,6 @@ class UsersController < ApplicationController
     @gnib_pages = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     @notifications = @user.notifications
-    @notification = @notifications[0];
-    p "notification gnib: #{@notification.gnib.description}"
-    p "notification user: #{@notification.user.username}"
-    p "notifications #{@notifications}"
   end
 
   def edit
