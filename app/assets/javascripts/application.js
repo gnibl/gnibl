@@ -11,10 +11,6 @@
 // GO AFTER THE REQUIRES BELOW
 //
 //= require jquery
-//= require jquery_ujs
-//= require jquery.simplePagination
 //= require jquery.carouFredSel-6.2.1
-//= require bootstrap
-//= require bootstrap-dropdown
 //= require default.user
 //= require_tree .

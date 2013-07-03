@@ -73,6 +73,7 @@ class GnibsController < ApplicationController
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
+    @page_count = (@counts / 9).ceil;
     render "users/gnibstream"
   end
 
@@ -82,30 +83,33 @@ class GnibsController < ApplicationController
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
+    @page_count = (@counts / 9).ceil;
     render "users/gnibpicks"
   end
   def next_gnibstream
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     @gnib = @user.gnibs.build
     @city_id = current_user.city
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offest(page).limit(9)
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offest(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id)
+    @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
   end
 
   def next_gnibpicks
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     @gnib = @user.gnibs.build
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(page).limit(9)
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
+    @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
@@ -180,16 +184,18 @@ class GnibsController < ApplicationController
     @gnib = @user.gnibs.build
     @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").limit(9)
     @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
   end
   def next_search
     term = params[:term]
-    page = params[:page]
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     @user = current_user
     @gnib = @user.gnibs.build
-    @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(page).limit(9)
+    @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(@page).limit(9)
     @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
@@ -214,7 +220,7 @@ class GnibsController < ApplicationController
     end
 
     params[:gnib][:city] = city_id
-    @gnib = current_user.gnibs.build(params[:gnib])  
+    @gnib = current_user.gnibs.build(params[:gnib])
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success

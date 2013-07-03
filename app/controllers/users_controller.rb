@@ -39,11 +39,12 @@ class UsersController < ApplicationController
     #search for users by user name - obviously
     uname = params[:uid]
     @user = current_user
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
-    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").offset(page).limit(9);
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
+    @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").offset(@page).limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
+    @page_count = (@counts / 9).ceil;
     respond_top do |format|
       format.js {render "shared/user"}
     end
@@ -54,19 +55,19 @@ class UsersController < ApplicationController
     @user = current_user
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
+    @page_count = (@counts / 9).ceil;
     render 'index'
   end
 
   def next_gnibs
     @user = User.find_by_username(params[:id])
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
-    puts "Current page: #{page}"
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     #get the gnibs for the page
-    @gnibs = @user.gnibs.offset(page).limit(9)
+    @gnibs = @user.gnibs.offset(@page).limit(9)
     @counts = @user.gnibs.count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     respond_to do |format|
       format.js {render "shared/gnibs"}
@@ -74,14 +75,13 @@ class UsersController < ApplicationController
   end
   def next_feed
     @user = User.find_by_username(params[:id])
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
-    puts "Current page: #{page}"
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     #get the gnibs for the page
-    @gnibs = @user.feed.offset(page).limit(9)
+    @gnibs = @user.feed.offset(@page).limit(9)
     @counts = @user.feed.count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     respond_to do |format|
       format.js {render "shared/gnibs"}
@@ -92,7 +92,7 @@ class UsersController < ApplicationController
     @gnibs = @user.feed.limit(9)
     puts "feed count: #{@gnibs.count} gnuibs: #{@gnibs}"
     @counts = @user.feed.count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
   end
 
@@ -103,15 +103,17 @@ class UsersController < ApplicationController
     #TEMPORARY
     @users = User.all
     @counts = @users.count
+    @page_count = (@counts / 9).ceil;
     render "show_follow"
   end
   def next_following
     @user = User.find_by_username(params[:id])
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
-    @users = @user.followed_users.offset(page).limit(9)
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
+    @users = @user.followed_users.offset(@page).limit(9)
     @counts = @user.followed_users.count
+    @page_count = (@counts / 9).ceil;
     respond_top do |format|
       format.js {render "shared/user"}
     end
@@ -119,11 +121,12 @@ class UsersController < ApplicationController
 
   def followers
     @user =  User.find_by_username(params[:id])
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
-    @users = @user.followers.offset(page).limit(9)
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
+    @users = @user.followers.offset(@page).limit(9)
     @counts = @user.followers.count
+    @page_count = (@counts / 9).ceil;
     render "show_follow"
   end
 
@@ -148,7 +151,7 @@ class UsersController < ApplicationController
     # @gnibs = @user.gnibs.offset(page).limit(9)
     @gnibs = @user.redefgnibs.offset(page).limit(9)
     @counts = @user.redefgnibs.count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     @notifications = @user.notifications
   end
@@ -176,7 +179,7 @@ class UsersController < ApplicationController
     # @gnibs = @user.gnibs.offset(page).limit(9)
     @gnibs = @user.redefgnibs.offset(page).limit(9)
     @counts = @user.redefgnibs.count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
   end
 

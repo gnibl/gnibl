@@ -7,7 +7,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
     <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
     <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
-
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <%= csrf_meta_tags %>
     <script type="text/javascript">
       var current_page = 0; //this is a global variable used to track the current gnib page
@@ -17,62 +17,12 @@
                 results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
-      function paginate() {
-        $(function() {
-          try {
-            console.log(location.href);
-            console.log(getParameterByName("term"));
-<% unless @counts.nil? %>
-              $('#gnib_panel_paginator').pagination({
-                items: <%= @counts + 1 %>,
-                itemsOnPage: 10,
-                cssStyle: 'dark-theme',
-                onPageClick: function(pageNumber) {
-  <% if current_user %>
-                    //we need to send a get form here using ajax.
-                    console.log("page: " + pageNumber);
-                    //create a form to submit with a hidden field
-                    current_page = pageNumber;
-                    var current_url = '<%= request.path %>';
-                    var gnibs = current_url.endsWith('<%=current_user.username%>');
-                    var search = !gnibs && current_url.contains('gnibs/search');
-                    var user_search = !search && current_url.contains('users/search');
-                    var action;
-                    if (gnibs) {
-                      action = '/users/<%=current_user.username%>/next_gnibs';
-                    } else if (search) {
-                      action = "/gnibs/next_search?term=" + getParameterByName("term");
-                    } else if (user_search) {
-                      action = "/users/next_search?uid=" + getParameterByName("uid");
-                    } else {
-                      action = '/users/<%=current_user.username%>/next_feed'
-                    }
-                    var form =
-                            '<form id="gnib_request_images_' + pageNumber + '" action="' + action + '"><input type="hidden" name="page" value="' + pageNumber + '"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
-                    $(form).appendTo('body');
-                    $.ajax({
-                      type: 'GET',
-                      url: action,
-                      data: $('#gnib_request_images_' + pageNumber).serialize()
-                    });
-  <% end  %>
-                }
-              });
-<% end %>
-          } catch (e) {
-            console.log(e);
-          }
-        });
-      }
-
       function onLoginPage() {
-        console.log('onLoginPage: ' + location.pathname)
         if (location.pathname === '/' || location.pathname === '/signup') {
           //we try to make the height and width of the gnibl login page the same
           var loginMain = document.getElementById('login-main');
           if (loginMain) {
             var width = Math.floor(0.7 * window.innerHeight);
-            console.log('login-main width: ' + width);
             loginMain.style.height = width + 'px';
             loginMain.style.width = width + 'px';
             var sideP = window.innerWidth * ((1.0 - (width / window.innerWidth)) / 6.0);
@@ -88,7 +38,6 @@
       function init() {
         //include all init functions here
         rectifyGnibs();
-        paginate();
         onLoginPage();
       }
     </script>
@@ -388,6 +337,57 @@
             $(this).show('slide', {direction: 'left'}, 1000);
           });
         }
+      });
+
+      function ajaxSlide(idx, current_page) {
+        $('.item').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
+        var current_url = '<%= request.path %>';
+        var gnibs = current_url.endsWith('<%=current_user.username%>');
+        var search = !gnibs && current_url.contains('gnibs/search');
+        var user_search = !search && current_url.contains('users/search');
+        var action;
+        if (gnibs) {
+          action = '/users/<%=current_user.username%>/next_gnibs';
+        } else if (search) {
+          action = "/gnibs/next_search?term=" + getParameterByName("term");
+        } else if (user_search) {
+          action = "/users/next_search?uid=" + getParameterByName("uid");
+        } else {
+          action = '/users/<%=current_user.username%>/next_feed'
+        }
+        var form =
+                '<form id="gnib_request_images_' + current_page + '" action="' + action + '"><input type="hidden" name="page" value="' + current_page + '"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
+        $(form).appendTo('body');
+        $.ajax({
+          type: 'GET',
+          url: action,
+          data: $('#gnib_request_images_' + current_page).serialize(),
+          success: function(response) {
+            $('#gnib_main_panel').carousel(idx);
+            //set the active count
+            $('.carousel-count').removeClass('active disabled');
+            $('#carousel-count_' + current_page).addClass('active disabled');
+          }
+        });
+      }
+
+      $(document).ready(function() {
+        $('#gnib_main_panel').carousel({
+          interval: false
+        });
+// when the carousel slides, load the ajax content
+        $('#gnib_main_panel').on('slid', function(e) {
+          // get index of currently active item
+          var idx = $('#gnib_main_panel .item.active').index();
+          var current_page = $('.item.active').data('slide-number');
+          ajaxSlide(idx, current_page);
+        });
+        //add click event to carousel counts
+        $('.carousel-count:not(.disabled)').click(function(){
+          //get the data
+          var current_page = $(this).data('count');
+          $('#gnib_main_panel').carousel(current_page);
+        });
       });
     </script>
     <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto"></div>
