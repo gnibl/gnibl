@@ -15,11 +15,9 @@
               </td>
             <% end %>
             <td style="text-align: left; vertical-align: middle; width: 8%; border-right: 1px solid #aaaaaa; padding-left: 2px">
-              <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true, :update=>"indicator") do |f| %>
-                <%= f.hidden_field :gnib_id  %>
-                <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
-                <%= f.submit "",:title => "gnib it!", :class => "gnib-gnib-button", :style=>"margin: 0px; margin-top: 5px; margin-right: 4px"%>
-              <% end %>
+              <button title="gnib it!" class="gnib-gnib-button"
+                     onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
+                       style="margin: 0px; margin-top: 1px; margin-right: 5px; background-size: 100% 100%"></button>
             </td>
             <td style="width: 12%">
               <div class="gnib-count"
@@ -34,57 +32,47 @@
         </tbody>
       </table>
     </div>
-    <%=form_for(gnib, :remote=>true, :url => {:action => "retcomment", :controller => "gnibs"}, :method => "get") do |f|%>
-      <%= f.hidden_field :gnib_id, :value => "#{gnib.id}" %>
-      <button class="gnib" style="background:transparent; border: 0px none">
-        <% if gnib.image.url %>
-          <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
-        <% else %>
-          <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
-        <% end %>
-      </button>
-    <% end %>
+    <button class="gnib" style="background:transparent; border: 0px none" data-gnib-id="<%=gnib.id%>"
+            onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
+                                 return false;">
+              <% if gnib.image.url %>
+                <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
+              <% else %>
+                <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
+              <% end %>
+    </button>
     <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px"><%=gnib.user.name%></div>
-      <div id="thumbnail-view_<%=gnib.id%>" style="width: 100%; display: none">
-        <table style="height: 100%; width: 100%; ">
-          <tbody>
-            <tr>
-              <td style="width: 40%">
-                <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 100%">
-                  <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
-                </div>
-              </td>
-              <td style="width: 60%">
-                <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg" style="width: 90%; margin: auto; margin-left: 10%">
-                  <%= gnib.parsed_description%>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="thumbnail-view_<%=gnib.id%>" style="width: 100%; display: none; margin: auto">
+        <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+          <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
+        </div>
+        <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
+             style="max-width: 50%; left: 48%; top: 30%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+          <%= gnib.parsed_description%>
+        </div>
       </div>
     </div>
   </div>
 
   <script type="text/javascript">
-    var speed = 300;
-    var rollbackSpeed = 600;
-    $('#<%= gnib.id %>').hover(function() {
-      $('#thumbnail-view_<%=gnib.id%>').slideDown(speed, function() {
-        $(this).show();
-      });
-      $('#thumbnail-control_<%=gnib.id%>').slideDown(speed, function() {
-        $(this).show();
-      });
-    },
-            function() {
-              $('#thumbnail-control_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
-                $(this).hide();
-              });
-              $('#thumbnail-view_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
-                $(this).hide();
-              });
-            });
+                       var speed = 300;
+                       var rollbackSpeed = 600;
+                       $('#<%= gnib.id %>').hover(function() {
+                         $('#thumbnail-view_<%=gnib.id%>').slideDown(speed, function() {
+                           $(this).show();
+                         });
+                         $('#thumbnail-control_<%=gnib.id%>').slideDown(speed, function() {
+                           $(this).show();
+                         });
+                       },
+                               function() {
+                                 $('#thumbnail-control_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+                                   $(this).hide();
+                                 });
+                                 $('#thumbnail-view_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+                                   $(this).hide();
+                                 });
+                               });
   </script>
 <% end %>

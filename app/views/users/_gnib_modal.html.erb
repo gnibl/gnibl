@@ -1,63 +1,212 @@
-<div style="background: rgba(255, 255, 255, 0.5); float: right; margin: 40px; border-radius: 15px; " title="close">
+<div style="background: rgba(255, 255, 255, 0.5); margin: 40px; border-radius: 15px; position: fixed; right: 20px" title="close">
   <button class="dialog-close-icon" onclick="getElementById('gnibl-modal-mp').style.display = 'none';" style="border: 0px none"></button>
 </div>
-<div id="gnibl-view" class="gnibl-view" style="height: auto">
-  <table class="table-modal">
-    <tr style="padding:0px; margin: 0px; width: 100%">
-      <td colspan="3" style="width: 100%; height: 60px; background: #eee; padding:0px; margin:0px; color: #17aeff; text-align: center">
-        <%= gnib.user.city %> <span style="color: #888">|</span> <%= gnib.title %> <span style="color: #888">|</span> Birmingham
-      </td>
-    </tr>
-    <tr>
-      <td id="left_navigation" class="centered" style="width: 50px;">
-        <button onclick="commentSlider.next();" class="arrow_left"></button>
-      </td>
-      <td id="gnibView" class="centered" style="background: rgba(255, 255, 255, 0.1 ); padding: 10px">
-        <%=image_tag(image_path(gnib.image.url), :style=>"width: 300px; height: 250px")%>
-        <div style="width: 100%; padding-bottom: 10px; position: relative">
-          <%=image_tag(image_path(gnib.user.avatar_url), :style=>"margin-bottom: 10px; width: 50px; height: 50px; border-radius: 100px; float: left; margin-left: 30px;margin-top: 5px")%>
-          <div style="float:left; margin-left: 1%; margin-top: 5px; width: 65%; text-align: left; ">
-            <span style="color: #17aeff"> <%= gnib.user.name %> {<%= counts %> comments} </span>
-            <br/>
-            <div style="background: rgba(255,255,255, 0.2); width: 100%; height: auto; min-height: 40px; color: black; border-radius: 5px;padding-left: 5px">
-              <div style="width: 70%; float: left"><%= gnib.description %></div>
-              <button title="Add a gnib photo" class="add-gnib-photo"></button>
-              <button id="commentBtn" title="Comment on this gnib" class="comment-on-gnib" ></button>
+<style type="text/css">
+  .thumbnail-control.control-modal{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: table-cell;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left:0px;
+    height: 70px;
+  }
+  .gnibl-modal-view, .gnibl-view{
+    top: 0px;
+    text-align: center;
+    border-radius: 20px;
+    width: 40%;
+    margin: auto;
+  }
+  .gnibl-modal-view{
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .gnibl-view, .gnibl-view-panel{
+    height: 400px;
+    width: 100%;
+    border-radius: 0px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+  .gnibl-view{
+    background: url(<%=image_path(gnib.image.url)%>);
+    position: relative;
+    background-size: 100% 100%;
+    cursor: pointer;
+  }
+  .modal{
+    overflow: hidden;
+    border-radius: 10px;
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    border-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .btn-modal{
+    margin: 0px;
+    width: 45px !important;
+    height: 45px !important;
+    background-size: 100% 100% !important;
+  }
+  .modal-profile{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+  }
+  .thumbnail-msg.modal-msg{
+    width: 50%;
+    float: left;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    font-size: 18px;
+    margin: auto;
+  }
+  .new-gnib-comment{
+    width: 100%;
+    height: 100px;
+    min-height: 100px;
+    margin: auto;
+    margin-top: 0px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  .new-comment-profile{
+    background: url(<%=image_path(current_user.avatar_url)%>);
+    background-size: 100% 100%;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+  }
+  .new-comment-comment{
+    float:left;
+    margin-left: 1%;
+    margin-top: 5px;
+    width: 75%;
+    text-align: left;
+  }
+  .gnibl-modal-gnib-it-logo{
+    text-align: left;
+    vertical-align: middle;
+    width: 12%;
+    position: absolute;
+    right: 20%;
+    border-left: 2px solid #aaa !important;
+    border-right: 2px solid #aaa !important;
+    padding: 10px;
+    padding-top: 5px;
+    height: 50px
+  }
+</style>
+<div align="center" style="width: 96%; margin: 2%; z-index: 44990002; height: 100% ">
+  <div id="gnibl-view" class="gnibl-modal-view" >
+    <div id="gnibl-view-panel" class="gnibl-view-panel">
+      <div id="gnibl-modal-view-panel" class="gnibl-view">
+        <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal">
+          <div style="width: 60%; font-size: 20px; text-align: left; color: #fff;
+               font-weight: bold; position: absolute; left: 10px; top: 20px;">
+               <%= gnib.title %>
+          </div>
+          <div class="gnibl-modal-gnib-it-logo">
+            <button title="gnib it!" class="gnib-gnib-button btn-modal"
+                    onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"></button>
+          </div>
+          <div style="width: 20%; margin-right: 10px; top: 15px; position: absolute; right: 10px">
+            <div class="gnib-count"
+                 style="font-size: 12px; width: 60px; height: 30px; color: white; background: rgba(0, 0, 0, 0.4); text-align: center"
+                 align="center">
+              <div id="gnib_count_<%=gnib.id%>"
+                   style="text-align: center; width: 100%; font-size: 18px; font-weight: bold;top: 10px; position: absolute; left: 0px"
+                   align="center" title="Number of gnibs">
+                     <%=gnib.gniblings.count%>
+              </div>
             </div>
-            <br/>
-            <div id="gnib-comment-panel" style="background: transparent; width: 100%; display: block">
-              <%= form_for(gnib, :remote => true, :url => {:action => "comment", :controller => "gnibs"}, :method => "get") do |f| %>
-                <input type="text" name="comment" placeholder="What do you like about this gnib"/>
-                <%=f.hidden_field :gnib_id, :value=>"#{gnib.id}"%>
-                <%=f.submit "Comment", :style => "display: none"%>
-              <% end %>
+          </div>
+        </div>
+        <div id="gnibl-modal-view" class="thumbnail-view"
+             style="overflow: hidden; bottom: 0px;
+             border-top-left-radius: 10px; border-top-right-radius: 10px; display: block; height: auto">
+          <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px"><%=gnib.user.name%></div>
+          <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: none; margin: auto">
+            <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+              <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
             </div>
+            <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
+                 style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+                   <%= gnib.parsed_description%>
+            </div>
+          </div>
+        </div>
+        <% if false %>
+          <div  class="thumbnail-view modal" style="height: 100%">
+            <div style="color: #17aeff; font-size: 20px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
+              <%=gnib.user.name%><span style="font-size: 15px"> {<%= counts %> comments}</span>
+            </div>
+            <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: none">
+              <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: auto; float: left">
+                <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
+              </div>
+              <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg modal-msg"
+                   style="height: 100%; margin-top: 8%">
+                     <%= gnib.parsed_description%>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="comment-panel" style="width: 100%">
+      <% if comments.any? %>
+        <%= render :partial=>"shared/gnib_comment", :collection=>comments, :as=>:comment  %>
+      <% end %>
+      <div id="newGnibComment" class="new-gnib-comment">
+        <div class="new-comment-profile"></div>
+        <div class="new-comment-comment">
+          <div style="color: #17aeff"> <%= current_user.name %> </div>
+          <div id="gnib-comment-panel" style="background: rgba(255, 255, 255, 0.1); width: 100%; height: 60px; border-radius: 10px">
+            <input id="commentInput" type="text" name="comment" placeholder="Add a comment ..."
+                   style="background: transparent; border: 0px none; height: 60px !important; color: white"/>
+            <input id="commentSubmit" type="submit" style="display: none"/>
             <script type="text/javascript">
-    $('#commentBtn').click(function() {
-      $('#gnib-comment-panel').slideDown(600, function() {
-        $(this).show();
-      });
+    $('#commentInput').keypress(function(e) {
+      if (e.which === 13) {
+        e.preventDefault();
+        doAjaxSubmit([{name: 'gnib_id', value: '<%= gnib.id %>'},
+          {name: 'comment', value: $('#commentInput').val()}], '/gnibs/comment',
+                function(e) {
+                  //we scroll to the bottom of page
+                  $('html,body').slideDown(500,'slow');
+                });
+        return false;
+      }
     });
             </script>
           </div>
         </div>
-      </td>
-      <td id="right_navigation" class="centered" style="width: 50px;">
-        <button onclick="commentSlider.previous();" class="arrow_right"></button>
-      </td>
-    </tr>
-    <% if comments.any? %>
-      <tr id="commentsBoxPanel" style="background: rgba(40, 40, 40, 0.8); text-align: center; height: 100px;">
-        <td  colspan="3" style="vertical-align: middle; padding: 0px; margin: 0px">
-          <button id="right_navigation_btn" style="float: right" onclick="commentSlider.next();" class="arrow_right"></button>
-          <button id="left_navigation_btn" style="float: left;" onclick="commentSlider.previous();" class="arrow_left"></button>
-          <div id="gnib-main_panel_comments" style="width: 72%; margin-top: 0px; float: left">
-            <div id="gnib-comments" style="position: relative;">
-              <%= render :partial=>"shared/gnib_comment", :collection=>comments, :as=>:comment  %>
-            </div>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+      </div>
+    </div>
+  </div>
 </div>
+<script type="text/javascript">
+  var speed = 300;
+  var rollbackSpeed = 600;
+  $('#gnibl-modal-view-panel').hover(function() {
+    $('#thumbnail-modal-view_<%=gnib.id%>').slideDown(speed, function() {
+      $(this).show();
+    });
+  },
+          function() {
+            $('#thumbnail-modal-view_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+              $(this).hide();
+            });
+          });
+</script>

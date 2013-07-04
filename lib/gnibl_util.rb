@@ -44,10 +44,11 @@ module GniblUtil
     user_id = @gnib.user.id
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => user_id, :gnib_id => gnib_id)
     if nots.empty?
-      message = comment.user.name+" commented on your gnib"
+      message = "@"+comment.user.name+" commented on your gnib"
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :message => message)
     else
-      msg = comment.user.name +", "+nots.message
+      user = "@"+comment.user.name
+      msg = user +", "+nots.message
       nots[0].update_attribute("message",msg)
     end
   rescue Exception => e
@@ -60,12 +61,12 @@ module GniblUtil
     sender = gnib.user
     target_users = sender.followers.where("name like :to or surname like :to or username like :to", :to => "%"+to+"%")
     gnib_id = gnib.id
-    message = sender.name + " has tagged you "
+    message = "@"+sender.name + " has tagged you "
     target_users.each do |target_user|
       user_id = target_user.id
       nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => user_id, :gnib_id => gnib_id)
       if nots.empty?
-        message = gnib.user.name+" tagged you in a gnib"
+        message = "@"+gnib.user.name+" tagged you in a gnib"
         Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
       end
     end
@@ -76,5 +77,4 @@ module GniblUtil
     m = UserMailer::invite_to_gnibl(@gnib,email)
     m.deliver
   end
-
 end

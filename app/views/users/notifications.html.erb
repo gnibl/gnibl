@@ -10,33 +10,35 @@
           <% elsif notification.user%>
             <%= render notification.user %>
           <% end %>
-          <div align="center"
-               id="gnib-thumbnail"
-               class="gnib-thumbnail"
-               style="position: absolute; top: 0px; height: 100%; background: rgba(0, 0, 0, 0.95); display: table-cell; vertical-align: middle; z-index: 30000; border-radius: 10px; padding: 5px">
-            <table>
-              <tbody>
-                <tr>
-                  <td id="gnib-notification-overlay" class="gnib-thumbnail" style="text-align: center">
-                    <style type="text/css">
-                      div.notification-logo{
-                        width: 40px;
-                        height: 40px;
-                        background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
-                        background-size: 100% 100%;
-                      }
-                    </style>
-                    <div align="center" style="width: 100%">
-                      <div class="notification-logo"></div>
-                    </div>
-    <%#*TODO(kennmunene@gmail.com): please parse the message to highlight the user's name within the message%>
-                    <div style="margin-top: 20px"><%= notification.message %></div>
-                    <div style="margin-top: 20px">Click Anywhere to open</div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <% if !notification.read%>
+            <div align="center"
+                 id="gnib-thumbnail"
+                 class="gnib-thumbnail"
+                 data-notification-id="<%= notification.id %>"
+                 style="position: absolute; top: 0px; height: 100%; background: rgba(0, 0, 0, 0.95); display: table-cell; vertical-align: middle; z-index: 30000; border-radius: 10px; padding: 5px">
+              <table>
+                <tbody>
+                  <tr>
+                    <td id="gnib-notification-overlay" class="gnib-thumbnail" style="text-align: center">
+                      <style type="text/css">
+                        div.notification-logo{
+                          width: 40px;
+                          height: 40px;
+                          background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
+                          background-size: 100% 100%;
+                        }
+                      </style>
+                      <div align="center" style="width: 100%">
+                        <div class="notification-logo"></div>
+                      </div>
+                      <div style="margin-top: 20px"><%= notification.parsed_message %></div>
+                      <div style="margin-top: 20px">Click Anywhere to open</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>

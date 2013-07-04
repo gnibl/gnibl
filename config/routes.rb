@@ -13,6 +13,7 @@ Gnibl::Application.routes.draw do
     collection do
       get 'search'
       get 'test'
+      get 'readnotifications'
     end
   end
 
@@ -33,7 +34,11 @@ Gnibl::Application.routes.draw do
   end
 
   resources :relationships
-  resources :gniblings
+  resources :gniblings do
+    member do
+      get :create
+    end
+  end
 
   match "/signup", :to => "users#new"
 

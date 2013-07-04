@@ -74,6 +74,7 @@ class GnibsController < ApplicationController
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibstream"
   end
 
@@ -84,6 +85,7 @@ class GnibsController < ApplicationController
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
   end
   def next_gnibstream
@@ -134,7 +136,8 @@ class GnibsController < ApplicationController
   end
 
   def comment
-    @gnib_id = params[:gnib][:gnib_id]
+    @user = current_user
+    @gnib_id = params[:gnib_id]
     @user_id = current_user.id
     @descr = params[:comment]
     @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
@@ -146,7 +149,7 @@ class GnibsController < ApplicationController
         puts "Exception #{e}"
       end
     end
-    @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
+    @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at ASC")
     @counts = 0
     if @comments
       @counts = @comments.length
@@ -158,6 +161,7 @@ class GnibsController < ApplicationController
   end
 
   def upvotecomment
+    @user = current_user
     @comment_id = params[:comment_id]
     @comment.update_attribute("votes",@comment.votes + 1)
     respond_to do |format|
@@ -166,8 +170,9 @@ class GnibsController < ApplicationController
   end
 
   def retcomment
-    gnib_id = params[:gnib][:gnib_id]
-    @comments = Comment.where("gnib_id = #{gnib_id}").order("created_at DESC")
+    gnib_id = params[:gnib_id]
+    @user = current_user
+    @comments = Comment.where("gnib_id = #{gnib_id}").order("created_at ASC")
     @counts = 0
     if @comments
       @counts = @comments.length
@@ -185,6 +190,7 @@ class GnibsController < ApplicationController
     @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").limit(9)
     @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
     @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
   def next_search
     term = params[:term]

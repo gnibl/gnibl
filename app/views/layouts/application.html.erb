@@ -355,19 +355,15 @@
           } else {
             action = '/users/<%=current_user.username%>/next_feed'
           }
-          var form =
-                  '<form id="gnib_request_images_' + current_page + '" action="' + action + '"><input type="hidden" name="page" value="' + current_page + '"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
-          $(form).appendTo('body');
-          $.ajax({
-            type: 'GET',
-            url: action,
-            data: $('#gnib_request_images_' + current_page).serialize(),
-            success: function(response) {
-              $('#gnib_main_panel').carousel(idx);
-              //set the active count
-              $('.carousel-count').removeClass('active disabled');
-              $('#carousel-count_' + current_page).addClass('active disabled');
-            }
+          var data = [
+            {name: 'page', value: current_page},
+            {name: 'current_url', value: '<%= request.fullpath %>'}
+          ];
+          doAjaxSubmit(data, action, function(response) {
+            $('#gnib_main_panel').carousel(idx);
+            //set the active count
+            $('.carousel-count').removeClass('active disabled');
+            $('#carousel-count_' + current_page).addClass('active disabled');
           });
         }
 
@@ -375,7 +371,7 @@
           $('#gnib_main_panel').carousel({
             interval: false
           });
-  // when the carousel slides, load the ajax content
+          // when the carousel slides, load the ajax content
           $('#gnib_main_panel').on('slid', function(e) {
             // get index of currently active item
             var idx = $('#gnib_main_panel .item.active').index();
