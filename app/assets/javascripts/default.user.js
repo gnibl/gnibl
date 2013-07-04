@@ -2,11 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 $('document').ready(function() {
-  $('#gnib-thumbnail').click(function() {
+  $('.notification-overlay-gnib-thumbnail').click(function() {
     $(this).hide();
     //send ajax request to server to indicate that we have read the notification
+    console.log('sending notification read');
     var not_id = $(this).data('notification-id');
+    console.log('notification:id: ' + not_id);
     var action = '/users/readnotifications';
     var data = {notification_id: not_id};
     doAjaxSubmit(data, action);
@@ -14,6 +17,7 @@ $('document').ready(function() {
 });
 
 function doAjaxSubmit(data, url, callback) {
+  $('body').css('cursor', 'wait');
   $.ajax({
     type: 'GET',
     url: url,
@@ -22,6 +26,7 @@ function doAjaxSubmit(data, url, callback) {
       if (callback) {
         callback(response);
       }
+      $('body').css('cursor', 'auto');
     }
   });
   return false; //if called within a form in order to avoid default form submit

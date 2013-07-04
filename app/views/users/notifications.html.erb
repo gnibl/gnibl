@@ -2,45 +2,51 @@
 <div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); height: 100%;">
   <div style="width:100%;">
     <%= render "/users/gnib_header" %>
-    <div id="notificationPanel" style="position: relative; top:0px;">
-      <% if @notifications.any? %>
-        <% @notifications.each do |notification| %>
-          <% if notification.gnib %>
-            <%= render notification.gnib %>
-          <% elsif notification.user%>
-            <%= render notification.user %>
+    <% if @notifications.any? %>
+      <%render_not = []%>
+      <% @notifications.each do |notification| %>
+        <div id="notificationPanel" style="position: relative; top:0px; float: left">
+          <% if !render_not.include? notification.id %>
+            <% render_not << notification.id %>
+            <% if notification.gnib %>
+              <%= render notification.gnib %>
+            <% elsif notification.user%>
+              <%= render notification.user %>
+            <% end %>
+            <% if !notification.read%>
+              <div align="center"
+                   id="notification-overlay-gnib-thumbnail_<%=notification.id%>"
+                   class="notification-overlay-gnib-thumbnail"
+                   data-notification-id="<%= notification.id %>"
+                   style="position: absolute; top: 0px; height: 100%;
+                   background: rgba(0, 0, 0, 0.7); display: table-cell;
+                   vertical-align: middle; z-index: 30000; border-radius: 10px;">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td id="gnib-notification-overlay" class="gnib-thumbnail" style="text-align: center">
+                        <style type="text/css">
+                          div.notification-logo{
+                            width: 40px;
+                            height: 40px;
+                            background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
+                            background-size: 100% 100%;
+                          }
+                        </style>
+                        <div align="center" style="width: 100%">
+                          <div class="notification-logo"></div>
+                        </div>
+                        <div style="margin-top: 20px; padding: 5px"><%= notification.parsed_message %></div>
+                        <div style="margin-top: 20px">Click Anywhere to open</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
           <% end %>
-          <% if !notification.read%>
-            <div align="center"
-                 id="gnib-thumbnail"
-                 class="gnib-thumbnail"
-                 data-notification-id="<%= notification.id %>"
-                 style="position: absolute; top: 0px; height: 100%; background: rgba(0, 0, 0, 0.95); display: table-cell; vertical-align: middle; z-index: 30000; border-radius: 10px; padding: 5px">
-              <table>
-                <tbody>
-                  <tr>
-                    <td id="gnib-notification-overlay" class="gnib-thumbnail" style="text-align: center">
-                      <style type="text/css">
-                        div.notification-logo{
-                          width: 40px;
-                          height: 40px;
-                          background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
-                          background-size: 100% 100%;
-                        }
-                      </style>
-                      <div align="center" style="width: 100%">
-                        <div class="notification-logo"></div>
-                      </div>
-                      <div style="margin-top: 20px"><%= notification.parsed_message %></div>
-                      <div style="margin-top: 20px">Click Anywhere to open</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          <% end %>
-        <% end %>
+        </div>
       <% end %>
-    </div>
+    <% end %>
   </div>
 </div>
