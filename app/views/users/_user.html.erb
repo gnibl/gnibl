@@ -2,7 +2,7 @@
 <!-- button class="gnib-icon" title="gnib this gnibl">4</button -->
 <% if(user.avatar_url ) %>
   <div id="user_thumbnail_<%=user.id%>"
-       class="gnib-thumbnail" style="margin-bottom: 5px;">
+       class="gnib-thumbnail" style="margin-bottom: 5px; float: left; margin-right: 4px">
     <script type="text/javascript">
       $('#user_thumbnail_<%= user.id %>').hover(function() {
         $('#thumbnail-control_<%= user.id%>').slideDown(1200, function() {
@@ -21,7 +21,8 @@
                 });
               });
     </script>
-    <div id="thumbnail-control_<%=user.id%>" class="thumbnail-control">
+    <div id="thumbnail-control_<%=user.id%>" class="thumbnail-control"
+         style="border-top-left-radius: 10px; border-top-right-radius: 10px; top: 3px">
       <div class="gnib-count" style="font-size: 20px;"  align="center">
         <div id="gnib_count_<%=user.id%>" title="My Gnibs!"
              style="width: 100%; height:100%; padding-top:5px; cursor: pointer" align="center">
@@ -35,7 +36,8 @@
       <%end%>
     </div>
     <%= image_tag(image_path(user.avatar_url), :class => 'gnib', :id=>"gnib_#{user.id}", :onclick=>"location.href = '/users/#{user.username}'")%>
-    <div id="thumbnail-view_<%=user.id%>" class="thumbnail-view" style="overflow: hidden; min-height: 60px; ">
+    <div id="thumbnail-view_<%=user.id%>" class="thumbnail-view"
+         style="overflow: hidden; min-height: 60px; bottom: -3px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px">
       <div id="thumbnail-desc_<%=user.id%>" class="thumbnail-desc" style="width: 100%">
         <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=user.name%></span>
         <br/>
