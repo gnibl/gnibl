@@ -33,7 +33,12 @@ Gnibl::Application.routes.draw do
     end
   end
 
-  resources :relationships
+  resources :relationships do
+    collection do
+      get 'follow'
+      get 'unfollow'
+    end
+  end
   resources :gniblings do
     member do
       get :create

@@ -116,8 +116,8 @@
                   <td colspan="2">
                     <div style="color: white; opacity: 0.8; max-width: 400px">
                       <%= @user.description %>
-                      <div id="follow-option-panel" style="width:100%;">
-                        <%= render "/users/follow_form" if signed_in?%>
+                      <div id="follow-option_<%=@user.id%>" style="width:100%; margin-top: 5px">
+                        <%= render(:partial => "/users/inn_follow", :locals => {:user => @user}) if signed_in?%>
                       </div>
                     </div>
                   </td>
