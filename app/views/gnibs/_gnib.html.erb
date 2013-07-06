@@ -16,8 +16,8 @@
             <% end %>
             <td style="text-align: left; vertical-align: middle; width: 8%; border-right: 1px solid #aaaaaa; padding-left: 2px">
               <button title="gnib it!" class="gnib-gnib-button"
-                     onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
-                       style="margin: 0px; margin-top: 1px; margin-right: 5px; background-size: 100% 100%"></button>
+                      onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
+                      style="margin: 0px; margin-top: 1px; margin-right: 5px; background-size: 100% 100%"></button>
             </td>
             <td style="width: 12%">
               <div class="gnib-count"
@@ -34,7 +34,7 @@
     </div>
     <button class="gnib" style="background:transparent; border: 0px none" data-gnib-id="<%=gnib.id%>"
             onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
-                                 return false;">
+                           return false;">
               <% if gnib.image.url %>
                 <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
               <% else %>
@@ -42,7 +42,9 @@
               <% end %>
     </button>
     <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
-      <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px"><%=gnib.user.name%></div>
+      <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
+       <a href="/users/<%=gnib.user.username%>" style="color: #17aeff;"><%=gnib.user.name%></a>
+      </div>
       <div id="thumbnail-view_<%=gnib.id%>" style="width: 100%; display: none; margin: auto">
         <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
           <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>

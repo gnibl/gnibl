@@ -20,6 +20,11 @@
           background: rgba(0, 0, 0, 0.2);
           cursor: default;
         }
+        .carousel-control{
+          top: 80% !important;
+          z-index: 23000;
+          position: fixed;
+        }
       </style>
       <% 0.upto(@page_count) do |c| %>
         <div id="carousel-count_<%=c%>"
@@ -45,8 +50,8 @@
           </div>
         <% end %>
       </div>
-      <a class="carousel-control left" href="#gnib_main_panel" data-slide="prev" style="z-index: 23000;">‹</a>
-      <a class="carousel-control right" href="#gnib_main_panel" data-slide="next" style="z-index: 23000">›</a>
+      <a class="carousel-control left" href="#gnib_main_panel" data-slide="prev" >‹</a>
+      <a class="carousel-control right" href="#gnib_main_panel" data-slide="next">›</a>
     </div>
   </div>
 </div>
