@@ -13,7 +13,9 @@ class Gnib < ActiveRecord::Base
 
   def self.from_users_followed_by(user)
     ids = "SELECT followed_id from relationships WHERE follower_id = :user_id"
-    where("user_id IN (#{ids}) OR user_id = :user_id",:user_id => user)
+#both my gnibs and those am following
+  #  where("user_id IN (#{ids}) OR user_id = :user_id",:user_id => user)
+  where("user_id IN (#{ids})",:user_id => user)
   end
   def parsed_description
     comment = self.description
@@ -41,7 +43,7 @@ class Gnib < ActiveRecord::Base
         pos = comment.index('@',pos+1)
       end
     end
-    if lastpos < len
+    if lastpos > 0 && lastpos < len
       final_comment += comment[lastpos..len]
     end
     return final_comment.html_safe
