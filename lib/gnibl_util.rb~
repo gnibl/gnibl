@@ -59,7 +59,7 @@ module GniblUtil
 
   def send_notifications(gnib, to)
     sender = gnib.user
-    target_users = sender.followers.where("name like :to or surname like :to or username like :to", :to => "%"+to+"%")
+    target_users = sender.followers.where("name ilike :to or surname like :to or username ilike :to", :to => "%"+to+"%")
     gnib_id = gnib.id
     message = "@"+sender.name + " has tagged you "
     target_users.each do |target_user|
