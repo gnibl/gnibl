@@ -1,9 +1,11 @@
 
 <% if comment %>
-<div id="newGnibComment_<%= comment.id %>" class="new-gnib-comment">
+  <div id="newGnibComment_<%= comment.id %>" class="new-gnib-comment">
     <div class="new-comment-profile" style="background: url(<%=image_path(comment.user.avatar_url)%>); background-size: 100% 100%"></div>
     <div class="new-comment-comment">
-      <div style="color: #17aeff"> <%= comment.user.name %> </div>
+      <div style="color: #17aeff">
+        <a href="/users/<%=comment.user.username%>" style="color: #17aeff;"><%=comment.user.name%></a>
+      </div>
       <div id="gnib-comment-panel_<%= comment.id %>" style="background: rgba(0, 0, 0, 0.5); width: 100%; height: 60px; border-radius: 10px">
         <table style="height: 100%">
           <tbody>
