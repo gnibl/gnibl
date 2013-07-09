@@ -8,10 +8,12 @@ Gnibl::Application.routes.draw do
 
   resources :users do
     member do
-      get :following, :followers, :feed, :next_gnibs, :next_feed
+      get :following, :followers, :feed, :next_gnibs, :next_feed, :notifications
     end
     collection do
       get 'search'
+      get 'test'
+      get 'readnotifications'
     end
   end
 
@@ -27,12 +29,21 @@ Gnibl::Application.routes.draw do
       get 'retcomment'
       get 'titles'
       get 'test'
-      get 'test2'
+      get 'paste_content_url'
     end
   end
 
-  resources :relationships
-  resources :gniblings
+  resources :relationships do
+    collection do
+      get 'follow'
+      get 'unfollow'
+    end
+  end
+  resources :gniblings do
+    member do
+      get :create
+    end
+  end
 
   match "/signup", :to => "users#new"
 

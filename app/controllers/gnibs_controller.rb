@@ -14,10 +14,48 @@ class GnibsController < ApplicationController
     false
   end
 
+def paste_image_url(img_url)
+ @urls = [img_url]
+    @image_sources = ['']
+   begin
+        locate =URI.parse(@urls[0])
+        file = open(locate,'rb').read
+        @image_sources[0]  = Base64.encode64(file)
+      rescue Exception => e
+        @error = "some error"
+      end
+ respond_to do |format|
+      format.js {render "gnibs/ajax_content_url_images"}
+    end
+
+end
+
+def imageurl?(url)
+matched = url.match(/^.+\/[\w:]+\.(jpe?g|png|gif)/i).to_a
+if matched && matched.length > 0
+return true
+else
+return false
+end
+end
+
   def paste_content_url
     @urls = ['']
     @image_sources = ['']
     url = params[:url]
+    if imageurl?(url)
+      begin
+        locate =URI.parse(url)
+        file = open(locate,'rb').read
+        @image_sources[0]  = Base64.encode64(file)
+      rescue Exception => e
+        @error = "some error"
+      end
+     respond_to do |format|
+          format.js {render "gnibs/ajax_content_url_images" and return}
+     end
+
+   else # not img url
     puts "Request url content: #{url}"
     uri = URI.parse(url)
     baseurl = uri.scheme+"://"+uri.host
@@ -42,7 +80,7 @@ class GnibsController < ApplicationController
       end
     end
     count = count -1
-    count = 3
+    count = 6
     while count > -1
       begin
         locate =URI.parse(@urls[count])
@@ -57,14 +95,15 @@ class GnibsController < ApplicationController
     if count > 0
       @pasted_content_url = true
     end
-  rescue Exception => e
+ # rescue Exception => e
     puts "Exception #{e}"
     @is_error = true
     @error_msg = e.to_s
-  ensure
+#  ensure
     respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
     end
+end # endif
   end
 
   def gnibstream

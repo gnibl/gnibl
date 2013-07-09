@@ -30,6 +30,7 @@ Gnibl::Application.routes.draw do
       get 'titles'
       get 'test'
       get 'paste_content_url'
+      get 'paste_image_url'
     end
   end
 
