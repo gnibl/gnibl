@@ -109,7 +109,13 @@ end # endif
 
   def gnibstream
     @city_id = current_user.city
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+    if params[:page]
+    @page = params[:page]
+    else
+    @page = 0
+    end
+   # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+ @gnibs = Gnib.all(:limit => 9, :offset => @page)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
@@ -134,7 +140,7 @@ end # endif
     @page *= 9;
     @gnib = @user.gnibs.build
     @city_id = current_user.city
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offest(@page).limit(9)
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id)
     @page_count = (@counts / 9).ceil;
