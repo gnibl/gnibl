@@ -31,7 +31,7 @@ def paste_image_url(img_url)
 end
 
 def imageurl?(url)
-matched = url.match(/^.+\/[\w:]+\.(jpe?g|png|gif)/i).to_a
+matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
 if matched && matched.length > 0
 return true
 else
@@ -48,6 +48,7 @@ end
         locate =URI.parse(url)
         file = open(locate,'rb').read
         @image_sources[0]  = Base64.encode64(file)
+        @urls[0] = url
       rescue Exception => e
         @error = "some error"
       end
@@ -183,7 +184,7 @@ end # endif
     if @comm
       begin
         @gnib = params[:gnib]
-        notify_gnibler(@gnib_id, @comm)
+        send_notifications_on_comment(@gnib_id, @comm)
       rescue Exception => e
         puts "Exception #{e}"
       end

@@ -31,7 +31,7 @@ def paste_image_url(img_url)
 end
 
 def imageurl?(url)
-matched = url.match(/^.+\/[\w:]+\.(jpe?g|png|gif)/i).to_a
+matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
 if matched && matched.length > 0
 return true
 else
@@ -48,6 +48,7 @@ end
         locate =URI.parse(url)
         file = open(locate,'rb').read
         @image_sources[0]  = Base64.encode64(file)
+        @urls[0] = url
       rescue Exception => e
         @error = "some error"
       end
@@ -95,11 +96,11 @@ end
     if count > 0
       @pasted_content_url = true
     end
-  rescue Exception => e
+ # rescue Exception => e
     puts "Exception #{e}"
     @is_error = true
     @error_msg = e.to_s
-  ensure
+#  ensure
     respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
     end

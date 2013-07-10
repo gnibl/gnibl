@@ -32,7 +32,7 @@ class Gnib < ActiveRecord::Base
         pos = comment.index('#',pos+1)
       end
     end
-if lastpos > 0 && lastpos < len
+if  lastpos < len
       final_comment += comment[lastpos..len]
     end
     comment = final_comment
@@ -49,7 +49,7 @@ if lastpos > 0 && lastpos < len
         pos = comment.index('@',pos+1)
       end
     end
-    if lastpos > 0 && lastpos < len
+    if lastpos < len
       final_comment += comment[lastpos..len]
     end
     
