@@ -14,7 +14,7 @@ class GnibsController < ApplicationController
     false
   end
 
-  
+
   def imageurl?(url)
     matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
     if matched && matched.length > 0
@@ -41,57 +41,55 @@ class GnibsController < ApplicationController
       respond_to do |format|
         format.js {render "gnibs/ajax_content_url_images" and return}
       end
-
-   else # not img url
-    puts "Request url content: #{url}"
-    uri = URI.parse(url)
-    baseurl = uri.scheme+"://"+uri.host
-    doc = Nokogiri::HTML(open(uri))
-    sfinder = "/html/body//img"
-    count = 0;
-    doc.xpath(sfinder).each do |node|
+    else # not img url
+      puts "Request url content: #{url}"
+      uri = URI.parse(url)
+      baseurl = uri.scheme+"://"+uri.host
+      doc = Nokogiri::HTML(open(uri))
+      sfinder = "/html/body//img"
+      count = 0;
+      doc.xpath(sfinder).each do |node|
         parturl = node.xpath("@src[not(contains(.,'footer') or contains(.,'logo') or contains (.,'spinners'))]").text #this is the url of an image avoid footers, ads etc
-      #find if the part url is full or not
-      fullurl = ""
-      if valid?(parturl)
-        fullurl= parturl
-      else
-        fullurl = baseurl+parturl
+        #find if the part url is full or not
+        fullurl = ""
+        if valid?(parturl)
+          fullurl= parturl
+        else
+          fullurl = baseurl+parturl
+        end
+
+        unless parturl.nil? or parturl.blank? or parturl.empty? # or valid?(fullurl)
+          @urls[count] = fullurl
+          count = count + 1
+        end
+
+      end #end block
+      count = count -1
+      puts "count = #{count}"
+      count = 6
+      while count > -1
+        begin
+          locate =URI.parse(@urls[count])
+          file = open(locate,'rb').read
+          @image_sources[count]  = Base64.encode64(file)
+        rescue Exception => e
+          @error = "error #{e.to_s}"
+        end
+        count = count -1
+      end #end while
+
+      if count > 0
+        @pasted_content_url = true
       end
-
-      unless parturl.nil? or parturl.blank? or parturl.empty? # or valid?(fullurl)
-        @urls[count] = fullurl
-        count = count + 1
+      # rescue Exception => e
+      #   puts "Exception #{e}"
+      #   @is_error = true
+      @error_msg = @error
+      #  ensure
+      respond_to do |format|
+        format.js {render "gnibs/ajax_content_url_images"}
       end
-
-    end #end block
-    count = count -1
-puts "count = #{count}"
-    count = 6
-    while count > -1
-      begin
-        locate =URI.parse(@urls[count])
-        file = open(locate,'rb').read
-        @image_sources[count]  = Base64.encode64(file)
-      rescue Exception => e
-        @error = "error #{e.to_s}" 
-      end
-     count = count -1
-     end #end while
-
-    if count > 0
-      @pasted_content_url = true
-    end
- # rescue Exception => e
- #   puts "Exception #{e}"
- #   @is_error = true
-    @error_msg = @error
-#  ensure
-    respond_to do |format|
-      format.js {render "gnibs/ajax_content_url_images"}
-    end
-end # endif
-
+    end # endif
   end
 
   def gnibstream
