@@ -71,7 +71,7 @@
             </div>
           </td>
           <td style=" padding: 1%; vertical-align: top">
-            <table>
+            <table style=" margin-top: 30px">
               <tr>
                 <td>
                   <div class="profile-title" style="width: 100%;">
@@ -92,8 +92,8 @@
               </tr>
               <tr>
                 <% if(current_user?(@user)) %>
-                  <%= form_for(@user, :url => "/users/#{@user.html_safe_username}", :remote=>true) do |f| %>
-                    <td colspan="1" style="width: 300px; padding-top: 10px">
+                  <td colspan="1" style="width: 300px; padding-top: 10px;">
+                    <%= form_for(@user, :url => "/users/#{@user.html_safe_username}", :remote=>true) do |f| %>
                       <div style="width: 100%; position: relative;">
                         <%= f.text_area :description, :maxlength => "255",
                           :id => "profileSummary", :rows => "3", :cols => "14",
@@ -105,13 +105,13 @@
                           <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
                             :onclick=>"document.getElementById('update-profile').style.display='none';"%>
                           <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';
-                                    return false;"
+                              return false;"
                                   style="float: right; margin-right: 30px"></button>
                           <span style="color: #17aeff; margin-right: 65px">Update profile</span>
                         </div>
                       </div>
-                    </td>
-                  <% end %>
+                    <% end %>
+                  </td>
                 <% else %>
                   <td colspan="2">
                     <div style="color: white; opacity: 0.8; max-width: 400px">
@@ -148,8 +148,8 @@
           </td>
         <% end %>
         <td style="vertical-align: top; padding: 1%; text-align: center">
-          <form action="/gnibs/search" method="get" style="margin-right: 20px; ">
-            <table style="width: 100%">
+          <form action="/gnibs/search" method="get" style="margin-right: 20px;  margin-top: 30px">
+            <table style="width: 100%;">
               <tr>
                 <td>
                   <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"/>
@@ -168,31 +168,31 @@
                    style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
           </form>
           <script type="text/javascript">
-                            String.prototype.endsWith = function(suffix) {
-                              return this.indexOf(suffix, this.length - suffix.length) !== -1;
-                            };
-                            String.prototype.contains = function(suffix) {
-                              return this.indexOf(suffix) !== -1;
-                            };
-                            var currentUrl = location.href;
-                            console.log(currentUrl);
-                            var input = document.getElementById('search-box');
-                            var gnibSomething = document.getElementById('gnib-something');
-                            var settings = document.getElementById('settings');
-                            if (currentUrl.endsWith('following') || currentUrl.contains('users/search')) {
-                              if (input) {
-                                input.name = 'uid';
-                                input.form.action = '/users/search';
-                                input.placeholder = 'search gniblers';
-                              }
-                              if (gnibSomething) {
-                                gnibSomething.style.display = 'none';
-                              }
-                              settings.className = 'centered border';
-                            }
-                            function onWhatOver() {
-                              var info = document.getElementById('whatInfo');
-                            }
+                      String.prototype.endsWith = function(suffix) {
+                        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+                      };
+                      String.prototype.contains = function(suffix) {
+                        return this.indexOf(suffix) !== -1;
+                      };
+                      var currentUrl = location.href;
+                      console.log(currentUrl);
+                      var input = document.getElementById('search-box');
+                      var gnibSomething = document.getElementById('gnib-something');
+                      var settings = document.getElementById('settings');
+                      if (currentUrl.endsWith('following') || currentUrl.contains('users/search')) {
+                        if (input) {
+                          input.name = 'uid';
+                          input.form.action = '/users/search';
+                          input.placeholder = 'search gniblers';
+                        }
+                        if (gnibSomething) {
+                          gnibSomething.style.display = 'none';
+                        }
+                        settings.className = 'centered border';
+                      }
+                      function onWhatOver() {
+                        var info = document.getElementById('whatInfo');
+                      }
           </script>
         </td>
       </tr>
