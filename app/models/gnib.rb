@@ -32,6 +32,12 @@ class Gnib < ActiveRecord::Base
         pos = comment.index('#',pos+1)
       end
     end
+if  lastpos < len
+      final_comment += comment[lastpos..len]
+    end
+    comment = final_comment
+    final_comment = ""
+    len = comment.length
     pos = -1
     lastpos = 0
     while (pos = comment.index('@',pos+1))
@@ -43,9 +49,14 @@ class Gnib < ActiveRecord::Base
         pos = comment.index('@',pos+1)
       end
     end
-    if lastpos > 0 && lastpos < len
+    if lastpos < len
       final_comment += comment[lastpos..len]
     end
+    
+   unless pos = comment.index('@',0) #if there is no @tag
+    final_comment = comment
+    end
+    
     return final_comment.html_safe
   end
 end

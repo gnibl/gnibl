@@ -14,10 +14,49 @@ class GnibsController < ApplicationController
     false
   end
 
+def paste_image_url(img_url)
+ @urls = [img_url]
+    @image_sources = ['']
+   begin
+        locate =URI.parse(@urls[0])
+        file = open(locate,'rb').read
+        @image_sources[0]  = Base64.encode64(file)
+      rescue Exception => e
+        @error = "some error"
+      end
+ respond_to do |format|
+      format.js {render "gnibs/ajax_content_url_images"}
+    end
+
+end
+
+def imageurl?(url)
+matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
+if matched && matched.length > 0
+return true
+else
+return false
+end
+end
+
   def paste_content_url
     @urls = ['']
     @image_sources = ['']
     url = params[:url]
+    if imageurl?(url)
+      begin
+        locate =URI.parse(url)
+        file = open(locate,'rb').read
+        @image_sources[0]  = Base64.encode64(file)
+        @urls[0] = url
+      rescue Exception => e
+        @error = "some error"
+      end
+     respond_to do |format|
+          format.js {render "gnibs/ajax_content_url_images" and return}
+     end
+
+   else # not img url
     puts "Request url content: #{url}"
     uri = URI.parse(url)
     baseurl = uri.scheme+"://"+uri.host
@@ -42,7 +81,7 @@ class GnibsController < ApplicationController
       end
     end
     count = count -1
-    count = 3
+    count = 6
     while count > -1
       begin
         locate =URI.parse(@urls[count])
@@ -57,22 +96,31 @@ class GnibsController < ApplicationController
     if count > 0
       @pasted_content_url = true
     end
-  rescue Exception => e
+ # rescue Exception => e
     puts "Exception #{e}"
     @is_error = true
     @error_msg = e.to_s
-  ensure
+#  ensure
     respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
     end
+end # endif
   end
 
   def gnibstream
     @city_id = current_user.city
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+    if params[:page]
+    @page = params[:page]
+    else
+    @page = 0
+    end
+   # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+ @gnibs = Gnib.where(:all).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
+    @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibstream"
   end
 
@@ -82,30 +130,34 @@ class GnibsController < ApplicationController
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
+    @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
   end
   def next_gnibstream
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     @gnib = @user.gnibs.build
     @city_id = current_user.city
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offest(page).limit(9)
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id)
+    @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
   end
 
   def next_gnibpicks
-    page = params[:page]
-    page = page.to_i - 1;
-    page *= 10;
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     @gnib = @user.gnibs.build
-    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(page).limit(9)
+    @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
+    @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
@@ -130,19 +182,20 @@ class GnibsController < ApplicationController
   end
 
   def comment
-    @gnib_id = params[:gnib][:gnib_id]
+    @user = current_user
+    @gnib_id = params[:gnib_id]
     @user_id = current_user.id
     @descr = params[:comment]
     @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
     if @comm
       begin
         @gnib = params[:gnib]
-        notify_gnibler(@gnib_id, @comm)
+        send_notifications_on_comment(@gnib_id, @comm)
       rescue Exception => e
         puts "Exception #{e}"
       end
     end
-    @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at DESC")
+    @comments = Comment.where("gnib_id = #{@gnib_id}").order("created_at ASC")
     @counts = 0
     if @comments
       @counts = @comments.length
@@ -154,6 +207,7 @@ class GnibsController < ApplicationController
   end
 
   def upvotecomment
+    @user = current_user
     @comment_id = params[:comment_id]
     @comment.update_attribute("votes",@comment.votes + 1)
     respond_to do |format|
@@ -162,8 +216,9 @@ class GnibsController < ApplicationController
   end
 
   def retcomment
-    gnib_id = params[:gnib][:gnib_id]
-    @comments = Comment.where("gnib_id = #{gnib_id}").order("created_at DESC")
+    gnib_id = params[:gnib_id]
+    @user = current_user
+    @comments = Comment.where("gnib_id = #{gnib_id}").order("created_at ASC")
     @counts = 0
     if @comments
       @counts = @comments.length
@@ -180,16 +235,19 @@ class GnibsController < ApplicationController
     @gnib = @user.gnibs.build
     @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").limit(9)
     @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
   def next_search
     term = params[:term]
-    page = params[:page]
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
     @user = current_user
     @gnib = @user.gnibs.build
-    @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(page).limit(9)
+    @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(@page).limit(9)
     @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
-    @gnib_pages = (@counts / 9).ceil;
+    @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
@@ -215,10 +273,6 @@ class GnibsController < ApplicationController
 
     params[:gnib][:city] = city_id
     @gnib = current_user.gnibs.build(params[:gnib])
-    @gnib.image = params[:image]
-    if params[:url]
-      @gnib.image = open(params[:url]
-    end
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
     flash[:notice] = @success

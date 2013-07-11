@@ -1,92 +1,72 @@
 <% if(gnib) %>
   <div id="<%=gnib.id%>"
-       class="gnib-thumbnail" style="margin-bottom: 5px;">
-    <script type="text/javascript">
-      $('#<%= gnib.id %>').hover(function() {
-        $('#thumbnail-control_<%=gnib.id%>').slideDown(600, function() {
-          $(this).show();
-        });
-        $('#thumbnail-view_<%=gnib.id%>').slideUp(600, function() {
-          $(this).show();
-        });
-      },
-              function() {
-                $('#thumbnail-control_<%=gnib.id%>').slideUp(600, function() {
-                  $(this).hide();
-                });
-                $('#thumbnail-view_<%=gnib.id%>').slideDown(600, function() {
-                  $(this).hide();
-                });
-              });
-    </script>
-    <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control">
+       class="gnib-thumbnail" style="margin-bottom: 5px; padding-bottom: 0px; float: left; margin-right: 4px">
+    <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control" style="margin-top: 5px; border-radius: 10px">
       <table>
         <tbody>
           <tr>
-            <td style="width: 60%; font-size: 25px; border-right: 2px solid #aaaaaa; text-align: center; color: #17aeff">
-              <%= gnib.title %>
+          
+            <td style="text-align: left; vertical-align: middle; width: 8%; border-right: 1px solid #aaaaaa; padding-left: 2px">
+              <button title="gnib it!" class="gnib-gnib-button"
+                      onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
+                      style="margin: 0px; margin-top: 1px; margin-right: 5px; background-size: 100% 100%"></button>
             </td>
-            <td style="text-align: left; padding: 0px">
-              <div class="gnib-controll">
-                <style type="text/css">
-                  form {
-                    margin: 0px;
-                  }
-                </style>
-                <%= form_for(@user.gniblings.build(:gnib_id => gnib.id), :remote => true, :update=>"indicator") do |f| %>
-                  <div >
-                    <%= f.hidden_field :gnib_id  %>
-                    <%= f.hidden_field :current_url, :value => "#{request.fullpath}"  %>
-                  </div>
-                  <table>
-                    <tr style="border-spacing: 0px">
-                      <td style="text-align: left; padding: 0px">
-                        <%= f.submit "",:title => "gnib", :class => "gnib-gnib-button", :style=>"margin: 0px; margin-top: 5px"%>
-                      </td>
-                      <td style="text-align: left">
-                        <div style="color: #17aeff; font-size: 15px">Gnib it!</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2">
-                        <div class="gnib-count" style="font-size: 20px; width: 100%; height: 30px; color: white"  align="center">
-                          <div id="gnib_count_<%=gnib.id%>" style="width: 100%; padding:5px" align="center"><%=gnib.gniblings.count%> gnibs</div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                <% end %>
+            <td style="width: 12%">
+              <div class="gnib-count"
+                   style="font-size: 12px; width: 40px; height: 20px; color: white; background: rgba(23, 174, 255, 0.4)"
+                   align="center">
+                <div id="gnib_count_<%=gnib.id%>" style="width: 100%;" align="center" title="Number of gnibs">
+                  <%=gnib.gniblings.count%>
+                </div>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <%=form_for(gnib, :remote=>true, :url => {:action => "retcomment", :controller => "gnibs"}, :method => "get") do |f|%>
-      <%= f.hidden_field :gnib_id, :value => "#{gnib.id}" %>
-      <button class="gnib" style="background:transparent; border: 0px none">
-        <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
-      </button>
-    <% end %>
-    <div id="thumbnail-view_<%=gnib.id%>" class="thumbnail-view" >
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style=" float: left; width: 100%">
-                <span style="color: #17aeff; font-size: 16px; font-weight: bold"><%=gnib.user.name%></span>
-                <br/>
-                <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
-              </div>
-            </td>
-            <td>
-              <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg" style="float:right; width: 100%; margin: auto">
-                <%= gnib.parsed_description%>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <button class="gnib" style="background:transparent; border: 0px none" data-gnib-id="<%=gnib.id%>"
+            onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
+                           return false;">
+              <% if gnib.image.url %>
+                <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
+              <% else %>
+                <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
+              <% end %>
+    </button>
+    <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
+      <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
+       <a href="/users/<%=gnib.user.username%>" style="color: #17aeff;"><%=gnib.user.name%></a>
+      </div>
+      <div id="thumbnail-view_<%=gnib.id%>" style="width: 100%; display: none; margin: auto">
+        <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+          <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
+        </div>
+        <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
+             style="max-width: 50%; left: 48%; top: 30%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+          <%= gnib.parsed_description%>
+        </div>
+      </div>
     </div>
   </div>
+
+  <script type="text/javascript">
+                       var speed = 300;
+                       var rollbackSpeed = 600;
+                       $('#<%= gnib.id %>').hover(function() {
+                         $('#thumbnail-view_<%=gnib.id%>').slideDown(speed, function() {
+                           $(this).show();
+                         });
+                         $('#thumbnail-control_<%=gnib.id%>').slideDown(speed, function() {
+                           $(this).show();
+                         });
+                       },
+                               function() {
+                                 $('#thumbnail-control_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+                                   $(this).hide();
+                                 });
+                                 $('#thumbnail-view_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+                                   $(this).hide();
+                                 });
+                               });
+  </script>
 <% end %>

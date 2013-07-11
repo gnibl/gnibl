@@ -5,15 +5,9 @@
       <table>
         <tbody>
           <tr>
-            <% if gnib.title.length >12 %>
-              <td style="width: 80%; font-size: 16px; border-right: 1px solid #aaaaaa; text-align: left; color: #17aeff">
-                <%= gnib.title %>
+             <td style="width: 80%; font-size: 20px; border-right: 1px solid #aaaaaa; text-align: center; color: #17aeff">
+                
               </td>
-            <% else %>
-              <td style="width: 80%; font-size: 20px; border-right: 1px solid #aaaaaa; text-align: center; color: #17aeff">
-                <%= gnib.title %>
-              </td>
-            <% end %>
             <td style="text-align: left; vertical-align: middle; width: 8%; border-right: 1px solid #aaaaaa; padding-left: 2px">
               <button title="gnib it!" class="gnib-gnib-button"
                       onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
