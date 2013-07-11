@@ -14,30 +14,30 @@ class GnibsController < ApplicationController
     false
   end
 
-def paste_image_url(img_url)
- @urls = [img_url]
+  def paste_image_url(img_url)
+    @urls = [img_url]
     @image_sources = ['']
-   begin
-        locate =URI.parse(@urls[0])
-        file = open(locate,'rb').read
-        @image_sources[0]  = Base64.encode64(file)
-      rescue Exception => e
-        @error = "some error"
-      end
- respond_to do |format|
+    begin
+      locate =URI.parse(@urls[0])
+      file = open(locate,'rb').read
+      @image_sources[0]  = Base64.encode64(file)
+    rescue Exception => e
+      @error = "some error"
+    end
+    respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
     end
 
-end
+  end
 
-def imageurl?(url)
-matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
-if matched && matched.length > 0
-return true
-else
-return false
-end
-end
+  def imageurl?(url)
+    matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
+    if matched && matched.length > 0
+      return true
+    else
+      return false
+    end
+  end
 
   def paste_content_url
     @urls = ['']
@@ -52,9 +52,9 @@ end
       rescue Exception => e
         @error = "error #{e.to_s}"
       end
-     respond_to do |format|
-          format.js {render "gnibs/ajax_content_url_images" and return}
-     end
+      respond_to do |format|
+        format.js {render "gnibs/ajax_content_url_images" and return}
+      end
 
    else # not img url
     puts "Request url content: #{url}"
@@ -88,7 +88,17 @@ end
         @error = "error #{e.to_s}" 
       end
       count = count -1
-    end
+      count = 6
+      while count > -1
+        begin
+          locate =URI.parse(@urls[count])
+          file = open(locate,'rb').read
+          @image_sources[count]  = Base64.encode64(file)
+        rescue Exception => e
+          @error = "some error"
+        end
+        count = count -1
+      end
 
     if count > 0
       @pasted_content_url = true
@@ -102,17 +112,18 @@ end
       format.js {render "gnibs/ajax_content_url_images"}
     end
 end # endif
+
   end
 
   def gnibstream
     @city_id = current_user.city
     if params[:page]
-    @page = params[:page]
+      @page = params[:page]
     else
-    @page = 0
+      @page = 0
     end
-   # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
- @gnibs = Gnib.all(:limit => 9, :offset => @page)
+    # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+    @gnibs = Gnib.all(:limit => 9, :offset => @page)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
@@ -183,7 +194,7 @@ end # endif
     @gnib_id = params[:gnib_id]
     @user_id = current_user.id
     @descr = params[:comment]
-    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
+    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr, :votes => 0)
     if @comm
       begin
         @gnib = params[:gnib]
@@ -206,9 +217,13 @@ end # endif
   def upvotecomment
     @user = current_user
     @comment_id = params[:comment_id]
-    @comment.update_attribute("votes",@comment.votes + 1)
+    gnib_id = params[:gnib_id]
+    @gnib = Gnib.find(gnib_id)
+    @comment = Comment.find(@comment_id)
+    @comment.votes = 0 unless @comment.votes
+    @comment.update_attribute("votes", @comment.votes + 1)
     respond_to do |format|
-      format.js {render "shared/gnib_modal"}
+      format.js {render "shared/gnib_comment_upvoted"}
     end
   end
 
@@ -280,7 +295,7 @@ end # endif
       current_user.like(@gnib.id)
       redirect_to current_url
     else
-      redirect_to "/users/#{current_user.username}"
+      redirect_to "/users/#{current_user.html_safe_username}"
     end
   end
 

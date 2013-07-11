@@ -342,18 +342,18 @@
         function ajaxSlide(idx, current_page) {
           $('.item').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
           var current_url = '<%= request.path %>';
-          var gnibs = current_url.endsWith('<%=current_user.username%>');
+          var gnibs = current_url.endsWith('<%=current_user.html_safe_username%>');
           var search = !gnibs && current_url.contains('gnibs/search');
           var user_search = !search && current_url.contains('users/search');
           var action;
           if (gnibs) {
-            action = '/users/<%=current_user.username%>/next_gnibs';
+            action = '/users/<%=current_user.html_safe_username%>/next_gnibs';
           } else if (search) {
             action = "/gnibs/next_search?term=" + getParameterByName("term");
           } else if (user_search) {
             action = "/users/next_search?uid=" + getParameterByName("uid");
           } else {
-            action = '/users/<%=current_user.username%>/next_feed'
+            action = '/users/<%=current_user.html_safe_username%>/next_feed'
           }
           var data = [
             {name: 'page', value: current_page},

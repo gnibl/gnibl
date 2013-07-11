@@ -84,4 +84,12 @@ class User < ActiveRecord::Base
   def self.create_from_hash!(hash,data)
     create(:name => data.name)
   end
+
+  def html_safe_username
+    safe_username = self.username.gsub /\.+/, '_'
+  end
+
+  def self.correct_username_from_safe_html_username(html_safe_username)
+    correct_username = html_safe_username.gsub /_+/, '.'
+  end
 end

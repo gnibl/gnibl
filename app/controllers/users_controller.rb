@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-      redirect_to "/users/#{current_user.username}/feed"
+      redirect_to "/users/#{current_user.html_safe_username}/feed"
       return
     end
     @user = User.new
@@ -54,12 +54,13 @@ class UsersController < ApplicationController
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render 'index'
   end
 
   def next_gnibs
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
@@ -73,7 +74,8 @@ class UsersController < ApplicationController
     end
   end
   def next_feed
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
@@ -87,34 +89,57 @@ class UsersController < ApplicationController
     end
   end
   def feed
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @gnibs = @user.feed.limit(9)
-    puts "feed count: #{@gnibs.count} gnuibs: #{@gnibs}"
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
   end
 
   def following
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     #@users = @user.followed_users.limit(9)
     #    @counts = @user.followed_users.count
     #TEMPORARY
     @users = User.all
     @counts = @users.count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render "show_follow"
   end
-  def next_following
-    @user = User.find_by_username(params[:id])
+  def gnibblings
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
+    @users = @user.followed_users.limit(9)
+    @counts = @user.followed_users.count
+    @page_count = (@counts / 9).ceil;
+    notifications();
+  end
+  def next_gnibblings
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
     @users = @user.followed_users.offset(@page).limit(9)
     @counts = @user.followed_users.count
     @page_count = (@counts / 9).ceil;
+    notifications();
+    render "show_follow"
+  end
+  def next_following
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
+    @users = @user.followed_users.offset(@page).limit(9)
+    @counts = @user.followed_users.count
+    @page_count = (@counts / 9).ceil;
+    notifications();
     respond_top do |format|
       format.js {render "shared/user"}
     end
@@ -128,7 +153,7 @@ class UsersController < ApplicationController
     @users = @user.followers.offset(@page).limit(9)
     @counts = @user.followers.count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render "show_follow"
   end
 
@@ -141,7 +166,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in(@user)
-      redirect_to "/users/#{@user.username}/feed"
+      redirect_to "/users/#{@user.html_safe_username}/feed"
     else
       render 'new'
     end
@@ -149,10 +174,8 @@ class UsersController < ApplicationController
 
   def notifications
     @user = current_user
-    page = params[:page]
-    # @gnibs = @user.gnibs.offset(page).limit(9)
-    @notifications = @user.notifications
-    @notifications_count = @notifications.where("read = :state", :state => false).count
+    @notifications = @user.notifications.where("read = :state", :state => false)
+    @notifications_count = @notifications.count
   end
 
   def readnotifications
@@ -173,7 +196,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     if params[:user] && params[:user][:description]
       @user.update_attribute(:description, params[:user][:description]);
     elsif params[:user] && params[:user][:avatar_url]
@@ -186,21 +210,21 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     page = params[:page]
     # @gnibs = @user.gnibs.offset(page).limit(9)
     @gnibs = @user.redefgnibs.offset(page).limit(9)
     @counts = @user.redefgnibs.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
   end
 
   private
-
-
   def correct_user
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     redirect_to(root_path) unless current_user?(@user)
   end
 end

@@ -4,8 +4,7 @@
  */
 
 $('document').ready(function() {
-  $('.notification-overlay-gnib-thumbnail').click(function() {
-    $(this).hide();
+  $('.notification-overlay').click(function() {
     //send ajax request to server to indicate that we have read the notification
     console.log('sending notification read');
     var not_id = $(this).data('notification-id');
