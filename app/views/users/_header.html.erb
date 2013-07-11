@@ -24,19 +24,19 @@
           </div>
         </td>
         <td class="border-right" style="width: 14.3%">
-          <a href="/users/<%=current_user.username%>" >
+          <a href="/users/<%=current_user.html_safe_username%>" >
             <span style="color: #17aeff">
               gnib<span style="color: white">file</span></span>
           </a>
         </td>
         <td class="border-right" style="width: 14.3%">
-          <a href="/gnibs/<%=current_user.username%>/gnibpicks" >
+          <a href="/gnibs/<%=current_user.html_safe_username%>/gnibpicks" >
             <span style="color: #17aeff">
               gnib<span style="color: white">picks</span></span>
           </a>
         </td>
         <td class="border-right" style="width: 14.3%">
-          <a href="/gnibs/<%=current_user.username%>/gnibstream" >
+          <a href="/gnibs/<%=current_user.html_safe_username%>/gnibstream" >
             <span style="color: #17aeff;">
               gnib<span style="color: white">stream</span></span>
           </a>
@@ -57,11 +57,11 @@
   <table style="width: 100%">
     <tbody>
       <tr>
-        <% if (request.path != "/gnibs/#{@user.username}/gnibpicks" && request.path != "/gnibs/#{@user.username}/gnibstream") %>
+        <% if (request.path != "/gnibs/#{@user.html_safe_username}/gnibpicks" && request.path != "/gnibs/#{@user.html_safe_username}/gnibstream") %>
           <td class="profile-column" >
             <div id="profile-image" >
               <% if current_user?(@user) %>
-                <%= form_for(@user, :url => "/users/#{@user.username}",:html =>{:id => "current_user_form"}) do |f| %>
+                <%= form_for(@user, :url => "/users/#{@user.html_safe_username}",:html =>{:id => "current_user_form"}) do |f| %>
                   <div class="wrapper">
                     <%= f.file_field :avatar_url, :id => "current_user_file_upload", :class => "file-upload", :title=>"Change your profile image" %>
                   </div>
@@ -92,7 +92,7 @@
               </tr>
               <tr>
                 <% if(current_user?(@user)) %>
-                  <%= form_for(@user, :url => "/users/#{@user.username}", :remote=>true) do |f| %>
+                  <%= form_for(@user, :url => "/users/#{@user.html_safe_username}", :remote=>true) do |f| %>
                     <td colspan="1" style="width: 300px; padding-top: 10px">
                       <div style="width: 100%; position: relative;">
                         <%= f.text_area :description, :maxlength => "255",
@@ -128,7 +128,7 @@
           </td>
         <% else %>
           <td>
-            <% if request.path == "/gnibs/#{@user.username}/gnibpicks" %>
+            <% if request.path == "/gnibs/#{@user.html_safe_username}/gnibpicks" %>
               <div align="center" style="width: 100%">
                 <div id="gnibpicksTitle">
                   <span style="color: #17aeff; font-size: 50px">

@@ -159,7 +159,7 @@
              style="overflow: hidden; bottom: 0px;
              border-top-left-radius: 10px; border-top-right-radius: 10px; display: block; height: auto">
           <div class="gnibl-modal-user-section">
-            <a href="/users/<%=gnib.user.username%>" style="color: #17aeff;"><%=gnib.user.name%></a>
+            <a href="/users/<%=gnib.user.html_safe_username%>" style="color: #17aeff;"><%=gnib.user.name%></a>
             <span style="font-size: 15px">  {<%= counts %> comments}</span>
           </div>
           <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: none; margin: auto">

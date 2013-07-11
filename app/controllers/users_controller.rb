@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-      redirect_to "/users/#{current_user.username}/feed"
+      redirect_to "/users/#{current_user.html_safe_username}/feed"
       return
     end
     @user = User.new
@@ -59,7 +59,8 @@ class UsersController < ApplicationController
   end
 
   def next_gnibs
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
@@ -73,7 +74,8 @@ class UsersController < ApplicationController
     end
   end
   def next_feed
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
@@ -87,7 +89,8 @@ class UsersController < ApplicationController
     end
   end
   def feed
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @gnibs = @user.feed.limit(9)
     puts "feed count: #{@gnibs.count} gnuibs: #{@gnibs}"
     @counts = @user.feed.count
@@ -97,7 +100,8 @@ class UsersController < ApplicationController
   end
 
   def following
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     #@users = @user.followed_users.limit(9)
     #    @counts = @user.followed_users.count
     #TEMPORARY
@@ -108,14 +112,16 @@ class UsersController < ApplicationController
     render "show_follow"
   end
   def gnibblings
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @users = @user.followed_users.limit(9)
     @counts = @user.followed_users.count
     @page_count = (@counts / 9).ceil;
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
   def next_gnibblings
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
@@ -126,7 +132,8 @@ class UsersController < ApplicationController
     render "show_follow"
   end
   def next_following
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
     @page *= 9;
@@ -159,7 +166,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in(@user)
-      redirect_to "/users/#{@user.username}/feed"
+      redirect_to "/users/#{@user.html_safe_username}/feed"
     else
       render 'new'
     end
@@ -191,7 +198,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     if params[:user] && params[:user][:description]
       @user.update_attribute(:description, params[:user][:description]);
     elsif params[:user] && params[:user][:avatar_url]
@@ -204,7 +212,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     page = params[:page]
     # @gnibs = @user.gnibs.offset(page).limit(9)
     @gnibs = @user.redefgnibs.offset(page).limit(9)
@@ -218,7 +227,8 @@ class UsersController < ApplicationController
 
 
   def correct_user
-    @user = User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user = User.find_by_username(username)
     redirect_to(root_path) unless current_user?(@user)
   end
 end

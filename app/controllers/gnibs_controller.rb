@@ -287,7 +287,7 @@ class GnibsController < ApplicationController
       current_user.like(@gnib.id)
       redirect_to current_url
     else
-      redirect_to "/users/#{current_user.username}"
+      redirect_to "/users/#{current_user.html_safe_username}"
     end
   end
 
