@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render 'index'
   end
 
@@ -92,11 +92,10 @@ class UsersController < ApplicationController
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
     @gnibs = @user.feed.limit(9)
-    puts "feed count: #{@gnibs.count} gnuibs: #{@gnibs}"
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
   end
 
   def following
@@ -108,7 +107,7 @@ class UsersController < ApplicationController
     @users = User.all
     @counts = @users.count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render "show_follow"
   end
   def gnibblings
@@ -117,7 +116,7 @@ class UsersController < ApplicationController
     @users = @user.followed_users.limit(9)
     @counts = @user.followed_users.count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
   end
   def next_gnibblings
     username = User.correct_username_from_safe_html_username(params[:id])
@@ -128,7 +127,7 @@ class UsersController < ApplicationController
     @users = @user.followed_users.offset(@page).limit(9)
     @counts = @user.followed_users.count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render "show_follow"
   end
   def next_following
@@ -140,6 +139,7 @@ class UsersController < ApplicationController
     @users = @user.followed_users.offset(@page).limit(9)
     @counts = @user.followed_users.count
     @page_count = (@counts / 9).ceil;
+    notifications();
     respond_top do |format|
       format.js {render "shared/user"}
     end
@@ -153,7 +153,7 @@ class UsersController < ApplicationController
     @users = @user.followers.offset(@page).limit(9)
     @counts = @user.followers.count
     @page_count = (@counts / 9).ceil;
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
     render "show_follow"
   end
 
@@ -174,10 +174,8 @@ class UsersController < ApplicationController
 
   def notifications
     @user = current_user
-    page = params[:page]
-    # @gnibs = @user.gnibs.offset(page).limit(9)
-    @notifications = @user.notifications
-    @notifications_count = @notifications.where("read = :state", :state => false).count
+    @notifications = @user.notifications.where("read = :state", :state => false)
+    @notifications_count = @notifications.count
   end
 
   def readnotifications
@@ -220,12 +218,10 @@ class UsersController < ApplicationController
     @counts = @user.redefgnibs.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    notifications();
   end
 
   private
-
-
   def correct_user
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)

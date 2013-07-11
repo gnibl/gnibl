@@ -127,17 +127,17 @@
             </table>
           </td>
         <% else %>
-          <td>
+          <td style="text-align: left">
             <% if request.path == "/gnibs/#{@user.html_safe_username}/gnibpicks" %>
-              <div align="center" style="width: 100%">
+              <div align="center" style="width: 100%; text-align: left">
                 <div id="gnibpicksTitle">
                   <span style="color: #17aeff; font-size: 50px">
                     gnib<span style="color: white">picks</span></span>
                 </div>
-                <div style="padding-top: 20px; font-size: 20px">Today's most highly rated gnibs</div>
+                <div style="padding-top: 15px; font-size: 20px; padding-bottom: 5px">Today's most highly rated gnibs</div>
               </div>
             <% else %>
-              <div align="center" style="width: 100%">
+              <div align="center" >
                 <div id="gnibpicksTitle">
                   <span style="color: #17aeff; font-size: 50px">
                     gnib<span style="color: white">stream</span></span>
@@ -148,15 +148,15 @@
           </td>
         <% end %>
         <td style="vertical-align: top; padding: 1%; text-align: center">
-          <form action="/gnibs/search" method="get" style="float: right; margin-right: 20px; ">
-            <table style="min-width: 200px">
+          <form action="/gnibs/search" method="get" style="margin-right: 20px; ">
+            <table style="width: 100%">
               <tr>
                 <td>
                   <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"/>
                 </td>
                 <td>
                   <div style="position: relative">
-                    <div class="what">?</div>
+                    <div class="what" title="Search any gnibs or gniblers">?</div>
                     <div style="position: absolute; background: #17aeff; color: white">
 
                     </div>
