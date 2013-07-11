@@ -19,6 +19,12 @@
           </a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
+        <td class="prof-not-bd" <% if request.path == "/users/#{@user.username}/gnibblings" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
+          <a id="gnibler_count" href="/users/<%=@user.username%>/gnibblings">
+            Gnibblings(<%=@user.followed_users.count%>)
+          </a>
+        </td>
+        <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <td class="prof-not-bd right-radius" <% if request.path == "/users/#{current_user.username}" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
           <a href="/users/<%=current_user.username%>">
             My gnibs(<%=current_user.redefgnibs.count%>)

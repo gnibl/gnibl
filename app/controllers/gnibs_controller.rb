@@ -14,30 +14,30 @@ class GnibsController < ApplicationController
     false
   end
 
-def paste_image_url(img_url)
- @urls = [img_url]
+  def paste_image_url(img_url)
+    @urls = [img_url]
     @image_sources = ['']
-   begin
-        locate =URI.parse(@urls[0])
-        file = open(locate,'rb').read
-        @image_sources[0]  = Base64.encode64(file)
-      rescue Exception => e
-        @error = "some error"
-      end
- respond_to do |format|
+    begin
+      locate =URI.parse(@urls[0])
+      file = open(locate,'rb').read
+      @image_sources[0]  = Base64.encode64(file)
+    rescue Exception => e
+      @error = "some error"
+    end
+    respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
     end
 
-end
+  end
 
-def imageurl?(url)
-matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
-if matched && matched.length > 0
-return true
-else
-return false
-end
-end
+  def imageurl?(url)
+    matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
+    if matched && matched.length > 0
+      return true
+    else
+      return false
+    end
+  end
 
   def paste_content_url
     @urls = ['']
@@ -52,70 +52,70 @@ end
       rescue Exception => e
         @error = "some error"
       end
-     respond_to do |format|
-          format.js {render "gnibs/ajax_content_url_images" and return}
-     end
+      respond_to do |format|
+        format.js {render "gnibs/ajax_content_url_images" and return}
+      end
 
-   else # not img url
-    puts "Request url content: #{url}"
-    uri = URI.parse(url)
-    baseurl = uri.scheme+"://"+uri.host
-    doc = Nokogiri::HTML(open(uri))
-    sfinder = "/html/body//img"
-    count = 0;
-    doc.xpath(sfinder).each do |node|
-      parturl = node.xpath("@src[not(contains(.,'footer')
+    else # not img url
+      puts "Request url content: #{url}"
+      uri = URI.parse(url)
+      baseurl = uri.scheme+"://"+uri.host
+      doc = Nokogiri::HTML(open(uri))
+      sfinder = "/html/body//img"
+      count = 0;
+      doc.xpath(sfinder).each do |node|
+        parturl = node.xpath("@src[not(contains(.,'footer')
 		or contains(.,'logo')
 		or contains(.,'spinners')
 		)]").text #this is the url of an image avoid footers, ads etc
-      #find if the part url is full or not
-      fullurl = ""
-      if valid?(parturl)
-        fullurl= parturl
-      else
-        fullurl = baseurl+parturl
-      end
-      unless parturl.nil? or parturl.blank? or parturl.empty? # or valid?(fullurl)
-        @urls[count] = fullurl
-        count = count + 1
-      end
-    end
-    count = count -1
-    count = 6
-    while count > -1
-      begin
-        locate =URI.parse(@urls[count])
-        file = open(locate,'rb').read
-        @image_sources[count]  = Base64.encode64(file)
-      rescue Exception => e
-        @error = "some error"
+        #find if the part url is full or not
+        fullurl = ""
+        if valid?(parturl)
+          fullurl= parturl
+        else
+          fullurl = baseurl+parturl
+        end
+        unless parturl.nil? or parturl.blank? or parturl.empty? # or valid?(fullurl)
+          @urls[count] = fullurl
+          count = count + 1
+        end
       end
       count = count -1
-    end
+      count = 6
+      while count > -1
+        begin
+          locate =URI.parse(@urls[count])
+          file = open(locate,'rb').read
+          @image_sources[count]  = Base64.encode64(file)
+        rescue Exception => e
+          @error = "some error"
+        end
+        count = count -1
+      end
 
-    if count > 0
-      @pasted_content_url = true
-    end
- # rescue Exception => e
-    puts "Exception #{e}"
-    @is_error = true
-    @error_msg = e.to_s
-#  ensure
-    respond_to do |format|
-      format.js {render "gnibs/ajax_content_url_images"}
-    end
-end # endif
+      if count > 0
+        @pasted_content_url = true
+      end
+      # rescue Exception => e
+      puts "Exception #{e}"
+      @is_error = true
+      @error_msg = e.to_s
+      #  ensure
+      respond_to do |format|
+        format.js {render "gnibs/ajax_content_url_images"}
+      end
+    end # endif
   end
 
   def gnibstream
     @city_id = current_user.city
     if params[:page]
-    @page = params[:page]
+      @page = params[:page]
     else
-    @page = 0
+      @page = 0
     end
-   # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
- @gnibs = Gnib.all(:limit => 9, :offset => @page)
+    # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+    @gnibs = Gnib.all(:limit => 9, :offset => @page)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
@@ -186,7 +186,7 @@ end # endif
     @gnib_id = params[:gnib_id]
     @user_id = current_user.id
     @descr = params[:comment]
-    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr)
+    @comm = Comment.create(:user_id => @user_id, :gnib_id => @gnib_id, :description => @descr, :votes => 0)
     if @comm
       begin
         @gnib = params[:gnib]
@@ -209,9 +209,13 @@ end # endif
   def upvotecomment
     @user = current_user
     @comment_id = params[:comment_id]
-    @comment.update_attribute("votes",@comment.votes + 1)
+    gnib_id = params[:gnib_id]
+    @gnib = Gnib.find(gnib_id)
+    @comment = Comment.find(@comment_id)
+    @comment.votes = 0 unless @comment.votes
+    @comment.update_attribute("votes", @comment.votes + 1)
     respond_to do |format|
-      format.js {render "shared/gnib_modal"}
+      format.js {render "shared/gnib_comment_upvoted"}
     end
   end
 

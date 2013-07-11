@@ -107,6 +107,24 @@ class UsersController < ApplicationController
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "show_follow"
   end
+  def gnibblings
+    @user = User.find_by_username(params[:id])
+    @users = @user.followed_users.limit(9)
+    @counts = @user.followed_users.count
+    @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+  end
+  def next_gnibblings
+    @user = User.find_by_username(params[:id])
+    @page = params[:page].to_i
+    @current_page = @page;
+    @page *= 9;
+    @users = @user.followed_users.offset(@page).limit(9)
+    @counts = @user.followed_users.count
+    @page_count = (@counts / 9).ceil;
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    render "show_follow"
+  end
   def next_following
     @user = User.find_by_username(params[:id])
     @page = params[:page].to_i
