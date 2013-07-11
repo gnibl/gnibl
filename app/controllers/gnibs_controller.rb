@@ -14,22 +14,7 @@ class GnibsController < ApplicationController
     false
   end
 
-  def paste_image_url(img_url)
-    @urls = [img_url]
-    @image_sources = ['']
-    begin
-      locate =URI.parse(@urls[0])
-      file = open(locate,'rb').read
-      @image_sources[0]  = Base64.encode64(file)
-    rescue Exception => e
-      @error = "some error"
-    end
-    respond_to do |format|
-      format.js {render "gnibs/ajax_content_url_images"}
-    end
-
-  end
-
+  
   def imageurl?(url)
     matched = url.match('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\.(?:jpg|gif|png))(?:\?([^#]*))?(?:#(.*))?').to_a
     if matched && matched.length > 0
@@ -52,6 +37,7 @@ class GnibsController < ApplicationController
       rescue Exception => e
         @error = "error #{e.to_s}"
       end
+
       respond_to do |format|
         format.js {render "gnibs/ajax_content_url_images" and return}
       end
@@ -64,7 +50,7 @@ class GnibsController < ApplicationController
     sfinder = "/html/body//img"
     count = 0;
     doc.xpath(sfinder).each do |node|
-      parturl = node.xpath("@src[not(contains(.,'footer') or contains(.,'logo') or contains (.,'spinners'))]").text #this is the url of an image avoid footers, ads etc
+        parturl = node.xpath("@src[not(contains(.,'footer') or contains(.,'logo') or contains (.,'spinners'))]").text #this is the url of an image avoid footers, ads etc
       #find if the part url is full or not
       fullurl = ""
       if valid?(parturl)
@@ -72,12 +58,15 @@ class GnibsController < ApplicationController
       else
         fullurl = baseurl+parturl
       end
+
       unless parturl.nil? or parturl.blank? or parturl.empty? # or valid?(fullurl)
         @urls[count] = fullurl
         count = count + 1
       end
-    end
+
+    end #end block
     count = count -1
+puts "count = #{count}"
     count = 6
     while count > -1
       begin
@@ -87,18 +76,8 @@ class GnibsController < ApplicationController
       rescue Exception => e
         @error = "error #{e.to_s}" 
       end
-      count = count -1
-      count = 6
-      while count > -1
-        begin
-          locate =URI.parse(@urls[count])
-          file = open(locate,'rb').read
-          @image_sources[count]  = Base64.encode64(file)
-        rescue Exception => e
-          @error = "some error"
-        end
-        count = count -1
-      end
+     count = count -1
+     end #end while
 
     if count > 0
       @pasted_content_url = true
