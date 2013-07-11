@@ -168,7 +168,10 @@
             </div>
             <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
                  style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
-                   <%= gnib.parsed_description%>
+              <p><%= gnib.parsed_description%></p>
+              <% if gnib.link %>
+                <p><a href="<%= gnib.link %>"><%= gnib.link %></a></p>
+              <% end %>
             </div>
           </div>
         </div>
