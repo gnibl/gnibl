@@ -50,7 +50,7 @@ end
         @image_sources[0]  = Base64.encode64(file)
         @urls[0] = url
       rescue Exception => e
-        @error = "some error"
+        @error = "error #{e.to_s}"
       end
      respond_to do |format|
           format.js {render "gnibs/ajax_content_url_images" and return}
@@ -64,10 +64,7 @@ end
     sfinder = "/html/body//img"
     count = 0;
     doc.xpath(sfinder).each do |node|
-      parturl = node.xpath("@src[not(contains(.,'footer')
-		or contains(.,'logo')
-		or contains(.,'spinners')
-		)]").text #this is the url of an image avoid footers, ads etc
+      parturl = node.xpath("@src[not(contains(.,'footer') or contains(.,'logo') or contains (.,'spinners'))]").text #this is the url of an image avoid footers, ads etc
       #find if the part url is full or not
       fullurl = ""
       if valid?(parturl)
@@ -88,7 +85,7 @@ end
         file = open(locate,'rb').read
         @image_sources[count]  = Base64.encode64(file)
       rescue Exception => e
-        @error = "some error"
+        @error = "error #{e.to_s}" 
       end
       count = count -1
     end
@@ -97,9 +94,9 @@ end
       @pasted_content_url = true
     end
  # rescue Exception => e
-    puts "Exception #{e}"
-    @is_error = true
-    @error_msg = e.to_s
+ #   puts "Exception #{e}"
+ #   @is_error = true
+    @error_msg = @error
 #  ensure
     respond_to do |format|
       format.js {render "gnibs/ajax_content_url_images"}
