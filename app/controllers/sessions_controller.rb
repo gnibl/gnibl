@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       #sign in normally via email/password
       user = User.find_by_email(params[:session][:email])
       puts "enteredpassword #{params[:session][:password]}"
-      if user && user.authenticate(params[:session][:password])
+      if user && user.validated && user.authenticate(params[:session][:password])
         sign_in(user)
         puts "signing in user: #{user.html_safe_username}"
         puts "Username: #{user.html_safe_username}"

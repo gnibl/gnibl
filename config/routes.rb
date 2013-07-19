@@ -14,6 +14,7 @@ Gnibl::Application.routes.draw do
       get 'search'
       get 'test'
       get 'readnotifications'
+      get 'taggable' # used to populate on @sign
     end
   end
 
@@ -31,6 +32,7 @@ Gnibl::Application.routes.draw do
       get 'test'
       get 'paste_content_url'
       get 'paste_image_url'
+      get 'upvotegnib'
     end
   end
 

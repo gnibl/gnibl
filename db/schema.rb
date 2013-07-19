@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704080542) do
+ActiveRecord::Schema.define(:version => 20130719000418) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20130704080542) do
     t.integer  "city"
     t.string   "imageurl"
     t.string   "link"
+    t.boolean  "video"
   end
 
   add_index "gnibs", ["user_id", "created_at"], :name => "index_gnibs_on_user_id_and_created_at"
@@ -66,9 +67,10 @@ ActiveRecord::Schema.define(:version => 20130704080542) do
     t.integer  "user_id"
     t.integer  "gnib_id"
     t.string   "message"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "read",       :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "read",        :default => false
+    t.integer  "gnib_action"
   end
 
   create_table "relationships", :force => true do |t|
@@ -90,19 +92,28 @@ ActiveRecord::Schema.define(:version => 20130704080542) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "upvotegnibs", :force => true do |t|
+    t.integer  "gnib_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.string   "email"
-    t.string   "city"
     t.string   "avatar"
     t.string   "description"
     t.string   "username"
+    t.integer  "city"
     t.string   "surname"
     t.datetime "birthday"
     t.integer  "city_id"
+    t.boolean  "validated"
+    t.string   "validation_code"
   end
 
 end

@@ -9,8 +9,10 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name,:surname, :city, :birthday, :email, :password,  :password_confirmation,:avatar, :username, :description
-
+  attr_accessible :name,:surname, :city, :birthday, :email, 
+                  :password,  :password_confirmation,:avatar, 
+                  :username, :description, :validated, :validation_code
+                  
   has_secure_password
 
   mount_uploader :avatar, AvatarUploader
@@ -83,5 +85,13 @@ class User < ActiveRecord::Base
 
   def self.create_from_hash!(hash,data)
     create(:name => data.name)
+  end
+
+  def html_safe_username
+    safe_username = self.username.gsub /\.+/, '_'
+  end
+
+  def self.correct_username_from_safe_html_username(html_safe_username)
+    correct_username = html_safe_username.gsub /_+/, '.'
   end
 end

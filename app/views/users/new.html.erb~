@@ -1,104 +1,54 @@
-<% provide(:title,"Sign Up") %>
-<div align="center" class="login-main-panel">
-  <div align="center" class="signup-main" id="signup-main">
-    <%= image_tag(image_path('FINALE-FINALE!!-_03.gif'), :class => 'gnibl-logo', :style => "height: 60px")%>
-    <div style="width: 100%">
-      <%= form_for(@user) do |f| %>
-        <%= render 'shared/error_messages' %>
-        <%= f.text_field :name, :class => 'input-option', :placeholder => 'Full name'%>
-        <%= f.hidden_field :city , :class => 'input-option'%>
-	 <input class="input-option" id="city" name="city" placeholder="City" size="30" type="text" />
-        <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
-        <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
-        <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
+<style type="text/css">
+  html, body{
+    background: url(<%= image_path('grass_dark_wallpaper-HD.jpg')%>);
+  }
+</style>
+<div style="margin: auto; position: relative; height: 100%; width: 100%">
+  <div id="login-main-panel" align="center" class="login-main-panel" style="margin: auto; height: auto;">
+    <div id="login-main" align="center" class="login-main"
+         style="position: relative; background: rgba(255, 255, 255, 0.8); z-index: 34;">
+      <div align="center" style="width: 100%; height: 28%; min-height: 140px; margin-bottom: 2%">
+        <%= image_tag(image_path('FINALE-FINALE!!-_03.png'), :class => 'gnibl-logo', :style=>"width: 80px; height: 80px")%>
         <br/>
-        
-        
-        <%= f.submit("Join Gnibl",:class => "btn btn-large btn-primary" ) %>
-      <% end %>
+        <%= image_tag(image_path('gnibl-text.png'), :style => 'width: 100px; height: 50px')%>
+        <br/>
+      </div>
+      <div align="center" style="width: 100%; height: 68%; margin-top: 2%">
+        <%= render 'new_user' %>
+      </div>
+    </div>
+    <div class="gnibl-login-banner">
+      <div style="width: 100%; height: 25%; top: 4%; position: absolute; background: transparent; text-align: left; margin-left: 30%; font-size: 30px">
+        Already Registered?
+        <br/>
+        <br/>
+        <%= link_to("signin!","/", :class => 'login-button', :style=>"margin-left: 10%;")%>
+<br/>
+<% unless @message || @message.empty? %>
+<%= @message%>
+<% end %>
+      </div>
+      <div style="width: 100%; height: 25%; top: 40%; position: absolute; background: transparent; text-align: left; margin-left: 40%; font-size: 30px">
+        Discover
+        <br/>
+        <br/>
+        <span  style="margin-left: 10%;">More</span>
+        <br/>
+        <br/>
+        <span  style="margin-left: 2%;">in a fun way</span>
+      </div>
+      <div style="width: 100%; height: 25%; top: 75%; position: absolute; background: transparent; text-align: left; margin-left: 25%; font-size: 30px">
+        <span  style="margin-left: 10%;">Gnib = Like</span>
+        <br/>
+        <br/>
+        <span  style="margin-left: 10%;">Gnib = Approval</span>
+        <br/>
+        <br/>
+        <span  style="margin-left: 10%;">Gnib = :)</span>
+      </div>
+    </div>
+    <div class="round" style="width: 440px; position: absolute; top: 0px; right: 0px; height: 80px; display: none">
+      <span>New to gnibl?</span>
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  //we try to make the height and width of the gnibl login page the same
-  var loginMain = document.getElementById('signup-main');
-  if(loginMain) {
-    var width = Math.floor(0.345 * window.innerWidth);
-    console.log('login-main width: '+width);
-    loginMain.style.height = width+'px';
-  }
-</script>
-
-<script>
-var renderList = function (ul, item) {
-        return $("<li></li>")
-                .data("item.autocomplete", item)
-                .append("<a>" + item.city_name+", "+item.country_name + "</a>")
-                .appendTo(ul);
-    };
-
-var hashFilter = function(string){
-return null;
-};
-
-var triggerChar = "#";
- var autoc = {
-     source: '/users',
-     focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item.city_name);
-		var city_identi = ui.item.city_name+", "+ui.item.country_name;
-		var prev = $('#city').val();
-		var pos = prev.lastIndexOf(triggerChar);
-		if (pos !== -1){
-		   var content = prev.substring(0,pos+1);
-		$('#city').val( content + city_identi);			
-		}
-            
-            $('#user_city').val(ui.item.id);
-            return false;
-          },
-
-    select: function(event,ui){
-var city_identi = ui.item.city_name+", "+ui.item.country_name;
-		var prev = $('#city').val();
-		var pos = prev.lastIndexOf(triggerChar);
-		if (pos !== -1){
-		   var content = prev.substring(0,pos+1);
-		$('#city').val( content + city_identi);			
-		}
-
-          return false;
-          },    
-    beforeRetrieve: hashFilter,
-    minLength: 2,
-    triggerOnSpecial: true,
-    specialChar: triggerChar,
-    delay: 250
-   };
-
-var simpleAutocomplete =  {
-     source: '/users',
-     focus: function(event, ui){
-            var de = "tr  " + JSON.stringify(ui.item.city_name);
-		var city_identi = ui.item.city_name+", "+ui.item.country_name;		
-		$('#city').val(city_identi);					
-            
-            $('#user_city').val(parseInt(ui.item.id));
-            return false;
-          },
-
-    select: function(event,ui){
-var city_identi = ui.item.city_name+", "+ui.item.country_name;		
-		$('#city').val(  city_identi);					
-          return false;
-          },        
-    specialChar: triggerChar,
-    delay: 250
-   };
-
-$(function() {
-$("#city").autocomplete(simpleAutocomplete)
-.data("uiAutocomplete")._renderItem = renderList;
-
-});
-</script>

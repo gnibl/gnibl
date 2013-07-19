@@ -9,8 +9,10 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name,:surname, :city, :birthday, :email, :password,  :password_confirmation,:avatar, :username, :description
-
+  attr_accessible :name,:surname, :city, :birthday, :email, 
+                  :password,  :password_confirmation,:avatar, 
+                  :username, :description, :validated, :validation_code
+                  
   has_secure_password
 
   mount_uploader :avatar, AvatarUploader
@@ -31,6 +33,8 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :length => {:minimum => 6}
   validates :password_confirmation, :presence => true
   validates :city, :presence => true
+  validates :validated, :presence => true
+  validates :validation_code, :presence => true
 
   has_many :authorizations
   has_many :gnibs, :dependent => :destroy

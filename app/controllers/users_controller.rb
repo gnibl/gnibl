@@ -1,27 +1,16 @@
+require 'gnibl_util'
+  include GniblUtil
+
 class UsersController < ApplicationController
 
   before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
   before_filter :correct_user, :only => [:edit,:update]
 
-  def index
-    #    @users = User.all #This is no longer supported
-    if params[:term]
-      @cities = City.find(:all, :conditions => ['city_name LIKE ?', "%#{params[:term]}%"])
-    else
-      @cities = City.all #"Nairobi, Mombasa, Kisumu, Malindi, Alego, Meru, Busia"
-    end
-    respond_to do |format|
-      format.html { render :action => "new" }
-      format.json { render :json => @cities.to_json}
-    end
+  def index    
   end
 
   def test
-    #DEBUG remove this
-    @gnib = Gnib.find(12)
-    #m = UserMailer::invite_to_gnibl("here")
-    #m.deliver
-    inform_tagged_gniblers(@gnib)
+    #DEBUG remove this   
   end
 
   def new
@@ -56,6 +45,14 @@ class UsersController < ApplicationController
     @page_count = (@counts / 9).ceil;
     notifications();
     render 'index'
+  end
+
+  def taggable
+    term = '%'+params[:term]+'%'
+    @friends = User.where("name ILIKE :term OR username ILIKE :term OR surname ILIKE :term", :term => term)
+    respond_to do |format|
+      format.js { render :json => @friends.to_json}
+    end
   end
 
   def next_gnibs
@@ -159,17 +156,20 @@ class UsersController < ApplicationController
 
 
   def create
-    #    params[:user]['city'] = params[:user]['city'].to_i
     city_id = params[:user]['city'].to_i
     @city = City.find(city_id)
     params[:user]['city'] = @city
+    params[:user]['validated'] = false
+    validation_code = getRandomString #random regex
+    params[:user]['validation_code'] = validation_code
     @user = User.new(params[:user])
-    if @user.save
-      sign_in(@user)
-      redirect_to "/users/#{@user.html_safe_username}/feed"
-    else
-      render 'new'
-    end
+#    if @user.save
+@user.save
+url = request.host_with_port
+      send_verification_email(url, @user)      
+      @message = "check your email for instructions"      
+#    end
+    redirect_to("/signup")
   end
 
   def notifications
@@ -208,6 +208,25 @@ class UsersController < ApplicationController
       format.js {render "shared/messages"}
     end
   end
+
+def validatemail
+validation_code = params[:code]
+@user = User.find_by_validation_code(validation_code)
+if @user
+@user.update_attribute("validation_code","")
+@user.update_attribute("validated",true)
+sign_in(@user)
+    page = 0
+    @gnibs = @user.redefgnibs.offset(page).limit(9)
+    @counts = @user.redefgnibs.count
+    @page_count = (@counts / 9).ceil;
+    @gnib = @user.gnibs.build
+    notifications();
+redirect_to "/users/#{current_user.html_safe_username}/feed"
+else
+redirect_to "/signup"
+end
+end
 
   def show
     username = User.correct_username_from_safe_html_username(params[:id])

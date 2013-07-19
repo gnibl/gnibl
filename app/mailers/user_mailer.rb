@@ -10,4 +10,16 @@ class UserMailer < ActionMailer::Base
       :subject=> "invitation to gnibl",
       :content_type => "text/html")
   end
+
+ def send_verification_code(url,user)
+   message = "Thank you for joining gnibl, 
+            <a href = 'http://#{url}/users/validateemail?code=#{user.validation_code}'>
+            click this link</a> 
+           to verify your email address and get gnibbing"
+   to = user.name+"<"+user.email+">"
+   mail(:to => to,
+      :subject=> "verify email address: Gnibl.com ",
+      :content_type => "text/html",
+      :body => message)
+end
 end

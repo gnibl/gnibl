@@ -1,5 +1,5 @@
 class Gnib < ActiveRecord::Base
-  attr_accessible :description, :image, :landmark, :title, :visibility, :city, :imageurl, :link
+  attr_accessible :description, :image, :landmark, :title, :visibility, :city, :imageurl, :link, :video
   belongs_to :user
   validates :user_id, :presence => true
   validates :description, :presence => true, :length => { :maximum => 77}
@@ -10,6 +10,7 @@ class Gnib < ActiveRecord::Base
   has_many :gniblings, :foreign_key => "gnib_id"
   has_many :reporteds, :foreign_key => "gnib_id"
   has_many :notifications, :foreign_key => "gnib_id"
+  has_many :upvotegnibs, :foreign_key => "gnib_id"
 
   def self.from_users_followed_by(user)
     ids = "SELECT followed_id from relationships WHERE follower_id = :user_id"

@@ -2,7 +2,7 @@ class Notification < ActiveRecord::Base
   require 'gnibl_util'
   include GniblUtil
 
-  attr_accessible :gnib_id, :message, :user_id, :read
+  attr_accessible :gnib_id, :message, :user_id, :read, :gnib_action
   belongs_to :user
   belongs_to :gnib
   def parsed_message
