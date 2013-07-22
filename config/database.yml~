@@ -9,12 +9,22 @@
 #  pool: 5
 #  timeout: 5000
 
+#just comment out my connection and uncomment yours!!!
+
 development:
   adapter: postgresql
   username: marembo
   database: gnibl_dev
   pool: 5
   timeout: 5000
+
+#development:
+#  adapter: postgresql
+#  username: postgres
+#  host: localhost
+#  database: gnibldb
+#  pool: 5
+#  timeout: 5000
 
 
 # Warning: The database defined as "test" will be erased and

@@ -6,22 +6,35 @@
     <%= @error_msg %>
   </div>
 <%else%>
-  <div id="content_url_images_panel" class="carousel slide">
+  <div id="content_url_images_panel" class="carousel slide content_url"
+       style="width: 100%; background: transparent; position: relative">
     <div id="content_url_images_inner_panel" class="carousel-inner">
       <% @image_sources.each do |source| %>
-        <img id="content_url_image<%= count %>"
-             src = "data:image/png;base64,<%=source%>"
-             class="content-url-image"
-             style="cursor: pointer; margin-bottom: 5px; height: auto"
-             width="100%" data-image-url="<%=@urls[count]%>"/>
-             <% count = count +1 %>
-           <% end%>
+        <div align="center" id="content_url_image<%= count %>" class="<% if count==0 %>active <% end %>item"
+             data-image-url="<%=@urls[count]%>">
+          <img id="content_url_image<%= count %>"
+               src = "data:image/png;base64,<%=source%>"
+               class="content-url-image"
+               style="cursor: pointer; margin-bottom: 5px;"
+               width="100%" data-image-url="<%=@urls[count]%>"
+               title="Click on image to select the image"
+               onclick="onImageClicked('content_url_image<%= count %>');"/>
+               <% count = count +1 %>
+        </div>
+      <% end%>
     </div>
-    <a class="carousel-control left" href="#content_url_images_panel" data-slide="prev" >‹</a>
-    <a class="carousel-control right" href="#content_url_images_panel" data-slide="next">›</a>
+    <a class="carousel-control left new_gnib left_url" href="#content_url_images_panel" data-slide="prev" >‹</a>
+    <a class="carousel-control right new_gnib right_url" href="#content_url_images_panel" data-slide="next">›</a>
   </div>
   <script type="text/javascript">
-    $('.content-url-image').height((gnib_thumnail_height - 5) / 2);
-    $('#gnib_main_panel').carousel();
+    $(document).ready(function() {
+      var width = (gnib_thumnail_height - 5) / 1.2;
+      var height = (gnib_thumnail_height - 5) / 2.2;
+      $('.content-url-image').height(height);
+      $('.content-url-image').width(width);
+      $('#gnib_main_panel').carousel({
+        interval: false
+      });
+    });
   </script>
 <% end %>

@@ -48,17 +48,16 @@
   function ajaxSubmit() {
     $('#373737_busy_image').show();
     var action = '/gnibs/paste_content_url';
-    console.log($('#paste_content_url_input').val());
-    form = '<form id="new_gnib_form" action="' + action + '"><input id="232783278_new_gnib_url_content" type="hidden" name="url" value=""/></form>'
-    $(form).appendTo('body');
-    $('#232783278_new_gnib_url_content').val($('#paste_content_url_input').val());
-    $.ajax({
-      type: 'GET',
-      url: action,
-      data: $('#new_gnib_form').serialize()
+    var data = [{name: 'url', value: $('#paste_content_url_input').val()}];
+    doAjaxSubmit(data, action, function() {
+      $('#373737_busy_image').hide();
+      $('#select-image-panel').show();
+      $('#find-image-panel').hide();
     });
     return false;
   }
+
+  var selected_image; //the currently selected image for upload.
 ///
 </script>
 <style type="text/css">
@@ -110,11 +109,29 @@
     height: 32px;
     text-align: center;
   }
+  .carousel-control.new_gnib{
+    top: 50px !important;
+    z-index: 23000;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 40px;
+    line-height: 20px;
+  }
+  .carousel-control.right_url{
+    right: 5px;
+  }
+  .carousel-control.left_url{
+    left: 5px;
+  }
+  .carousel.content_url{
+    margin-bottom: 0px;
+  }
 </style>
 <%= form_for(@gnib) do |f| %>
   <div id="new_gnib_727272727_<%=@gnib.id%>"
-       class="gnib-thumbnail"
-       style="margin-bottom: 5px; float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px; position: relative">
+       class="gnib-thumbnail new_gnib_thumbnail"
+       style="float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px; position: relative">
     <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
     <input id="current_term_34783784980" type="hidden" name="term" value=""/>
     <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
@@ -130,15 +147,18 @@
       <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
         :class=>"paste-content-field",
         :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
-      <div align="center" style="width: 100%">
+      <div id="find-image-panel" align="center" style="width: 100%">
         <button class="find-image" onclick="return ajaxSubmit();">Find Image</button>
       </div>
+      <div id="select-image-panel" align="center" style="width: 100%; display: none">
+        <button class="find-image" onclick="return onSelectImageClicked();">Select Image</button>
+      </div>
       <br/>
-      <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto"/>
+      <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto; z-index: 1000"/>
     </div>
     <div id="content_url_images">
     </div>
-    <div id="gnib_description_submit" >
+    <div id="gnib_description_submit" style="display: none">
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 30px !important; height: 30px !important", :onclick=>"sanitize();"%>
     </div>
   </div>
@@ -148,8 +168,19 @@
   document.getElementById('current_url_34783784980').value = location.pathname;
   document.getElementById('current_term_34783784980').value = getParameterByName("term");
   document.getElementById('current_uid_34783784980').value = getParameterByName("uid");
+  //find the current active div
+  function onSelectImageClicked() {
+    var url = $('.item.active').data('image-url');
+    console.log('image-url: ' + url);
+    if (url) {
+      $('#content_url_field').val(url);
+    }
+    return false;
+  }
   function onImageClicked(id) {
-    $('#content_url_field').val($('#' + id).attr('data-image-url'));
+    var url = $('#' + id).data('image-url');
+    console.log('image-url: ' + url);
+    $('#content_url_field').val(url);
     return false;
   }
   function onKeyPress(e) {

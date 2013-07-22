@@ -40,7 +40,7 @@ class GnibsController < ApplicationController
     @image_sources = ['']
     url = params[:url]
     youtube_id = youtube_video_id(url)
-    unless youtube_id && youtube_id.empty?
+    if youtube_id && ! youtube_id.empty?
       begin
         locate = URI.parse("http://img.youtube.com/vi/#{youtube_id}/1.jpg")
         @video = true
