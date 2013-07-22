@@ -162,35 +162,44 @@
           document.getElementById("current_user_form").submit();
         }
 <% end %>
+  <%#*global variable%>
+    var gnib_thumnail_height = 0;
       function rectifyGnibs() {
         //set the sizes of the thumbnail, four per page.
         var className = 'gnib-thumbnail';
         //find all the thumnails
         var width = window.innerWidth;
-        var gt_width = Math.floor(0.195 * width);
-        //get the buttons themselves
-        var thumbnails = document.getElementsByTagName('*'), i;
-        for (i in thumbnails) {
-          var btn = thumbnails[i];
-          if ((btn.className + '').indexOf(className) !== -1) {
-            if (btn.id.contains('new_gnib_727272727_')) {
-              //the new gnib has border of width 2px
-              btn.style.height = (gt_width - 4) + 'px';
-              btn.style.width = (gt_width - 8) + 'px';
-              btn.style.minWidth = (gt_width - 6) + 'px';
-            } else {
-              btn.style.height = (gt_width) + 'px';
-              btn.style.width = (gt_width) + 'px';
-              btn.style.minWidth = (gt_width) + 'px';
-              //find the child of this div with the specified id
-              var gnibImage = document.getElementById('gnib_' + btn.id);
-              if (gnibImage) {
-                gnibImage.style.height = (gt_width) + 'px';
-                gnibImage.style.width = (gt_width + 15) + 'px';
-              }
-            }
-          }
-        }
+        var gt_width = gnib_thumnail_height = Math.floor(0.195 * width);
+        $('.gnib-thumbnail').height(gt_width);
+        $('.gnib-thumbnail').width(gt_width);
+        <%#*//get the buttons themselves%>
+        <%#*var thumbnails = document.getElementsByTagName('*'), i;%>
+        <%#*for (i in thumbnails) {%>
+          <%#*var btn = thumbnails[i];%>
+          <%#*if ((btn.className + '').indexOf(className) !== -1) {%>
+            <%#*if (btn.id.contains('new_gnib_727272727_')) {%>
+              <%#*//the new gnib has border of width 2px%>
+              <%#*btn.style.height = (gt_width - 4) + 'px';%>
+              <%#*btn.style.width = (gt_width - 8) + 'px';%>
+              <%#*btn.style.minWidth = (gt_width - 6) + 'px';%>
+            <%#*} else {%>
+              <%#*btn.style.height = (gt_width) + 'px';%>
+              <%#*btn.style.width = (gt_width) + 'px';%>
+              <%#*btn.style.minWidth = (gt_width) + 'px';%>
+              <%#*//find the child of this div with the specified id%>
+              <%#*var gnibImage = document.getElementById('gnib_' + btn.id);%>
+              <%#*if (gnibImage) {%>
+                <%#*gnibImage.style.height = (gt_width) + 'px';%>
+                <%#*gnibImage.style.width = (gt_width + 15) + 'px';%>
+              <%#*}%>
+            <%#*}%>
+          <%#*}%>
+        <%#*}%>
+        <%#*//we working with the new gnib div, set the height of the url images%>
+        <%#*var urlImages = document.getElementById('content_url_images');%>
+        <%#*if (urlImages) {%>
+          <%#*urlImages.height = ((gt_width - 50) / 2) + 'px';%>
+        <%#*}%>
       }
       function rectifyGnib(id) {
         //set the sizes of the thumbnail, four per page.
@@ -366,7 +375,6 @@
             $('#carousel-count_' + current_page).addClass('active disabled');
           });
         }
-
         $(document).ready(function() {
           $('#gnib_main_panel').carousel({
             interval: false
