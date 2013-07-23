@@ -162,34 +162,16 @@
           document.getElementById("current_user_form").submit();
         }
 <% end %>
+<%#*global variable%>
+      var gnib_thumnail_height = 0;
       function rectifyGnibs() {
-        //set the sizes of the thumbnail, four per page.
-        var className = 'gnib-thumbnail';
         //find all the thumnails
         var width = window.innerWidth;
-        var gt_width = Math.floor(0.195 * width);
-        //get the buttons themselves
-        var thumbnails = document.getElementsByTagName('*'), i;
-        for (i in thumbnails) {
-          var btn = thumbnails[i];
-          if ((btn.className + '').indexOf(className) !== -1) {
-            if (btn.id.contains('new_gnib_727272727_')) {
-              //the new gnib has border of width 2px
-              btn.style.height = (gt_width - 4) + 'px';
-              btn.style.width = (gt_width - 8) + 'px';
-              btn.style.minWidth = (gt_width - 6) + 'px';
-            } else {
-              btn.style.height = (gt_width) + 'px';
-              btn.style.width = (gt_width) + 'px';
-              btn.style.minWidth = (gt_width) + 'px';
-              //find the child of this div with the specified id
-              var gnibImage = document.getElementById('gnib_' + btn.id);
-              if (gnibImage) {
-                gnibImage.style.height = (gt_width) + 'px';
-                gnibImage.style.width = (gt_width + 15) + 'px';
-              }
-            }
-          }
+        var gt_width = gnib_thumnail_height = Math.floor(0.195 * width);
+        $('.gnib-thumbnail').height(gt_width);
+        $('.gnib-thumbnail').width(gt_width);
+        if ($('.new_gnib_thumbnail').length) {
+          $('.new_gnib_thumbnail').height(gt_width - 10);
         }
       }
       function rectifyGnib(id) {
@@ -366,7 +348,6 @@
             $('#carousel-count_' + current_page).addClass('active disabled');
           });
         }
-
         $(document).ready(function() {
           $('#gnib_main_panel').carousel({
             interval: false
@@ -376,7 +357,9 @@
             // get index of currently active item
             var idx = $('#gnib_main_panel .item.active').index();
             var current_page = $('.item.active').data('slide-number');
-            ajaxSlide(idx, current_page);
+            if (current_page) {
+              ajaxSlide(idx, current_page);
+            }
           });
           //add click event to carousel counts
           $('.carousel-count:not(.disabled)').click(function() {

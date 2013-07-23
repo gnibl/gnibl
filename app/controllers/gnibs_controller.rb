@@ -24,38 +24,36 @@ class GnibsController < ApplicationController
     end
   end
 
-def youtube_video_id(youtube_url)
-  youtube_id =""
-  if youtube_url[/youtu\.be\/([^\?]*)/]
-    youtube_id = $1
-  else
-    youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
-    youtube_id = $5
+  def youtube_video_id(youtube_url)
+    youtube_id =""
+    if youtube_url[/youtu\.be\/([^\?]*)/]
+      youtube_id = $1
+    else
+      youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+      youtube_id = $5
+    end
+    return youtube_id
   end
-  return youtube_id
-end
 
   def paste_content_url
     @urls = ['']
     @image_sources = ['']
     url = params[:url]
     youtube_id = youtube_video_id(url)
-    if youtube_id && ! youtube_id.empty? 
-       begin
-          locate = URI.parse("http://img.youtube.com/vi/#{youtube_id}/1.jpg")
-          @video = true
-          @urls[0] = locate
-          file = open(locate,'rb').read
-          @image_sources[0]  = Base64.encode64(file)
+    if youtube_id && ! youtube_id.empty?
+      begin
+        locate = URI.parse("http://img.youtube.com/vi/#{youtube_id}/1.jpg")
+        @video = true
+        @urls[0] = locate
+        file = open(locate,'rb').read
+        @image_sources[0]  = Base64.encode64(file)
       rescue Exception => e
-          @error = "bad things happen"
-     end 
-     respond_to do |format|
+        @error = "bad things happen"
+      end
+      respond_to do |format|
         format.js {render "gnibs/ajax_content_url_images" and return}
       end
-   end
-
-
+    end
     if imageurl?(url)
       begin
         locate =URI.parse(url)
@@ -65,7 +63,6 @@ end
       rescue Exception => e
         @error = "error #{e.to_s}"
       end
-
       respond_to do |format|
         format.js {render "gnibs/ajax_content_url_images" and return}
       end
@@ -90,7 +87,6 @@ end
           @urls[count] = fullurl
           count = count + 1
         end
-
       end #end block
       count = count -1
       puts "count = #{count}"
@@ -219,25 +215,25 @@ end
     end
   end
 
-def upvotegnib
-#called by ajax when user clicks upvote on a gnib, 
-#expects a parameter gnib_id=##
+  def upvotegnib
+    #called by ajax when user clicks upvote on a gnib,
+    #expects a parameter gnib_id=##
     gid = params[:gnib_id]
     uid = current_user.id
     upvotes = Upvotegnib.where("user_id = :uid and gnib_id = :gid", :uid => uid, :gid => gid)
     @gnib = Gnib.find(gid)
-    if upvotes.empty?        
-        @upvote = Upvotegnib.create(:user_id => uid, :gnib_id => gid)
-        upvoter = current_user
-        if @upvote
-           @success  = "Successfully up voted."
-           send_notifications_on_upgnib(@gnib,upvoter)
-        end
-   end
-    respond_to do |format|
-#      format.js {render "shared/gniblings"}
+    if upvotes.empty?
+      @upvote = Upvotegnib.create(:user_id => uid, :gnib_id => gid)
+      upvoter = current_user
+      if @upvote
+        @success  = "Successfully up voted."
+        send_notifications_on_upgnib(@gnib,upvoter)
+      end
     end
-end
+    respond_to do |format|
+      #      format.js {render "shared/gniblings"}
+    end
+  end
 
   def upvotecomment
     @user = current_user
@@ -322,7 +318,7 @@ end
     end
 
     params[:gnib][:city] = city_id
-    
+
     @gnib = current_user.gnibs.build(params[:gnib])
     current_url = params[:current_url]
     @success = "You have successfully posted your gnib"
