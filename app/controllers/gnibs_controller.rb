@@ -291,10 +291,23 @@ end
   end
 
   def create
-    city_id = 0
+    ip = request.remote_ip
+ city_id = 0   
+   if ip == '127.0.0.1'
+      ip = '41.235.178.14' #a nairobi ip        
+    end
+      place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
+      city_name = place.city_name
+      city = City.where("city_name = ?",city_name).limit(1)
+     
+    unless city
+         city = City.find(city_id) #default city id 0
+     end
+    
     if current_user.city
       city_id = current_user.city.id
     end
+
     #retrieve title from # sign
     title = ''
     comment = params[:gnib][:description]

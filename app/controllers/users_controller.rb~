@@ -1,3 +1,4 @@
+
 require 'gnibl_util'
   include GniblUtil
 
@@ -155,10 +156,7 @@ class UsersController < ApplicationController
   end
 
 
-  def create
-    city_id = params[:user]['city'].to_i
-    @city = City.find(city_id)
-    params[:user]['city'] = @city
+  def create    
     params[:user]['validated'] = false
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
@@ -211,7 +209,6 @@ url = request.host_with_port
 
 def validatemail
 validation_code = params[:code]
-email = params[:email]
 @user = User.find_by_validation_code(validation_code)
 if @user
 @user.update_attribute("validation_code","")

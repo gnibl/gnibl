@@ -20,6 +20,7 @@ gem 'fog'
 gem 'aws-sdk'
 gem 'rmagick'
 gem 'nokogiri'
+gem 'geoip'
 
 gem 'jquery-rails','2.0.2'
 
