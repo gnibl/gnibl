@@ -127,6 +127,25 @@
   .carousel.content_url{
     margin-bottom: 0px;
   }
+  .content-url-comment{
+    width: 90%; margin: auto;
+    background: rgba(255, 255, 255, 0.2);
+    margin-top: 5px;
+    border-radius: 5px;
+    display: none;
+    margin-bottom: 5px;
+    position: relative;
+    border-bottom-right-radius: 25px;
+  }
+  .comment-field{
+    background: transparent;
+    font-size: 12px;
+    border: 0px none;
+    margin: auto;
+    color: #17aeff;
+    height: 99%;
+    border-radius: 5px
+  }
 </style>
 <%= form_for(@gnib) do |f| %>
   <div id="new_gnib_727272727_<%=@gnib.id%>"
@@ -136,12 +155,6 @@
     <input id="current_term_34783784980" type="hidden" name="term" value=""/>
     <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
     <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
-    <div id="gnib_description_1" style="width: 90%; margin: auto;
-         background: rgba(255, 255, 255, 0.2); margin-top: 10px;border-radius: 30px; display: none">
-         <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
-           :style=>"background: transparent; font-size: 12px; border: 0px none; margin: auto; color: #17aeff; height: 50px; border-radius: 30px",
-           :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
-    </div>
     <div id="content_url" >
       <h3>Add Url</h3>
       <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
@@ -158,8 +171,14 @@
     </div>
     <div id="content_url_images">
     </div>
-    <div id="gnib_description_submit" style="display: none">
-      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 30px !important; height: 30px !important", :onclick=>"sanitize();"%>
+    <div id="gnib_description_1" class="content-url-comment content-url-image">
+      <%= f.hidden_field :imageurl, :id=>"content_url_field" %>
+      <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
+        :class=>"comment-field",
+        :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
+      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
+        :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
+        :onclick=>"sanitize();", :title=>"Gnib"%>
     </div>
   </div>
 <% end %>
@@ -170,11 +189,16 @@
   document.getElementById('current_uid_34783784980').value = getParameterByName("uid");
   //find the current active div
   function onSelectImageClicked() {
-    var url = $('.item.active').data('image-url');
+    var activeImageDiv = $('.active.content_url');
+    console.log(activeImageDiv.id);
+    var url = $('.active.content_url').data('image-url');
     console.log('image-url: ' + url);
     if (url) {
       $('#content_url_field').val(url);
     }
+    $('#content_url_images').hide();
+    $('#gnib_description_1').show();
+    resizeDataDisplay();
     return false;
   }
   function onImageClicked(id) {
