@@ -155,10 +155,7 @@ class UsersController < ApplicationController
   end
 
 
-  def create
-    city_id = params[:user]['city'].to_i
-    @city = City.find(city_id)
-    params[:user]['city'] = @city
+  def create    
     params[:user]['validated'] = false
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
