@@ -288,7 +288,7 @@ class GnibsController < ApplicationController
 
   def create
     ip = request.remote_ip
- city_id = 0   
+   city_id = 0   
    if ip == '127.0.0.1'
       ip = '41.235.178.14' #a nairobi ip        
     end
