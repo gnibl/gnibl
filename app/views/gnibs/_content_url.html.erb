@@ -10,7 +10,7 @@
        style="width: 100%; background: transparent; position: relative">
     <div id="content_url_images_inner_panel" class="carousel-inner">
       <% @image_sources.each do |source| %>
-        <div align="center" id="content_url_image<%= count %>" class="<% if count==0 %>active <% end %>item"
+        <div align="center" id="content_url_image<%= count %>" class="<% if count==0 %>active <% end %>item content_url"
              data-image-url="<%=@urls[count]%>">
           <img id="content_url_image<%= count %>"
                src = "data:image/png;base64,<%=source%>"
@@ -27,14 +27,18 @@
     <a class="carousel-control right new_gnib right_url" href="#content_url_images_panel" data-slide="next">›</a>
   </div>
   <script type="text/javascript">
-    $(document).ready(function() {
-      var width = (gnib_thumnail_height - 5) / 1.2;
-      var height = (gnib_thumnail_height - 5) / 2.2;
-      $('.content-url-image').height(height);
-      $('.content-url-image').width(width);
-      $('#gnib_main_panel').carousel({
-        interval: false
-      });
-    });
+                 $(document).ready(function() {
+                   resizeDataDisplay();
+                   $('#gnib_main_panel').carousel({
+                     interval: false
+                   });
+                 });
+
+                 function resizeDataDisplay() {
+                   var width = (gnib_thumnail_height - 5) / 1.2;
+                   var height = (gnib_thumnail_height - 5) / 2.2;
+                   $('.content-url-image').height(height);
+                   $('.content-url-image').width(width);
+                 }
   </script>
 <% end %>

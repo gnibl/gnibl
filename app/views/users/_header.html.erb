@@ -35,11 +35,40 @@
               gnib<span style="color: white">picks</span></span>
           </a>
         </td>
-        <td class="border-right" style="width: 14.3%">
-          <a href="/gnibs/<%=current_user.html_safe_username%>/gnibstream" >
-            <span style="color: #17aeff;">
-              gnib<span style="color: white">stream</span></span>
-          </a>
+        <td class="border-right" style="width: 14.3%;">
+          <div class="dropdown" id="notification_menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#notification_menu">
+              <%= render :partial=>"notifications/notification_header", :locals=>{:notifications_count => @notifications_count} %>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: 27px">
+              <% if @notifications %>
+                <% index = 0 %>
+                <% @notifications.each do |notification| %>
+                  <li style="height: 100px;<% if index > 0 %> border-top: 5px solid #ddd;<% end %>cursor: pointer; width: 350px"
+                      onclick="doAjaxSubmit({gnib_id: '<%= notification.gnib.id %>'}, '/gnibs/retcomment');
+                            doAjaxSubmit({notification_id: '<%=notification.id%>'}, '/users/readnotifications');"
+                      class="notification-overlay" data-notification-id="<%=notification.id%>">
+                        <% index += 1 %>
+                    <div style="height: 100px; position: relative; width: 100%">
+                      <div id="thumbnail-desc:<%=notification.id%>" class="thumbnail-desc"
+                           style="margin: 0px; position: absolute; top:0px; left: 0px">
+                             <% if notification.gnib.image.url %>
+                               <%=image_tag(image_path(notification.gnib.image.url), :class=>"notification-profile")%>
+                             <% else %>
+                               <%=image_tag(image_path(notification.gnib.imageurl), :class=>"notification-profile")%>
+                             <% end %>
+                      </div>
+                      <div style="color: black; text-align: left; position: absolute; left: 104px; top: 0px; max-height: 100px; overflow-y: hidden">
+                        <div style="min-width: 150px">
+                          <%= notification.parsed_message %>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
         </td>
         <td id="settings" class="border" style="width: 14.3%">
           <button class="flat-style" style="color: #bbb; font-size: 20px">settings</button>
