@@ -24,6 +24,17 @@ video_id = (/([\w-]{11})/.match(link)).to_s
 return "http://www.youtube.com/embed/"+video_id
 end
 
+def short_title
+limit = 30
+stitle = ''
+if title && title.size > limit
+stitle = title[0..limit]
+else
+stitle = title
+end
+return stitle
+end
+
   def parsed_description
     comment = self.description
     final_comment = ""
