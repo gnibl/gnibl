@@ -36,6 +36,7 @@ class GnibsController < ApplicationController
   end
 
   def paste_content_url
+    @video = false
     @urls = ['']
     @image_sources = ['']
     url = params[:url]
@@ -71,6 +72,12 @@ class GnibsController < ApplicationController
       uri = URI.parse(url)
       baseurl = uri.scheme+"://"+uri.host
       doc = Nokogiri::HTML(open(uri))
+      hfinder = "/html/head//title"
+      titles = doc.xpath(hfinder)
+      @title = "enter a title"
+      if titles.length > 0
+         @title = titles[0].text
+      end
       sfinder = "/html/body//img"
       count = 0;
       doc.xpath(sfinder).each do |node|
@@ -302,19 +309,6 @@ class GnibsController < ApplicationController
     
     if current_user.city
       city_id = current_user.city.id
-    end
-
-    #retrieve title from # sign
-    title = ''
-    comment = params[:gnib][:description]
-    unless(comment.nil?)
-      pos = -1
-      title = ""
-      len = comment.length
-      while pos = comment.index('#',pos+1)
-        title = title+" "+ comment[pos+1..len].split(" ")[0]
-      end
-      params[:gnib][:title] = title
     end
 
     params[:gnib][:city] = city_id

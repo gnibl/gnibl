@@ -139,7 +139,7 @@
     <div id="gnibl-view-panel" class="gnibl-view-panel">
       <div id="gnibl-modal-view-panel" class="gnibl-view">
 <% if gnib.video %>
-<iframe width="425" height="349" src="<%= gnib.youtube_embeddable_url %>" frameborder="0" allowfullscreen> </iframe>
+<iframe width="425" height="349" src="http://www.youtube.com/embed/zb-gmJVW5lw" frameborder="0" allowfullscreen> </iframe>
 <% end %>
         <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal">
           <div style="width: 60%; font-size: 20px; text-align: left; color: #fff;

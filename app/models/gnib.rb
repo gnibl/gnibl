@@ -18,6 +18,12 @@ class Gnib < ActiveRecord::Base
     #  where("user_id IN (#{ids}) OR user_id = :user_id",:user_id => user)
     where("user_id IN (#{ids})",:user_id => user)
   end
+
+def youtube_embeddable_url
+video_id = (/([\w-]{11})/.match(link)).to_s
+return "http://www.youtube.com/embed/"+video_id
+end
+
   def parsed_description
     comment = self.description
     final_comment = ""

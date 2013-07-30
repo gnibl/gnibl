@@ -4,31 +4,31 @@
   var renderTitles = function(ul, item) {
     return $("<li></li>")
             .data("item.autocomplete", item)
-            .append("<a>" + item.title + "</a>")
+            .append("<a>" + item.username + "</a>")
             .appendTo(ul);
   };
 
-  var triggerChar = "#";
+  var triggerChar = "@";
   var autoc = {
-    source: '/gnibs/titles',
+    source: '/users/taggable',
     focus: function(event, ui) {
       var de = "tr  " + JSON.stringify(ui.item);
-      var city_identi = ui.item.title;
+      var identi = ui.item.username;
       var prev = $('#gnib_description').val();
       var pos = prev.lastIndexOf(triggerChar);
       if (pos !== -1) {
         var content = prev.substring(0, pos + 1);
-        $('#gnib_description').val(content + city_identi);
+        $('#gnib_description').val(content + identi);
       }
       return false;
     },
     select: function(event, ui) {
-      var city_identi = ui.item.title;
+      var identi = ui.item.username;
       var prev = $('#gnib_description').val();
       var pos = prev.lastIndexOf(triggerChar);
       if (pos !== -1) {
         var content = prev.substring(0, pos + 1);
-        $('#gnib_description').val(content + city_identi);
+        $('#gnib_description').val(content + identi);
       }
 
       return false;
@@ -48,67 +48,167 @@
   function ajaxSubmit() {
     $('#373737_busy_image').show();
     var action = '/gnibs/paste_content_url';
-    console.log($('#paste_content_url_input').val());
-    form = '<form id="new_gnib_form" action="' + action + '"><input id="232783278_new_gnib_url_content" type="hidden" name="url" value=""/></form>'
-    $(form).appendTo('body');
-    $('#232783278_new_gnib_url_content').val($('#paste_content_url_input').val());
-    $.ajax({
-      type: 'GET',
-      url: action,
-      data: $('#new_gnib_form').serialize()
+    var data = [{name: 'url', value: $('#paste_content_url_input').val()}];
+    doAjaxSubmit(data, action, function() {
+      $('#373737_busy_image').hide();
+      $('#select-image-panel').show();
+      $('#find-image-panel').hide();
     });
     return false;
   }
+
+  var selected_image; //the currently selected image for upload.
 ///
 </script>
-
-<div id="new_gnib_727272727_<%=@gnib.id%>"  class="gnib-thumbnail" style="margin-bottom: 5px; float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px ">
-  <%= form_for(@gnib) do |f| %>
+<style type="text/css">
+  input[type="text"].paste-content-field{
+    border: 0px none !important;
+    margin:0% 5%;
+    width: 90%;
+    background: rgba(204, 122, 204, 0.3);
+  }
+  button.find-image{
+    padding: 5px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 40%;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  #content_url, #content_url_images{
+    width: 98%;
+    border: 3px solid #efefef;
+    text-align: center;
+    height: 47.8%;
+    min-height: 47.8%;
+  }
+  #content_url{
+    background: rgba(255, 70, 45, 0.9);
+    border-radius: 8px 8px 0px 0px
+  }
+  #content_url_images, .content-url-image{
+    border-radius: 0px 0px 8px 8px;
+  }
+  #content_url_images{
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  #gnib_file_upload{
+    width: 94%;
+    margin-right: 4%;
+    margin-left: 2%;
+    background: rgba(255, 255, 255, 0.9);
+    margin-top: 10px;
+  }
+  #gnib_description_submit{
+    width: 90%;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
+    height: 32px;
+    text-align: center;
+  }
+  .carousel-control.new_gnib{
+    top: 50px !important;
+    z-index: 23000;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 40px;
+    line-height: 20px;
+  }
+  .carousel-control.right_url{
+    right: 5px;
+  }
+  .carousel-control.left_url{
+    left: 5px;
+  }
+  .carousel.content_url{
+    margin-bottom: 0px;
+  }
+  .content-url-comment{
+    width: 90%; margin: auto;
+    background: rgba(255, 255, 255, 0.2);
+    margin-top: 5px;
+    border-radius: 5px;
+    display: none;
+    margin-bottom: 5px;
+    position: relative;
+    border-bottom-right-radius: 25px;
+  }
+  .comment-field{
+    background: transparent;
+    font-size: 12px;
+    border: 0px none;
+    margin: auto;
+    color: #17aeff;
+    height: 99%;
+    border-radius: 5px
+  }
+</style>
+<%= form_for(@gnib) do |f| %>
+  <div id="new_gnib_727272727_<%=@gnib.id%>"
+       class="gnib-thumbnail new_gnib_thumbnail"
+       style="float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px; position: relative">
     <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
     <input id="current_term_34783784980" type="hidden" name="term" value=""/>
     <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
     <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
-    <div id="gnib_description_1" style="width: 90%; margin: auto; background: rgba(255, 255, 255, 0.2); margin-top: 10px;border-radius: 30px">
+    <div id="content_url" >
+      <h3>Add Url</h3>
+      <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
+        :class=>"paste-content-field",
+        :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
+      <div id="find-image-panel" align="center" style="width: 100%">
+        <button class="find-image" onclick="return ajaxSubmit();">Find Image</button>
+      </div>
+      <div id="select-image-panel" align="center" style="width: 100%; display: none">
+        <button class="find-image" onclick="return onSelectImageClicked();">Select Image</button>
+      </div>
+      <br/>
+      <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto; z-index: 1000"/>
+    </div>
+    <div id="content_url_images">
+    </div>
+    <div id="gnib_description_1" class="content-url-comment content-url-image">
+      <%= f.hidden_field :imageurl, :id=>"content_url_field" %>
+      <%= f.hidden_field :video, :id => "is_video_field", :value => 'false'%>
+      <%= f.hidden_field :title, :id => "title_field", :class = > 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
-        :style=>"background: transparent; font-size: 12px; border: 0px none; margin: auto; color: #17aeff; height: 50px; border-radius: 30px",
+        :class=>"comment-field",
         :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
+      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
+        :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
+        :onclick=>"sanitize();", :title=>"Gnib"%>
     </div>
-    <div id="gnib_file_upload" style="width: 80%; margin: auto; background: rgba(255, 255, 255, 0.9); margin-top: 10px" class="upload">
-      <div id="content_url" style="width: 100%">
-        <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"Paste content url...",
-               :style=>"border-bottom: 2px solid #ddd; margin:0px; padding:0px; padding-left: 5px; width: 70%",
-               :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
-        <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto"/>
-      </div>
-      <div id="content_url_images"
-           style="width: 100%; display: none; height: auto; max-height: 90px; overflow-y: scroll; background: rgba(0, 0, 0, 0.5);">
-      </div>
-      <div id="file_upload_option" style="width: 100%">
-        <div class="fakeupload">
-          <input type="text" value=" (OR) upload an image" name="fakeupload" style="color: #17aeff; height: 50px !important; width: 100% !important" />
-        </div>
-        <%= f.file_field :image, :class=>"realupload", :style=>"color: black; border: 0px",
-          :onchange=>"this.form.fakeupload.value = this.value;"%>
-      </div>
-    </div>
-    <div id="gnib_description_submit" style="width: 90%; margin: auto; background: rgba(0, 0, 0, 0.5);margin-top: 10px; height: 32px; text-align: center">
-      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton", :style=>"width: 30px !important; height: 30px !important", :onclick=>"sanitize();"%>
-    </div>
-  <% end %>
-</div>
-
-
+  </div>
+<% end %>
 <script type="text/javascript">
   document.getElementById('current_page_3447384734883').value = current_page;
   document.getElementById('current_url_34783784980').value = location.pathname;
   document.getElementById('current_term_34783784980').value = getParameterByName("term");
   document.getElementById('current_uid_34783784980').value = getParameterByName("uid");
-
-  function onImageClicked(id) {
-    $('#content_url_field').val($('#' + id).attr('data-image-url'));
+  //find the current active div
+  function onSelectImageClicked() {
+    var activeImageDiv = $('.active.content_url');
+    console.log(activeImageDiv.id);
+    var url = $('.active.content_url').data('image-url');
+    console.log('image-url: ' + url);
+    if (url) {
+      $('#content_url_field').val(url);
+    }
+    $('#content_url_images').hide();
+    $('#gnib_description_1').show();
+    resizeDataDisplay();
     return false;
   }
-
+  function onImageClicked(id) {
+    var url = $('#' + id).data('image-url');
+    console.log('image-url: ' + url);
+    $('#content_url_field').val(url);
+    return false;
+  }
   function onKeyPress(e) {
     if (e && e.keyCode === 13) {
       return ajaxSubmit();

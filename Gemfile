@@ -2,13 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-#group :development, :test do
-#gem 'sqlite3', '1.3.5'
-#end
-
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'datamapper'
@@ -30,7 +23,6 @@ end
 
 group :test do
 gem 'capybara', '1.1.2'
-# gem 'factory_girl_rails', '4.1.0'
  gem 'cucumber-rails', '1.2.1', :require => false
   gem 'database_cleaner', '0.7.0'
 end

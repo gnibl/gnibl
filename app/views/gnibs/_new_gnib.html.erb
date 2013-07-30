@@ -173,6 +173,8 @@
     </div>
     <div id="gnib_description_1" class="content-url-comment content-url-image">
       <%= f.hidden_field :imageurl, :id=>"content_url_field" %>
+      <%= f.hidden_field :video, :id => "is_video_field", :value => 'false'%>
+      <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
         :class=>"comment-field",
         :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>

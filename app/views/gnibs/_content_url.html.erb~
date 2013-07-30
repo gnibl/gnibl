@@ -6,7 +6,6 @@
     <%= @error_msg %>
   </div>
 <%else%>
-
   <div id="content_url_images_panel" class="carousel slide content_url"
        style="width: 100%; background: transparent; position: relative">
     <div id="content_url_images_inner_panel" class="carousel-inner">
