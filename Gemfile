@@ -14,6 +14,7 @@ gem 'aws-sdk'
 gem 'rmagick'
 gem 'nokogiri'
 gem 'geoip'
+ruby '1.9.2'
 
 gem 'jquery-rails','2.0.2'
 
