@@ -37,7 +37,7 @@
     </button>
     <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
-        <a href="/users/<%=gnib.user.html_safe_username%>" title = "<%= gnib.title%>" style="color: #17aeff;"><%=gnib.title[0..10]%></a>
+        <a href="/users/<%=gnib.user.html_safe_username%>" title = "<%= gnib.title%>" style="color: #17aeff;"><%=gnib.short_title%></a>
 
       </div>
 
