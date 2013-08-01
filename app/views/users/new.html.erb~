@@ -24,7 +24,7 @@
         <br/>
         <%= link_to("signin!","/", :class => 'login-button', :style=>"margin-left: 10%;")%>
 <br/>
-<% unless @message || @message.empty? %>
+<% if @message  %>
 <%= @message%>
 <% end %>
       </div>

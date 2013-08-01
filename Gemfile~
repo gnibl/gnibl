@@ -15,6 +15,10 @@ gem 'rmagick'
 gem 'nokogiri'
 gem 'geoip'
 
+group :production do
+ruby '1.9.2'
+end
+
 gem 'jquery-rails','2.0.2'
 
 group :development, :test do
