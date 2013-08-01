@@ -162,8 +162,8 @@ class UsersController < ApplicationController
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
-    Rails.logger.info "here: "+validation_code
     @user = User.create(params[:user])
+ Rails.logger.info "here: "+params[:user]
 message = ""
     if @user.save
       url = request.host_with_port
