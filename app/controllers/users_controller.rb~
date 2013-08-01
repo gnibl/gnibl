@@ -162,10 +162,15 @@ class UsersController < ApplicationController
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
-    @user = User.new(params[:user])
-  is_saved = @user.save
+is_saved = false
+@user = User.new(params[:user])
+begin    
+is_saved = @user.save
+rescue => error
+puts error
+end    
 message = ""
-    if is_saved
+    if @user
       url = request.host_with_port
       send_verification_email(url, @user)      
 message = "check your email for instructions "+@user.email
