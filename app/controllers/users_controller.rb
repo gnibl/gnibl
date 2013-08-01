@@ -167,10 +167,10 @@ message = ""
     if @user.save
       url = request.host_with_port
       send_verification_email(url, @user)      
-      message = "check your email for instructions"  
+message = "check your email for instructions "+@user.email
 else
 message = "Signup failed"    
-message = "check your email for instructions "+@user.email  
+  
     end
 msg = {msg: message}.to_query
  path = "/signup?"+msg

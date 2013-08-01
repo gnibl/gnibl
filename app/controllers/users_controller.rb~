@@ -170,7 +170,7 @@ message = ""
       message = "check your email for instructions"  
 else
 message = "Signup failed"    
-message = "check your email for instructions"  
+message = "check your email for instructions "+@user.email  
     end
 msg = {msg: message}.to_query
  path = "/signup?"+msg
