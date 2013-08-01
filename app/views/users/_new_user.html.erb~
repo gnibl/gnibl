@@ -26,4 +26,8 @@
     <br/>
     <%= f.submit("Join Gnibl",:class => "login-button" ) %>
   <% end %>
+</br>
+<div style = "color: red; font-size:24px">
+<%= @message%>
+</div>
 </div>

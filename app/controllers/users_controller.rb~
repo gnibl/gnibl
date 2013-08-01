@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     end
     @user = User.new
     @cities = City.all
+    @message = params[:msg]
   end
 
   def next_search
@@ -162,14 +163,18 @@ class UsersController < ApplicationController
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
     @user = User.create(params[:user])
+message = ""
     if @user.save
       url = request.host_with_port
       send_verification_email(url, @user)      
-      @message = "check your email for instructions"  
+      message = "check your email for instructions"  
 else
-@message = "Signup failed"    
+message = "Signup failed"    
+message = "check your email for instructions"  
     end
-    redirect_to("/signup")
+msg = {msg: message}.to_query
+ path = "/signup?"+msg
+    redirect_to(path)
   end
 
   def notifications
@@ -221,7 +226,6 @@ sign_in(@user)
     @counts = @user.redefgnibs.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
-
     notifications();
 redirect_to "/signin"
 #redirect_to "/users/#{current_user.html_safe_username}/feed"
