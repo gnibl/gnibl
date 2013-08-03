@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+    /* to display image fullscreen and body elemtns */
+html{
+
+ /*   background:url(<%= image_path('images/login.png')%>) no-repeat center center; */
+
+    min-height:100%;
+
+      background-size:cover;
+}
+
+body{
+
+    min-height:100%;
+	font-family: avenir;
+}
+/* bottom div tag */
+div.bottomnav
+  {
+  width:100%;
+  height:55px;
+  background-color:#544C3D;
+  position:absolute;
+  padding:0px;
+  bottom:0;
+  left:0;
+  opacity:0.6;
+  filter:alpha(opacity=60); /* For IE8 and earlier */
+  }
+  
+  /* bottom navigation */
+  
+	 .bottommenu ul {
+	 list-style: square;
+	 font-family:Averina;
+	
+	 /*width: 70%;*/text-align: left;
+	  }
+.bottommenu li { 
+display: inline; 
+margin-right: 40px;
+}
+.bottommenu ul li a{
+text-decoration:none;
+color: #FFFFFF;
+
+}
+
+.bottommenu ul li a:visited{
+color: #FFFFFF;
+}
+
+.bottommenu ul li a:hover, .bottommenu ul li .current{
+    color: #fff;
+	
+	}
+.bottommenu li:after { 
+content:url('images/listdot.png'); margin-left:40px; 
+}
+.bottommenu li:last-child:after {
+ content: "";
+ }
+/* gnibl copyright */
+
+.copyright {color: #FFFFFF}
+
+/*div tag with logo left div tag */
+#apDiv1 {
+	position:absolute;
+	width:280px;
+	height:401px;
+	z-index:1;
+	left: 232px;
+	top: 35px;
+
+        background-size:100%;
+/*	background-image:url(images/leftlogo.png);        */
+	background-repeat:no-repeat;
+}
+.hidden {
+	display : none;
+}
