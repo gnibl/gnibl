@@ -123,7 +123,7 @@ a:active {
   <div id="apDiv2">
  <%= form_for(:session, :url => sessions_path) do |f| %>
     <div align="center">
-      <%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Enter your email',:style=>'border: 0px none'  %>
+      <%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Enter your email',:style=>'color: rgb(136, 136, 136);border: 0px none'  %>
     </div>
   </div>
 </div>
@@ -164,7 +164,7 @@ a:active {
   <p align="center" class="style4">share stuff with your friends.</p>
 </div>
 <div id="apDiv9">
-  <div align="center"><a href="register.html"><img src="<%= image_path('startgnibbing.png')%>"/></a></div>
+  <div align="center"><a href="signout"><img src="<%= image_path('startgnibbing.png')%>"/></a></div>
 <% end %>
 </div>
 </body>
