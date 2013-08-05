@@ -4,10 +4,7 @@
     width: 15%;
     padding: 2px;
   }
-  #user_city{
-    padding: 2px;
-    width: 80%;
-  }
+   
 </style>
 <div id="new_user_data" style="width: 80%">
   <%= form_for(@user) do |f| %>
@@ -22,11 +19,15 @@
         :prompt=> { :month => 'mm', :day => 'dd', :year => 'yy' }
     %>
     </div>
-    <%= f.collection_select  :city, @cities, :id, :city_name, :prompt => "City", :class=>"input-optio" %>
+   
     <%= f.text_field :email , :class => 'input-option', :placeholder => 'Your Email' %>
     <%= f.password_field :password , :class => 'input-option', :placeholder => 'password'%>
     <%= f.password_field :password_confirmation , :class => 'input-option', :placeholder => 'confirm password'%>
     <br/>
     <%= f.submit("Join Gnibl",:class => "login-button" ) %>
   <% end %>
+</br>
+<div style = "color: red; font-size:16px">
+<%= @message%>
+</div>
 </div>

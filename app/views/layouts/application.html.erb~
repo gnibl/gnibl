@@ -4,10 +4,12 @@
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
-
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
     <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
+<%= javascript_include_tag "hint-textbox.js" %>
     <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
-
+ <%= stylesheet_link_tag    "style.css" %>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <%= csrf_meta_tags %>
     <script type="text/javascript">
       var current_page = 0; //this is a global variable used to track the current gnib page
@@ -17,62 +19,12 @@
                 results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
-      function paginate() {
-        $(function() {
-          try {
-            console.log(location.href);
-            console.log(getParameterByName("term"));
-<% unless @counts.nil? %>
-              $('#gnib_panel_paginator').pagination({
-                items: <%= @counts + 1 %>,
-                itemsOnPage: 10,
-                cssStyle: 'dark-theme',
-                onPageClick: function(pageNumber) {
-  <% if current_user %>
-                    //we need to send a get form here using ajax.
-                    console.log("page: " + pageNumber);
-                    //create a form to submit with a hidden field
-                    current_page = pageNumber;
-                    var current_url = '<%= request.path %>';
-                    var gnibs = current_url.endsWith('<%=current_user.username%>');
-                    var search = !gnibs && current_url.contains('gnibs/search');
-                    var user_search = !search && current_url.contains('users/search');
-                    var action;
-                    if (gnibs) {
-                      action = '/users/<%=current_user.username%>/next_gnibs';
-                    } else if (search) {
-                      action = "/gnibs/next_search?term=" + getParameterByName("term");
-                    } else if (user_search) {
-                      action = "/users/next_search?uid=" + getParameterByName("uid");
-                    } else {
-                      action = '/users/<%=current_user.username%>/next_feed'
-                    }
-                    var form =
-                            '<form id="gnib_request_images_' + pageNumber + '" action="' + action + '"><input type="hidden" name="page" value="' + pageNumber + '"/><input type="hidden" name="current_url" value="<%= request.fullpath %>"/></form>'
-                    $(form).appendTo('body');
-                    $.ajax({
-                      type: 'GET',
-                      url: action,
-                      data: $('#gnib_request_images_' + pageNumber).serialize()
-                    });
-  <% end  %>
-                }
-              });
-<% end %>
-          } catch (e) {
-            console.log(e);
-          }
-        });
-      }
-
       function onLoginPage() {
-        console.log('onLoginPage: ' + location.pathname)
         if (location.pathname === '/' || location.pathname === '/signup') {
           //we try to make the height and width of the gnibl login page the same
           var loginMain = document.getElementById('login-main');
           if (loginMain) {
             var width = Math.floor(0.7 * window.innerHeight);
-            console.log('login-main width: ' + width);
             loginMain.style.height = width + 'px';
             loginMain.style.width = width + 'px';
             var sideP = window.innerWidth * ((1.0 - (width / window.innerWidth)) / 6.0);
@@ -88,7 +40,6 @@
       function init() {
         //include all init functions here
         rectifyGnibs();
-        paginate();
         onLoginPage();
       }
     </script>
@@ -107,20 +58,21 @@
       <div id="gniblMainPage" style="height: 100%; width: 100%; margin: 0px; position: absolute; top: 0px;">
         <%= yield %>
       </div>
-      <div align="center" id="footer">
-        <table style="width: 100%; padding: 5px; height: 100%">
-          <tbody>
-            <tr>
-              <td class="centered" style="width: 10%"><a href="#">About us</a></td>
-              <td class="centered" style="width: 2%"><div class="circle"></div></td>
-              <td class="centered" style="width: 10%"><a href="#">Contact us</a></td>
-              <td class="centered" style="width: 2%"><div class="circle"></div></td>
-              <td class="centered" style="width: 10%"><a href="#">terms and conditions</a></td>
-              <td class="centered" style="float: right; padding-right: 20px">Gnibl Site Copyright 2013 &copy;</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="bottomnav">
+<table width="100%"><tr><td>
+<div class="bottommenu">
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Terms</a></li>
+<li><a href="#">Privacy</a></li>
+</ul>
+</div>
+</td>
+<td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+</tr>
+</table>
+</div>
     </div>
     <script type="text/javascript">
       function showGnibThumbnailControl(id) {
@@ -213,34 +165,16 @@
           document.getElementById("current_user_form").submit();
         }
 <% end %>
+<%#*global variable%>
+      var gnib_thumnail_height = 0;
       function rectifyGnibs() {
-        //set the sizes of the thumbnail, four per page.
-        var className = 'gnib-thumbnail';
         //find all the thumnails
         var width = window.innerWidth;
-        var gt_width = Math.floor(0.195 * width);
-        //get the buttons themselves
-        var thumbnails = document.getElementsByTagName('*'), i;
-        for (i in thumbnails) {
-          var btn = thumbnails[i];
-          if ((btn.className + '').indexOf(className) !== -1) {
-            if (btn.id.contains('new_gnib_727272727_')) {
-              //the new gnib has border of width 2px
-              btn.style.height = (gt_width - 4) + 'px';
-              btn.style.width = (gt_width - 8) + 'px';
-              btn.style.minWidth = (gt_width - 6) + 'px';
-            } else {
-              btn.style.height = (gt_width) + 'px';
-              btn.style.width = (gt_width) + 'px';
-              btn.style.minWidth = (gt_width) + 'px';
-              //find the child of this div with the specified id
-              var gnibImage = document.getElementById('gnib_' + btn.id);
-              if (gnibImage) {
-                gnibImage.style.height = (gt_width) + 'px';
-                gnibImage.style.width = (gt_width + 15) + 'px';
-              }
-            }
-          }
+        var gt_width = gnib_thumnail_height = Math.floor(0.195 * width);
+        $('.gnib-thumbnail').height(gt_width);
+        $('.gnib-thumbnail').width(gt_width);
+        if ($('.new_gnib_thumbnail').length) {
+          $('.new_gnib_thumbnail').height(gt_width - 10);
         }
       }
       function rectifyGnib(id) {
@@ -389,6 +323,56 @@
           });
         }
       });
+<% if current_user %>
+        function ajaxSlide(idx, current_page) {
+          $('.item').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
+          var current_url = '<%= request.path %>';
+          var gnibs = current_url.endsWith('<%=current_user.html_safe_username%>');
+          var search = !gnibs && current_url.contains('gnibs/search');
+          var user_search = !search && current_url.contains('users/search');
+          var action;
+          if (gnibs) {
+            action = '/users/<%=current_user.html_safe_username%>/next_gnibs';
+          } else if (search) {
+            action = "/gnibs/next_search?term=" + getParameterByName("term");
+          } else if (user_search) {
+            action = "/users/next_search?uid=" + getParameterByName("uid");
+          } else {
+            action = '/users/<%=current_user.html_safe_username%>/next_feed'
+          }
+          var data = [
+            {name: 'page', value: current_page},
+            {name: 'current_url', value: '<%= request.fullpath %>'}
+          ];
+          doAjaxSubmit(data, action, function(response) {
+            $('#gnib_main_panel').carousel(idx);
+            //set the active count
+            $('.carousel-count').removeClass('active disabled');
+            $('#carousel-count_' + current_page).addClass('active disabled');
+          });
+        }
+        $(document).ready(function() {
+          $('#gnib_main_panel').carousel({
+            interval: false
+          });
+          // when the carousel slides, load the ajax content
+          $('#gnib_main_panel').on('slid', function(e) {
+            // get index of currently active item
+            var idx = $('#gnib_main_panel .item.active').index();
+            var current_page = $('.item.active').data('slide-number');
+            if (current_page) {
+              ajaxSlide(idx, current_page);
+            }
+          });
+          //add click event to carousel counts
+          $('.carousel-count:not(.disabled)').click(function() {
+            //get the data
+            var current_page = $(this).data('count');
+            $('#gnib_main_panel').carousel(current_page);
+          });
+        });
+<% end %>
     </script>
+    <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto"></div>
   </body>
 </html>

@@ -2,12 +2,11 @@
   <div id="<%=gnib.id%>"
        class="gnib-thumbnail" style="margin-bottom: -1px; padding-bottom: 0px; float: left;">
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control"
-         style="height: 80px; border-top-left-radius: 5px; border-top-right-radius: 5px; display: block">
+         style="height: 80px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
       <table>
         <tbody>
           <tr>
             <td style="width: 80%; font-size: 20px; border-right: 1px solid #aaaaaa; text-align: center; color: #17aeff; height: 55px">
-
             </td>
             <td style="text-align: left; vertical-align: middle; width: 8%; border-right: 1px solid #aaaaaa; padding-left: 2px">
               <button title="gnib it!" class="gnib-gnib-button"
@@ -27,7 +26,9 @@
               <button title="gnib it!" class="gnib-gnib-button"
                       onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/upvotegnib');"
                       style="position: relative; background: none; height: 60px; min-width: 80px">
-                <span style="position: absolute; right: 50px; color: cyan; font-size: 12px">1</span>
+                <span id="upvoted_gnibs_<%=gnib.id%>" style="position: absolute; right: 50px; color: cyan; font-size: 12px">
+                  <%=  gnib.upvotegnibs.count%>
+                </span>
                 <span style="position: absolute; right: 10px; top: 0px;  background: url(<%= image_path('arrow_up.png') %>); height: 60px; width: 50px; margin: 0px; margin-top: 1px; margin-right: 5px; background-size: 100% 100%"></span>
                 <span style="position: absolute; right: 5px; color: cyan; font-size: 20px">Up</span>
               </button>
@@ -38,7 +39,7 @@
     </div>
     <button class="gnib" style="background:transparent; border: 0px none; margin-top: 0px; border-radius: 0px" data-gnib-id="<%=gnib.id%>"
             onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
-                          return false;">
+                            return false;">
               <% if gnib.image.url %>
                 <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}", :style=>"border-radius: 0px; margin-top: 0px")%>
               <% else %>

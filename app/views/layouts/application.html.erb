@@ -7,7 +7,9 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
     <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
     <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
+ <%= stylesheet_link_tag    "style.css" %>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<%= javascript_include_tag "hint-textbox.js" %>
     <%= csrf_meta_tags %>
     <script type="text/javascript">
       var current_page = 0; //this is a global variable used to track the current gnib page
@@ -56,20 +58,21 @@
       <div id="gniblMainPage" style="height: 100%; width: 100%; margin: 0px; position: absolute; top: 0px;">
         <%= yield %>
       </div>
-      <div align="center" id="footer">
-        <table style="width: 100%; padding: 5px; height: 100%">
-          <tbody>
-            <tr>
-              <td class="centered" style="width: 10%"><a href="#">About us</a></td>
-              <td class="centered" style="width: 2%"><div class="circle"></div></td>
-              <td class="centered" style="width: 10%"><a href="#">Contact us</a></td>
-              <td class="centered" style="width: 2%"><div class="circle"></div></td>
-              <td class="centered" style="width: 15%"><a href="#">terms and conditions</a></td>
-              <td class="centered" style="float: right; padding-right: 20px">Gnibl Site Copyright 2013 &copy;</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="bottomnav">
+<table width="100%"><tr><td>
+<div class="bottommenu">
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Terms</a></li>
+<li><a href="#">Privacy</a></li>
+</ul>
+</div>
+</td>
+<td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+</tr>
+</table>
+</div>
     </div>
     <script type="text/javascript">
       function showGnibThumbnailControl(id) {

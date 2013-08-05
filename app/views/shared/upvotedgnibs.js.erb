@@ -1,0 +1,7 @@
+var id = 'upvoted_gnibs_<%=@gnib.id%>';
+$('#'+id).html('<%= @gnib.upvotegnibs.count %>');
+$('#messagePanel').html("<%= @success %>");
+$('div#messages').show();
+setTimeout(function(){
+$('div#messages').hide();
+}, 10000);

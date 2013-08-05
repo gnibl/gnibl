@@ -1,4 +1,3 @@
-
 require 'gnibl_util'
   include GniblUtil
 
@@ -21,6 +20,7 @@ class UsersController < ApplicationController
     end
     @user = User.new
     @cities = City.all
+    @message = params[:msg]
   end
 
   def next_search
@@ -157,17 +157,30 @@ class UsersController < ApplicationController
 
 
   def create    
-    params[:user]['validated'] = false
+   city = City.find 1
+    params[:user]['city'] = city
+    params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
-    @user = User.new(params[:user])
-#    if @user.save
-@user.save
-url = request.host_with_port
+is_saved = false
+@user = User.new(params[:user])
+begin    
+is_saved = @user.save
+rescue => error
+puts error
+end    
+message = ""
+    if @user
+      url = request.host_with_port
       send_verification_email(url, @user)      
-      @message = "check your email for instructions"      
-#    end
-    redirect_to("/signup")
+message = "check your email for instructions "+@user.email
+else
+message = "Signup failed"    
+  
+    end
+msg = {msg: message}.to_query
+ path = "/signup?"+msg
+    redirect_to(path)
   end
 
   def notifications
@@ -207,7 +220,7 @@ url = request.host_with_port
     end
   end
 
-def validatemail
+def validateemail
 validation_code = params[:code]
 @user = User.find_by_validation_code(validation_code)
 if @user
@@ -220,7 +233,8 @@ sign_in(@user)
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     notifications();
-redirect_to "/users/#{current_user.html_safe_username}/feed"
+redirect_to "/signin"
+#redirect_to "/users/#{current_user.html_safe_username}/feed"
 else
 redirect_to "/signup"
 end

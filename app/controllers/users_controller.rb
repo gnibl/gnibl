@@ -1,16 +1,16 @@
 require 'gnibl_util'
-  include GniblUtil
+include GniblUtil
 
 class UsersController < ApplicationController
 
   before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
   before_filter :correct_user, :only => [:edit,:update]
 
-  def index    
+  def index
   end
 
   def test
-    #DEBUG remove this   
+    #DEBUG remove this
   end
 
   def new
@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     end
     @user = User.new
     @cities = City.all
+    @message = params[:msg]
   end
 
   def next_search
@@ -155,18 +156,31 @@ class UsersController < ApplicationController
   end
 
 
-  def create    
-    params[:user]['validated'] = false
+  def create
+    city = City.find 1
+    params[:user]['city'] = city
+    params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
+    is_saved = false
     @user = User.new(params[:user])
-#    if @user.save
-@user.save
-url = request.host_with_port
-      send_verification_email(url, @user)      
-      @message = "check your email for instructions"      
-#    end
-    redirect_to("/signup")
+    begin
+      is_saved = @user.save
+    rescue => error
+      puts error
+    end
+    message = "over"
+    if @user
+      url = request.host_with_port
+      send_verification_email(url, @user)
+      message = "check your email for instructions "+@user.email
+    else
+      message = "Signup failed"
+
+    end
+    msg = {:msg => message}.to_query
+    path = "/signup?"+msg
+    redirect_to(path)
   end
 
   def notifications
@@ -206,24 +220,25 @@ url = request.host_with_port
     end
   end
 
-def validatemail
-validation_code = params[:code]
-@user = User.find_by_validation_code(validation_code)
-if @user
-@user.update_attribute("validation_code","")
-@user.update_attribute("validated",true)
-sign_in(@user)
-    page = 0
-    @gnibs = @user.redefgnibs.offset(page).limit(9)
-    @counts = @user.redefgnibs.count
-    @page_count = (@counts / 9).ceil;
-    @gnib = @user.gnibs.build
-    notifications();
-redirect_to "/users/#{current_user.html_safe_username}/feed"
-else
-redirect_to "/signup"
-end
-end
+  def validateemail
+    validation_code = params[:code]
+    @user = User.find_by_validation_code(validation_code)
+    if @user
+      @user.update_attribute("validation_code","")
+      @user.update_attribute("validated",true)
+      sign_in(@user)
+      page = 0
+      @gnibs = @user.redefgnibs.offset(page).limit(9)
+      @counts = @user.redefgnibs.count
+      @page_count = (@counts / 9).ceil;
+      @gnib = @user.gnibs.build
+      notifications();
+      redirect_to "/signin"
+      #redirect_to "/users/#{current_user.html_safe_username}/feed"
+    else
+      redirect_to "/signup"
+    end
+  end
 
   def show
     username = User.correct_username_from_safe_html_username(params[:id])

@@ -240,7 +240,7 @@ class GnibsController < ApplicationController
     end
     @upvote_count = upvotes.size() unless upvotes.empty?;
     respond_to do |format|
-      format.js {render "shared/gniblings"}
+      format.js {render "shared/upvotedgnibs"}
     end
   end
 
