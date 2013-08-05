@@ -160,7 +160,7 @@ ip = request.remote_ip
     unless city
          city = City.find(city_id) #default city id 1
      end
-    params[:user]['city'] = city
+  #  params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
