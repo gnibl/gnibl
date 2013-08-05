@@ -96,19 +96,9 @@ class UsersController < ApplicationController
     notifications();
   end
 
-  def following
-    username = User.correct_username_from_safe_html_username(params[:id])
-    @user = User.find_by_username(username)
-    #@users = @user.followed_users.limit(9)
-    #    @counts = @user.followed_users.count
-    #TEMPORARY
-    @users = User.all
-    @counts = @users.count
-    @page_count = (@counts / 9).ceil;
-    notifications();
-    render "show_follow"
-  end
+
   def gnibblings
+#show all people the user is gnibbling/following
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
     @users = @user.followed_users.limit(9)
@@ -116,15 +106,16 @@ class UsersController < ApplicationController
     @page_count = (@counts / 9).ceil;
     notifications();
   end
+
   def next_gnibblings
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
     @page = params[:page].to_i
     @current_page = @page;
-    @page *= 9;
-    @users = @user.followed_users.offset(@page).limit(9)
+    @page *= 10;
+    @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 10).ceil;
     notifications();
     render "show_follow"
   end
@@ -157,7 +148,18 @@ class UsersController < ApplicationController
 
 
   def create    
-   city = City.find 1
+ip = request.remote_ip
+   city_id = 1   
+   if ip == '127.0.0.1'
+      ip = '41.235.178.14' #a nairobi ip        
+    end
+      place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
+      city_name = place.city_name
+      city = City.where("city_name = ?",city_name).limit(1)
+     
+    unless city
+         city = City.find(city_id) #default city id 1
+     end
     params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
@@ -169,7 +171,7 @@ is_saved = @user.save
 rescue => error
 puts error
 end    
-message = ""
+message = "over"
     if @user
       url = request.host_with_port
       send_verification_email(url, @user)      
@@ -185,8 +187,8 @@ msg = {msg: message}.to_query
 
   def notifications
     @user = current_user
-    @notifications = @user.notifications.where("read = :state", :state => false)
-    @notifications_count = @notifications.count
+    @notifications = @user.notifications.limit(10)#.where("read = :state", :state => false)
+    @notifications_count = @user.notifications.where("read = :state", :state => false).count
   end
 
   def readnotifications

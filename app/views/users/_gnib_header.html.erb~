@@ -8,7 +8,7 @@
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <td class="prof-not-bd" <% if request.path == "/users/#{@user.html_safe_username}/following" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
-          <a  href="/users/<%=@user.html_safe_username%>/followers">Gniblers</a>
+          <a  href="/users/<%=@user.html_safe_username%>/following">Gniblers</a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <td class="prof-not-bd" <% if request.path == "/users/#{@user.html_safe_username}/gnibblings" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>

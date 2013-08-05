@@ -36,6 +36,7 @@ class GnibsController < ApplicationController
   end
 
   def paste_content_url
+    @video = false
     @urls = ['']
     @image_sources = ['']
     url = params[:url]

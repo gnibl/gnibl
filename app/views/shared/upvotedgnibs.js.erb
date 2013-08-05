@@ -1,5 +1,7 @@
 var id = 'upvoted_gnibs_<%=@gnib.id%>';
+var id_ups = 'upvoted_gnibs_ups_text_<%=@gnib.id%>';
 $('#'+id).html('<%= @gnib.upvotegnibs.count %>');
+$('#'+id_ups).html('Up<% if @gnib.upvotegnibs.count > 1%>s<% end %>');
 $('#messagePanel').html("<%= @success %>");
 $('div#messages').show();
 setTimeout(function(){
