@@ -4,5 +4,5 @@
     <%= f.hidden_field :current_url, :value => "#{request.fullpath}" %>
     <%= f.hidden_field :user_view, :value => "true" %>
   </div>
-  <%= f.submit "Gnibble", :class => "btn btn-large btn-primary", :style =>"font-size: 10px; height: 20px; padding: 2px" %>
+  <%= f.submit "Follow", :class => "btn btn-large btn-primary", :style =>"font-size: 10px; height: 20px; padding: 2px" %>
 <% end %>
