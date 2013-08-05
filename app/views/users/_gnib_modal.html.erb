@@ -15,15 +15,15 @@
     top: 0px;
     text-align: center;
     border-radius: 20px;
-    width: 450px;
+    width: 600px; /* 450*/
     margin: auto;
   }
   .gnibl-modal-view{
     background: rgba(255, 255, 255, 0.15);
   }
   .gnibl-view, .gnibl-view-panel{
-    height: 420px;
-    width: 450px;
+    height: 450px;
+    width: 600px; /*450, 420*/
     border-radius: 0px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -139,7 +139,7 @@
     <div id="gnibl-view-panel" class="gnibl-view-panel">
       <div id="gnibl-modal-view-panel" class="gnibl-view">
 <% if gnib.video %>
-<iframe width="425" height="349" src="<%= gnib.youtube_embeddable_url %>" frameborder="0" allowfullscreen> </iframe>
+<iframe width="600" height="400" src="<%= gnib.youtube_embeddable_url %>" frameborder="0" allowfullscreen> </iframe>
 <% end %>
         <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal">
           <div style="width: 60%; font-size: 20px; text-align: left; color: #fff;
