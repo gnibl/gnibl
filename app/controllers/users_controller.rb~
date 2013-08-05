@@ -185,10 +185,9 @@ msg = {msg: message}.to_query
     redirect_to(path)
   end
 
-  def notifications
-    @user = current_user
-    @notifications = @user.notifications.limit(10)#.where("read = :state", :state => false)
-    @notifications_count = @user.notifications.where("read = :state", :state => false).count
+  def notifications    
+    @notifications = current_user.notifications.limit(10)#.where("read = :state", :state => false)
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
 
   def readnotifications

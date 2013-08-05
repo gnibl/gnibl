@@ -186,7 +186,7 @@ msg = {msg: message}.to_query
   end
 
   def notifications    
-    @notifications = current_user.notifications.limit(10)#.where("read = :state", :state => false)
+    @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
 

@@ -28,9 +28,13 @@
     </div>
     <button class="gnib" style="background:transparent; border: 0px none" data-gnib-id="<%=gnib.id%>"
             onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
-                          return false;">          
-                <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}", :style=>"height: 100%")%>              
-   </button>  
+                          return false;">
+              <% if gnib.image.url %>
+                <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
+              <% else %>
+                <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}")%>
+              <% end %>
+    </button>
     <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
         <a href="/users/<%=gnib.user.html_safe_username%>" title = "<%= gnib.title%>" style="color: #17aeff;"><%=gnib.short_title%></a>
