@@ -14,8 +14,8 @@ gem 'aws-sdk'
 gem 'rmagick'
 gem 'nokogiri'
 gem 'geoip'
-
-
+#gem 'ruby' , '1.9.2'
+#gem 'ruby', '2.0.0'
 
 gem 'jquery-rails','2.0.2'
 
@@ -35,7 +35,7 @@ end
 
 #production gems
 #group :production do
-gem 'pg' 
+gem 'pg'
 #end
 
 # Gems used only for assets and not required

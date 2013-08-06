@@ -77,18 +77,13 @@
     border-radius: 5px;
   }
   #content_url, #content_url_images{
-    width: 98%;
-    border: 3px solid #efefef;
+    width: 100%;
     text-align: center;
-    height: 47.8%;
-    min-height: 47.8%;
+    height: 50%;
+    min-height: 50%;
   }
   #content_url{
     background: rgba(255, 70, 45, 0.9);
-    border-radius: 8px 8px 0px 0px
-  }
-  #content_url_images, .content-url-image{
-    border-radius: 0px 0px 8px 8px;
   }
   #content_url_images{
     display: block;
@@ -131,7 +126,6 @@
     width: 90%; margin: auto;
     background: rgba(255, 255, 255, 0.2);
     margin-top: 5px;
-    border-radius: 5px;
     display: none;
     margin-bottom: 5px;
     position: relative;
@@ -148,14 +142,14 @@
   }
 </style>
 <%= form_for(@gnib) do |f| %>
+  <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
+  <input id="current_term_34783784980" type="hidden" name="term" value=""/>
+  <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
+  <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
   <div id="new_gnib_727272727_<%=@gnib.id%>"
        class="gnib-thumbnail new_gnib_thumbnail"
-       style="float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px; position: relative">
-    <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
-    <input id="current_term_34783784980" type="hidden" name="term" value=""/>
-    <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
-    <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
-    <div id="content_url" >
+       style="float: left;  position: relative; margin-top: 1px; margin-bottom: -1px">
+    <div id="content_url" style="margin-top: -10px; padding-top: 0px">
       <h3>Add Url</h3>
       <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
         :class=>"paste-content-field",

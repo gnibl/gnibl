@@ -1,16 +1,16 @@
 require 'gnibl_util'
-  include GniblUtil
+include GniblUtil
 
 class UsersController < ApplicationController
 
   before_filter :signed_in_user, :only => [:edit,:update,:index, :following, :followers]
   before_filter :correct_user, :only => [:edit,:update]
 
-  def index    
+  def index
   end
 
   def test
-    #DEBUG remove this   
+    #DEBUG remove this
   end
 
   def new
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
 
 
   def gnibblings
-#show all people the user is gnibbling/following
+    #show all people the user is gnibbling/following
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
     @users = @user.followed_users.limit(9)
@@ -147,43 +147,48 @@ class UsersController < ApplicationController
   end
 
 
-  def create    
-ip = request.remote_ip
-   city_id = 1   
-   if ip == '127.0.0.1'
-      ip = '41.235.178.14' #a nairobi ip        
+  def create
+    city = City.find 1
+    ip = request.remote_ip
+    city_id = 1
+    if ip == '127.0.0.1'
+      ip = '41.235.178.14' #a nairobi ip
     end
-      place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
-      city_name = place.city_name
-      city = City.where("city_name = ?",city_name).limit(1)
-     
+    place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
+    city_name = place.city_name
+    city = City.where("city_name = ?",city_name).limit(1)
     unless city
+
          city = City.find(city_id) #default city id 1
      end
-  #  params[:user]['city'] = city
+
+      city = City.find(city_id) #default city id 1
+    end
+#    params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
-is_saved = false
-@user = User.new(params[:user])
-begin    
-is_saved = @user.save
-rescue => error
-puts error
-end    
-message = "over"
+    is_saved = false
+    @user = User.new(params[:user])
+    begin
+      is_saved = @user.save
+    rescue => error
+      puts error
+    end
+    message = "over"
     if @user
       url = request.host_with_port
-      send_verification_email(url, @user)      
-message = "check your email for instructions "+@user.email
-else
-message = "Signup failed"    
-  
+      send_verification_email(url, @user)
+      message = "check your email for instructions "+@user.email
+    else
+      message = "Signup failed"
+
     end
-msg = {msg: message}.to_query
- path = "/signup?"+msg
+    msg = {:msg => message}.to_query
+    path = "/signup?"+msg
     redirect_to(path)
   end
+
 
   def notifications    
     @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
@@ -221,25 +226,25 @@ msg = {msg: message}.to_query
     end
   end
 
-def validateemail
-validation_code = params[:code]
-@user = User.find_by_validation_code(validation_code)
-if @user
-@user.update_attribute("validation_code","")
-@user.update_attribute("validated",true)
-sign_in(@user)
-    page = 0
-    @gnibs = @user.redefgnibs.offset(page).limit(9)
-    @counts = @user.redefgnibs.count
-    @page_count = (@counts / 9).ceil;
-    @gnib = @user.gnibs.build
-    notifications();
-redirect_to "/signin"
-#redirect_to "/users/#{current_user.html_safe_username}/feed"
-else
-redirect_to "/signup"
-end
-end
+  def validateemail
+    validation_code = params[:code]
+    @user = User.find_by_validation_code(validation_code)
+    if @user
+      @user.update_attribute("validation_code","")
+      @user.update_attribute("validated",true)
+      sign_in(@user)
+      page = 0
+      @gnibs = @user.redefgnibs.offset(page).limit(9)
+      @counts = @user.redefgnibs.count
+      @page_count = (@counts / 9).ceil;
+      @gnib = @user.gnibs.build
+      notifications();
+      redirect_to "/signin"
+      #redirect_to "/users/#{current_user.html_safe_username}/feed"
+    else
+      redirect_to "/signup"
+    end
+  end
 
   def show
     username = User.correct_username_from_safe_html_username(params[:id])
