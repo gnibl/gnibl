@@ -185,7 +185,7 @@ class UsersController < ApplicationController
       puts error
     end
     message = "over"
-    if @user
+    if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
       message = "check your email for instructions "+@user.email
