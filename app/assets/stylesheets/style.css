@@ -175,7 +175,8 @@ color: #FFFFFF;
 	
 	}
 .bottommenu li:after { 
-content:url("<%= image_path('listdot.png')%>"; margin-left:40px; 
+content:url("<%= image_path('listdot.png')%>"); 
+margin-left:40px; 
 }
 .bottommenu li:last-child:after {
  content: "";
