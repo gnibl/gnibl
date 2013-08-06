@@ -1,125 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Gnibl </title>
-<link media="screen" rel="stylesheet" type="text/css" href="./style.css"  />
-<script type="text/javascript" src="hint-textbox.js"></script>
-
-<style type="text/css">
-<!--
-#apDiv2 {
-	position:absolute;
-	width:220px;
-	height:33px;
-	z-index:1;
-	left: 39px;
-	top: 190px;
-	padding:6px;
-}
-#apDiv3 {
-	position:absolute;
-	width:221px;
-	height:29px;
-	z-index:2;
-	left: 266px;
-	top: 281px;
-	padding:5px;
-}
-#apDiv4 {
-	position:absolute;
-	width:159px;
-	height:29px;
-	z-index:3;
-	left: 303px;
-	top: 329px;
-}
-#apDiv5 {
-	position:absolute;
-	width:99px;
-	height:33px;
-	z-index:4;
-	left: 323px;
-	top: 364px;
-	background-image:url("<%= image_path('loginbutton.png')%>");     
-/*	background-image:url(images/loginbutton.png);
-	background-repeat:no-repeat;*/
-}
-#apDiv6 {
-	position:absolute;
-	width:164px;
-	height:26px;
-	z-index:5;
-	left: 295px;
-	top: 404px;
-}
-.style2 {
-	color: #9CD9F1;
-	font-weight: bold;	
-	text-decoration:none;
-}
-input {
-background-color:transparent;
-border: 0px solid;
-
-color:#000;
-}
-INPUT.hintTextbox { color: #888; } INPUT.hintTextboxActive { color: #000; }
-a:link {
-	color: #9DDAF4;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-	color: #9EDAF4;
-}
-a:hover {
-	text-decoration: none;
-	color: #9DDAF4;
-}
-a:active {
-	text-decoration: none;
-	color: #9EDAF4;
-}
-#apDiv7 {
-	position:absolute;
-	width:388px;
-	height:385px;
-	z-index:6;
-	left: 622px;
-	top: 35px;
-}
-#apDiv8 {
-	position:absolute;
-	width:357px;
-	height:115px;
-	z-index:7;
-	left: 639px;
-	top: 103px;
-}
-#apDiv9 {
-	position:absolute;
-	width:351px;
-	height:29px;
-	z-index:8;
-	left: 646px;
-	top: 262px;
-}
-.style3 {font-size: 18px}
-.style4 {
-	font-size: 30px;
-	color: #FFFFFF;
-}
-.style5 {font-size: 40px}
-.style6 {font-size: 30px}
--->
-</style>
-</head>
-
-<body>  
 
 <div id="apDiv1">
-<img src="<%= image_path('leftlogo.png')%>" height = "100%"/>
+<img src="<%= image_path('leftlogo.png')%>" height = 100% width = 100%/>
   <div id="apDiv2">
  <%= form_for(:session, :url => sessions_path) do |f| %>
     <div align="center">
@@ -131,11 +12,26 @@ a:active {
 
 
 <!--Bottom Navigation-->
-
+<div class="bottomnav">
+<table width="100%"><tr><td>
+<div class="bottommenu">
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Terms</a></li>
+<li><a href="#">Privacy</a></li>
+</ul>
+</div>
+</td>
+<td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+</tr>
+</table>
+</div>
 
 <div id="apDiv3">
   <div align="center">
-  <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password', :style=>"border: 0px none" %>
+ <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password', :style=>"border: 0px none" %>
+
 </div>
 </div>
 <div id="apDiv4">
@@ -145,18 +41,16 @@ a:active {
     <div align="center">  
       <input type="checkbox" name="checkbox" id="checkbox" />
       </div></td>
-    <td width="74%"><strong style = "color:black">remember me</strong></td>
+    <td width="74%" style= "color:black"><strong>remember me</strong></td>
   </tr>
 </table>
   <div align="center"></div>
 </div>
 
- <div id="apDiv5">
- <div align="center" style="width: 100%" class="actions">
-      <%= f.submit :value => '        ', :class=>"appDiv5"%>
-    </div>     
-    </div>
+<div id="apDiv5">
+  <%= f.submit :value => '  Login  ', :style=>"color:white; background-color:lightblue"%>
 
+</div>
 <div class="style2" id="apDiv6"><a href="#">Forgot Your Password?</a></div>
 <div id="apDiv7"></div>
 <div id="apDiv8">
@@ -165,7 +59,5 @@ a:active {
 </div>
 <div id="apDiv9">
   <div align="center"><a href="signup"><img src="<%= image_path('startgnibbing.png')%>"/></a></div>
-<% end %>
 </div>
-</body>
-</html>
+<% end %>

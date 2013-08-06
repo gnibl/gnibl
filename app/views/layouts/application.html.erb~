@@ -9,25 +9,7 @@
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
     <%= csrf_meta_tags %>
-<script type="text/javascript">
-$(document).ready(function(){
-  $("#slidingnavid").hide();
-  $("#buttongnibid").addClass('plus');
-  $("#buttongnibid").show();
-  $("#buttongnibid").toggle(
-      function(){
-          $("#slidingnavid").slideDown();
-           $(this).removeClass("plus");
-         $(this).removeClass("minus");
-      },
-      function(){
-          $("#slidingnavid").slideUp();
-        $(this).removeClass("plus");
-         $(this).removeClass("minus");
-      }
-  );
-});
-</script>
+
 
     <script type="text/javascript">
       var current_page = 0; //this is a global variable used to track the current gnib page

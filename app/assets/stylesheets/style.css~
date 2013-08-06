@@ -3,7 +3,7 @@
     /* to display image fullscreen and body elemtns */
 html{
 
-    background:url(<%= image_path('images/login.png')%>) no-repeat center center;
+    background:url("<%= image_path('login.png')%>") no-repeat center center;
 
     min-height:100%;
 
@@ -15,6 +15,126 @@ body{
     min-height:100%;
 	font-family: avenir;
 }
+
+
+/*div tag with logo left div tag */
+#apDiv1 {
+	position:absolute;
+	width:280px;
+	height:401px;
+	z-index:1;
+	left: 232px;
+	top: 35px;
+	background-repeat:no-repeat;
+}
+.hidden {
+	display : none;
+}
+
+#apDiv2 {
+	position:absolute;
+	width:220px;
+	height:33px;
+	z-index:1;
+	left: 39px;
+	top: 190px;
+	padding:6px;
+}
+#apDiv3 {
+	position:absolute;
+	width:221px;
+	height:29px;
+	z-index:2;
+	left: 266px;
+	top: 281px;
+	padding:5px;
+}
+#apDiv4 {
+	position:absolute;
+	width:159px;
+	height:29px;
+	z-index:3;
+	left: 303px;
+	top: 329px;
+}
+#apDiv5 {
+	position:absolute;
+	width:99px;
+	height:33px;
+	z-index:4;
+	left: 323px;
+background-image:url("<%= image_path('loginbutton.png')%>");
+	top: 364px;/*	background-image:url(images/loginbutton.png);
+	background-repeat:no-repeat;*/
+}
+#apDiv6 {
+	position:absolute;
+	width:164px;
+	height:26px;
+	z-index:5;
+	left: 295px;
+	top: 404px;
+}
+.style2 {
+	color: #9CD9F1;
+	font-weight: bold;	
+	text-decoration:none;
+}
+input {
+background-color:transparent;
+border: 0px solid;
+
+color:#000;
+}
+INPUT.hintTextbox { color: #888; } INPUT.hintTextboxActive { color: #000; }
+a:link {
+	color: #9DDAF4;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #9EDAF4;
+}
+a:hover {
+	text-decoration: none;
+	color: #9DDAF4;
+}
+a:active {
+	text-decoration: none;
+	color: #9EDAF4;
+}
+#apDiv7 {
+	position:absolute;
+	width:388px;
+	height:385px;
+	z-index:6;
+	left: 622px;
+	top: 35px;
+}
+#apDiv8 {
+	position:absolute;
+	width:357px;
+	height:115px;
+	z-index:7;
+	left: 639px;
+	top: 103px;
+}
+#apDiv9 {
+	position:absolute;
+	width:351px;
+	height:29px;
+	z-index:8;
+	left: 646px;
+	top: 262px;
+}
+.style3 {font-size: 18px}
+.style4 {
+	font-size: 30px;
+	color: #FFFFFF;
+}
+.style5 {font-size: 40px}
+.style6 {font-size: 30px}
+
 /* bottom div tag */
 div.bottomnav
   {
@@ -56,7 +176,7 @@ color: #FFFFFF;
 	
 	}
 .bottommenu li:after { 
-content:url('images/listdot.png'); margin-left:40px; 
+content:url("<%= image_path('listdot.png')%>"; margin-left:40px; 
 }
 .bottommenu li:last-child:after {
  content: "";
@@ -65,19 +185,3 @@ content:url('images/listdot.png'); margin-left:40px;
 
 .copyright {color: #FFFFFF}
 
-/*div tag with logo left div tag */
-#apDiv1 {
-	position:absolute;
-	width:280px;
-	height:401px;
-	z-index:1;
-	left: 232px;
-	top: 35px;
-
-        background-size:100%;
-/*	background-image:url(images/leftlogo.png);        */
-	background-repeat:no-repeat;
-}
-.hidden {
-	display : none;
-}
