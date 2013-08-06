@@ -37,6 +37,8 @@ class UsersController < ApplicationController
       format.js {render "shared/user"}
     end
   end
+
+
   def search
     #search for users by user name - obviously
     uname = params[:uid]
@@ -71,6 +73,8 @@ class UsersController < ApplicationController
       format.js {render "shared/gnibs"}
     end
   end
+
+
   def next_feed
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
@@ -86,6 +90,9 @@ class UsersController < ApplicationController
       format.js {render "shared/gnibs"}
     end
   end
+
+
+
   def feed
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
@@ -107,6 +114,7 @@ class UsersController < ApplicationController
     notifications();
   end
 
+
   def next_gnibblings
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
@@ -119,6 +127,9 @@ class UsersController < ApplicationController
     notifications();
     render "show_follow"
   end
+
+
+
   def next_following
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
@@ -133,6 +144,7 @@ class UsersController < ApplicationController
       format.js {render "shared/user"}
     end
   end
+
 
   def followers
     @user =  User.find_by_username(params[:id])
@@ -158,12 +170,9 @@ class UsersController < ApplicationController
     city_name = place.city_name
     city = City.where("city_name = ?",city_name).limit(1)
     unless city
-
          city = City.find(city_id) #default city id 1
      end
 
-      city = City.find(city_id) #default city id 1
-    end
 #    params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex

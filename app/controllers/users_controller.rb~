@@ -158,19 +158,13 @@ class UsersController < ApplicationController
     city_name = place.city_name
     city = City.where("city_name = ?",city_name).limit(1)
     unless city
-<<<<<<< HEAD
+
          city = City.find(city_id) #default city id 1
      end
-<<<<<<< HEAD
-  #  params[:user]['city'] = city
-=======
-   # params[:user]['city'] = city
-=======
+
       city = City.find(city_id) #default city id 1
     end
-    params[:user]['city'] = city
->>>>>>> 32bda8408455ae236d790f7206f8f4f6b1af6669
->>>>>>> 4c9972b6d2ab104260caa3e5f61767820bfb8084
+#    params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
@@ -195,13 +189,9 @@ class UsersController < ApplicationController
     redirect_to(path)
   end
 
-<<<<<<< HEAD
+
   def notifications    
     @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
-=======
-  def notifications
-    @notifications = current_user.notifications.limit(10)#.where("read = :state", :state => false)
->>>>>>> 32bda8408455ae236d790f7206f8f4f6b1af6669
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
 
