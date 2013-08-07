@@ -282,6 +282,7 @@ class GnibsController < ApplicationController
     @page_count = (@counts / 9).ceil;
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
+
   def next_search
     term = params[:term]
     @page = params[:page].to_i
