@@ -8,8 +8,10 @@
 // the compiled file.
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
+// GO AFTER THE REQUIRES BELOW
 //
-= require jquery
-//= require jquery_ujs
+//= require jquery
+//= require jquery.carouFredSel-6.2.1
+//= require default.user
+//= require jquery_ujs.js
 //= require_tree .

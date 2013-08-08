@@ -1,15 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TEST LOGIN</title>
+<script type="text/javascript">
 
-<div id="apDiv1">
-<img src="<%= image_path('leftlogo.png')%>" height = 100% width = 100%/>
-  <div id="apDiv2">
- <%= form_for(:session, :url => sessions_path) do |f| %>
-    <div align="center">
-      <%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Enter your email',:style=>'color: rgb(136, 136, 136);border: 0px none'  %>
-    </div>
-  </div>
+$(document).ready(function(){
+$('#new_user').bind('ajax:success',function(data,status,xhr){
+alert('data '+JSON.stringify(data))
+$('#vermsgpanel').show();
+});
+$('#new_user').bind('ajax:failure',function(data,status,xhr){
+alert('FAILED to register, please try again');
+});
+  $(".slidingnav").hide();
+  $(".buttongnib").addClass("plus").show();
+  $('.buttongnib').toggle(
+      function(){
+          $(".slidingnav").slideDown();
+           $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      },
+      function(){
+          $(".slidingnav").slideUp();
+        $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      }
+  );
+});
+</script>
+
+</head>
+ 
+<div class="frame">
+<div class="logindiv">
+  <div align="center" style="padding-top:2%"><img src="<%= image_path('logognibl.png')%>" width="130" height="130" /></div>
+   <div align="center" style="padding-top:2%"><img src="<%= image_path('gnibltext.png')%>" /></div>
+<div>
+<%= form_for(:session, :url => sessions_path) do |f| %>
+     <div align="center" style="padding-top:2%">
+<%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Email'%>
+</div>
+       <div align="center" style="padding-top:2%"> 
+ <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password'%>
+
+
+</div>
+        <div align="center" style="padding-top:2%;">    <table width="52%" border="0">
+  <tr>
+  <td width="26%">
+    <div align="center">  
+      <input type="checkbox" name="checkbox" id="checkbox" />
+      </div></td>
+    <td width="74%"><strong style="color:black">remember me</strong></td>
+  </tr>
+</table></div>
+     <div align="center" style="padding-top:2%" > 
+  <%= f.submit :value => '   login  ',  :class=>"buttonlogin"%>
+
+</div>
+     
+      <div align="center" style="padding-top:2%"><a href="#" class="links">Forgot your password ?</a></div>
+<% end %>
+</div>
 </div>
 
+<div class="rightdiv">
 
+<table width="100%" height="100%"><tr><td valign="middle"  align="center">
+<p class = "loginpagetxt">
+<strong>Content</strong> is our <strong>language,</strong><br />share stuff with your friends.
+</p>
+<div class="slidingnav" style="display: block;">
+
+<div class="registerdiv">
+<%= form_for(@user, :remote => true) do |f| %>
+ <div align="center" style="padding-top:0%">
+<%= f.text_field :name, :class => 'hintTextbox', :placeholder => 'First name' , :style=>"width: 40%" %> 
+<%= f.text_field :surname, :class => 'hintTextbox', :placeholder => 'Last name', :style=>"width: 40%" %>
+</div>
+<div align="center" style="padding-top:2%">
+<%= f.date_select :birthday,
+        :start_year => 1970, :style=>"display: table-cell",
+        :order => [ :day, :month, :year],
+        :prompt=> { :month => 'mm', :day => 'dd', :year => 'yy' },
+:html_options => {class: "datefield"}
+    %>
+</div>
+<div  align="center" style="padding-top:0%">
+  <table border="0">
+    <tr>
+      <td><span class="gender">Male</span></td>
+      <td><label>
+        <input type="radio" name="radio" id="gender" value="gender" />
+        </label>
+     </td>
+      <td><span class="gender">Female</span></td>
+      <td><label>
+        <input type="radio" name="radio" id="gender2" value="gender" />
+        </label>
+     </td>
+    </tr>
+  </table>
+</div>
+
+   <div align="center" style="padding-top:2%"> 
+<%= f.text_field :email , :class => 'hintTextbox', :placeholder => 'Your Email' %>
+   
+</div>
+
+   <div align="center" style="padding-top:2%">  
+<%= f.password_field :password , :class => 'hintTextbox', :placeholder => 'password'%>
+</div>
+   
+     <div align="center" style="padding-top:2%"> 
+ <%= f.password_field :password_confirmation , :class => 'hintTextbox', :placeholder => 'confirm password'%>
+</div>
+  <div  align="center" style="padding-top:0%">     <table border="0">
+      <tr>
+        <td><label>
+          <input type="checkbox" name="terms" id="terms" />
+        </label></td>
+        <td><span class="agree">I agree to </span><span class="gender">gnibl</span><span class="agree"> Terms</span></td>
+      </tr>
+    </table>
+     </div>
+</div>
+<!--use this button to post data-->
+
+<p align="center"><a href = "#">
+<%= f.submit("start gnibbing",:class => "buttongnibpost" ) %>
+</a>
+</p>
+
+</div>
+
+<p align="center"><a href=# class=buttongnib></a></p>
+<p class = "vermsg" id = "vermsgpanel">
+Thank you for joining gnibl </br>
+ check your email for instructions
+  </p>
+</td></tr></table>
+
+<% end %>
+</div>
 
 <!--Bottom Navigation-->
 <div class="bottomnav">
@@ -28,36 +162,4 @@
 </table>
 </div>
 
-<div id="apDiv3">
-  <div align="center">
- <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password', :style=>"border: 0px none" %>
-
-</div>
-</div>
-<div id="apDiv4">
-  <table width="100%" border="0">
-  <tr>
-  <td width="26%">
-    <div align="center">  
-      <input type="checkbox" name="checkbox" id="checkbox" />
-      </div></td>
-    <td width="74%"><strong>remember me</strong></td>
-  </tr>
-</table>
-  <div align="center"></div>
-</div>
-
-<div id="apDiv5">
-  <%= f.submit :value => '  Login  ', :style=>"color:white; background-color:lightblue"%>
-
-</div>
-<div class="style2" id="apDiv6"><a href="#">Forgot Your Password?</a></div>
-<div id="apDiv7"></div>
-<div id="apDiv8">
-  <p align="center"><span class="style3"><span class="copyright"><span class="style5"><strong><span class="style6">Content</span></strong><span class="style6"> is our <strong>language</strong>,</span></span></span></span></p>
-  <p align="center" class="style4">share stuff with your friends.</p>
-</div>
-<div id="apDiv9">
-  <div align="center"><a href="signup"><img src="<%= image_path('startgnibbing.png')%>"/></a></div>
-</div>
-<% end %>
+</html>

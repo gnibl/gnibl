@@ -13,6 +13,54 @@ class UsersController < ApplicationController
     #DEBUG remove this
   end
 
+def create
+respond_to do |format|
+     format.js {render :json => @message}
+   end
+    city = City.find 1
+    ip = request.remote_ip
+    city_id = 1
+    if ip == '127.0.0.1'
+      ip = '41.235.178.14' #a nairobi ip
+    end
+    place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
+    city_name = place.city_name
+    city = City.where("city_name = ?",city_name).limit(1)
+    unless city
+         city = City.find(city_id) #default city id 1
+     end
+
+#    params[:user]['city'] = city
+    params[:user]['validated'] = 'false'
+    validation_code = getRandomString #random regex
+    params[:user]['validation_code'] = validation_code
+    is_saved = false
+    @user = User.new(params[:user])
+    begin
+      is_saved = @user.save
+    rescue => error
+      puts error
+    end
+    @message = "over"
+    if is_saved
+      url = request.host_with_port
+      send_verification_email(url, @user)
+      @message = "check your email for instructions "+@user.email
+    else
+      @message = "Signup failed"
+
+    end
+
+   
+    
+  end
+
+
+  def notifications    
+    @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+  end
+
   def new
     if signed_in?
       redirect_to "/users/#{current_user.html_safe_username}/feed"
@@ -21,6 +69,7 @@ class UsersController < ApplicationController
     @user = User.new
     @cities = City.all
     @message = params[:msg]
+
   end
 
   def next_search
@@ -159,50 +208,7 @@ class UsersController < ApplicationController
   end
 
 
-  def create
-    city = City.find 1
-    ip = request.remote_ip
-    city_id = 1
-    if ip == '127.0.0.1'
-      ip = '41.235.178.14' #a nairobi ip
-    end
-    place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
-    city_name = place.city_name
-    city = City.where("city_name = ?",city_name).limit(1)
-    unless city
-         city = City.find(city_id) #default city id 1
-     end
-
-#    params[:user]['city'] = city
-    params[:user]['validated'] = 'false'
-    validation_code = getRandomString #random regex
-    params[:user]['validation_code'] = validation_code
-    is_saved = false
-    @user = User.new(params[:user])
-    begin
-      is_saved = @user.save
-    rescue => error
-      puts error
-    end
-    message = "over"
-    if @user
-      url = request.host_with_port
-      send_verification_email(url, @user)
-      message = "check your email for instructions "+@user.email
-    else
-      message = "Signup failed"
-
-    end
-    msg = {:msg => message}.to_query
-    path = "/signup?"+msg
-    redirect_to(path)
-  end
-
-
-  def notifications    
-    @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
-  end
+  
 
   def readnotifications
     not_id = params[:notification_id]
@@ -248,12 +254,11 @@ class UsersController < ApplicationController
       @page_count = (@counts / 9).ceil;
       @gnib = @user.gnibs.build
       notifications();
-      redirect_to "/signin"
-      #redirect_to "/users/#{current_user.html_safe_username}/feed"
-    else
-      redirect_to "/signup"
-    end
+      
+      #redirect_to "/users/#{current_user.html_safe_username}/feed"   
   end
+redirect_to "/signin"
+end
 
   def show
     username = User.correct_username_from_safe_html_username(params[:id])

@@ -3,11 +3,11 @@
   <head>
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
-  
-    <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
+<%= javascript_include_tag :defaults %>
+  <!--  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
+  -->
+    
     <%= csrf_meta_tags %>
 
 
@@ -174,7 +174,7 @@
         $('.gnib-thumbnail').height(gt_width);
         $('.gnib-thumbnail').width(gt_width);
         if ($('.new_gnib_thumbnail').length) {
-          $('.new_gnib_thumbnail').height(gt_width - 10);
+          $('.new_gnib_thumbnail').height(gt_width -12);
         }
       }
       function rectifyGnib(id) {
