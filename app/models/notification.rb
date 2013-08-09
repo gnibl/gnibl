@@ -14,7 +14,7 @@ class Notification < ActiveRecord::Base
       lastpos = 0
       while (pos = comment.index('@',pos+1))
         tag =  comment[pos+1 ..len].split(" ")[0]
-        replacement_string = "<a style='color: #17aeff' href = '/users/search?uid="+tag+"'>"+tag+"</a>"
+        replacement_string = "<a style='color: #17aeff; padding: 0px !important; display: inline' href = '/users/search?uid="+tag+"'>"+tag+"</a>"
         final_comment += comment[lastpos..pos] + replacement_string
         lastpos = pos +1+tag.length
       end
@@ -22,6 +22,6 @@ class Notification < ActiveRecord::Base
         final_comment += comment[lastpos..len]
       end
     end
-    return final_comment.html_safe
+    final_comment.html_safe;
   end
 end
