@@ -7,7 +7,7 @@
            style="font-size: 12px; color: white; background: rgba(23, 174, 255, 0.4);
            min-width: 60px; width: 40%; height: 30px; float: left; text-align: left">
         <div id="gnib_count_<%=gnib.id%>" style="border-bottom: 2px solid white; padding: 5px; text-align: left"
-             align="center" title="Number of gnibs">
+             align="center" title="<%= gnib.regnibbedby(current_user)%>">
           <%=gnib.gniblings.count%>Regnibs
         </div>
       </div>
@@ -31,29 +31,14 @@
     </div>
     <button class="gnib" style="background:transparent; border: 0px none; margin-top: 0px; border-radius: 0px" data-gnib-id="<%=gnib.id%>"
             onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
-<<<<<<< HEAD
+
                           return false;">          
                 <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}", :style=>"height: 100%")%>              
    </button>  
     <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
         <a href="/users/<%=gnib.user.html_safe_username%>" title = "<%= gnib.title%>" style="color: #17aeff;"><%=gnib.short_title%></a>
-=======
-                  return false;">
-              <% if gnib.image.url %>
-                <%= image_tag(image_path(gnib.image.url), :class => 'gnib', :id=>"gnib_#{gnib.id}", :style=>"border-radius: 0px; margin-top: 0px")%>
-              <% else %>
-                <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}", :style=>"border-radius: 0px; margin-top: 0px")%>
-              <% end %>
-    </button>
-    <div  class="thumbnail-view" style="overflow: hidden; bottom: 0px; border-top-left-radius: 10px; border-top-right-radius: 10px; display: block; height: auto">
-      <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 30px; padding-left: 5px;">
-        <div style="margin-top: 20px">
-          <a href="/users/<%=gnib.user.html_safe_username%>"
-             title = "<%= gnib.title%>"
-             style="color: #17aeff;"><%=gnib.short_title%></a>
-        </div>
->>>>>>> 32bda8408455ae236d790f7206f8f4f6b1af6669
+
       </div>
       <div id="thumbnail-view_<%=gnib.id%>"
            style="width: 100%; display: none; margin: auto; border-top: 2px solid white;  padding-top: 4px !important">

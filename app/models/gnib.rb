@@ -12,6 +12,36 @@ class Gnib < ActiveRecord::Base
   has_many :notifications, :foreign_key => "gnib_id"
   has_many :upvotegnibs, :foreign_key => "gnib_id"
 
+ def regnibbedby(current_user)
+ #return a string indicating the first names of those
+ # who have regnibbed this gnib 
+ # who also happen to followed by current user
+regnibbers =  self.gniblings.select('user_id')
+regnibbers_friends = current_user.followed_users.where(:id => regnibbers).select('name')
+message = "regnib this!"
+if regnibbers_friends && regnibbers_friends.length > 0
+   message = "regnibbed by "
+     regnibbers_friends.each do | friend |
+          message = message + friend.name + " "
+     end
+   end
+return message
+ end
+
+def upvotedby(current_user)
+upvoters = self.upvotegnibs.select('user_id')
+upvoters_friends = current_user.followed_users.where(:id => upvoters).select('name')
+
+message = "up it"
+  if upvoters_friends && upvoters_friends.length > 0
+   message = "upped by "
+     upvoters_friends.each do | friend |
+          message = message + friend.name + " "
+     end
+   end
+return message
+end
+
   def self.from_users_followed_by(user)
     ids = "SELECT followed_id from relationships WHERE follower_id = :user_id"
     #both my gnibs and those am following
