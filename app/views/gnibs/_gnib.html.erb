@@ -4,16 +4,18 @@
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control"
          style="border-top-left-radius: 5px; border-top-right-radius: 5px; display: block; height: 40px">
       <div class="gnib-count"
-           style="font-size: 12px; color: white; background: rgba(23, 174, 255, 0.4);
-           min-width: 60px; width: 40%; height: 30px; float: left; text-align: left">
-        <div id="gnib_count_<%=gnib.id%>" style="border-bottom: 2px solid white; padding: 5px; text-align: left"
-             align="center" title="<%= gnib.regnibbedby(current_user)%>">
-          <%=gnib.gniblings.count%>Regnibs
-        </div>
-      </div>
+           style="font-size: 11px; color: white; background: rgba(23, 174, 255, 0.4);
+           min-width: 60px; width: 50%; height: 30px; float: left; text-align: left">
+<% if gnib.gniblings.count > 1 %>
+    <%= raw(gnib.regnibbedby_div(current_user)) %>
+<% else %>
+<div id="gnib_count_<%=gnib.id%>" style="padding: 5px; text-align: left" align="center" > Regnib </div>
+<% end %>  
+    </div>
       <button title="gnib it!" class="gnib-gnib-button"
               onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
               style="margin: 1px 5px 0 0; background-size: 100% 100%; float: left; width: 38px; height: 38px"></button>
+
       <button title="<%= gnib.upvotedby(current_user)%>" class="gnib-gnib-button"
               onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/upvotegnib');"
               style="background: none; width: 50px; height: 38px; float: right; padding: 3px 0px; margin: 0px; margin-right: 5px; position: relative; border-left: 2px solid white; border-radius: 0px">
@@ -37,7 +39,7 @@
    </button>  
     <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
-        <a href="/users/<%=gnib.user.html_safe_username%>" 
+        <a href="<%=gnib.link%>" 
 <%if gnib.title %>
 title = "<%= gnib.title.html_safe%>" 
 <% end %>
@@ -46,16 +48,19 @@ style="color: #17aeff;"><%=gnib.short_title.html_safe%></a>
       </div>
       <div id="thumbnail-view_<%=gnib.id%>"
            style="width: 100%; display: none; margin: auto; border-top: 2px solid white;  padding-top: 4px !important">
+<a href = "/users/<%=gnib.user.username%>"> 
 <div id = "thumbnail-name_<%=gnib.id%>" class = "thumbnail-name" style="color: #17aeff;">
 <%= gnib.user.name %> <%= gnib.user.surname %>
+
 </div>
+</a>
         <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px;">
           <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
         </div>
         <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
              style="max-width: 50%; left: 48%; top: 32%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
           <p><%= gnib.parsed_description%></p>
-          <% if gnib.link %>
+          <% if gnib.title.length < 1 %>
             <p><a target="_blank" href="<%= gnib.link %>">See what is here?</a></p>
           <% end %>
         </div>

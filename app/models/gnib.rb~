@@ -17,16 +17,31 @@ class Gnib < ActiveRecord::Base
  # who have regnibbed this gnib 
  # who also happen to followed by current user
 regnibbers =  self.gniblings.select('user_id')
-regnibbers_friends = current_user.followers.where(:id => regnibbers).select('name')
-message = "regnib this!"
+regnibbers_friends = current_user.followed_users.where(:id => regnibbers).select('name')
+gniblings_count = self.gniblings.count
+message = ""
 if regnibbers_friends && regnibbers_friends.length > 0
-   message = "regnibbed by "
      regnibbers_friends.each do | friend |
           message = message + friend.name + " "
      end
    end
 return message
  end
+
+def regnibbedby_div(current_user)
+#return raw html describing the div to display
+regnib_count = self.gniblings.count
+div = "<div id='gnib_count_<%=gnib.id%>' style='border-bottom: 2px solid white; padding: 5px; text-align: left' align='center'> #{regnib_count} regnibs </div>"
+
+regnibbers = regnibbedby(current_user)
+div_friends = "<div id='gnib_count_<%=gnib.id%>' style=' padding: 5px; text-align: left' align='center'>regnibbed by #{regnibbers} and #{regnib_count - 1} others</div>"
+
+  if regnibbers && regnibbers.length > 1
+      return div_friends 
+  else
+       return div
+  end   
+end
 
 def upvotedby(current_user)
 upvoters = self.upvotegnibs.select('user_id')
