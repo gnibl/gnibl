@@ -198,9 +198,12 @@ def create
   def followers
     @user =  User.find_by_username(params[:id])
     @page = params[:page].to_i
+    unless @page
+    @page = 0
+    end
     @current_page = @page;
     @page *= 9;
-    @users = @user.followers.offset(@page).limit(9)
+    @users = User.all(:offset => @page, :limit =>9)
     @counts = @user.followers.count
     @page_count = (@counts / 9).ceil;
     notifications();
