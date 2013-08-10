@@ -53,8 +53,8 @@ puts @user.birthday
 
    respond_to do |format|
      format.json{render :json => @message}
-     format.js {render :json => @message}
-format.html{render :json => @message}
+     format.js {render :js => "$('#vermsgpanel').show()"}
+format.html{ render :json => @message}
    end
     
   end

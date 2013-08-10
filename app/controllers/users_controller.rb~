@@ -52,8 +52,9 @@ puts @user.birthday
     end
 
    respond_to do |format|
-     format.json
-     format.js {render :json => @message}
+     format.json{render :json => @message}
+     format.js {render :text => @message}
+format.html{ render :json => @message}
    end
     
   end

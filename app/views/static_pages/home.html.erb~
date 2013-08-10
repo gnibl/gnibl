@@ -7,7 +7,7 @@
 
 $(document).ready(function(){
 $('#new_user').bind('ajax:success',function(data,status,xhr){
-alert('data '+JSON.stringify(data))
+//alert('data '+JSON.stringify(data))
 $('#vermsgpanel').show();
 });
 $('#new_user').bind('ajax:failure',function(data,status,xhr){
