@@ -5,7 +5,7 @@
          style="border-top-left-radius: 5px; border-top-right-radius: 5px; display: block; height: 40px">
       <div class="gnib-count"
            style="font-size: 11px; color: white; background: rgba(23, 174, 255, 0.4);
-           min-width: 60px; width: 40%; height: 30px; float: left; text-align: left">
+           min-width: 60px; width: 50%; height: 30px; float: left; text-align: left">
 <% if gnib.gniblings.count > 1 %>
     <%= raw(gnib.regnibbedby_div(current_user)) %>
 <% else %>
@@ -55,7 +55,7 @@ style="color: #17aeff;"><%=gnib.short_title.html_safe%></a>
 </div>
 </a>
         <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px;">
-          <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile")%>
+   <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile" , :style=> "height: 100%")%>
         </div>
         <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
              style="max-width: 50%; left: 48%; top: 32%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
