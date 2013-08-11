@@ -13,5 +13,4 @@
 //= require jquery
 //= require jquery.carouFredSel-6.2.1
 //= require default.user
-//= require jquery_ujs.js
 //= require_tree .

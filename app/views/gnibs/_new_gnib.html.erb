@@ -39,11 +39,6 @@
     delay: 250
   };
 
-  $(function() {
-    $("#gnib_description").autocomplete(autoc)
-            .data("uiAutocomplete")._renderItem = renderTitles;
-  });
-
   console.log('submitting form on change');
   function ajaxSubmit() {
     $('#373737_busy_image').show();
@@ -170,7 +165,7 @@
       <%= f.hidden_field :video, :id => "is_video_field", :value => 'false'%>
       <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
-        :class=>"comment-field",
+        :class=>"comment-field", :id=>"gnib_description",
         :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
         :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",

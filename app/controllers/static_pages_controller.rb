@@ -1,6 +1,11 @@
 class StaticPagesController < ApplicationController
   def home
-    puts "Current user#{current_user}"
+   @message = params['msg']
+if @message
+
+puts "message param #{@message}"
+end
+    puts "Current user #{current_user} " 
     if signed_in?
       redirect_to "/users/#{current_user.html_safe_username}/feed"
       return
