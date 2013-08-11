@@ -3,14 +3,14 @@
   <head>
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
-    <%= javascript_include_tag "jquery-ui-1.10.3.custom.min.js" %>
-    <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.10.3.custom.css" %>
- <%= stylesheet_link_tag    "style.css" %>
-    <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-<%= javascript_include_tag "hint-textbox.js" %>
+
+<%= javascript_include_tag "application" %>
+  <!--  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
+  -->
+
     <%= csrf_meta_tags %>
+
+
     <script type="text/javascript">
       var current_page = 0; //this is a global variable used to track the current gnib page
       function getParameterByName(name) {
@@ -174,7 +174,7 @@
         $('.gnib-thumbnail').height(gt_width);
         $('.gnib-thumbnail').width(gt_width);
         if ($('.new_gnib_thumbnail').length) {
-          $('.new_gnib_thumbnail').height(gt_width - 10);
+          $('.new_gnib_thumbnail').height(gt_width -12);
         }
       }
       function rectifyGnib(id) {
@@ -373,6 +373,6 @@
         });
 <% end %>
     </script>
-    <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto; width =450px "></div>
+    <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto; width =525px "></div>
   </body>
 </html>

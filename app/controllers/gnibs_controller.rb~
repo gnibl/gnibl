@@ -76,7 +76,7 @@ class GnibsController < ApplicationController
       titles = doc.xpath(hfinder)
       @title = "enter a title"
       if titles.length > 0
-         @title = titles[0].text
+        @title = titles[0].text
       end
       sfinder = "/html/body//img"
       count = 0;
@@ -136,6 +136,7 @@ class GnibsController < ApplicationController
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
+    @notifications = @user.notifications.limit(5)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibstream"
   end
@@ -147,6 +148,7 @@ class GnibsController < ApplicationController
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
+       @notifications = @user.notifications.limit(10)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
   end
@@ -234,11 +236,13 @@ class GnibsController < ApplicationController
       upvoter = current_user
       if @upvote
         @success  = "Successfully up voted."
+        @upvote_count = 1
         send_notifications_on_upgnib(@gnib,upvoter)
       end
     end
+    @upvote_count = upvotes.size() unless upvotes.empty?;
     respond_to do |format|
-      #      format.js {render "shared/gniblings"}
+      format.js {render "shared/upvotedgnibs"}
     end
   end
 
@@ -278,11 +282,12 @@ class GnibsController < ApplicationController
     @page_count = (@counts / 9).ceil;
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
+
   def next_search
     term = params[:term]
     @page = params[:page].to_i
     @current_page = @page;
-    @page *= 9;
+    @page += 9;
     @user = current_user
     @gnib = @user.gnibs.build
     @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(@page).limit(9)
@@ -295,18 +300,18 @@ class GnibsController < ApplicationController
 
   def create
     ip = request.remote_ip
-   city_id = 0   
-   if ip == '127.0.0.1'
-      ip = '41.235.178.14' #a nairobi ip        
+    city_id = 0
+    if ip == '127.0.0.1'
+      ip = '41.235.178.14' #a nairobi ip
     end
-      place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
-      city_name = place.city_name
-      city = City.where("city_name = ?",city_name).limit(1)
-     
+    place =  GeoIP.new("#{Rails.root}/GeoLiteCity.dat").city(ip)
+    city_name = place.city_name
+    city = City.where("city_name = ?",city_name).limit(1)
+
     unless city
-         city = City.find(city_id) #default city id 0
-     end
-    
+      city = City.find(city_id) #default city id 0
+    end
+
     if current_user.city
       city_id = current_user.city.id
     end

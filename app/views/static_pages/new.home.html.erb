@@ -1,0 +1,118 @@
+ 
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#slidingnavid").hide();
+  $('#buttongnibid').addClass('plus');
+  $("#buttongnibid").show();
+  $("#buttongnibid").toggle(
+      function(){
+          $("#slidingnavid").slideDown();
+           $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      },
+      function(){
+          $("#slidingnavid").slideUp();
+        $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      }
+  );
+});
+</script>
+
+  
+<div class="frame">
+<div class="logindiv">
+  <div align="center" style="padding-top:2%"><img src="<%=image_path('logognibl.png')%>" width="130" height="130" /></div>
+   <div align="center" style="padding-top:2%"><img src="<%=image_path('gnibltext.png')%>" /></div>
+     <div align="center" style="padding-top:2%">  <input type="text" name="username" id="username" size="25" class="hintTextbox" value="username"/></div>
+       <div align="center" style="padding-top:2%">  <input type="password" name="password" id="password" size="25" class="hintTextbox" value="password"/></div>
+        <div align="center" style="padding-top:2%;">    <table width="50%" border="0">
+  <tr>
+  <td width="26%">
+    <div align="center">  
+      <input type="checkbox" name="checkbox" id="checkbox" />
+      </div></td>
+    <td width="74%"><strong>remember me</strong></td>
+  </tr>
+</table></div>
+     <div align="center" style="padding-top:2%">  <a href="#" class="buttonlogin">login</a></div>
+     
+      <div align="center" style="padding-top:2%"><a href="#" class="links">Forgot your password ?</a></div>
+</div>
+
+<div class="rightdiv">
+
+<table width="100%" height="100%"><tr><td valign="middle"  align="center">
+<strong>Content</strong> is our <strong>language,</strong><br />share stuff with your friends.
+
+<div class="slidingnav" id = "slidingnavid" style="display: block;">
+
+<div class="registerdiv">
+ <div align="center" style="padding-top:0%">  <input type="text" name="firstname" id="firstname" size="15" class="hintTextbox" value="Firstname"/>  <input type="text" name="lastname" id="lasttname" size="15" class="hintTextbox" value="Lastname"/></div>
+<div align="center" style="padding-top:2%"><table><tr><td>  <input type="text" name="dobday" id="dobday" size="5" class="hintTextbox" value="dd"/></td><td><img src="<%=image_path('slash.png')%>" /></td><td>
+  <input type="text" name="dobmonth" id="dobmonth" size="5" class="hintTextbox" value="mm"/></td><td><img src="<%=image_path('slash.png')%>" />
+  </td><td> <input type="text" name="dobyear" id="dobyear" size="5" class="hintTextbox" value="yy"/></td></tr></table></div>
+<div  align="center" style="padding-top:0%">
+  <table border="0">
+    <tr>
+      <td><span class="gender">Male</span></td>
+      <td><label>
+        <input type="radio" name="radio" id="gender" value="gender" />
+        </label>
+     </td>
+      <td><span class="gender">Female</span></td>
+      <td><label>
+        <input type="radio" name="radio" id="gender2" value="gender" />
+        </label>
+     </td>
+    </tr>
+  </table>
+</div>
+
+   <div align="center" style="padding-top:2%">  <input type="text" name="email" id="email" size="25" class="hintTextbox" value="Email"/></div>
+
+   <div align="center" style="padding-top:2%">  <input type="password" name="password" id="password" size="25" class="hintTextbox" value="Password"/></div>
+   
+     <div align="center" style="padding-top:2%">  <input type="password" name="confirmpassword" id="confirmpassword" size="25" class="hintTextbox" value="Confirm password"/></div>
+  <div  align="center" style="padding-top:0%">     <table border="0">
+      <tr>
+        <td><label>
+          <input type="checkbox" name="terms" id="terms" />
+        </label></td>
+        <td><span class="agree">I agree to </span><span class="gender">gnibl</span><span class="agree"> Terms</span></td>
+      </tr>
+    </table>
+     </div>
+</div>
+<!--use this button to post data-->
+<p align="center"><a href=# class="buttongnibpost">start gnibbing</a></p>
+
+</div>
+
+<p align="center"><a href=# class="buttongnib" id = "buttongnibid"></a></p>
+
+  
+</td></tr></table>
+
+
+</div>
+
+<!--Bottom Navigation-->
+<div class="bottomnav">
+<table width="100%"><tr><td>
+<div class="bottommenu">
+<ul>
+<li><a href="#">About Us</a></li>
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Terms</a></li>
+<li><a href="#">Privacy</a></li>
+</ul>
+</div>
+</td>
+<td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>

@@ -136,7 +136,7 @@ class GnibsController < ApplicationController
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
-    @notifications = @user.notifications.limit(10)
+    @notifications = @user.notifications.limit(5)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibstream"
   end
@@ -282,6 +282,7 @@ class GnibsController < ApplicationController
     @page_count = (@counts / 9).ceil;
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
+
   def next_search
     term = params[:term]
     @page = params[:page].to_i

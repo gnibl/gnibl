@@ -20,8 +20,8 @@
 }
 
 /* forms */
-/* select, removed */
-input, textarea,  .uneditable-input {
+
+input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   padding: 10px;

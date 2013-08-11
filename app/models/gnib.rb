@@ -12,6 +12,51 @@ class Gnib < ActiveRecord::Base
   has_many :notifications, :foreign_key => "gnib_id"
   has_many :upvotegnibs, :foreign_key => "gnib_id"
 
+ def regnibbedby(current_user)
+ #return a string indicating the first names of those
+ # who have regnibbed this gnib 
+ # who also happen to followed by current user
+regnibbers =  self.gniblings.select('user_id')
+regnibbers_friends = current_user.followed_users.where(:id => regnibbers).select('name')
+gniblings_count = self.gniblings.count
+message = ""
+if regnibbers_friends && regnibbers_friends.length > 0
+     regnibbers_friends.each do | friend |
+          message = message + friend.name + " "
+     end
+   end
+return message
+ end
+
+def regnibbedby_div(current_user)
+#return raw html describing the div to display
+regnib_count = self.gniblings.count
+div = "<div id='gnib_count_<%=gnib.id%>' style='border-bottom: 2px solid white; padding: 5px; text-align: left' align='center'> #{regnib_count} regnibs </div>"
+
+regnibbers = regnibbedby(current_user)
+div_friends = "<div id='gnib_count_<%=gnib.id%>' style=' padding: 5px; text-align: left' align='center'>regnibbed by #{regnibbers[0..10]} and #{regnib_count - 1} people</div>"
+
+  if regnibbers && regnibbers.length > 1
+      return div_friends 
+  else
+       return div
+  end   
+end
+
+def upvotedby(current_user)
+upvoters = self.upvotegnibs.select('user_id')
+upvoters_friends = current_user.followed_users.where(:id => upvoters).select('name')
+
+message = "up it"
+  if upvoters_friends && upvoters_friends.length > 0
+   message = "upped by "
+     upvoters_friends.each do | friend |
+          message = message + friend.name + " "
+     end
+   end
+return message
+end
+
   def self.from_users_followed_by(user)
     ids = "SELECT followed_id from relationships WHERE follower_id = :user_id"
     #both my gnibs and those am following

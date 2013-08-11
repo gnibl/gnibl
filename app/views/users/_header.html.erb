@@ -85,8 +85,13 @@
                     <% end %>
                     <%  @notifications.each do |notification| %>
                   <li style="height: 100px;<% if index > 0 %> border-top: 5px solid #ddd;<% end %>cursor: pointer; width: 350px"
+<<<<<<< HEAD
                       onclick="onNotificationClicked(<%= notification.gnib.id %>, <%= notification.id %>);
         return false;"
+=======
+                      onclick="doAjaxSubmit({gnib_id: '<%= notification.gnib.id %>'}, '/gnibs/retcomment');
+doAjaxSubmit({notification_id: '<%=notification.id%>'}, '/users/readnotifications');"
+>>>>>>> 3c184f9364f9853588251a3e822c2dfb5c9e797c
                       class="notification-overlay" data-notification-id="<%=notification.id%>">
                         <% index += 1 %>
                     <div style="height: 100px; position: relative;  width: 100%;
@@ -175,8 +180,7 @@
                         <div id="update-profile" class="update-profile" style="border-radius: 50px; height: 40px; padding-top: 5px; margin-top: 3px">
                           <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
                             :onclick=>"document.getElementById('update-profile').style.display='none';"%>
-                          <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';
-          return false;"
+                          <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';return false;"
                                   style="float: right; margin-right: 30px"></button>
                           <span style="color: #17aeff; margin-right: 65px">Update profile</span>
                         </div>
