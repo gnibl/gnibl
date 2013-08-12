@@ -15,3 +15,4 @@
 //= require default.user
 //= require_tree .
 //= require jquery_ujs
+//= require bootstrap
