@@ -34,6 +34,8 @@ def create
     params[:user]['validation_code'] = validation_code
     is_saved = false
     @user = User.new(params[:user])
+puts @user.validation_code
+puts @user.birthday
     begin
       is_saved = @user.save
     rescue => error
@@ -50,7 +52,9 @@ def create
     end
 
    respond_to do |format|
-     format.js {render :json => @message}
+     format.json{render :json => @message}
+     format.js {render :js => "$('#vermsgpanel').show()"}
+format.html{ render :json => @message}
    end
     
   end

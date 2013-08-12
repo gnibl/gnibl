@@ -34,7 +34,7 @@ regnib_count = self.gniblings.count
 div = "<div id='gnib_count_<%=gnib.id%>' style='border-bottom: 2px solid white; padding: 5px; text-align: left' align='center'> #{regnib_count} regnibs </div>"
 
 regnibbers = regnibbedby(current_user)
-div_friends = "<div id='gnib_count_<%=gnib.id%>' style=' padding: 5px; text-align: left' align='center'>regnibbed by #{regnibbers[0..10]} and #{regnib_count - 1} people</div>"
+div_friends = "<div id='gnib_count_<%=gnib.id%>' style=' padding: 5px; text-align: left' align='center'>regnibbed by <span style = 'color: #17ffae;'>  #{regnibbers[0..10]} </span> and #{regnib_count - 1} people</div>"
 
   if regnibbers && regnibbers.length > 1
       return div_friends 
