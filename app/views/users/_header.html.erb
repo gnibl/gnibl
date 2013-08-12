@@ -13,6 +13,38 @@
     background-size: 100% 100%;
   }
 </style>
+<script type="text/javascript">
+  String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+  };
+  String.prototype.contains = function(suffix) {
+    return this.indexOf(suffix) !== -1;
+  };
+  $(document).ready(function() {
+    var currentUrl = location.href;
+    var input = document.getElementById('search-box');
+    var gnibSomething = document.getElementById('gnib-something');
+    var settings = document.getElementById('settings');
+    if (currentUrl.endsWith('following') || currentUrl.contains('users/search')) {
+      if (input) {
+        input.name = 'uid';
+        input.form.action = '/users/search';
+        input.placeholder = 'search gniblers';
+      }
+      if (gnibSomething) {
+        gnibSomething.style.display = 'none';
+      }
+      settings.className = 'centered border';
+    }
+  });
+  function onWhatOver() {
+    var info = document.getElementById('whatInfo');
+  }
+  function onNotificationClicked(gnib_id, notification_id) {
+    doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
+    doAjaxSubmit({notification_id: notification_id}, '/users/readnotifications');
+  }
+</script>
 <div class="profile_header" style="width: 99%; z-index: 3455; background: rgba(0, 0, 0, 0.8)">
   <table style="width: 100%; font-size: 16px" cellspacing="10">
     <tbody>
@@ -36,20 +68,30 @@
           </a>
         </td>
         <td class="border-right" style="width: 14.3%;">
-          <div class="dropdown" id="notification_menu">
+          <div class="dropdown" id="notification_menu" >
             <a class="dropdown-toggle" data-toggle="dropdown" href="#notification_menu">
               <%= render :partial=>"notifications/notification_header", :locals=>{:notifications_count => @notifications_count} %>
             </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: 27px">
-              <% if @notifications %>
-                <% index = 0 %>
-                <% @notifications.each do |notification| %>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"
+                style="top: 27px; width: 365px; overflow-x: hidden;  height: 400px; overflow-y: auto !important;">
+                  <% if @notifications %>
+                    <% index = 0 %>
+                    <% @notifications.sort! do |a, b| %>
+                      <% h_i =  0%>
+                      <% h_j =  0%>
+                      <% h_i =  1 unless a.read%>
+                      <% h_j =  1 unless b.read%>
+                      <% h_j <=> h_i%>
+                    <% end %>
+                    <%  @notifications.each do |notification| %>
                   <li style="height: 100px;<% if index > 0 %> border-top: 5px solid #ddd;<% end %>cursor: pointer; width: 350px"
-                      onclick="doAjaxSubmit({gnib_id: '<%= notification.gnib.id %>'}, '/gnibs/retcomment');
-doAjaxSubmit({notification_id: '<%=notification.id%>'}, '/users/readnotifications');"
+                      onclick="onNotificationClicked(<%= notification.gnib.id %>, <%= notification.id %>);
+        return false;"
                       class="notification-overlay" data-notification-id="<%=notification.id%>">
                         <% index += 1 %>
-                    <div style="height: 100px; position: relative; width: 100%">
+                    <div style="height: 100px; position: relative;  width: 100%;
+                         <% if !notification.read %> background: rgba(0, 0, 0, 0.2);<% end %>
+                         ">
                       <div id="thumbnail-desc:<%=notification.id%>" class="thumbnail-desc"
                            style="margin: 0px; position: absolute; top:0px; left: 0px">
                              <% if notification.gnib.image.url %>
@@ -134,7 +176,7 @@ doAjaxSubmit({notification_id: '<%=notification.id%>'}, '/users/readnotification
                           <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
                             :onclick=>"document.getElementById('update-profile').style.display='none';"%>
                           <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';
-return false;"
+          return false;"
                                   style="float: right; margin-right: 30px"></button>
                           <span style="color: #17aeff; margin-right: 65px">Update profile</span>
                         </div>
@@ -178,51 +220,17 @@ return false;"
         <% end %>
         <td style="vertical-align: top; padding: 1%; text-align: center">
           <form action="/gnibs/search" method="get" style="margin-right: 20px; margin-top: 30px">
-            <table style="width: 100%;">
-              <tr>
-                <td>
-                  <input id="search-box" class="search-box" name="term" type="text" placeholder="Search gnibs"/>
-                </td>
-                <td>
-                  <div style="position: relative">
-                    <div class="what" title="Search any gnibs or gniblers">?</div>
-                    <div style="position: absolute; background: #17aeff; color: white">
-
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
+            <div style="width: 300px; float: right">
+              <input id="search-box" class="search-box"
+                     style="width: 250px !important; min-width: 250px !important; max-width: 250px !important; right: 0px; float: left"
+                     name="term" type="text" placeholder="Search gnibs"/>
+              <div class="what" title="Search any gnibs or gniblers" style="float: left; margin-left: 5px">?</div>
+            </div>
+            <div style="clear: both"></div>
             <input value="" type="submit" class="gnibl-file-log" title="search gnibs/gniblers"
-                   style="border: 0px none; width: 40px; height: 30px; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat; background-size: 100% 100%"/>
+                   style="border: 0px none; width: 40px; height: 40px !important; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
+                   background-size: 100% 100%; padding: 0px; margin: 0px; margin-right: 150px; float: right"/>
           </form>
-          <script type="text/javascript">
-                      String.prototype.endsWith = function(suffix) {
-                        return this.indexOf(suffix, this.length - suffix.length) !== -1;
-                      };
-                      String.prototype.contains = function(suffix) {
-                        return this.indexOf(suffix) !== -1;
-                      };
-                      var currentUrl = location.href;
-                      console.log(currentUrl);
-                      var input = document.getElementById('search-box');
-                      var gnibSomething = document.getElementById('gnib-something');
-                      var settings = document.getElementById('settings');
-                      if (currentUrl.endsWith('following') || currentUrl.contains('users/search')) {
-                        if (input) {
-                          input.name = 'uid';
-                          input.form.action = '/users/search';
-                          input.placeholder = 'search gniblers';
-                        }
-                        if (gnibSomething) {
-                          gnibSomething.style.display = 'none';
-                        }
-                        settings.className = 'centered border';
-                      }
-                      function onWhatOver() {
-                        var info = document.getElementById('whatInfo');
-                      }
-          </script>
         </td>
       </tr>
     </tbody>
