@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery.carouFredSel-6.2.1
+//= require bootstrap.min
 //= require default.user
 //= require_tree .
