@@ -201,9 +201,10 @@ format.html{ render :json => @message}
 
   def followers
     @user =  User.find_by_username(params[:id])
-    @page = params[:page].to_i
-    unless @page
+    sent_page = params[:page]
     @page = 0
+    if sent_page    
+    @page = sent_page.to_i
     end
     @current_page = @page;
     @page *= 9;

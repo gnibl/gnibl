@@ -200,7 +200,8 @@ format.html{ render :json => @message}
 
 
   def followers
-    @user =  User.find_by_username(params[:id])
+    username = User.correct_username_from_safe_html_username(params[:id])
+    @user =  User.find_by_username(username)
     sent_page = params[:page]
     @page = 0
     if sent_page    
