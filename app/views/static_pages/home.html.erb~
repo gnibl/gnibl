@@ -14,19 +14,12 @@ $('#new_user').bind('ajax:failure',function(data,status,xhr){
 alert('FAILED to register, please try again');
 });
   $(".slidingnav").hide();
-  $(".buttongnib").addClass("plus").show();
-  $('.buttongnib').toggle(
-      function(){
+  $('.buttongnib').addClass('plus').show();
+   $('.buttongnib').click(function(){
           $(".slidingnav").slideDown();
            $(this).removeClass("plus");
          $(this).removeClass("minus");
-      },
-      function(){
-          $(".slidingnav").slideUp();
-        $(this).removeClass("plus");
-         $(this).removeClass("minus");
-      }
-  );
+      });
 });
 </script>
 
@@ -135,10 +128,12 @@ alert('FAILED to register, please try again');
 
 </div>
 
-<p align="center"><a href=# class=buttongnib></a></p>
+<p align="center">
+
+<a href=# class="buttongnib"></a></p>
 <p class = "vermsg" id = "vermsgpanel">
-Thank you for joining gnibl </br>
- check your email for instructions
+Cheers </br>
+verify your email and begin
   </p>
 </td></tr></table>
 

@@ -181,9 +181,7 @@ line-height: normal;
 .vermsg{
 display: none;
 font-size: 18px;
-color: black;
-background-color: blue;
-
+color: blue;
 }
 
 INPUT.hintTextboxActive { color: #000; }
@@ -255,11 +253,42 @@ INPUT.hintTextboxActive { color: #000; }
 	display : none;
 }
 
+/*
+$('.buttongnib').toggle(
+      function(){
+          $(".slidingnav").slideDown();
+           $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      },
+      function(){
+          $(".slidingnav").slideUp();
+        $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      }
+  );
+*/
+
 /* for the stles to hide and show register div */
 .buttongnib {
-    display:none;
+/*    display:none;*/
+ content:" start gnibbing";
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3B9BA0), color-stop(1, #3B9BA0) );
+	background:-moz-linear-gradient( center top, #3B9BA0 5%, #3B9BA0 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3B9BA0', endColorstr='#3B9BA0');
+	background-color:#3B9BA0;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:inline-block;
+	color:#ffffff;
+
+	font-size:30px;
+	
+	padding:3px 20px;
+	text-decoration:none;
 
 }
+
 .plus:after {
     content:" start gnibbing";
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3B9BA0), color-stop(1, #3B9BA0) );

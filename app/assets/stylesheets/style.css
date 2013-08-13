@@ -253,11 +253,27 @@ INPUT.hintTextboxActive { color: #000; }
 	display : none;
 }
 
+/*
+$('.buttongnib').toggle(
+      function(){
+          $(".slidingnav").slideDown();
+           $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      },
+      function(){
+          $(".slidingnav").slideUp();
+        $(this).removeClass("plus");
+         $(this).removeClass("minus");
+      }
+  );
+*/
+
 /* for the stles to hide and show register div */
 .buttongnib {
     display:none;
-
+ 
 }
+
 .plus:after {
     content:" start gnibbing";
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3B9BA0), color-stop(1, #3B9BA0) );
