@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 
   validates :password, :presence => true, :length => {:minimum => 6}
   validates :password_confirmation, :presence => true
-  validates :city, :presence => true
+#  validates :city, :presence => true
 # validates :validated, :presence => true
   validates :validation_code, :presence => true
 
