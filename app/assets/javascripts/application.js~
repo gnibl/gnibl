@@ -10,8 +10,13 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW
 //
-//= require jquery
+//= require jquery-1.9.1
 //= require jquery.carouFredSel-6.2.1
+//= require bootstrap
 //= require default.user
 //= require_tree .
+<<<<<<< HEAD
 //= require jquery_ujs
+//= require bootstrap
+=======
+>>>>>>> 4e1b6b3fed48c67042337dec8e6731c03c5524b7

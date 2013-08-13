@@ -4,13 +4,9 @@
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
 
-<%= javascript_include_tag "application" %>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
 
-<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-
-<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
+    <%= javascript_include_tag "application" %>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
 
     <%= csrf_meta_tags %>
 
@@ -63,20 +59,20 @@
         <%= yield %>
       </div>
       <div class="bottomnav">
-<table width="100%"><tr><td>
-<div class="bottommenu">
-<ul>
-<li><a href="#">About Us</a></li>
-<li><a href="#">Contact Us</a></li>
-<li><a href="#">Terms</a></li>
-<li><a href="#">Privacy</a></li>
-</ul>
-</div>
-</td>
-<td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
-</tr>
-</table>
-</div>
+        <table width="100%"><tr><td>
+              <div class="bottommenu">
+                <ul>
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#">Contact Us</a></li>
+                  <li><a href="#">Terms</a></li>
+                  <li><a href="#">Privacy</a></li>
+                </ul>
+              </div>
+            </td>
+            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+          </tr>
+        </table>
+      </div>
     </div>
     <script type="text/javascript">
       function showGnibThumbnailControl(id) {
@@ -178,7 +174,7 @@
         $('.gnib-thumbnail').height(gt_width);
         $('.gnib-thumbnail').width(gt_width);
         if ($('.new_gnib_thumbnail').length) {
-          $('.new_gnib_thumbnail').height(gt_width -12);
+          $('.new_gnib_thumbnail').height(gt_width - 12);
         }
       }
       function rectifyGnib(id) {
@@ -329,6 +325,7 @@
       });
 <% if current_user %>
         function ajaxSlide(idx, current_page) {
+          console.log('doing ajax sliding.......')
           $('.item').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
           var current_url = '<%= request.path %>';
           var gnibs = current_url.endsWith('<%=current_user.html_safe_username%>');
@@ -377,6 +374,6 @@
         });
 <% end %>
     </script>
-    <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto; width =525px "></div>
+    <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto; width: 100% "></div>
   </body>
 </html>
