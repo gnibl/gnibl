@@ -33,9 +33,10 @@
     <button class="gnib" style="background:transparent; border: 0px none; margin-top: 0px; border-radius: 0px" data-gnib-id="<%=gnib.id%>"
             onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
                     return false;">
-              <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}", :style=>"height: 100%")%>
+              <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}",
+                :style=>"height: 100%; border-radius: 0px !important; margin-top: 0px !important;")%>
     </button>
-    <div  class="thumbnail-view" style="overflow: hidden; bottom: -6px; ; border-radius: 10px; display: block; height: auto">
+    <div  class="thumbnail-view" style="overflow: hidden; bottom: 0px; ; border-radius: 10px; display: block; height: auto; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
         <a href="<%=gnib.link%>"
         <%if gnib.title %>
