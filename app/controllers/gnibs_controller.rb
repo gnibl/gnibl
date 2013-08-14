@@ -125,20 +125,32 @@ class GnibsController < ApplicationController
 
   def gnibstream
     @city_id = current_user.city
-    if params[:page]
-      @page = params[:page]
+    current_page = params[:page]
+    p "Current page #{current_page}"
+    @page = 0
+    if current_page
+      @page = current_page.to_i
     else
       @page = 0
     end
+    @page *= 9
+    p "@page #{@page}"
     # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
     @gnibs = Gnib.all(:limit => 9, :offset => @page)
     @user = current_user
-    @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
+    @counts = Gnib.count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
     @notifications = @user.notifications.limit(5)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
-    render "users/gnibstream"
+    if current_page
+      respond_to do |format|
+        format.js {render "shared/gnibs"}
+      end
+      return
+    else
+      render "users/gnibstream"
+    end
   end
 
   def gnibpicks
@@ -148,7 +160,7 @@ class GnibsController < ApplicationController
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9).ceil;
-       @notifications = @user.notifications.limit(10)
+    @notifications = @user.notifications.limit(10)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
   end

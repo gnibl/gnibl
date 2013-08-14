@@ -38,9 +38,13 @@
         }
       }
       function init() {
-        //include all init functions here
-        rectifyGnibs();
-        onLoginPage();
+        try {
+          //include all init functions here
+          rectifyGnibs();
+          onLoginPage();
+        } catch (e) {
+
+        }
       }
     </script>
   </head>
@@ -160,9 +164,12 @@
         }
       }
 <% if current_user? @user %>
-        document.getElementById("current_user_file_upload").onchange = function() {
-          console.log('submitting form');
-          document.getElementById("current_user_form").submit();
+        try {
+          document.getElementById("current_user_file_upload").onchange = function() {
+            console.log('submitting form');
+            document.getElementById("current_user_form").submit();
+          }
+        } catch (e) {
         }
 <% end %>
 <%#*global variable%>
@@ -174,7 +181,7 @@
         $('.gnib-thumbnail').height(gt_width);
         $('.gnib-thumbnail').width(gt_width);
         if ($('.new_gnib_thumbnail').length) {
-          $('.new_gnib_thumbnail').height(gt_width - 12);
+          $('.new_gnib_thumbnail').height(gt_width);
         }
       }
       function rectifyGnib(id) {
@@ -331,15 +338,13 @@
           var gnibs = current_url.endsWith('<%=current_user.html_safe_username%>');
           var search = !gnibs && current_url.contains('gnibs/search');
           var user_search = !search && current_url.contains('users/search');
-          var action;
+          var action = current_url;
           if (gnibs) {
             action = '/users/<%=current_user.html_safe_username%>/next_gnibs';
           } else if (search) {
             action = "/gnibs/next_search?term=" + getParameterByName("term");
           } else if (user_search) {
             action = "/users/next_search?uid=" + getParameterByName("uid");
-          } else {
-            action = '/users/<%=current_user.html_safe_username%>/next_feed'
           }
           var data = [
             {name: 'page', value: current_page},
@@ -361,9 +366,8 @@
             // get index of currently active item
             var idx = $('#gnib_main_panel .item.active').index();
             var current_page = $('.item.active').data('slide-number');
-            if (current_page) {
-              ajaxSlide(idx, current_page);
-            }
+            console.log('current_page: ' + current_page);
+            ajaxSlide(idx, current_page);
           });
           //add click event to carousel counts
           $('.carousel-count:not(.disabled)').click(function() {
