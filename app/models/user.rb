@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
   belongs_to :city
 
-  has_many :notifications, :foreign_key => "user_id", :dependent => :destroy
+  has_many :notifications, :foreign_key => "user_id", :dependent => :destroy, :order => 'updated_at DESC'
   has_many :notification_gnibs, :through => :notifications, :source => :gnib
 
   def redefined_mygnibs
