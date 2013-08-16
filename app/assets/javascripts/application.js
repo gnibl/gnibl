@@ -11,9 +11,9 @@
 // GO AFTER THE REQUIRES BELOW
 //
 //= require jquery-1.9.1
+//= require jquery_ujs
 //= require jquery.carouFredSel-6.2.1
 //= require bootstrap
 //= require default.user
 //= require_tree .
-//= require jquery_ujs
 
