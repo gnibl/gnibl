@@ -28,18 +28,18 @@
     <a class="carousel-control right new_gnib right_url" href="#content_url_images_panel" data-slide="next">›</a>
   </div>
   <script type="text/javascript">
-                 $(document).ready(function() {
-                   resizeDataDisplay();
-                   $('#gnib_main_panel').carousel({
-                     interval: false
-                   });
+               $(document).ready(function() {
+                 resizeDataDisplay();
+                 $('#content_url_images_panel').carousel({
+                   interval: false
                  });
+               });
 
-                 function resizeDataDisplay() {
-                   var width = (gnib_thumnail_height - 5) / 1.2;
-                   var height = (gnib_thumnail_height - 5) / 2.2;
-                   $('.content-url-image').height(height);
-                   $('.content-url-image').width(width);
-                 }
+               function resizeDataDisplay() {
+                 var width = (gnib_thumnail_height - 5) / 1.2;
+                 var height = (gnib_thumnail_height - 5) / 2.2;
+                 $('.content-url-image').height(height);
+                 $('.content-url-image').width(width);
+               }
   </script>
 <% end %>
