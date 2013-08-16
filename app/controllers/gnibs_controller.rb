@@ -43,7 +43,7 @@ class GnibsController < ApplicationController
     youtube_id = youtube_video_id(url)
     if youtube_id && ! youtube_id.empty?
       begin
-        locate = URI.parse("http://img.youtube.com/vi/#{youtube_id}/1.jpg")
+        locate = URI.parse("http://img.youtube.com/vi/#{youtube_id}/hqdefault.jpg")
         @video = true
         @urls[0] = locate
         file = open(locate,'rb').read
