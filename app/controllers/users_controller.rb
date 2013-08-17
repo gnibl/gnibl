@@ -162,7 +162,7 @@ class UsersController < ApplicationController
     notifications();
     if sent_page
       respond_to do |format|
-        format.js {render "shared/gnibs"}
+        format.js {render "shared/side_scroll_gnibs"}
       end
       return
     end

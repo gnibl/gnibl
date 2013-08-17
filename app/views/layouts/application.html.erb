@@ -46,9 +46,52 @@
 
         }
       }
+      function modelessBusyStart() {
+        $('#modelessAjaxLoading').show();
+      }
+      function modelessBusyEnd() {
+        $('#modelessAjaxLoading').hide();
+      }
+      $(document).ready(function() {
+        $('#gnib_main_panel_0').bind('scroll', function() {
+          console.log('scrolling activated...................');
+          var sw = $('#gnib_main_panel_0').scrollLeft();
+          var inner_sw = $('#gnib_main_panel_0 #gnib_panel_holder').width();
+          var this_sw = $('#gnib_main_panel_0').width();
+          if (sw === (inner_sw - this_sw)) {
+            var action = '<%= request.path %>';
+            var current_page = $(this).data('page') + 1;
+            var pages = $(this).data('pages');
+            $(this).data('page', current_page);
+            if (current_page <= pages) {
+              modelessBusyStart();
+              var data = [
+                {name: 'page', value: current_page},
+                {name: 'current_url', value: '<%= request.fullpath %>'}
+              ];
+              doAjaxSubmit(data, action, function(response) {
+                var current_width = $('#gnib_panel').width();
+                console.log("gnib_panel: width=" + current_width);
+                current_width += 3000;
+                $('#gnib_panel').width(current_width);
+                rectifyGnibs();
+                modelessBusyEnd();
+              });
+            }
+          }
+        });
+      });
     </script>
+    <style type="text/css">
+      body{
+        height: 100% !important;
+      }
+    </style>
   </head>
   <body id="body" onload="init();">
+    <div id="modelessAjaxLoading" style="position: fixed; bottom: 5px; right: 4px; background: none; display: none">
+      <%= image_tag(image_path('loading.gif'), :height=>"40", :width=>"60") %>
+    </div>
     <div id="main">
       <div id="messages" style="display: none; vertical-align: middle; position: fixed; top: 5px">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
@@ -62,7 +105,7 @@
       <div id="gniblMainPage" style="height: 100%; width: 100%; margin: 0px; position: absolute; top: 0px;">
         <%= yield %>
       </div>
-      <div class="bottomnav">
+      <div class="bottomnav" >
         <table width="100%"><tr><td>
               <div class="bottommenu">
                 <ul>
@@ -177,7 +220,7 @@
       function rectifyGnibs() {
         //find all the thumnails
         var width = window.innerWidth;
-        var gt_width = gnib_thumnail_height = Math.floor(0.195 * width);
+        var gt_width = gnib_thumnail_height = Math.floor(0.235 * width);
         $('.gnib-thumbnail').height(gt_width);
         $('.gnib-thumbnail').width(gt_width);
         if ($('.new_gnib_thumbnail').length) {
