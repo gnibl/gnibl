@@ -373,55 +373,7 @@
           });
         }
       });
-<% if current_user %>
-        function ajaxSlide(idx, current_page) {
-          console.log('doing ajax sliding.......')
-          $('.item.gnib-view-option').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
-          var current_url = '<%= request.path %>';
-          var gnibs = current_url.endsWith('<%=current_user.html_safe_username%>');
-          var search = !gnibs && current_url.contains('gnibs/search');
-          var user_search = !search && current_url.contains('users/search');
-          var action = current_url;
-          if (gnibs) {
-            action = '/users/<%=current_user.html_safe_username%>/next_gnibs';
-          } else if (search) {
-            action = "/gnibs/next_search?term=" + getParameterByName("term");
-          } else if (user_search) {
-            action = "/users/next_search?uid=" + getParameterByName("uid");
-          }
-          var data = [
-            {name: 'page', value: current_page},
-            {name: 'current_url', value: '<%= request.fullpath %>'}
-          ];
-          doAjaxSubmit(data, action, function(response) {
-            $('#gnib_main_panel').carousel(idx);
-            //set the active count
-            $('.carousel-count').removeClass('active disabled');
-            $('#carousel-count_' + current_page).addClass('active disabled');
-          });
-        }
-        $(document).ready(function() {
-          $('.gnib-main-panel').carousel({
-            interval: false
-          });
-          // when the carousel slides, load the ajax content
-          $('.gnib-main-panel').on('slid', function(e) {
-            var this_id = $(this).attr('id');
-            console.log('carousel id: ' + this_id);
-            // get index of currently active item
-            var idx = $('#gnib_main_panel .item.active').index();
-            var current_page = $('.item.active').data('slide-number');
-            console.log('current_page: ' + current_page);
-            ajaxSlide(idx, current_page);
-          });
-          //add click event to carousel counts
-          $('.carousel-count:not(.disabled)').click(function() {
-            //get the data
-            var current_page = $(this).data('count');
-            $('#gnib_main_panel').carousel(current_page);
-          });
-        });
-<% end %>
+
 //for the use by content -url image loading
       function resizeDataDisplay() {
         var width = (gnib_thumnail_height - 5) / 1.2;
