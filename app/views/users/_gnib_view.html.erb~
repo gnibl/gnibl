@@ -1,42 +1,26 @@
 <%= render "/users/header" %>
-<div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); height: 100%;">
+<div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); ">
   <div style="width:100%;">
     <%= render "/users/gnib_header" %>
-    <div align="center" style="width: 100%;">
-      <style type="text/css">
-        .carousel-count{
-          background: rgba(200, 200, 200, 0.6);
-          width: 20px;
-          height: 20px;
-          border-radius: 20px;
-          border: 2px solid rgba(255, 255, 255, 0.7);
-          font-size: 10px;
-          display: table-cell;
-          position: relative;
-          vertical-align: middle;
-          cursor: pointer;
-        }
-        .carousel-count.active{
-          background: rgba(0, 0, 0, 0.2);
-          cursor: default;
-        }
-        .carousel-control{
-          top: 90% !important;
-          z-index: 23000;
-          position: fixed;
-        }
-      </style>
-      <% 0.upto(@page_count) do |c| %>
-        <div id="carousel-count_<%=c%>"
-             class="carousel-count <% if c==0 %>active<% end %> >"
-             style="position: inherit"
-             data-count="<%=c%>">
-               <%=c%>
+    <div id="gnib_main_panel_0" class="carousel slide gnib-main-panel"
+             data-page="<%=@current_page%>" data-pages="<%=@page_count%>"
+         style="width: 100%; background: transparent; position: relative; overflow-x: auto; padding-bottom: 50px; z-index: 100">
+      <div id="gnib_panel_holder" class="carousel-inner"
+           style="width: auto; background: transparent; display: table-cell; vertical-align: top; overflow-x: auto">
+        <div id="gnib_panel"
+             class="active item gnib-view-option" style="max-height: 572px; width: 3400px;">
+          <% unless @gnibs.nil? %>
+            <%= render :partial=>"gnibs/new_gnib" %>
+          <% end %>
+          <% if @gnibs.any? %>
+            <%= render @gnibs %>
+          <% end %>
         </div>
+<<<<<<< HEAD
       <% end %>
     </div>
     <div id="gnib_main_panel" class="carousel slide" style="width: 100%; background: transparent; position: relative">
-      <div id="gnib_panel_holder" class="carousel-inner" style="width: 100%; background: transparent; display: table-cell; vertical-align: top">
+      <div id="gnib_panel_holder" class="carousel-inner" style="width: 100%; background: transparent; vertical-align: top;display:block;  overflow-y: hidden; overflow-x: scroll; white-space: nowrap; max-height: 260px ; height: auto !important; height: 260px; ">
         <% 0.upto(@page_count) do |c| %>
           <div id="gnib_panel_<%= c %>" class="<% if c==0 %>active <% end %>item" data-slide-number="<%=c%>">
             <%if c==0%>
@@ -49,9 +33,11 @@
             <% end %>
           </div>
         <% end %>
+=======
+>>>>>>> f9a0fbdaed708dd293365f9264b4cd2aa49ec532
       </div>
-      <a class="carousel-control left" href="#gnib_main_panel" data-slide="prev" >‹</a>
-      <a class="carousel-control right" href="#gnib_main_panel" data-slide="next">›</a>
+<%#*<a class="carousel-control left" href="#gnib_main_panel" data-slide="prev" >‹</a>%>
+<%#*<a class="carousel-control right" href="#gnib_main_panel" data-slide="next" >›</a>%>
     </div>
   </div>
 </div>

@@ -156,6 +156,7 @@ class UsersController < ApplicationController
     end
     @page = @current_page * 9
     @gnibs = @user.feed.offset(@page).limit(9)
+
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build

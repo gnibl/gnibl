@@ -2,8 +2,6 @@
 /* CSS Document */
     /* to display image fullscreen and body elemtns */
 html{
-/* background url not found*/
-background:url('../images/login.png') no-repeat center center;
 min-height:100%;
 background-size:cover;
 }
@@ -36,8 +34,8 @@ div.bottomnav
   
 .bottommenu ul {
 list-style: square;
-/*width: 70%;*/text-align: left;
-	  }
+text-align: left;
+}
 .bottommenu li { 
 display: inline; 
 margin-right: 40px;
@@ -57,7 +55,7 @@ color: #FFFFFF;
 color: #FFFFFF;
 }
 .bottommenu li:after { 
-content:url("<%= image_path('listdot.png'%>)");
+
  margin-left:40px; 
 }
 .bottommenu li:last-child:after {
@@ -68,6 +66,19 @@ content:url("<%= image_path('listdot.png'%>)");
 .copyright {color: #FFFFFF}
 
 /* holder div*/
+
+div.frame-outer{
+height: 100%;
+width: 100%;
+top: 0px;
+position: fixed;
+top: 0px;
+left: 0px;
+ background: rgba(0, 0, 0, 0.4);
+z-index: 10000;
+display: none;
+}
+
 
 div.frame
 {
@@ -80,6 +91,18 @@ border:0px solid black;
 opacity:0.9;
 filter:alpha(opacity=60); /* For IE8 and earlier */
 }
+
+div.success-panel{
+position: absolute; 
+top: 43%; 
+left: 43%; 
+width: 14%; 
+background: rgba(0, 0, 0, 0.6);
+font-size: 18px;
+padding: 10px;
+color: blue;
+}
+
 
 
 /*div tag with logo left div tag */
@@ -178,11 +201,7 @@ font-size: 30px;
 line-height: normal;
 } 
 
-.vermsg{
-display: none;
-font-size: 18px;
-color: blue;
-}
+
 
 INPUT.hintTextboxActive { color: #000; }
 

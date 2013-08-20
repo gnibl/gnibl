@@ -4,21 +4,11 @@
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
 
-<<<<<<< HEAD
-<%= javascript_include_tag "application" %>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
 
-<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-
-<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
-
-=======
     <%= javascript_include_tag "application" %>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
-<%#*i am disabling this. i dont understand why kenn you have explicitly added it here%>
-<%#*<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>%>
->>>>>>> 4e1b6b3fed48c67042337dec8e6731c03c5524b7
+<!--  
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
+-->
     <%= csrf_meta_tags %>
 
 
@@ -49,13 +39,68 @@
         }
       }
       function init() {
-        //include all init functions here
-        rectifyGnibs();
-        onLoginPage();
+        try {
+          //include all init functions here
+          rectifyGnibs();
+          onLoginPage();
+        } catch (e) {
+
+        }
       }
+      function modelessBusyStart() {
+        $('#modelessAjaxLoading').show();
+      }
+      function modelessBusyEnd() {
+        $('#modelessAjaxLoading').hide();
+      }
+      $(document).ready(function() {
+        $('#gnib_main_panel_0').bind('scroll', function() {
+          console.log('scrolling activated...................');
+          var sw = $('#gnib_main_panel_0').scrollLeft();
+          var inner_sw = $('#gnib_main_panel_0 #gnib_panel_holder').width();
+          var this_sw = $('#gnib_main_panel_0').width();
+          if (sw === (inner_sw - this_sw)) {
+            var action = '<%= request.path %>';
+            var current_page = $(this).data('page') + 1;
+            var pages = $(this).data('pages');
+            $(this).data('page', current_page);
+            if (current_page <= pages) {
+              modelessBusyStart();
+              var data = [
+                {name: 'page', value: current_page},
+                {name: 'current_url', value: '<%= request.fullpath %>'}
+              ];
+              doAjaxSubmit(data, action, function(response) {
+                var current_width = $('#gnib_panel').width();
+                console.log("gnib_panel: width=" + current_width);
+                current_width += 3000;
+                $('#gnib_panel').width(current_width);
+                rectifyGnibs();
+                modelessBusyEnd();
+              });
+            }
+          }
+        });
+      });
     </script>
+    <style type="text/css">
+      body{
+        height: 100% !important;
+      }
+    </style>
   </head>
   <body id="body" onload="init();">
+<<<<<<< HEAD
+  <div class="frame-outer" id = "mainframe">
+<div class = "success-panel" id="successPanel">
+Cheers! verify your email and begin
+</div>
+  </div>
+=======
+    <div id="modelessAjaxLoading" style="position: fixed; bottom: 5px; right: 4px; background: none; display: none">
+      <%= image_tag(image_path('loading.gif'), :height=>"40", :width=>"60") %>
+    </div>
+>>>>>>> f9a0fbdaed708dd293365f9264b4cd2aa49ec532
     <div id="main">
       <div id="messages" style="display: none; vertical-align: middle; position: fixed; top: 5px">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
@@ -69,7 +114,7 @@
       <div id="gniblMainPage" style="height: 100%; width: 100%; margin: 0px; position: absolute; top: 0px;">
         <%= yield %>
       </div>
-      <div class="bottomnav">
+      <div class="bottomnav" >
         <table width="100%"><tr><td>
               <div class="bottommenu">
                 <ul>
@@ -80,7 +125,7 @@
                 </ul>
               </div>
             </td>
-            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 &copy</span></div></td>
           </tr>
         </table>
       </div>
@@ -171,9 +216,12 @@
         }
       }
 <% if current_user? @user %>
-        document.getElementById("current_user_file_upload").onchange = function() {
-          console.log('submitting form');
-          document.getElementById("current_user_form").submit();
+        try {
+          document.getElementById("current_user_file_upload").onchange = function() {
+            console.log('submitting form');
+            document.getElementById("current_user_form").submit();
+          }
+        } catch (e) {
         }
 <% end %>
 <%#*global variable%>
@@ -181,11 +229,11 @@
       function rectifyGnibs() {
         //find all the thumnails
         var width = window.innerWidth;
-        var gt_width = gnib_thumnail_height = Math.floor(0.195 * width);
+        var gt_width = gnib_thumnail_height = Math.floor(0.235 * width);
         $('.gnib-thumbnail').height(gt_width);
         $('.gnib-thumbnail').width(gt_width);
         if ($('.new_gnib_thumbnail').length) {
-          $('.new_gnib_thumbnail').height(gt_width - 12);
+          $('.new_gnib_thumbnail').height(gt_width);
         }
       }
       function rectifyGnib(id) {
@@ -337,20 +385,18 @@
 <% if current_user %>
         function ajaxSlide(idx, current_page) {
           console.log('doing ajax sliding.......')
-          $('.item').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
+          $('.item.gnib-view-option').html('<div align="center" style="width: 90%; text-align: center; left: 8%">Please wait .....</div>');
           var current_url = '<%= request.path %>';
           var gnibs = current_url.endsWith('<%=current_user.html_safe_username%>');
           var search = !gnibs && current_url.contains('gnibs/search');
           var user_search = !search && current_url.contains('users/search');
-          var action;
+          var action = current_url;
           if (gnibs) {
             action = '/users/<%=current_user.html_safe_username%>/next_gnibs';
           } else if (search) {
             action = "/gnibs/next_search?term=" + getParameterByName("term");
           } else if (user_search) {
             action = "/users/next_search?uid=" + getParameterByName("uid");
-          } else {
-            action = '/users/<%=current_user.html_safe_username%>/next_feed'
           }
           var data = [
             {name: 'page', value: current_page},
@@ -364,17 +410,18 @@
           });
         }
         $(document).ready(function() {
-          $('#gnib_main_panel').carousel({
+          $('.gnib-main-panel').carousel({
             interval: false
           });
           // when the carousel slides, load the ajax content
-          $('#gnib_main_panel').on('slid', function(e) {
+          $('.gnib-main-panel').on('slid', function(e) {
+            var this_id = $(this).attr('id');
+            console.log('carousel id: ' + this_id);
             // get index of currently active item
             var idx = $('#gnib_main_panel .item.active').index();
             var current_page = $('.item.active').data('slide-number');
-            if (current_page) {
-              ajaxSlide(idx, current_page);
-            }
+            console.log('current_page: ' + current_page);
+            ajaxSlide(idx, current_page);
           });
           //add click event to carousel counts
           $('.carousel-count:not(.disabled)').click(function() {
@@ -384,6 +431,20 @@
           });
         });
 <% end %>
+//for the use by content -url image loading
+      function resizeDataDisplay() {
+        var width = (gnib_thumnail_height - 5) / 1.2;
+        var height = (gnib_thumnail_height - 5) / 2.2;
+        $('.content-url-image').height(height);
+        $('.content-url-image').width(width);
+      }
+      function initContentUrl() {
+        console.log('starting content url.........');
+        resizeDataDisplay();
+        $('#content_url_images_panel').carousel({
+          interval: false
+        });
+      }
     </script>
     <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto; width: 100% "></div>
   </body>

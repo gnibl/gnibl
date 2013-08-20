@@ -6,8 +6,9 @@
 
 
     <%= javascript_include_tag "application" %>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
-
+<!--  
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
+-->
     <%= csrf_meta_tags %>
 
 
@@ -89,9 +90,17 @@
     </style>
   </head>
   <body id="body" onload="init();">
+
+  <div class="frame-outer" id = "mainframe">
+<div class = "success-panel" id="successPanel">
+Cheers! verify your email and begin
+</div>
+  </div>
+
     <div id="modelessAjaxLoading" style="position: fixed; bottom: 5px; right: 4px; background: none; display: none">
       <%= image_tag(image_path('loading.gif'), :height=>"40", :width=>"60") %>
     </div>
+
     <div id="main">
       <div id="messages" style="display: none; vertical-align: middle; position: fixed; top: 5px">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
@@ -116,7 +125,7 @@
                 </ul>
               </div>
             </td>
-            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 &copy</span></div></td>
           </tr>
         </table>
       </div>
