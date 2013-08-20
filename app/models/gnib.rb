@@ -19,7 +19,7 @@ class Gnib < ActiveRecord::Base
 message = ""
 
 #check if current_user has regnibbed
-me_regnibbed = regnibbers =  self.gniblings.select('user_id').where('user_id = '+current_user.id)
+me_regnibbed =  self.gniblings.select('user_id').where('user_id = '+current_user.id.to_s)
 
 regnibbers =  self.gniblings.select('user_id')
 regnibbers_friends = current_user.followed_users.where(:id => regnibbers).select('name')
