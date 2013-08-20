@@ -127,25 +127,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-  def next_feed
-    username = User.correct_username_from_safe_html_username(params[:id])
-    @user = User.find_by_username(username)
-    @page = params[:page].to_i
-    @current_page = @page;
-    @page *= 9;
-    #get the gnibs for the page
-    @gnibs = @user.feed.offset(@page).limit(9)
-    @counts = @user.feed.count
-    @page_count = (@counts / 9).ceil;
-    @gnib = @user.gnibs.build
-    respond_to do |format|
-      format.js {render "shared/gnibs"}
-    end
-  end
-
-
-
   def feed
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
@@ -186,41 +167,11 @@ class UsersController < ApplicationController
     @page_count = (@counts / 10).ceil;
     notifications();
     if sent_current_page
-      render "show_follow"
+      respond_to do |format|
+        format.js {render "shared/side_scroll_users"}
+      end
     end
   end
-
-
-  def next_gnibblings
-    username = User.correct_username_from_safe_html_username(params[:id])
-    @user = User.find_by_username(username)
-    @page = params[:page].to_i
-    @current_page = @page;
-    @page *= 10;
-    @users = @user.followed_users.offset(@page).limit(10)
-    @counts = @user.followed_users.count
-    @page_count = (@counts / 10).ceil;
-    notifications();
-    render "show_follow"
-  end
-
-
-
-  def next_following
-    username = User.correct_username_from_safe_html_username(params[:id])
-    @user = User.find_by_username(username)
-    @page = params[:page].to_i
-    @current_page = @page;
-    @page *= 9;
-    @users = @user.followed_users.offset(@page).limit(9)
-    @counts = @user.followed_users.count
-    @page_count = (@counts / 9).ceil;
-    notifications();
-    respond_top do |format|
-      format.js {render "shared/user"}
-    end
-  end
-
 
   def followers
     username = User.correct_username_from_safe_html_username(params[:id])
