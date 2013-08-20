@@ -59,14 +59,24 @@ else
       if count > 1 && !me_regnibbed.empty? # me, friends and others
          message = " you, "
          friend_names.each do |fname|
-           message = message + fname   
+           message = message + fname+" "   
          end 
-        message_part2 = " and #{count - 2} others"      
+        if count - 2  == 1
+        message_part2 = " and 1 other"      
+        end
+        if count - 2  > 1
+        message_part2 = " and #{count -2} others"      
+        end
+        
       end
 end
 
 
-div_content = "Regnibbed by <span style = 'color: #17ffae;'>" + message[0..20] + "</span> and "+message_part2
+div_content = "Regnibbed by <span style = 'color: #17ffae;'>" + message[0..20] + "</span> "
+if message_part2 && message_part2.length
+   div_content = div_content +message_part2
+end
+
 if message && message.length> 1
    return div_content
 else

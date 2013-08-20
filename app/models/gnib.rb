@@ -57,11 +57,17 @@ if !me_regnibbed.empty? &&  count == 1 # me and friends
       end 
 else
       if count > 1 && !me_regnibbed.empty? # me, friends and others
-         message = " you, "
+         message = " you "
          friend_names.each do |fname|
-           message = message + fname   
+           message = message+", " + fname   
          end 
-        message_part2 = " and #{count - 2} others"      
+        if count - 2  == 1
+        message_part2 = " and 1 other"      
+        end
+        if count - 2  > 1
+        message_part2 = " and #{count -2} others"      
+        end
+        
       end
 end
 
