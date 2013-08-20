@@ -16,15 +16,48 @@ class Gnib < ActiveRecord::Base
  #return a string indicating the first names of those
  # who have regnibbed this gnib 
  # who also happen to followed by current user
+message = ""
+
+#check if current_user has regnibbed
+me_regnibbed =  self.gniblings.select('user_id').where('user_id = '+current_user.id.to_s)
+
 regnibbers =  self.gniblings.select('user_id')
 regnibbers_friends = current_user.followed_users.where(:id => regnibbers).select('name')
 gniblings_count = self.gniblings.count
-message = ""
+friend_names = []
+count = 0
 if regnibbers_friends && regnibbers_friends.length > 0
      regnibbers_friends.each do | friend |
-          message = message + friend.name + " "
-     end
+          friend_names[count] = friend.name
+          count = count + 1
+     end           
    end
+
+if count == 0 && !me_regnibbed.empty? #only me
+ message = "you"
+else
+   if count == 1 && !me_regnibbed.empty? # me and one other person
+   message = "you and "
+      friend_names.each do |fname|
+      message = message + fname   
+      end 
+  else
+      if count > 0 && !me_regnibbed.empty? # me and others
+         message = " you, "
+         friend_names.each do |fname|
+           message = message + fname   
+         end 
+      else 
+         if  count > 0 && me_regnibbed.empty? #others only
+             message = ""
+             friend_names.each do |fname|
+                message = message + fname   
+             end 
+         end
+      end
+  end
+end
+
 return message
  end
 
