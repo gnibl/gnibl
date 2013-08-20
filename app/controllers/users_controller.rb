@@ -235,6 +235,12 @@ class UsersController < ApplicationController
     @counts = @user.followers.count
     @page_count = (@counts / 10).ceil;
     notifications();
+    if sent_page
+      respond_top do |format|
+        format.js {render "shared/user"}
+      end
+      return
+    end
     render "show_follow"
   end
 

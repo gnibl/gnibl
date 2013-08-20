@@ -1,1 +1,2 @@
-$('.notifications_count').html('<%= escape_javascript(render :partial=>"notifications/notification_header", :locals =>{:notifications_count => @notifications_count}) %>');
+$('#notificationDropDownPanel').html('<%= escape_javascript(render "/users/notification_data") %>');
+$('#notificationDropDownCount').html('<%= escape_javascript(render :partial=>"notifications/notification_header", :locals =>{:notifications_count => @notifications_count}) %>');

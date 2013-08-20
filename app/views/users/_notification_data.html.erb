@@ -1,0 +1,35 @@
+<% if @notifications %>
+  <% index = 0 %>
+  <% @notifications.sort! do |a, b| %>
+    <% h_i =  0%>
+    <% h_j =  0%>
+    <% h_i =  1 unless a.read%>
+    <% h_j =  1 unless b.read%>
+    <% h_j <=> h_i%>
+  <% end %>
+  <%  @notifications.each do |notification| %>
+    <li style="height: 100px;<% if index > 0 %> border-top: 5px solid #ddd;<% end %>cursor: pointer; width: 350px"
+        onclick="onNotificationClicked(<%= notification.gnib.id %>, <%= notification.id %>);
+                              return false;"
+        class="notification-overlay" data-notification-id="<%=notification.id%>">
+          <% index += 1 %>
+      <div style="height: 100px; position: relative;  width: 100%;
+           <% if !notification.read %> background: rgba(0, 0, 0, 0.2);<% end %>
+           ">
+        <div id="thumbnail-desc:<%=notification.id%>" class="thumbnail-desc"
+             style="margin: 0px; position: absolute; top:0px; left: 0px">
+               <% if notification.gnib.image.url %>
+                 <%=image_tag(image_path(notification.gnib.image.url), :class=>"notification-profile")%>
+               <% else %>
+                 <%=image_tag(image_path(notification.gnib.imageurl), :class=>"notification-profile")%>
+               <% end %>
+        </div>
+        <div style="color: black; text-align: left; position: absolute; left: 104px; top: 0px; max-height: 100px; overflow-y: hidden">
+          <div style="min-width: 150px">
+            <%= notification.parsed_message %>
+          </div>
+        </div>
+      </div>
+    </li>
+  <% end %>
+<% end %>
