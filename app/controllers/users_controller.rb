@@ -233,7 +233,7 @@ class UsersController < ApplicationController
     @current_page = @page;
     @page *= 10;
     @users = User.all(:offset => @page, :limit =>10)
-    @counts = @user.followers.count
+    @counts = User.all.count
     @page_count = (@counts / 10).ceil;
     notifications();
     if sent_page
