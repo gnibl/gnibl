@@ -2,13 +2,12 @@
 <div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); ">
   <div style="width:100%;">
     <%= render "/users/gnib_header" %>
-    <div id="gnib_main_panel_0" class="carousel slide gnib-main-panel"
+    <div id="gnib_main_panel_0" class="gnib-main-panel"
              data-page="<%=@current_page%>" data-pages="<%=@page_count%>"
          style="width: 100%; background: transparent; position: relative; overflow-x: auto; padding-bottom: 50px; z-index: 100">
-      <div id="gnib_panel_holder" class="carousel-inner"
+      <div id="gnib_panel_holder"
            style="width: auto; background: transparent; display: table-cell; vertical-align: top; overflow-x: auto">
-        <div id="gnib_panel"
-             class="active item gnib-view-option" style="max-height: 572px; width: 3400px;">
+        <div id="gnib_panel" style="max-height: 572px; width: 3400px;">
           <% unless @gnibs.nil? %>
             <%= render :partial=>"gnibs/new_gnib" %>
           <% end %>
