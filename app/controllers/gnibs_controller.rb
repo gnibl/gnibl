@@ -145,7 +145,7 @@ class GnibsController < ApplicationController
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     if current_page
       respond_to do |format|
-        format.js {render "shared/gnibs"}
+        format.js {render "shared/side_scroll_gnibs"}
       end
       return
     else
@@ -164,6 +164,7 @@ class GnibsController < ApplicationController
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
   end
+  
   def next_gnibstream
     @page = params[:page].to_i
     @current_page = @page;
