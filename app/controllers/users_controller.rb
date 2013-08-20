@@ -237,7 +237,7 @@ class UsersController < ApplicationController
     @page_count = (@counts / 10).ceil;
     notifications();
     if sent_page
-      respond_top do |format|
+      respond_to do |format|
         format.js {render "shared/user"}
       end
       return
