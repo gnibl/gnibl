@@ -4,21 +4,11 @@
     <title>Gnibl</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
 
-<<<<<<< HEAD
-<%= javascript_include_tag "application" %>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
 
-<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-    <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-
-<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-carousel.js"></script>
-
-=======
     <%= javascript_include_tag "application" %>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
-<%#*i am disabling this. i dont understand why kenn you have explicitly added it here%>
-<%#*<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>%>
->>>>>>> 4e1b6b3fed48c67042337dec8e6731c03c5524b7
+<!--  
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
+-->
     <%= csrf_meta_tags %>
 
 
@@ -56,6 +46,11 @@
     </script>
   </head>
   <body id="body" onload="init();">
+  <div class="frame-outer" id = "mainframe">
+<div class = "success-panel" id="successPanel">
+Cheers! verify your email and begin
+</div>
+  </div>
     <div id="main">
       <div id="messages" style="display: none; vertical-align: middle; position: fixed; top: 5px">
         <%= image_tag(image_path('info.png'), :style=>"float: left; width: 20%; height: auto") %>
@@ -73,14 +68,14 @@
         <table width="100%"><tr><td>
               <div class="bottommenu">
                 <ul>
-                  <li><a href="#">About Us</a></li>
+                  <li style = "content: url(<%=image_path('listdot.png')%>)"><a href="#">About Us</a></li>
                   <li><a href="#">Contact Us</a></li>
                   <li><a href="#">Terms</a></li>
                   <li><a href="#">Privacy</a></li>
                 </ul>
               </div>
             </td>
-            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
+            <td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 &copy</span></div></td>
           </tr>
         </table>
       </div>

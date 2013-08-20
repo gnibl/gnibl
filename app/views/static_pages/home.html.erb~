@@ -1,160 +1,146 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>TEST LOGIN</title>
-<script type="text/javascript">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TEST LOGIN</title>
+    <script type="text/javascript">
 
-$(document).ready(function(){
-$('#new_user').bind('ajax:success',function(data,status,xhr){
-alert('data '+JSON.stringify(data))
-$('#vermsgpanel').show();
-});
-$('#new_user').bind('ajax:failure',function(data,status,xhr){
-alert('FAILED to register, please try again');
-});
-  $(".slidingnav").hide();
-  $('.buttongnib').addClass('plus').show();
-   $('.buttongnib').click(function(){
+      $(document).ready(function() {
+        $('#new_user').bind('ajax:success', function(data, status, xhr) {
+ $('#mainframe').show();
+        });
+        $('#new_user').bind('ajax:failure', function(data, status, xhr) {
+          alert('FAILED to register, please try again');
+        });
+        $(".slidingnav").hide();
+        $('.buttongnib').addClass('plus').show();
+        $('.buttongnib').click(function() {
+
           $(".slidingnav").slideDown();
-           $(this).removeClass("plus");
-         $(this).removeClass("minus");
+          $(this).removeClass("plus");
+          $(this).removeClass("minus");
+        });
       });
-});
-</script>
+    </script>
 
-</head>
- 
-<div class="frame">
-<div class="logindiv">
-  <div align="center" style="padding-top:2%"><img src="<%= image_path('logognibl.png')%>" width="130" height="130" /></div>
-   <div align="center" style="padding-top:2%"><img src="<%= image_path('gnibltext.png')%>" /></div>
-<div>
-<%= form_for(:session, :url => sessions_path) do |f| %>
-     <div align="center" style="padding-top:2%">
-<%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Email'%>
-</div>
-       <div align="center" style="padding-top:2%"> 
- <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password'%>
+  </head>
+  <div class="frame">
+    <div class="logindiv">
+      <div align="center" style="padding-top:2%"><img src="<%= image_path('logognibl.png')%>" width="130" height="130" /></div>
+      <div align="center" style="padding-top:2%"><img src="<%= image_path('gnibltext.png')%>" /></div>
+      <div>
+        <%= form_for(:session, :url => sessions_path) do |f| %>
+          <div align="center" style="padding-top:2%">
+            <%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Email'%>
+          </div>
+          <div align="center" style="padding-top:2%">
+            <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password'%>
 
 
-</div>
-        <div align="center" style="padding-top:2%;">    <table width="52%" border="0">
-  <tr>
-  <td width="26%">
-    <div align="center">  
-      <input type="checkbox" name="checkbox" id="checkbox" />
-      </div></td>
-    <td width="74%"><strong style="color:black">remember me</strong></td>
-  </tr>
-</table></div>
-     <div align="center" style="padding-top:2%" > 
-  <%= f.submit :value => '   login  ',  :class=>"buttonlogin"%>
+          </div>
+          <div align="center" style="padding-top:2%;">    <table width="52%" border="0">
+              <tr>
+                <td width="26%">
+                  <div align="center">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                  </div></td>
+                <td width="74%"><strong style="color:black">remember me</strong></td>
+              </tr>
+            </table></div>
+          <div align="center" style="padding-top:2%" >
+            <%= f.submit :value => '   login  ',  :class=>"buttonlogin"%>
 
-</div>
-     
-      <div align="center" style="padding-top:2%"><a href="#" class="links">Forgot your password ?</a></div>
-<% end %>
-</div>
-</div>
+          </div>
 
-<div class="rightdiv">
+          <div align="center" style="padding-top:2%">
 
-<table width="100%" height="100%"><tr><td valign="middle"  align="center">
-<p class = "loginpagetxt">
-<strong>Content</strong> is our <strong>language,</strong><br />share stuff with your friends.
-</p>
-<div class="slidingnav" style="display: block;">
+<a href="#" class="links" style="color: light-blue">
 
-<div class="registerdiv">
-<%= form_for(@user, :remote => true) do |f| %>
- <div align="center" style="padding-top:0%">
-<%= f.text_field :name, :class => 'hintTextbox', :placeholder => 'First name' , :style=>"width: 40%" %> 
-<%= f.text_field :surname, :class => 'hintTextbox', :placeholder => 'Last name', :style=>"width: 40%" %>
-</div>
-<div align="center" style="padding-top:2%">
-<%= f.date_select :birthday,
-        :start_year => 1970, :style=>"display: table-cell",
-        :order => [ :day, :month, :year],
-        :prompt=> { :month => 'mm', :day => 'dd', :year => 'yy' },
-:html_options => {class: "datefield"}
-    %>
-</div>
-<div  align="center" style="padding-top:0%">
-  <table border="0">
-    <tr>
-      <td><span class="gender">Male</span></td>
-      <td><label>
-        <input type="radio" name="radio" id="gender" value="gender" />
-        </label>
-     </td>
-      <td><span class="gender">Female</span></td>
-      <td><label>
-        <input type="radio" name="radio" id="gender2" value="gender" />
-        </label>
-     </td>
-    </tr>
-  </table>
-</div>
+Forgot your password ?
 
-   <div align="center" style="padding-top:2%"> 
-<%= f.text_field :email , :class => 'hintTextbox', :placeholder => 'Your Email' %>
-   
-</div>
-
-   <div align="center" style="padding-top:2%">  
-<%= f.password_field :password , :class => 'hintTextbox', :placeholder => 'password'%>
-</div>
-   
-     <div align="center" style="padding-top:2%"> 
- <%= f.password_field :password_confirmation , :class => 'hintTextbox', :placeholder => 'confirm password'%>
-</div>
-  <div  align="center" style="padding-top:0%">     <table border="0">
-      <tr>
-        <td><label>
-          <input type="checkbox" name="terms" id="terms" />
-        </label></td>
-        <td><span class="agree">I agree to </span><span class="gender">gnibl</span><span class="agree"> Terms</span></td>
-      </tr>
-    </table>
-     </div>
-</div>
-<!--use this button to post data-->
-
-<p align="center"><a href = "#">
-<%= f.submit("start gnibbing",:class => "buttongnibpost" ) %>
 </a>
-</p>
-
 </div>
+        <% end %>
+      </div>
+    </div>
 
-<p align="center">
+    <div class="rightdiv">
 
-<a href=# class="buttongnib"></a></p>
-<p class = "vermsg" id = "vermsgpanel">
-Cheers </br>
-verify your email and begin
-  </p>
-</td></tr></table>
+      <table width="100%" height="100%"><tr><td valign="middle"  align="center">
+            <p class = "loginpagetxt">
+              <strong>Content</strong> is our <strong>language,</strong><br />share stuff with your friends.
+            </p>
+            <div class="slidingnav" style="display: block;">
 
-<% end %>
-</div>
+              <div class="registerdiv">
+                <%= form_for(@user, :remote => true) do |f| %>
+                  <div align="center" style="padding-top:0%">
+                    <%= f.text_field :name, :class => 'hintTextbox', :placeholder => 'First name' , :style=>"width: 40%" %>
+                    <%= f.text_field :surname, :class => 'hintTextbox', :placeholder => 'Last name', :style=>"width: 40%" %>
+                  </div>
+                  <div align="center" style="padding-top:2%">
+                    <%= f.date_select :birthday,
+                      :start_year => 1970, :style=>"display: table-cell",
+                      :order => [ :day, :month, :year],
+                      :prompt=> { :month => 'mm', :day => 'dd', :year => 'yy' },
+                      :html_options => {class: "datefield"}
+                    %>
+                    </div>
+                    <div  align="center" style="padding-top:0%">
+                      <table border="0">
+                        <tr>
+                          <td><span class="gender">Male</span></td>
+                          <td><label>
+                              <input type="radio" name="radio" id="gender" value="gender" />
+                            </label>
+                          </td>
+                          <td><span class="gender">Female</span></td>
+                          <td><label>
+                              <input type="radio" name="radio" id="gender2" value="gender" />
+                            </label>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
 
-<!--Bottom Navigation-->
-<div class="bottomnav">
-<table width="100%"><tr><td>
-<div class="bottommenu">
-<ul>
-<li><a href="#">About Us</a></li>
-<li><a href="#">Contact Us</a></li>
-<li><a href="#">Terms</a></li>
-<li><a href="#">Privacy</a></li>
-</ul>
-</div>
-</td>
-<td><div align="center"><span class="copyright">Gnibl Site Copyright 2013 @</span></div></td>
-</tr>
-</table>
-</div>
+                    <div align="center" style="padding-top:2%">
+                      <%= f.text_field :email , :class => 'hintTextbox', :placeholder => 'Your Email' %>
 
-</html>
+                    </div>
+
+                    <div align="center" style="padding-top:2%">
+                      <%= f.password_field :password , :class => 'hintTextbox', :placeholder => 'password'%>
+                    </div>
+
+                    <div align="center" style="padding-top:2%">
+                      <%= f.password_field :password_confirmation , :class => 'hintTextbox', :placeholder => 'confirm password'%>
+                    </div>
+                    <div  align="center" style="padding-top:0%">     <table border="0">
+                        <tr>
+                          <td><label>
+                              <input type="checkbox" name="terms" id="terms" />
+                            </label></td>
+                          <td><span class="agree">I agree to </span><span class="gender">gnibl</span><span class="agree"> Terms</span></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                  <!--use this button to post data-->
+
+                  <p align="center">
+                      <%= f.submit("start gnibbing",:class => "buttongnibpost" ) %>
+                  </p>
+
+                </div>
+
+                <p align="center">
+
+                  <a href=# class="buttongnib"></a></p>
+                
+              </td></tr></table>
+
+        <% end %>
+      </div>
+
+      
+  </html>

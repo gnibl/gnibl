@@ -36,7 +36,7 @@
       <% end %>
     </div>
     <div id="gnib_main_panel" class="carousel slide" style="width: 100%; background: transparent; position: relative">
-      <div id="gnib_panel_holder" class="carousel-inner" style="width: 100%; background: transparent; display: table-cell; vertical-align: top">
+      <div id="gnib_panel_holder" class="carousel-inner" style="width: 100%; background: transparent; vertical-align: top;display:block;  overflow-y: hidden; overflow-x: scroll; white-space: nowrap; max-height: 260px ; height: auto !important; height: 260px; ">
         <% 0.upto(@page_count) do |c| %>
           <div id="gnib_panel_<%= c %>" class="<% if c==0 %>active <% end %>item" data-slide-number="<%=c%>">
             <%if c==0%>

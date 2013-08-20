@@ -149,7 +149,7 @@ format.html{ render :json => @message}
   def feed
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
-    @gnibs = @user.feed.limit(9)
+    @gnibs = @user.feed.limit(11)#limit to 9
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build

@@ -209,7 +209,7 @@ format.html{ render :json => @message}
     end
     @current_page = @page;
     @page *= 9;
-    @users = User.all(:offset => @page, :limit =>9)
+    @users = User.all(:offset => @page, :limit =>10)
     @counts = @user.followers.count
     @page_count = (@counts / 9).ceil;
     notifications();
