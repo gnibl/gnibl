@@ -253,11 +253,13 @@ class UsersController < ApplicationController
   def show
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
-    page = params[:page]
+    sent_page = params[:page]
+    @page = 0
+     if sent_page
+       @page = 9 * sent_page.to_i
+     end
      @gnibs = @user.gnibs.offset(page).limit(9)
     #@gnibs = @user.redefgnibs.offset(page).limit(9)
-    
-     @gnibs = Gnib.
     @counts = @user.gnibs.count
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
