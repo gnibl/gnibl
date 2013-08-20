@@ -238,7 +238,7 @@ class UsersController < ApplicationController
     notifications();
     if sent_page
       respond_to do |format|
-        format.js {render "shared/user"}
+        format.js {render "shared/side_scroll_users"}
       end
       return
     end
