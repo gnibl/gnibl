@@ -160,12 +160,10 @@ class UsersController < ApplicationController
     @page = 0;
     if sent_current_page
       @current_page = sent_current_page.to_i
-      @page = sent_current_page * 10
+      @page =  @current_page  * 10
     end
     @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
-    puts @page
-    puts @users.count
     @page_count = (@counts / 10.0).ceil;
     notifications();
     if sent_current_page
