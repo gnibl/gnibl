@@ -222,9 +222,13 @@ class UsersController < ApplicationController
       @user.update_attribute(:avatar, params[:user][:avatar_url])
     end
     @success = "You have successfully updated your profile"
-    respond_to do |format|
-      format.js {render "shared/messages"}
+    current_path = params[:current_path]
+    if current_path.nil?
+      respond_to do |format|
+        format.js {render "shared/messages"}
+      end
     end
+    redirect_to current_path
   end
 
   def validateemail
