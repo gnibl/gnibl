@@ -94,7 +94,7 @@
   <table style="width: 100%">
     <tbody>
       <tr>
-        <% if (request.path != "/gnibs/#{@user.html_safe_username}/gnibpicks" && request.path != "/gnibs/#{@user.html_safe_username}/gnibstream") %>
+        <% if (request.path == "/users/#{@user.html_safe_username}/feed" || request.path == "/users/#{@user.html_safe_username}") %>
           <td class="profile-column" >
             <div id="profile-image" >
               <% if current_user?(@user) %>
@@ -172,6 +172,33 @@
                     gnib<span style="color: white">picks</span></span>
                 </div>
                 <div style="padding-top: 15px; font-size: 20px; padding-bottom: 5px">Today's most highly rated gnibs</div>
+              </div>
+            <% elsif request.path == "/users/#{@user.html_safe_username}/followers" %>
+              <div align="center" style="text-align: center;  width: 400px; margin-left: 20px; padding-top: 30px">
+                <div id="gnibpicksTitle">
+                  <span style="color: #17aeff; font-size: 50px;">
+                    gnibblers
+                  </span>
+                </div>
+                <br/>
+                <div style="padding: 15px; font-size: 17px; background: rgba(0,0,0,0.4); text-align: left">
+                  This would normally be a list of people gnibbling you. But for you Beta users,
+                  we have compiled a short list of people for you to gnibble and get started.
+                  Try by picking 5 to begin with.
+                </div>
+              </div>
+            <% elsif request.path == "/users/#{@user.html_safe_username}/gnibblings" %>
+              <div align="center" style="text-align: center;  width: 400px; margin-left: 20px; padding-top: 30px">
+                <div id="gnibpicksTitle">
+                  <span style="color: #17aeff; font-size: 50px;">
+                    gnibbling
+                  </span>
+                </div>
+                <br/>
+                <div style="padding: 15px; font-size: 17px; background: rgba(0,0,0,0.4); text-align: left;
+                     padding-bottom: 70px">
+                  A list of people your're currently gnibbling
+                </div>
               </div>
             <% else %>
               <div align="center" >

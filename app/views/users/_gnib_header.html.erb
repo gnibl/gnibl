@@ -7,7 +7,7 @@
           <a href="/users/<%=current_user.html_safe_username%>/feed">Gnibfeeds(<%=current_user.feed.count%>)</a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
-        <td class="prof-not-bd" <% if request.path == "/users/#{@user.html_safe_username}/following" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
+        <td class="prof-not-bd" <% if request.path == "/users/#{@user.html_safe_username}/followers" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
           <a  href="/users/<%=@user.html_safe_username%>/followers">Gniblers</a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
