@@ -16,7 +16,8 @@ class Gnib < ActiveRecord::Base
  #return a string indicating the first names of those
  # who have regnibbed this gnib 
  # who also happen to followed by current user
-message = ""
+
+message = "" #the highlighted part
 
 #check if current_user has regnibbed
 me_regnibbed =  self.gniblings.select('user_id').where('user_id = '+current_user.id.to_s)
@@ -33,32 +34,44 @@ if regnibbers_friends && regnibbers_friends.length > 0
      end           
    end
 
-if count == 0 && !me_regnibbed.empty? #only me
- message = "you"
-else
-   if count == 1 && !me_regnibbed.empty? # me and one other person
+message_part2 = "" #none highlighted part
+
+if gniblings_count > 0 && me_regnibbed.empty? && count ==0 #other people, not me or friends
+   if gniblings_count == 1
+       message_part2 = "1 person"
+   else
+      message_part2 = "#{gniblings_count} people"
+   end
+end
+
+if !me_regnibbed.empty? && count == 0  #only me, no friends
+  message = "you"
+  if gniblings_count == 2 
+     message_part2 = "and 1 person"
+  end
+ if gniblings_count > 2 #you and none friends
+     message_part2 = "and #{gniblings_count - 1} people"
+  end
+end
+
+if !me_regnibbed.empty? &&  count == 1 # me and friends
    message = "you and "
       friend_names.each do |fname|
       message = message + fname   
       end 
-  else
-      if count > 0 && !me_regnibbed.empty? # me and others
+else
+      if count > 1 && !me_regnibbed.empty? # me, friends and others
          message = " you, "
          friend_names.each do |fname|
            message = message + fname   
          end 
-      else 
-         if  count > 0 && me_regnibbed.empty? #others only
-             message = ""
-             friend_names.each do |fname|
-                message = message + fname   
-             end 
-         end
+        message_part2 = " and #{count - 2} others"      
       end
-  end
 end
 
-return message
+
+div_content = "Regnibbed by <span style = 'color: #17ffae;'>" + message[0..20] + "</span> and "+message_part2
+return div_content
  end
 
 def regnibbedby_div(current_user)
