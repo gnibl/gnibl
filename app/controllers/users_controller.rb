@@ -254,9 +254,9 @@ class UsersController < ApplicationController
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
     page = params[:page]
-    # @gnibs = @user.gnibs.offset(page).limit(9)
-    @gnibs = @user.redefgnibs.offset(page).limit(9)
-    @counts = @user.redefgnibs.count
+     @gnibs = @user.gnibs.offset(page).limit(9)
+    #@gnibs = @user.redefgnibs.offset(page).limit(9)
+    @counts = @user.gnibs.count
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
     notifications();

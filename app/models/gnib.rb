@@ -74,7 +74,7 @@ end
 if me_regnibbed.empty? && count > 0 # friends only, not me
 message = ""
          friend_names.each do |fname|
-           message =  message + fname   
+           message =  message + fname+" "   
          end
    if count > 1
    message_part2 = "and #{count - 1} other"
