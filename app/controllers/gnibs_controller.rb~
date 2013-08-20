@@ -339,7 +339,6 @@ class GnibsController < ApplicationController
     if @gnib.save
       #handle tagged people
       send_notifications_on_create(@gnib)
-      current_user.like(@gnib.id)
       redirect_to current_url
     else
       redirect_to "/users/#{current_user.html_safe_username}"

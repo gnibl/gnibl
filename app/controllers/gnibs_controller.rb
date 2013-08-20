@@ -140,7 +140,7 @@ class GnibsController < ApplicationController
     @user = current_user
     @counts = Gnib.count
     @gnib = @user.gnibs.build
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     @notifications = @user.notifications.limit(5)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     if current_page
@@ -159,7 +159,7 @@ class GnibsController < ApplicationController
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
     @gnib = @user.gnibs.build
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     @notifications = @user.notifications.limit(10)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
@@ -174,7 +174,7 @@ class GnibsController < ApplicationController
     @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id)
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
@@ -188,7 +188,7 @@ class GnibsController < ApplicationController
     @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).offset(@page).limit(9)
     @user = current_user
     @counts = Gnib.where("city = :city_id", :city_id => @city_id).count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}
     end
