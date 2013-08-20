@@ -6,9 +6,9 @@
 
 
     <%= javascript_include_tag "application" %>
-<!--
+
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'/>
--->
+
     <%= csrf_meta_tags %>
 
 
@@ -93,7 +93,9 @@
 
   <div class="frame-outer" id = "mainframe">
 <div class = "success-panel" id="successPanel">
+<div> </br></br>
 Cheers! verify your email and begin
+</div>
 </div>
   </div>
 
@@ -227,14 +229,14 @@ Cheers! verify your email and begin
 <%#*global variable%>
       var gnib_thumnail_height = 0;
       function rectifyGnibs() {
-        //find all the thumnails
-        var width = window.innerWidth;
-        var gt_width = gnib_thumnail_height = Math.floor(0.235 * width);
-        $('.gnib-thumbnail').height(gt_width);
-        $('.gnib-thumbnail').width(gt_width);
-        if ($('.new_gnib_thumbnail').length) {
-          $('.new_gnib_thumbnail').height(gt_width);
-        }
+        <%#*//find all the thumnails%>
+        <%#*var width = window.innerWidth;%>
+        <%#*var gt_width = gnib_thumnail_height = Math.floor(0.235 * width);%>
+        <%#*$('.gnib-thumbnail').height(gt_width);%>
+        <%#*$('.gnib-thumbnail').width(gt_width);%>
+        <%#*if ($('.new_gnib_thumbnail').length) {%>
+          <%#*$('.new_gnib_thumbnail').height(gt_width);%>
+        <%#*}%>
       }
       function rectifyGnib(id) {
         //set the sizes of the thumbnail, four per page.

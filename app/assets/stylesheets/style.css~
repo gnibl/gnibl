@@ -35,7 +35,7 @@ div.bottomnav
 .bottommenu ul {
 list-style: square;
 text-align: left;
-	  }
+}
 .bottommenu li { 
 display: inline; 
 margin-right: 40px;
@@ -95,12 +95,14 @@ filter:alpha(opacity=60); /* For IE8 and earlier */
 div.success-panel{
 position: absolute; 
 top: 43%; 
-left: 43%; 
-width: 14%; 
+left: 40%; 
+width: 18%; 
+height: 18%;
 background: rgba(0, 0, 0, 0.6);
 font-size: 18px;
+margin-top: 40px;
 padding: 10px;
-color: blue;
+color: white;
 }
 
 
