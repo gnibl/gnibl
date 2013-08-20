@@ -164,6 +164,7 @@ class UsersController < ApplicationController
     end
     @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
+    puts @page
     puts @users.count
     @page_count = (@counts / 10.0).ceil;
     notifications();
