@@ -37,11 +37,7 @@ if regnibbers_friends && regnibbers_friends.length > 0
 message_part2 = "" #none highlighted part
 
 if gniblings_count > 0 && me_regnibbed.empty? && count ==0 #other people, not me or friends
-   if gniblings_count == 1
-       message_part2 = "1 person"
-   else
-      message_part2 = "#{gniblings_count} people"
-   end
+   message = ""
 end
 
 if !me_regnibbed.empty? && count == 0  #only me, no friends
@@ -70,8 +66,17 @@ else
 end
 
 
-div_content = "Regnibbed by <span style = 'color: #17ffae;'>" + message[0..20] + "</span> and "+message_part2
-return div_content
+div_content = "Regnibbed by <span style = 'color: #17ffae;'>" + message[0..20] + "</span> "
+if message_part2 && message_part2.length
+   div_content = div_content +message_part2
+end
+
+if message && message.length> 1
+   return div_content
+else
+   return ""
+end
+
  end
 
 def regnibbedby_div(current_user)
@@ -79,10 +84,11 @@ def regnibbedby_div(current_user)
 regnib_count = self.gniblings.count
 div = "<div id='gnib_count_<%=gnib.id%>' style='border-bottom: 2px solid white; padding: 5px; text-align: left' align='center'> #{regnib_count} regnibs </div>"
 
-regnibbers = regnibbedby(current_user)
-div_friends = "<div id='gnib_count_<%=gnib.id%>' style=' padding: 5px; text-align: left' align='center'>regnibbed by <span style = 'color: #17ffae;'>  #{regnibbers[0..10]} </span> and #{regnib_count - 1} people</div>"
+div_content = regnibbedby(current_user)
+div_friends = "<div id='gnib_count_<%=gnib.id%>' style=' padding: 5px; text-align: left' align='center'>
+#{div_content}</div>"
 
-  if regnibbers && regnibbers.length > 1
+  if div_content && div_content.length > 1
       return div_friends 
   else
        return div
