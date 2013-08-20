@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     #DEBUG remove this
   end
 
-def create
+  def create
 
     city = City.find 1
     ip = request.remote_ip
@@ -25,17 +25,17 @@ def create
     city_name = place.city_name
     city = City.where("city_name = ?",city_name).limit(1)
     unless city
-         city = City.find(city_id) #default city id 1
-     end
+      city = City.find(city_id) #default city id 1
+    end
 
-#    params[:user]['city'] = city
+    #    params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
     params[:user]['validation_code'] = validation_code
     is_saved = false
     @user = User.new(params[:user])
-puts @user.validation_code
-puts @user.birthday
+    puts @user.validation_code
+    puts @user.birthday
     begin
       is_saved = @user.save
     rescue => error
@@ -51,16 +51,16 @@ puts @user.birthday
 
     end
 
-   respond_to do |format|
-     format.json{render :json => @message}
-     format.js {render :js => "$('#vermsgpanel').show()"}
-format.html{ render :json => @message}
-   end
-    
+    respond_to do |format|
+      format.json{render :json => @message}
+      format.js {render :js => "$('#vermsgpanel').show()"}
+      format.html{ render :json => @message}
+    end
+
   end
 
 
-  def notifications    
+  def notifications
     @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
@@ -149,11 +149,24 @@ format.html{ render :json => @message}
   def feed
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
-    @gnibs = @user.feed.limit(11)#limit to 9
+    sent_page = params[:page]
+    @current_page = 0
+    if sent_page
+      @current_page = sent_page.to_i
+    end
+    @page = @current_page * 9
+    @gnibs = @user.feed.offset(@page).limit(9)
+
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     notifications();
+    if sent_page
+      respond_to do |format|
+        format.js {render "shared/side_scroll_gnibs"}
+      end
+      return
+    end
   end
 
 
@@ -161,10 +174,20 @@ format.html{ render :json => @message}
     #show all people the user is gnibbling/following
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
-    @users = @user.followed_users.limit(9)
+    sent_current_page = params[:page]
+    @current_page = 0
+    @page = 0;
+    if sent_current_page
+      @current_page = sent_current_page.to_i
+      @page = sent_current_page * 10
+    end
+    @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 10).ceil;
     notifications();
+    if sent_current_page
+      render "show_follow"
+    end
   end
 
 
@@ -204,20 +227,17 @@ format.html{ render :json => @message}
     @user =  User.find_by_username(username)
     sent_page = params[:page]
     @page = 0
-    if sent_page    
-    @page = sent_page.to_i
+    if sent_page
+      @page = sent_page.to_i
     end
     @current_page = @page;
-    @page *= 9;
+    @page *= 10;
     @users = User.all(:offset => @page, :limit =>10)
     @counts = @user.followers.count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 10).ceil;
     notifications();
     render "show_follow"
   end
-
-
-  
 
   def readnotifications
     not_id = params[:notification_id]
@@ -263,11 +283,11 @@ format.html{ render :json => @message}
       @page_count = (@counts / 9).ceil;
       @gnib = @user.gnibs.build
       notifications();
-      
-      #redirect_to "/users/#{current_user.html_safe_username}/feed"   
+
+      #redirect_to "/users/#{current_user.html_safe_username}/feed"
+    end
+    redirect_to "/signin"
   end
-redirect_to "/signin"
-end
 
   def show
     username = User.correct_username_from_safe_html_username(params[:id])

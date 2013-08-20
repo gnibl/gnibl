@@ -196,6 +196,9 @@
     var url = $('#' + id).data('image-url');
     console.log('image-url: ' + url);
     $('#content_url_field').val(url);
+    $('#content_url_images').hide();
+    $('#gnib_description_1').show();
+    resizeDataDisplay();
     return false;
   }
   function onKeyPress(e) {
