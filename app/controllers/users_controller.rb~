@@ -254,9 +254,9 @@ class UsersController < ApplicationController
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
     sent_page = params[:page]
-    @page = 0
+    page = 0
      if sent_page
-       @page = 9 * sent_page.to_i
+       page = 9 * sent_page.to_i
      end
      @gnibs = @user.gnibs.offset(page).limit(9)
     #@gnibs = @user.redefgnibs.offset(page).limit(9)
