@@ -269,6 +269,12 @@ class UsersController < ApplicationController
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
     notifications();
+    if sent_page
+      respond_to do |format|
+        format.js {render "shared/side_scroll_gnibs"}
+      end
+      return
+    end
   end
 
   private
