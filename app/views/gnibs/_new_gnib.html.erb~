@@ -39,11 +39,6 @@
     delay: 250
   };
 
-  $(function() {
-    $("#gnib_description").autocomplete(autoc)
-            .data("uiAutocomplete")._renderItem = renderTitles;
-  });
-
   console.log('submitting form on change');
   function ajaxSubmit() {
     $('#373737_busy_image').show();
@@ -77,18 +72,13 @@
     border-radius: 5px;
   }
   #content_url, #content_url_images{
-    width: 98%;
-    border: 3px solid #efefef;
+    width: 100%;
     text-align: center;
-    height: 47.8%;
-    min-height: 47.8%;
+    height: 50%;
+    min-height: 50%;
   }
   #content_url{
     background: rgba(255, 70, 45, 0.9);
-    border-radius: 8px 8px 0px 0px
-  }
-  #content_url_images, .content-url-image{
-    border-radius: 0px 0px 8px 8px;
   }
   #content_url_images{
     display: block;
@@ -131,7 +121,6 @@
     width: 90%; margin: auto;
     background: rgba(255, 255, 255, 0.2);
     margin-top: 5px;
-    border-radius: 5px;
     display: none;
     margin-bottom: 5px;
     position: relative;
@@ -148,14 +137,14 @@
   }
 </style>
 <%= form_for(@gnib) do |f| %>
+  <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
+  <input id="current_term_34783784980" type="hidden" name="term" value=""/>
+  <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
+  <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
   <div id="new_gnib_727272727_<%=@gnib.id%>"
        class="gnib-thumbnail new_gnib_thumbnail"
-       style="float: left; border: 2px solid #17aeff; margin-right: 2px; border-radius: 10px; position: relative">
-    <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
-    <input id="current_term_34783784980" type="hidden" name="term" value=""/>
-    <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
-    <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
-    <div id="content_url" >
+       style="float: left;  position: relative; margin-top: 1px; margin-bottom: -1px">
+    <div id="content_url" style="margin-top: -10px; padding-top: 0px">
       <h3>Add Url</h3>
       <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
         :class=>"paste-content-field",
@@ -174,9 +163,9 @@
     <div id="gnib_description_1" class="content-url-comment content-url-image">
       <%= f.hidden_field :imageurl, :id=>"content_url_field" %>
       <%= f.hidden_field :video, :id => "is_video_field", :value => 'false'%>
-      <%= f.hidden_field :title, :id => "title_field", :class = > 'title_field'%>
+      <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
-        :class=>"comment-field",
+        :class=>"comment-field", :id=>"gnib_description",
         :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
         :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
@@ -207,6 +196,9 @@
     var url = $('#' + id).data('image-url');
     console.log('image-url: ' + url);
     $('#content_url_field').val(url);
+    $('#content_url_images').hide();
+    $('#gnib_description_1').show();
+    resizeDataDisplay();
     return false;
   }
   function onKeyPress(e) {

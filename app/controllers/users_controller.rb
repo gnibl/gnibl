@@ -85,7 +85,7 @@ class UsersController < ApplicationController
     @page *= 9;
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").offset(@page).limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     respond_top do |format|
       format.js {render "shared/user"}
     end
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
     @user = current_user
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     notifications();
     render 'index'
   end
@@ -120,7 +120,7 @@ class UsersController < ApplicationController
     #get the gnibs for the page
     @gnibs = @user.gnibs.offset(@page).limit(9)
     @counts = @user.gnibs.count
-    @page_count = (@counts / 9).ceil;
+    @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
     respond_to do |format|
       format.js {render "shared/gnibs"}
@@ -160,11 +160,11 @@ class UsersController < ApplicationController
     @page = 0;
     if sent_current_page
       @current_page = sent_current_page.to_i
-      @page = sent_current_page * 10
+      @page =  @current_page  * 10
     end
     @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
-    @page_count = (@counts / 10).ceil;
+    @page_count = (@counts / 10.0).ceil;
     notifications();
     if sent_current_page
       respond_to do |format|
@@ -185,7 +185,7 @@ class UsersController < ApplicationController
     @page *= 10;
     @users = User.all(:offset => @page, :limit =>10)
     @counts = User.all.count
-    @page_count = (@counts / 10).ceil;
+    @page_count = (@counts / 10.0).ceil;
     notifications();
     if sent_page
       respond_to do |format|
@@ -241,7 +241,7 @@ class UsersController < ApplicationController
       page = 0
       @gnibs = @user.redefgnibs.offset(page).limit(9)
       @counts = @user.redefgnibs.count
-      @page_count = (@counts / 9).ceil;
+      @page_count = (@counts / 9.0).ceil;
       @gnib = @user.gnibs.build
       notifications();
 
@@ -253,13 +253,28 @@ class UsersController < ApplicationController
   def show
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
-    page = params[:page]
-    # @gnibs = @user.gnibs.offset(page).limit(9)
-    @gnibs = @user.redefgnibs.offset(page).limit(9)
-    @counts = @user.redefgnibs.count
-    @page_count = (@counts / 9).ceil;
+    sent_page = params[:page]
+    page = 0
+     if sent_page
+       page_num = sent_page.to_i
+       page = 9 * page_num
+     end
+     
+     @gnibs = @user.gnibs.offset(page).limit(9)
+    #@gnibs = @user.redefgnibs.offset(page).limit(9)
+    @counts = @user.gnibs.count
+    puts sent_page
+    puts page
+    puts @gnibs.count
+    @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
     notifications();
+    if sent_page
+      respond_to do |format|
+        format.js {render "shared/side_scroll_gnibs"}
+      end
+      return
+    end
   end
 
   private

@@ -166,7 +166,7 @@
       <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
         :class=>"comment-field", :id=>"gnib_description",
-        :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
+        :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
         :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
         :onclick=>"sanitize();", :title=>"Gnib"%>

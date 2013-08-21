@@ -90,13 +90,12 @@
     </style>
   </head>
   <body id="body" onload="init();">
-
     <div class="frame-outer" id = "mainframe">
       <div class = "success-panel" id="successPanel">
+        </br></br>
         Cheers! verify your email and begin
       </div>
     </div>
-
     <div id="modelessAjaxLoading" style="position: fixed; bottom: 5px; right: 4px; background: none; display: none">
       <%= image_tag(image_path('loading.gif'), :height=>"40", :width=>"60") %>
     </div>
@@ -375,6 +374,7 @@
 
 //for the use by content -url image loading
       function resizeDataDisplay() {
+        gnib_thumnail_height = 320;
         var width = (gnib_thumnail_height - 5) / 1.2;
         var height = (gnib_thumnail_height - 5) / 2.2;
         $('.content-url-image').height(height);
