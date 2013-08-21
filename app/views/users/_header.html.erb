@@ -12,6 +12,14 @@
     background: url(<%=image_path(@user.avatar_url)%>);
     background-size: 100% 100%;
   }
+  div.user-description{
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    height: 60px !important;
+    padding-top: 10px;
+    padding-left: 5px;
+    margin-bottom: 20px;
+  }
 </style>
 <script type="text/javascript">
   String.prototype.endsWith = function(suffix) {
@@ -107,7 +115,7 @@
                   </div>
                 <% end %>
               <% end %>
-              <div class="gnibl-button"></div>
+              <div class="gnibl-button" style="border: 2px solid white"></div>
             </div>
           </td>
           <td style=" padding: 1%; vertical-align: top">
@@ -131,10 +139,10 @@
                 </td>
               </tr>
               <tr>
-                <% if(current_user?(@user)) %>
-                  <td colspan="1" style="width: 300px; padding-top: 10px;">
-                    <%= form_for(@user, :url => "/users/#{@user.html_safe_username}", :remote=>true) do |f| %>
-                      <div style="width: 100%; position: relative;">
+                <td colspan="1" style="width: 300px; padding-top: 10px;">
+                  <div style="width: 100%; position: relative;">
+                    <% if(current_user?(@user)) %>
+                      <%= form_for(@user, :url => "/users/#{@user.html_safe_username}", :remote=>true) do |f| %>
                         <%= f.text_area :description, :maxlength => "255",
                           :id => "profileSummary", :rows => "3", :cols => "14",
                           :placeholder => "Describe yourself here briefly",
@@ -144,24 +152,22 @@
                         <div id="update-profile" class="update-profile" style="border-radius: 50px; height: 40px; padding-top: 5px; margin-top: 3px">
                           <%= f.submit :class => "gnibl-icon", :value=>"", :style => "width: 35px !important; height: 35px !important; margin:auto",
                             :onclick=>"document.getElementById('update-profile').style.display='none';"%>
-                          <button class="dialog-close-icon" onclick="document.getElementById('update-profile').style.display = 'none';
+                          <button class="dialog-close-icon"
+                                  onclick="document.getElementById('update-profile').style.display = 'none';
           return false;"
                                   style="float: right; margin-right: 30px"></button>
                           <span style="color: #17aeff; margin-right: 65px">Update profile</span>
                         </div>
+                      <% end %>
+                    <% else %>
+                      <div class="user-description">
+                        <%= @user.description %>
                       </div>
-                    <% end %>
-                  </td>
-                <% else %>
-                  <td colspan="2">
-                    <div style="color: white; opacity: 0.8; max-width: 400px">
-                      <%= @user.description %>
                       <div id="follow-option_<%=@user.id%>" style="width:100%; margin-top: 5px">
                         <%= render(:partial => "/users/inn_follow", :locals => {:user => @user}) if signed_in?%>
                       </div>
-                    </div>
-                  </td>
-                <% end %>
+                    <% end %>
+                  </div>
                 </td>
               </tr>
             </table>
@@ -184,7 +190,7 @@
                   </span>
                 </div>
                 <br/>
-                <div style="padding: 15px; font-size: 17px; background: rgba(0,0,0,0.4); text-align: left">
+                <div style="padding: 15px; font-size: 17px; background: rgba(0,0,0,0.4); text-align: left; border-radius: 10px">
                   This would normally be a list of people gnibbling you. But for you Beta users,
                   we have compiled a short list of people for you to gnibble and get started.
                   Try by picking 5 to begin with.
@@ -199,7 +205,7 @@
                 </div>
                 <br/>
                 <div style="padding: 15px; font-size: 17px; background: rgba(0,0,0,0.4); text-align: left;
-                     padding-bottom: 70px">
+                     padding-bottom: 70px; border-radius: 10px">
                   A list of people your're currently gnibbling
                 </div>
               </div>
