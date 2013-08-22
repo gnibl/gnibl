@@ -73,7 +73,11 @@
               doAjaxSubmit(data, action, function(response) {
                 var current_width = $('#gnib_panel').width();
                 console.log("gnib_panel: width=" + current_width);
-                current_width += 3300;
+                var next_page_width = 2980;
+                if (action.endsWith('/gnibblings') || action.endsWith('/followers')) {
+                  next_page_width = 3200;
+                }
+                current_width += next_page_width;
                 $('#gnib_panel').width(current_width);
                 rectifyGnibs();
                 modelessBusyEnd();
