@@ -139,6 +139,7 @@ class GnibsController < ApplicationController
     @gnibs = Gnib.all(:limit => 9, :offset => @page)
     @user = current_user
     @counts = Gnib.count
+    @current_page = 0;
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9.0).ceil;
     @notifications = @user.notifications.limit(5)
@@ -164,7 +165,7 @@ class GnibsController < ApplicationController
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
     render "users/gnibpicks"
   end
-  
+
   def next_gnibstream
     @page = params[:page].to_i
     @current_page = @page;
