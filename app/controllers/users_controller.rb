@@ -253,6 +253,7 @@ class UsersController < ApplicationController
   def show
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
+    @current_page = 0;
     sent_page = params[:page]
     page = 0
     if sent_page
