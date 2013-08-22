@@ -19,7 +19,7 @@
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <td class="prof-not-bd right-radius" <% if request.path == "/users/#{current_user.html_safe_username}" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
           <a href="/users/<%=current_user.html_safe_username%>">
-            My gnibs(<%=current_user.redefgnibs.count%>)
+            My gnibs(<%=current_user.gnibs.count%>)
           </a>
         </td>
       </tr>
