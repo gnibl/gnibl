@@ -255,17 +255,16 @@ class UsersController < ApplicationController
     @user = User.find_by_username(username)
     sent_page = params[:page]
     page = 0
-     if sent_page
-       page_num = sent_page.to_i
-       page = 9 * page_num
-     end
-     
-     @gnibs = @user.gnibs.offset(page).limit(9)
-    #@gnibs = @user.redefgnibs.offset(page).limit(9)
+    if sent_page
+      page_num = sent_page.to_i
+      page = 9 * page_num
+    end
+    @gnibs = @user.gnibs.offset(page).limit(9)
     @counts = @user.gnibs.count
     puts sent_page
     puts page
     puts @gnibs.count
+    puts @counts
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
     notifications();
