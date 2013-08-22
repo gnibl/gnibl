@@ -7,13 +7,14 @@ module GniblUtil
   end
 
 def send_notifications_on_upgnib(gnib,upvoter)
+puts "executing notifications method"
 gnib_action_upvote = 2
 user_id = gnib.user.id
 gnib_id = gnib.id
 nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id and gnib_action = :gnib_action", :user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote)
   if nots.empty?
      message = upvoter.name+" has upvoted your gnib"
-     Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false)
+     Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
   else
      prev_notification = nots[0]
      prev_upvoter_name = prev_notification.message.split(" ")[0]
