@@ -60,7 +60,7 @@
           var inner_sw = $('#gnib_main_panel_0 #gnib_panel_holder').width();
           var this_sw = $('#gnib_main_panel_0').width();
           var w_diff = inner_sw - this_sw;
-          if (sw >= w_diff) {
+          if (sw >= (w_diff - 20)) {
             var action = '<%= request.path %>';
             var current_page = $(this).data('page') + 1;
             var pages = $(this).data('pages');
