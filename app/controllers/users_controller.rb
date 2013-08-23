@@ -261,7 +261,7 @@ class UsersController < ApplicationController
       page = 9 * page_num
     end
     regnibbed_gnibs = @user.gniblings
-    @gnibs = Gnib.where("user_id = ? and id in (?)",@user.id.to_s,regnibbed_gnibs).offset(page).limit(9)
+    @gnibs = Gnib.where("user_id = ? and id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9)
    # @gnibs = @user.gnibs.offset(page).limit(9)
     @counts = Gnib.where("user_id = ? and id in (?)",@user.id.to_s,regnibbed_gnibs).count
     puts sent_page

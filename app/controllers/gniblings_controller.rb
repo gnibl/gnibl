@@ -1,3 +1,4 @@
+#require 'gnibl_util'
 #include GniblUtil
 
 class GniblingsController < ApplicationController
