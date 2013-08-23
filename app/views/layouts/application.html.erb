@@ -59,7 +59,8 @@
           var sw = $('#gnib_main_panel_0').scrollLeft();
           var inner_sw = $('#gnib_main_panel_0 #gnib_panel_holder').width();
           var this_sw = $('#gnib_main_panel_0').width();
-          if (sw === (inner_sw - this_sw)) {
+          var w_diff = inner_sw - this_sw;
+          if (sw <= w_diff) {
             var action = '<%= request.path %>';
             var current_page = $(this).data('page') + 1;
             var pages = $(this).data('pages');
