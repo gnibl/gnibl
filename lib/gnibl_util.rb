@@ -7,7 +7,6 @@ module GniblUtil
   end
 
   def send_notifications_on_regnib(gnib,regnibber)
-    puts "executing notifications method"
     gnib_action_upvote = 4
     user_id = gnib.user.id
     gnib_id = gnib.id
