@@ -1,4 +1,4 @@
-include GniblUtil
+#include GniblUtil
 
 class GniblingsController < ApplicationController
   before_filter :signed_in_user
@@ -10,7 +10,7 @@ class GniblingsController < ApplicationController
      upvotes = Upvotegnib.where("user_id = :uid and gnib_id = :gid", :uid => uid, :gid => @gid)
     @success  = "Successfully gnibed."
     @gnib = Gnib.find(@gid)
-     send_notifications_on_regnib(@gnib,@current_user)
+   #  send_notifications_on_regnib(@gnib,@current_user)
     @upvote_count = upvotes.size() unless upvotes.empty?;
     respond_to do |format|
       format.js {render "shared/gniblings"}
