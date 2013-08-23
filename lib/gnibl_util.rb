@@ -1,9 +1,43 @@
 module GniblUtil
-  # definitions GNIB_ACTION_COMMENT = 1, GNIB_ACTION_UPVOTE = 2, GNIB_ACTION_TAGGED = 3 REGNIB = 4
+  # definitions GNIB_ACTION_COMMENT = 1, GNIB_ACTION_UPVOTE = 2, GNIB_ACTION_TAGGED = 3 REGNIB = 4 FOLLOWED = 5 UPCOMMENT = 6
 
   def send_notifications_on_create(gnib)
     comment = gnib.description
     send_notifications_ontags(gnib, gnib.user, comment)
+  end
+
+  def send_notifications_on_being_gnibbled(user,follower)
+    gnib_action_upvote = 5
+    user_id = gnib.user.id
+    gnib_id = gnib.
+    nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id and gnib_action = :gnib_action", :user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote)
+    if nots.empty?
+      message = follower.name+" is gnibbling you"
+      Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
+    else
+      prev_notification = nots[0]
+      prev_upvoter_name = prev_notification.message.split(" ")[0]
+      message = regnibber.name + ", "+prev_upvoter_name+ " are gnibbling you"
+      prev_notification.update_attribute("message",message)
+      prev_notification.update_attribute("read",false)
+    end
+  end
+
+  def send_notifications_on_upvote_comment(gnib,upvoter)
+    gnib_action_upvote = 6
+    user_id = gnib.user.id
+    gnib_id = gnib.id
+    nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id and gnib_action = :gnib_action", :user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote)
+    if nots.empty?
+      message = upvoter.name+" has upvoted your comment"
+      Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
+    else
+      prev_notification = nots[0]
+      prev_upvoter_name = prev_notification.message.split(" ")[0]
+      message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your comments"
+      prev_notification.update_attribute("message",message)
+      prev_notification.update_attribute("read",false)
+    end
   end
 
   def send_notifications_on_regnib(gnib,regnibber)
@@ -22,6 +56,7 @@ module GniblUtil
       prev_notification.update_attribute("read",false)
     end
   end
+
 
   def send_notifications_on_upgnib(gnib,upvoter)
 

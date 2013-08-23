@@ -268,6 +268,7 @@ class GnibsController < ApplicationController
     @comment = Comment.find(@comment_id)
     @comment.votes = 0 unless @comment.votes
     @comment.update_attribute("votes", @comment.votes + 1)
+    send_notifications_on_upvote_comment(@gnib,@user)
     respond_to do |format|
       format.js {render "shared/gnib_comment_upvoted"}
     end
