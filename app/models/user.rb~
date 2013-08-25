@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
   belongs_to :city
 
-  has_many :notifications, :foreign_key => "user_id", :dependent => :destroy
+  has_many :notifications, :foreign_key => "user_id", :dependent => :destroy, :order => 'updated_at DESC'
   has_many :notification_gnibs, :through => :notifications, :source => :gnib
 
   def redefined_mygnibs
@@ -90,10 +90,12 @@ class User < ActiveRecord::Base
   end
 
   def html_safe_username
-    safe_username = self.username.gsub /\.+/, '_'
+return self.username
+   # safe_username = self.username.gsub /\.+/, '_'
   end
 
   def self.correct_username_from_safe_html_username(html_safe_username)
-    correct_username = html_safe_username.gsub /_+/, '.'
+return html_safe_username
+ #   correct_username = html_safe_username.gsub /_+/, '.'
   end
 end

@@ -250,25 +250,32 @@ class UsersController < ApplicationController
     redirect_to "/signin"
   end
 
-  def show
-    username = User.correct_username_from_safe_html_username(params[:id])
+  def show    
     @user = User.find_by_username(username)
+    @current_page = 0;
     sent_page = params[:page]
     page = 0
-     if sent_page
-       page_num = sent_page.to_i
-       page = 9 * page_num
-     end
-     
-     @gnibs = @user.gnibs.offset(page).limit(9)
-    #@gnibs = @user.redefgnibs.offset(page).limit(9)
-    @counts = @user.gnibs.count
+    if sent_page
+      page_num = sent_page.to_i
+      page = 9 * page_num
+    end
+    regnibbed_gnibs = @user.gniblings.order("updated_at DESC").offset(page).limit(9)
+    @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9)
+   # @gnibs = @user.gnibs.offset(page).limit(9)
+    @counts =  Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs).count
     puts sent_page
     puts page
     puts @gnibs.count
+    puts @counts
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
     notifications();
+    if sent_page
+      respond_to do |format|
+        format.js {render "shared/side_scroll_gnibs"}
+      end
+      return
+    end
   end
 
   private

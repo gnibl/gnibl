@@ -90,10 +90,12 @@ class User < ActiveRecord::Base
   end
 
   def html_safe_username
-    safe_username = self.username.gsub /\.+/, '_'
+     #this method does nothing, remove it and all its occurences
+     return self.username
   end
 
   def self.correct_username_from_safe_html_username(html_safe_username)
-    correct_username = html_safe_username.gsub /_+/, '.'
+     #this method does nothing, remove it and all its occurences
+     return html_safe_username
   end
 end
