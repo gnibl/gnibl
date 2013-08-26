@@ -6,7 +6,7 @@ Gnibl::Application.routes.draw do
   root :to => 'static_pages#home'
   get "static_pages/home"
 
-  resources :users do
+  resources :users, constraints: {:id=> /[^\/]+/} do
     member do
       get :following, :followers, :feed, :next_gnibs, :next_feed, :notifications, :gnibblings, :next_gnibblings
     end
@@ -19,8 +19,10 @@ Gnibl::Application.routes.draw do
     end
   end
 
+ 
+
   resources :sessions, :only => [:new, :create, :destroy]
-  resources :gnibs do
+  resources :gnibs, constraints: {:id=> /[^\/]+/}  do
     member do
       get :retcomment, :comment, :gnibpicks, :gnibstream, :upvotecomment
     end
