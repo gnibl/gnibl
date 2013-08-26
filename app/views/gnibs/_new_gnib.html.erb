@@ -58,9 +58,13 @@
 <style type="text/css">
   input[type="text"].paste-content-field{
     border: 0px none !important;
-    margin:0% 5%;
+    margin:4% 5%;
     width: 90%;
-    background: rgba(204, 122, 204, 0.3);
+    height: 50px;
+    background: white;
+  }
+  input[type="text"].paste-content-field:hover{
+    box-shadow: 1px 1px 5px 5px #cecece inset;
   }
   button.find-image{
     padding: 5px;
@@ -145,8 +149,8 @@
        class="gnib-thumbnail new_gnib_thumbnail"
        style="float: left;  position: relative; margin-top: 1px; margin-bottom: -1px">
     <div id="content_url" style="margin-top: -10px; padding-top: 0px">
-      <h3>Gnib something</h3>
-      <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
+      <h3 style="padding-top: 6px">Gnib something</h3>
+      <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"Add url...",
         :class=>"paste-content-field",
         :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
       <div id="find-image-panel" align="center" style="width: 100%">
