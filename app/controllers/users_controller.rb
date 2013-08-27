@@ -61,13 +61,15 @@ class UsersController < ApplicationController
 
 
   def notifications
+   if current_user
     @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+  end
   end
 
   def new
     if signed_in?
-      redirect_to "/users/#{current_user.html_safe_username}/feed"
+      redirect_to "/users/#{current_user.username}/feed"
       return
     end
     @user = User.new
