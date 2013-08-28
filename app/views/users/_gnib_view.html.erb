@@ -1,7 +1,9 @@
 <%= render "/users/header" %>
 <div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); ">
   <div style="width:100%;">
+<% if current_user %>
     <%= render "/users/gnib_header" %>
+<% end %>
     <div id="gnib_main_panel_0" class="gnib-main-panel"
              data-page="<%=@current_page%>" data-pages="<%=@page_count%>"
          style="width: 100%; background: transparent; position: relative; overflow-x: auto; padding-bottom: 50px; z-index: 100">

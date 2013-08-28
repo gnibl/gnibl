@@ -5,7 +5,7 @@ class GnibsController < ApplicationController
   require 'gnibl_util'
   include GniblUtil
 
-  before_filter :signed_in_user
+  before_filter :signed_in_user, :only => [:paste_content_url, :gnibstream, :gnibpicks, :reportgnib, :comment, :upvotegnib, :create, :upvotecomment]
 
   def valid?(url)
     uri = URI.parse(url)
