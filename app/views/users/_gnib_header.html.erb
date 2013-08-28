@@ -3,8 +3,13 @@
   <table style="background: rgba(23, 174, 255, 0.3); bottom: 0px; width: 40%; margin-top: 10px; border-radius: 5px; min-width: 490px">
     <tbody>
       <tr style="background: transparent;">
-        <td class="prof-not-bd left-radius" <% if request.path == "/users/#{current_user.html_safe_username}/feed" %> style="background: rgba(0, 0, 0, 0.2)" <% end %> >
+        <td class="prof-not-bd left-radius" <% if current_user && request.path == "/users/#{current_user.html_safe_username}/feed" %> style="background: rgba(0, 0, 0, 0.2)" <% end %> >
+
+<% if current_user %>
           <a href="/users/<%=current_user.html_safe_username%>/feed">Gnibfeeds(<%=current_user.feed.count%>)</a>
+<% else %>
+   <a href="#">Gnibfeeds</a>
+<% end %>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
         <td class="prof-not-bd" <% if request.path == "/users/#{@user.html_safe_username}/followers" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
@@ -17,10 +22,17 @@
           </a>
         </td>
         <td class="prof-not-bd" style="max-width: 60px"><div class="line"></div></td>
-        <td class="prof-not-bd right-radius" <% if request.path == "/users/#{current_user.html_safe_username}" %> style="background: rgba(0, 0, 0, 0.2)" <% end %>>
+        <td class="prof-not-bd right-radius" <% if current_user && request.path == "/users/#{current_user.html_safe_username}" %> style="background: rgba(0, 0, 0, 0.2)" <% end %> >
+<% if current_user %>
           <a href="/users/<%=@user.html_safe_username%>">
             My gnibs(<%=@counts%>)
           </a>
+<% else %>
+          <a href="#">
+            User Gnibs
+          </a>
+
+<% end %>
         </td>
       </tr>
     </tbody>

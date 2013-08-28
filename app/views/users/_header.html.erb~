@@ -10,10 +10,10 @@
     height: 200px;
     width: 200px;
 <% if @user.avatar_url %>
- background: url(<%=image_path('gravata_image.png')%>);   
-<%else %>
  background: url(<%=image_path(@user.avatar_url)%>);   
-
+<%else %>
+ 
+background: url(<%=image_path('gravata_image.png')%>);   
 <% end %>
     background-size: 100% 100%;
   }
@@ -69,8 +69,12 @@
           </div>
         </td>
         <td class="border-right" style="width: 14.3%">
+ <% if current_user %>
           <a href="/users/<%=current_user.html_safe_username%>/feed" >
-            <span style="color: #17aeff">
+<% else %>     
+  <a href="/users/<%=@user.username%>/feed" >
+<% end %>
+       <span style="color: #17aeff">
               gnib<span style="color: white">file</span></span>
           </a>
         </td>

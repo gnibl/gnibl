@@ -69,14 +69,22 @@ background: url(<%=image_path('gravata_image.png')%>);
           </div>
         </td>
         <td class="border-right" style="width: 14.3%">
+ <% if current_user %>
           <a href="/users/<%=current_user.html_safe_username%>/feed" >
-            <span style="color: #17aeff">
+<% else %>     
+  <a href="#" >
+<% end %>
+       <span style="color: #17aeff">
               gnib<span style="color: white">file</span></span>
           </a>
         </td>
         <td class="border-right" style="width: 14.3%">
+<% if current_user %>
           <a href="/gnibs/<%=current_user.html_safe_username%>/gnibstream" >
-            <span style="color: #17aeff">
+<% else   %>
+   <a href="#" >
+<% end %>
+         <span style="color: #17aeff">
               gnib<span style="color: white">stream</span></span>
           </a>
         </td>
@@ -107,7 +115,7 @@ background: url(<%=image_path('gravata_image.png')%>);
   <table style="width: 100%">
     <tbody>
       <tr>
-        <% if (request.path == "/users/#{@user.html_safe_username}/feed" || request.path == "/users/#{@user.html_safe_username}") %>
+        <% if ( (current_user && request.path == "/users/#{@user.html_safe_username}/feed") || request.path == "/users/#{@user.html_safe_username}") %>
           <td class="profile-column" >
             <div id="profile-image" >
               <% if current_user?(@user) %>

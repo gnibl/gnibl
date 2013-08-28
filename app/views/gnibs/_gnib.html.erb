@@ -6,14 +6,14 @@
       <div class="gnib-count"
            style="font-size: 11px; color: white; background: rgba(23, 174, 255, 0.4);
            min-width: 60px; width: 50%; height: 42px; float: left; text-align: left">
-           <% if gnib.gniblings.count > 1 %>
+           <% if current_user && gnib.gniblings.count > 1 %>
              <%= raw(gnib.regnibbedby_div(current_user)) %>
            <% else %>
           <div id="gnib_count_<%=gnib.id%>" style="padding: 5px; text-align: left" align="center" > Regnib </div>
         <% end %>
       </div>
-
-      <% unless (current_user?@user && request.path == "/users/#{@user.html_safe_username}") %>
+<% if current_user %>
+      <% unless ( current_user?@user && request.path == "/users/#{@user.html_safe_username}") %>
         <button title="gnib it!" class="gnib-gnib-button"
                 onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"
                 style="margin: 1px 5px 0 0; background-size: 100% 100%; float: left; width: 38px; height: 38px"></button>
@@ -32,6 +32,7 @@
           </span>
         </button>
       <% end %>
+<% end %>
     </div>
     <button class="gnib" style="background:transparent; border: 0px none; margin-top: 0px; border-radius: 0px" data-gnib-id="<%=gnib.id%>"
             onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');

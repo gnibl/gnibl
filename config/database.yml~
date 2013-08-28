@@ -14,7 +14,6 @@
 development:
   adapter: postgresql
   username: marembo
-
   database: gnibl_dev
   pool: 5
   timeout: 5000
