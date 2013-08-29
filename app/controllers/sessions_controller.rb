@@ -22,11 +22,14 @@ class SessionsController < ApplicationController
         sign_in(user)
         puts "signing in user: #{user.html_safe_username}"
         puts "Username: #{user.html_safe_username}"
-        redirect_to "/users/#{user.html_safe_username}/feed"
+        redirect_to "/users/#{user.username}/feed"
       else
+   #     user = User.find_by_username('guest')
+   #     sign_in(user)
         puts "failed to authenticate:................"
         flash.now[:error] = "Invalid email/password combination"
         redirect_to "/"
+        redirect_to "/users/#{user.username}/feed"
       end
     end
   end

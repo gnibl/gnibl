@@ -1,6 +1,6 @@
 <div style="float: left; margin-left: 30px">
   notifications
 </div>
-<% if notifications_count && notifications_count > 0 %>
+<% if notifications_count > 0 %>
   <div class="gn-notifications">(<%=  notifications_count%>)</div>
 <% end %>
