@@ -9,12 +9,12 @@
   #profile-image .gnibl-button{
     height: 200px;
     width: 200px;
-<% if @user.avatar_url %>
- background: url(<%=image_path(@user.avatar_url)%>);   
-<%else %>
- 
-background: url(<%=image_path('gravata_image.png')%>);   
-<% end %>
+    background-color: rgba(0, 0, 0, 0.5);
+    <% if @user.avatar_url %>
+      background-image: url(<%=image_path(@user.avatar_url)%>);
+    <%else %>
+      background-image: url(<%=image_path('gravata_image.png')%>);
+    <% end %>
     background-size: 100% 100%;
   }
   div.user-description{
@@ -24,6 +24,9 @@ background: url(<%=image_path('gravata_image.png')%>);
     padding-top: 10px;
     padding-left: 5px;
     margin-bottom: 20px;
+  }
+  .on-dent:hover{
+    padding-left: 20px;
   }
 </style>
 <script type="text/javascript">
@@ -62,31 +65,30 @@ background: url(<%=image_path('gravata_image.png')%>);
   <table style="width: 100%; font-size: 16px" cellspacing="10">
     <tbody>
       <tr>
-        <td class="border-right" style="width: 14.3%;">
-          <div style="position: inherit; height: 100%;">
-            <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 50px; height: 50px; float: left; margin-left: 5%')%>
-            <div style="font-size: 40px; color: #17aeff; bottom: 15px !important; position: absolute; float: left; margin-left: 65px">gnibl</div>
+        <td class="border-right" style="width: 14.3%; padding: 0px">
+          <div style="position: inherit; height: 100%; padding: 0px; margin: 0px">
+            <%=image_tag(image_path('GniblBeta.png'), :style => 'width: 220px; height: 50px; float: left; margin-left: 0%; padding: 0px')%>
           </div>
         </td>
-        <td class="border-right" style="width: 14.3%">
- <% if current_user %>
-          <a href="/users/<%=current_user.html_safe_username%>/feed" >
-<% else %>     
-  <a href="#" >
-<% end %>
-       <span style="color: #17aeff">
-              gnib<span style="color: white">file</span></span>
-          </a>
+        <td class="border-right on-dent" style="width: 14.3%">
+          <% if current_user %>
+            <a href="/users/<%=current_user.html_safe_username%>/feed" >
+            <% else %>
+              <a href="#" >
+              <% end %>
+              <span style="color: #17aeff">
+                gnib<span style="color: white">file</span></span>
+            </a>
         </td>
-        <td class="border-right" style="width: 14.3%">
-<% if current_user %>
-          <a href="/gnibs/<%=current_user.html_safe_username%>/gnibstream" >
-<% else   %>
-   <a href="#" >
-<% end %>
-         <span style="color: #17aeff">
-              gnib<span style="color: white">stream</span></span>
-          </a>
+        <td class="border-right on-dent" style="width: 14.3%">
+          <% if current_user %>
+            <a href="/gnibs/<%=current_user.html_safe_username%>/gnibstream" >
+            <% else   %>
+              <a href="#" >
+              <% end %>
+              <span style="color: #17aeff">
+                gnib<span style="color: white">stream</span></span>
+            </a>
         </td>
         <td class="border-right" style="width: 14.3%;">
           <div class="dropdown" id="notification_menu" >
@@ -99,10 +101,10 @@ background: url(<%=image_path('gravata_image.png')%>);
             </ul>
           </div>
         </td>
-        <td id="settings" class="border" style="width: 14.3%">
+        <td id="settings" class="border on-dent" style="width: 14.3%">
           <button class="flat-style" style="color: #bbb; font-size: 20px">settings</button>
         </td>
-        <td class="centered" style="width: 14.3%">
+        <td class="centered on-dent" style="width: 14.3%">
           <div id="setting-header" class="setting-header" style="display: block">
             <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold; font-size: 20px"%>
           </div>

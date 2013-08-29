@@ -43,7 +43,7 @@
     <%= image_tag(image_path(user.avatar_url),
       :class => 'gnib', :id=>"gnib_#{user.id}",
       :onclick=>"location.href = '/users/#{user.html_safe_username}'",
-      :style=>"margin-top: 0px; border-radius: 0px")%>
+      :style=>"margin-top: 0px; border-radius: 0px; background-color: rgba(0, 0, 0, 0.5);")%>
     <!-- This is visible before hovering -->
     <div id = "thumbnail-view-name_<%=user.id%>"
          class="thumbnail-view"
@@ -61,7 +61,7 @@
         <div style="align: center; width:100%; border-bottom: 1px solid white; "> <!-- holds name indicator-->
           <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 20px; display: table-cell;
                vertical-align: middle; text-align:center; width:100%; align:center;">
-            <%= user.name %>  <%= user.surname %>
+               <%= user.name %>  <%= user.surname %>
           </div>
         </div>
         <div id="thumbnail-desc-msg_<%=user.id%>" style="height: auto; width: 100%; line-height: auto;">

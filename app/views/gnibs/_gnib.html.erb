@@ -54,10 +54,10 @@
         <a href = "/users/<%=gnib.user.username%>">
           <div id = "thumbnail-name_<%=gnib.id%>" class = "thumbnail-name" style="color: #17aeff;">
             <%= gnib.user.name %> <%= gnib.user.surname %>
-
           </div>
         </a>
-        <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px;">
+        <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc"
+             style="width: 40%; float: left; margin-bottom: 10px;">
           <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile" )%>
         </div>
         <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
