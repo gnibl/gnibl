@@ -292,9 +292,10 @@ class GnibsController < ApplicationController
     term = params[:term]
     @user = current_user
     @gnib = @user.gnibs.build
-    @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").limit(9)
-    @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
+    @gnibs = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')").limit(15)
+    @counts = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')").count
     @page_count = (@counts / 9).ceil;
+    @notifications = @user.notifications.limit(5)
     @notifications_count = current_user.notifications.where("read = :state", :state => false).count
   end
 
@@ -305,8 +306,10 @@ class GnibsController < ApplicationController
     @page *= 9;
     @user = current_user
     @gnib = @user.gnibs.build
-    @gnibs = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").offset(@page).limit(9)
-    @counts = Gnib.where("to_tsvector(description) @@ plainto_tsquery('"+term+"')").count
+    @notifications = @user.notifications.limit(5)
+    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    @gnibs = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')").offset(@page).limit(15)
+    @counts = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')").count
     @page_count = (@counts / 9).ceil;
     respond_to do |format|
       format.js {render "shared/gnibs"}

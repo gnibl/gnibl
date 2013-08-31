@@ -164,6 +164,7 @@
             </div>
           </div>
         </div>
+<% unless gnib.video %>
         <div id="gnibl-modal-view" class="thumbnail-view"
              style="overflow: hidden; bottom: 0px;
              border-top-left-radius: 10px; border-top-right-radius: 10px; display: block; height: auto">
@@ -171,7 +172,7 @@
             <a href="/users/<%=gnib.user.html_safe_username%>" style="color: #17aeff;"><%=gnib.user.name%></a>
             <span style="font-size: 15px">  {<%= counts %> comments}</span>
           </div>
-          <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: none; margin: auto">
+          <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: block; margin: auto">
             <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
               <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
             </div>
@@ -184,8 +185,32 @@
             </div>
           </div>
         </div>
+<% end %>
       </div>
     </div>
+<% if gnib.video %>
+        <div id="gnibl-modal-view" class="thumbnail-view"
+             style="overflow: hidden; bottom: 0px; position: relative;
+             border-top-left-radius: 10px; border-top-right-radius: 10px; display: block; height: auto">
+          <div class="gnibl-modal-user-section">
+            <a href="/users/<%=gnib.user.html_safe_username%>" style="color: #17aeff;"><%=gnib.user.name%></a>
+            <span style="font-size: 15px">  {<%= counts %> comments}</span>
+          </div>
+          <div id="thumbnail-modal-view-mod_<%=gnib.id%>" style="width: 100%; display: block; margin: auto">
+            <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+              <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
+            </div>
+            <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
+                 style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+              <p><%= gnib.parsed_description%></p>
+              <% if gnib.link %>
+                <p><a target="_blank" href="<%= gnib.link %>">See what is here?</a></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+<% end %>
+
     <div id="comment-panel" style="width: 100%">
       <% if comments.any? %>
         <%= render :partial=>"shared/gnib_comment", :collection=>comments, :as=>:comment  %>
