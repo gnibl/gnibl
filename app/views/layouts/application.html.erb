@@ -93,6 +93,22 @@
         height: 100% !important;
       }
     </style>
+<%#*google analytics code%>
+    <script type="text/javascript">
+      (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-43539415-2', 'gnibl.com');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body id="body" onload="init();">
     <div class="frame-outer" id = "mainframe">
@@ -377,7 +393,7 @@
         }
       });
 
-//for the use by content -url image loading
+      //for the use by content -url image loading
       function resizeDataDisplay() {
         gnib_thumnail_height = 320;
         var width = (gnib_thumnail_height - 5) / 1.2;
