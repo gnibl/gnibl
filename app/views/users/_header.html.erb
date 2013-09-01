@@ -27,7 +27,7 @@
   }
   .on-dent:hover{
     background: rgba(0, 0, 0, 0.9);
-    font-size: 25px;
+    font-size: 30px !important;
   }
 </style>
 <script type="text/javascript">
@@ -67,8 +67,14 @@
     <tbody>
       <tr>
         <td class="border-right" style="width: 14.3%; padding: 0px">
-          <div style="position: inherit; height: 100%; padding: 0px; margin: 0px">
-            <%=image_tag(image_path('GniblBeta.png'), :style => 'width: 220px; height: 50px; float: left; margin-left: 0%; padding: 0px')%>
+          <%#*<div style="position: inherit; height: 100%; padding: 0px; margin: 0px">%>
+            <%#=image_tag(image_path('GniblBeta.png'), :style => 'width: 220px; height: 50px; float: left; margin-left: 0%; padding: 0px')%>
+          <%#*</div>%>
+          <div style="position: inherit; height: 100%;">
+            <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 50px; height: 50px; float: left; margin-left: 5%')%>
+            <div style="font-size: 30px; color: #17aeff; bottom: 15px !important; position: absolute; float: left; margin-left: 65px">
+              gnibl<sup style="color: white; margin-left: 5px; font-size: 20px; font-family: ariel">beta</sup>
+            </div>
           </div>
         </td>
         <td class="border-right on-dent" style="width: 14.3%">
@@ -91,23 +97,23 @@
                 gnib<span style="color: white">stream</span></span>
             </a>
         </td>
-        <td class="border-right" style="width: 14.3%;">
+        <td class="border-right on-dent" style="width: 14.3%;">
           <div class="dropdown" id="notification_menu" >
             <a id="notificationDropDownCount" class="dropdown-toggle" data-toggle="dropdown" href="#notification_menu">
               <%= render :partial=>"notifications/notification_header", :locals=>{:notifications_count => @notifications_count} %>
             </a>
             <ul id="notificationDropDownPanel" class="dropdown-menu" role="menu" aria-labelledby="dLabel"
-                style="top: 27px; width: 365px; overflow-x: hidden;  height: 400px; overflow-y: auto !important;">
+                style="top: 27px; width: 365px; overflow-x: hidden;  height: 400px; overflow-y: auto !important; font-size: 15px">
                   <%= render "/users/notification_data"%>
             </ul>
           </div>
         </td>
         <td id="settings" class="border on-dent" style="width: 14.3%">
-          <button class="flat-style" style="color: #bbb; font-size: 20px">settings</button>
+          <%= link_to "settings", "/settings", :style => "color: white;"%>
         </td>
         <td class="centered on-dent" style="width: 14.3%">
           <div id="setting-header" class="setting-header" style="display: block">
-            <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold; font-size: 20px"%>
+            <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold;"%>
           </div>
         </td>
       </tr>
