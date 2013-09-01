@@ -185,7 +185,7 @@
                       <div class="user-description">
                         <%= @user.description %>
                       </div>
-                      <div id="follow-option_<%=@user.id%>" style="width:100%; margin-top: 5px">
+                      <div id="follow-option_<%=@user.id%>" style="width:100%; margin-top: 5px; text-align: center">
                         <%= render(:partial => "/users/inn_follow", :locals => {:user => @user}) if signed_in?%>
                       </div>
                     <% end %>
