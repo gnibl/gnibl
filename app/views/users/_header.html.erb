@@ -29,6 +29,16 @@
     background: rgba(0, 0, 0, 0.9);
     font-size: 30px !important;
   }
+  input[type="submit"].search-gnibl{
+    border: 0px none;
+    width: 40px;
+    height: 40px !important;
+    padding: 0px;
+    margin: 10px 150px 0px 0px;
+    float: right;
+    background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
+    background-size: 100% 100%;
+  }
 </style>
 <script type="text/javascript">
   String.prototype.endsWith = function(suffix) {
@@ -67,9 +77,9 @@
     <tbody>
       <tr>
         <td class="border-right" style="width: 14.3%; padding: 0px">
-          <%#*<div style="position: inherit; height: 100%; padding: 0px; margin: 0px">%>
-            <%#=image_tag(image_path('GniblBeta.png'), :style => 'width: 220px; height: 50px; float: left; margin-left: 0%; padding: 0px')%>
-          <%#*</div>%>
+<%#*<div style="position: inherit; height: 100%; padding: 0px; margin: 0px">%>
+<%#=image_tag(image_path('GniblBeta.png'), :style => 'width: 220px; height: 50px; float: left; margin-left: 0%; padding: 0px')%>
+<%#*</div>%>
           <div style="position: inherit; height: 100%;">
             <%=image_tag(image_path('FINALE-FINALE!!-_03.png'), :style => 'width: 50px; height: 50px; float: left; margin-left: 5%')%>
             <div style="font-size: 30px; color: #17aeff; bottom: 15px !important; position: absolute; float: left; margin-left: 65px">
@@ -251,9 +261,7 @@
               <div class="what" title="Search any gnibs or gniblers" style="float: left; margin-left: 5px">?</div>
             </div>
             <div style="clear: both"></div>
-            <input value="" type="submit" class="gnibl-file-log" title="search gnibs/gniblers"
-                   style="border: 0px none; width: 40px; height: 40px !important; background: url(<%=image_path('FINALE-FINALE!!-_03.png')%>) no-repeat;
-                   background-size: 100% 100%; padding: 0px; margin: 0px; margin-right: 150px; float: right"/>
+            <input value="" type="submit" class="gnibl-file-log search-gnibl" title="search gnibs/gniblers"/>
           </form>
         </td>
       </tr>
