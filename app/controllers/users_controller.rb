@@ -138,8 +138,16 @@ class UsersController < ApplicationController
       @current_page = sent_page.to_i
     end
     @page = @current_page * 9
+    type = params[:type]
+    if type
+       if type == 'video'
+	    @gnibs = @user.feed.offset(@page).limit(9).where("video = true")
+       else
+           @gnibs = @user.feed.offset(@page).limit(9).where("video is null")
+       end
+    else
     @gnibs = @user.feed.offset(@page).limit(9)
-
+    end
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build

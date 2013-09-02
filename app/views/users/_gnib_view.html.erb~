@@ -1,9 +1,49 @@
 <%= render "/users/header" %>
 <div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); ">
   <div style="width:100%;">
-    <%= render "/users/gnib_header" %>
+    <% if current_user %>
+      <%= render "/users/gnib_header" %>
+    <% end %>
+    <div align="center" style="width: 100%">
+      <style type="text/css">
+        div.article, div.video{
+          width: 80px;
+          height: 27px;
+          background: rgba(0, 0, 0, 0.7);
+          float: left;
+          margin-right: 2px;
+          font-size: 20px;
+          padding-top: 3px;
+          color: #a7eaff;
+          cursor: pointer;
+        }
+        div.video{
+          padding-left: 20px;
+          text-align: left;
+          border-bottom-left-radius: 30px;
+          border-top-left-radius: 30px;
+        }
+        div.article{
+          padding-right: 20px;
+          text-align: right;
+          border-bottom-right-radius: 30px;
+          border-top-right-radius: 30px;
+        }
+      </style>
+      <div align="center" style="width: 260px">
+        <div class="video">
+          videos
+        </div>
+        <div class="article">
+
+         <a href = "<%= request.path%>?type=articles"> articles </a>
+
+        </div>
+      </div>
+    </div>
+
     <div id="gnib_main_panel_0" class="gnib-main-panel"
-             data-page="<%=@current_page%>" data-pages="<%=@page_count%>"
+         data-page="<%=@current_page%>" data-pages="<%=@page_count%>"
          style="width: 100%; background: transparent; position: relative; overflow-x: auto; padding-bottom: 50px; z-index: 100">
       <div id="gnib_panel_holder"
            style="width: auto; background: transparent; display: table-cell; vertical-align: top; overflow-x: auto">

@@ -136,7 +136,20 @@ class GnibsController < ApplicationController
     @page *= 9
     p "@page #{@page}"
     # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
+    type = params[:type]
+    if type
+        if type == 'video'
+         puts 'video'
+         @gnibs = Gnib.all(:limit => 9, :offset => @page, :conditions=> ["video = true"])
+         else
+         puts 'articles'
+         @gnibs = Gnib.all(:limit => 9, :offset => @page, :conditions => ["video is null"])    
+         end
+    else
+    puts 'unspecified'
     @gnibs = Gnib.all(:limit => 9, :offset => @page)
+    end
+    
     @user = current_user
     @counts = Gnib.count
     @current_page = 0;

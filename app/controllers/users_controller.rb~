@@ -69,7 +69,7 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-      redirect_to "/users/#{current_user}/feed"
+      redirect_to "/users/#{current_user.username}/feed"
       return
     end
     @user = User.new
