@@ -13,7 +13,7 @@ class UserMailer < ActionMailer::Base
 
  def send_verification_code(url,user)
    message = "Thank you for joining gnibl, 
-            <a href = 'http://#{url}/users/validateemail?email=#{user.email}&code=#{user.validation_code}'>
+            <a href = 'http://#{url}/users/validateemail?code=#{user.validation_code}'>
             click this link</a> 
            to verify your email address and get gnibbing"
    to = user.name+"<"+user.email+">"
@@ -22,4 +22,14 @@ class UserMailer < ActionMailer::Base
       :content_type => "text/html",
       :body => message)
 end
+
+def email_notification(user,message)
+	link = message +"</br> <a href = 'http://www.gnibl.com/users/#{user.username}'> click here to go to gnibl </a>"
+	to = user.name + "<"+ user.email + ">"
+	mail(:to => to,
+             :subject=> "Gnibl: "+message[0..15],
+             :content_type => "text/html",
+             :body => link)
+end
+
 end

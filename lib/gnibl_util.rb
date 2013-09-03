@@ -136,11 +136,15 @@ module GniblUtil
       message = "@"+comment.user.name+" commented on your gnib"
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :message => message)
     else
-      user = "@"+comment.user.name
-      msg = user +", "+nots[0].message
-      nots[0].update_attribute("message",msg)
+      user_name = "@"+comment.user.name
+      message = user_name +", "+nots[0].message
+      nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
+    user = gnib.user
+puts '--------here remove this'
+    m = UserMailer.delay.email_notification(user,message)
+
   rescue Exception => e
     puts "Exception #{e}"
   end
@@ -162,14 +166,17 @@ module GniblUtil
 
   def notify_past_commenter(past_commenter_id, gnib_id, commenter_name)
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => past_commenter_id, :gnib_id => gnib_id)
+    message = ''
     if nots.empty?
       message = "@"+commenter_name+" posted a comment "
       Notification.create(:user_id => past_commenter_id, :gnib_id => gnib_id, :message => message)
     else
-      msg = "@"+commenter_name+" posted a comment " +", "+nots[0].message
-      nots[0].update_attribute("message",msg)
+      message = "@"+commenter_name+" posted a comment " +", "+nots[0].message
+      nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
+   # user = User.find(past_commenter_id)
+   # UserMailer::email_notification(user,message).delay
   rescue Exception => e
     puts "Exception #{e}"
   end

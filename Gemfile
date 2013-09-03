@@ -18,6 +18,8 @@ gem 'geoip'
 #gem 'ruby', '2.0.0'
 
 gem 'jquery-rails','2.0.2'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 group :development, :test do
        gem 'rspec-rails'

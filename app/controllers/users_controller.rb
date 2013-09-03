@@ -288,8 +288,7 @@ puts 'unspecified priv'
     @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9)
     @counts =  Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs).count
     end
-   # @gnibs = @user.gnibs.offset(page).limit(9)
-    
+   # @gnibs = @user.gnibs.offset(page).limit(9)    
     puts sent_page
     puts page
     puts @gnibs.count

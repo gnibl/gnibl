@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
   require 'base64'
+  require 'delayed_job'
   default :from => "gniblteam@gmail.com"
   def invite_to_gnibl(gnib, recipient)
     @gnib = gnib
@@ -22,4 +23,14 @@ class UserMailer < ActionMailer::Base
       :content_type => "text/html",
       :body => message)
 end
+
+def email_notification(user,message)
+	link = message +"</br> <a href = 'http://www.gnibl.com/users/#{user.username}'> click here to go to gnibl </a>"
+	to = user.name + "<"+ user.email + ">"
+	mail(:to => to,
+             :subject=> "Gnibl: "+message[0..15],
+             :content_type => "text/html",
+             :body => link)
+end
+
 end

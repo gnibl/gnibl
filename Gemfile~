@@ -14,10 +14,11 @@ gem 'aws-sdk'
 gem 'rmagick'
 gem 'nokogiri'
 gem 'geoip'
-
-
+#gem 'ruby' , '1.9.2'
+#gem 'ruby', '2.0.0'
 
 gem 'jquery-rails','2.0.2'
+gem 'delayed_job'
 
 group :development, :test do
        gem 'rspec-rails'
@@ -35,7 +36,7 @@ end
 
 #production gems
 #group :production do
-gem 'pg' 
+gem 'pg'
 #end
 
 # Gems used only for assets and not required
@@ -50,7 +51,6 @@ group :assets do
   gem 'uglifier', '1.2.3'
 end
 
-gem 'jquery-rails','2.0.2'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
