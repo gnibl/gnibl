@@ -77,6 +77,7 @@ module GniblUtil
   end
 
   def send_notifications_on_comment(gnib_id, comment)
+puts 'sending notifications on comment'
     @gnib = Gnib.find(gnib_id)
     notify_gnib_commenters(gnib_id,comment)
     send_notifications_ontags(@gnib,comment.user, comment.description)
@@ -143,8 +144,8 @@ module GniblUtil
     end
     user = gnib.user
 puts '--------here remove this'
-    m = UserMailer::email_notification(user,message)
-    m.delay
+    m = UserMailer.delay.email_notification(user,message)
+
   rescue Exception => e
     puts "Exception #{e}"
   end

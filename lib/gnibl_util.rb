@@ -77,6 +77,7 @@ module GniblUtil
   end
 
   def send_notifications_on_comment(gnib_id, comment)
+
     @gnib = Gnib.find(gnib_id)
     notify_gnib_commenters(gnib_id,comment)
     send_notifications_ontags(@gnib,comment.user, comment.description)
