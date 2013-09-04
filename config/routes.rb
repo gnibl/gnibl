@@ -36,6 +36,7 @@ Gnibl::Application.routes.draw do
       get 'paste_content_url'
       get 'paste_image_url'
       get 'upvotegnib'
+      get 'display'
     end
   end
 

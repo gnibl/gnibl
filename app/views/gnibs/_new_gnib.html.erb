@@ -146,6 +146,7 @@
     border-radius: 5px
   }
 </style>
+<% if @gnib %>
 <%= form_for(@gnib) do |f| %>
   <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
   <input id="current_term_34783784980" type="hidden" name="term" value=""/>
@@ -183,6 +184,7 @@
     </div>
   </div>
 <% end %>
+<% end%>
 <script type="text/javascript">
   document.getElementById('current_page_3447384734883').value = current_page;
   document.getElementById('current_url_34783784980').value = location.pathname;

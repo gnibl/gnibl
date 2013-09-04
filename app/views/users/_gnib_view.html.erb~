@@ -32,7 +32,7 @@
       </style>
       <div align="center" style="width: 260px">
         <div class="video">
-          videos
+       <a href = "<%= request.path%>?type=video">   videos </a>
         </div>
         <div class="article">
 

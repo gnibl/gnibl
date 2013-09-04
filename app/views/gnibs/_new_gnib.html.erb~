@@ -58,9 +58,19 @@
 <style type="text/css">
   input[type="text"].paste-content-field{
     border: 0px none !important;
-    margin:0% 5%;
+    margin:4% 5%;
     width: 90%;
-    background: rgba(204, 122, 204, 0.3);
+    height: 50px;
+    background: white;
+  }
+  input[type="text"].paste-content-field:hover{
+    box-shadow: 1px 1px 3px 3px white;
+    -webkit-transition: all 5s linear;
+    -o-transition: all 5s linear;
+    -moz-transition: all 5s linear;
+    -ms-transition: all 5s linear;
+    -kthtml-transition: all 5s linear;
+    transition: all 5s linear;
   }
   button.find-image{
     padding: 5px;
@@ -78,7 +88,7 @@
     min-height: 50%;
   }
   #content_url{
-    background: rgba(255, 70, 45, 0.9);
+    background: rgba(23, 174, 255, 0.8);
   }
   #content_url_images{
     display: block;
@@ -119,7 +129,7 @@
   }
   .content-url-comment{
     width: 90%; margin: auto;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.6);
     margin-top: 5px;
     display: none;
     margin-bottom: 5px;
@@ -136,6 +146,7 @@
     border-radius: 5px
   }
 </style>
+
 <%= form_for(@gnib) do |f| %>
   <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
   <input id="current_term_34783784980" type="hidden" name="term" value=""/>
@@ -145,8 +156,8 @@
        class="gnib-thumbnail new_gnib_thumbnail"
        style="float: left;  position: relative; margin-top: 1px; margin-bottom: -1px">
     <div id="content_url" style="margin-top: -10px; padding-top: 0px">
-      <h3>Add Url</h3>
-      <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"http://",
+      <h3 style="padding-top: 6px">Gnib something</h3>
+      <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"Add url...",
         :class=>"paste-content-field",
         :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
       <div id="find-image-panel" align="center" style="width: 100%">
@@ -166,13 +177,14 @@
       <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
         :class=>"comment-field", :id=>"gnib_description",
-        :onkeypress => "return enforceMaxlength('gniblDescription', 76);", :maxlength => "77"%>
+        :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
         :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
         :onclick=>"sanitize();", :title=>"Gnib"%>
     </div>
   </div>
 <% end %>
+
 <script type="text/javascript">
   document.getElementById('current_page_3447384734883').value = current_page;
   document.getElementById('current_url_34783784980').value = location.pathname;

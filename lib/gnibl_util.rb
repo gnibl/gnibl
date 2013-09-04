@@ -134,7 +134,7 @@ module GniblUtil
     gnib_id = gnib.id
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => user_id, :gnib_id => gnib_id)
     if nots.empty?
-      message = "@"+comment.user.name+" commented on your gnib"
+      message = "@"+comment.user.name+" commented on your gnib "
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :message => message)
     else
       user_name = "@"+comment.user.name
@@ -142,9 +142,10 @@ module GniblUtil
       nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
+   	link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"
     user = gnib.user
 puts '--------here remove this'
-    m = UserMailer.delay.email_notification(user,message)
+    m = UserMailer.delay.email_notification(user,link)
 
   rescue Exception => e
     puts "Exception #{e}"

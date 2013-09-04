@@ -77,7 +77,7 @@ module GniblUtil
   end
 
   def send_notifications_on_comment(gnib_id, comment)
-puts 'sending notifications on comment'
+
     @gnib = Gnib.find(gnib_id)
     notify_gnib_commenters(gnib_id,comment)
     send_notifications_ontags(@gnib,comment.user, comment.description)
@@ -134,7 +134,7 @@ puts 'sending notifications on comment'
     gnib_id = gnib.id
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => user_id, :gnib_id => gnib_id)
     if nots.empty?
-      message = "@"+comment.user.name+" commented on your gnib"
+      message = "@"+comment.user.name+" commented on your gnib "
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :message => message)
     else
       user_name = "@"+comment.user.name
@@ -142,9 +142,10 @@ puts 'sending notifications on comment'
       nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
+   	link = message +"</br> <a href = 'http://www.gnibl.com/users/#{user.username}'> click here to go to gnibl </a>"
     user = gnib.user
 puts '--------here remove this'
-    m = UserMailer.delay.email_notification(user,message)
+    m = UserMailer.delay.email_notification(user,link)
 
   rescue Exception => e
     puts "Exception #{e}"

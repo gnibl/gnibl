@@ -123,10 +123,21 @@ class GnibsController < ApplicationController
     end # endif
   end
 
+def display
+gnib_id = params[:gnib_id]
+#@gnibs = Gnib.where("id = ?",gnib_id)
+@gnibs =Gnib.all(:limit => 4) 
+gnib = Gnib.find(gnib_id)
+@gnibs[0] = gnib
+@user = gnib.user
+@counts = 4
+@page_count = 1
+@page = 0
+@current_page = 0
+end
+
   def gnibstream
-    @city_id = current_user.city
-    current_page = params[:page]
-    p "Current page #{current_page}"
+    current_page = params[:page]   
     @page = 0
     if current_page
       @page = current_page.to_i
@@ -135,7 +146,6 @@ class GnibsController < ApplicationController
     end
     @page *= 9
     p "@page #{@page}"
-    # @gnibs = Gnib.where("city = :city_id", :city_id => @city_id).limit(9)
     type = params[:type]
     if type
         if type == 'video'
@@ -328,6 +338,8 @@ class GnibsController < ApplicationController
       format.js {render "shared/gnibs"}
     end
   end
+
+
 
   def create
     ip = request.remote_ip
