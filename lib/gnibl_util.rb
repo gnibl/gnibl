@@ -191,9 +191,8 @@ module GniblUtil
       if nots.empty?
         message = "@"+sender.name+" tagged you in a gnib"
         Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
-        link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"
-    	user = gnib.user
-        m = UserMailer.delay.email_notification(user,link)
+        link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"    	
+        m = UserMailer.delay.email_notification(target_user,link)
       end
     end
   end

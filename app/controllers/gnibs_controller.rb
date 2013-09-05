@@ -35,6 +35,20 @@ class GnibsController < ApplicationController
     return youtube_id
   end
 
+def get_youtube_title(youtube_id)
+    title_url = "http://youtube.com/get_video_info?video_id=#{youtube_id}"
+    file = open(title_url,'rb').read    
+    file_str = file.to_s.split('title=')
+    title_part = file_str[1]
+    title_part = title_part.split('&')
+    title_part = title_part[0]
+    title_part = title_part.split('<')
+    title = title_part[0]
+    title = URI.decode(title)
+    title = title.gsub('+',' ')
+    return title
+end
+
   def paste_content_url
     @video = false
     @urls = ['']
@@ -44,7 +58,8 @@ class GnibsController < ApplicationController
     if youtube_id && ! youtube_id.empty?
       begin
         locate = URI.parse("http://img.youtube.com/vi/#{youtube_id}/hqdefault.jpg")
-        @video = true
+        @video = true	
+        @title = get_youtube_title(youtube_id)
         @urls[0] = locate
         file = open(locate,'rb').read
         @image_sources[0]  = Base64.encode64(file)
