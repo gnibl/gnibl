@@ -44,6 +44,8 @@ def get_youtube_title(youtube_id)
     title_part = title_part[0]
     title_part = title_part.split('<')
     title = title_part[0]
+    title = URI.decode(title)
+    title = title.gsub('+',' ')
     return title
 end
 
