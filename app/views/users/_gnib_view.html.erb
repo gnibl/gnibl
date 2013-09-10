@@ -1,9 +1,9 @@
 <%= render "/users/header" %>
 <div style="position: relative; margin-top: 25px; background: rgba(0, 0, 0, 0.5); ">
   <div style="width:100%;">
-     
-      <%= render "/users/gnib_header" %>
-    
+
+    <%= render "/users/gnib_header" %>
+
     <div align="center" style="width: 100%">
       <style type="text/css">
         div.article, div.video{
@@ -32,11 +32,11 @@
       </style>
       <div align="center" style="width: 260px">
         <div class="video">
-       <a href = "<%= request.path%>?type=video">   videos </a>
+          <a href = "<%= request.path%>?type=video">   videos </a>
         </div>
         <div class="article">
 
-         <a href = "<%= request.path%>?type=articles"> articles </a>
+          <a href = "<%= request.path%>?type=articles"> articles </a>
 
         </div>
       </div>
@@ -52,6 +52,29 @@
             <%= render :partial=>"gnibs/new_gnib" %>
           <% end %>
           <% if @gnibs.any? %>
+
+            <script type="text/javascript">
+              var gnibs = new Array();
+              var gnib_index = 0;
+  <% @gnibs.each do |gnib| %>
+                gnibs.push(<%=gnib.id%>);
+  <% end %>
+              function next() {
+                gnib_index = (gnib_index + 1) % gnibs.length;
+                console.log('next gnib: ' + gnib_index);
+                var gnib_id = gnibs[gnib_index];
+                doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
+              }
+
+              function previous() {
+                if (gnib_index === 0) {
+                  gnib_index = gnibs.length;
+                }
+                gnib_index = (gnib_index - 1) % gnibs.length;
+                var gnib_id = gnibs[gnib_index];
+                doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
+              }
+            </script>
             <%= render @gnibs %>
           <% end %>
         </div>
