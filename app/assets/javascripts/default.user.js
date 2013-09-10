@@ -30,5 +30,4 @@ function doAjaxSubmit(data, url, callback) {
   });
   return false; //if called within a form in order to avoid default form submit
 }
-;
 

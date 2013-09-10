@@ -52,29 +52,6 @@
             <%= render :partial=>"gnibs/new_gnib" %>
           <% end %>
           <% if @gnibs.any? %>
-
-            <script type="text/javascript">
-              var gnibs = new Array();
-              var gnib_index = 0;
-  <% @gnibs.each do |gnib| %>
-                gnibs.push(<%=gnib.id%>);
-  <% end %>
-              function next() {
-                gnib_index = (gnib_index + 1) % gnibs.length;
-                console.log('next gnib: ' + gnib_index);
-                var gnib_id = gnibs[gnib_index];
-                doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
-              }
-
-              function previous() {
-                if (gnib_index === 0) {
-                  gnib_index = gnibs.length;
-                }
-                gnib_index = (gnib_index - 1) % gnibs.length;
-                var gnib_id = gnibs[gnib_index];
-                doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
-              }
-            </script>
             <%= render @gnibs %>
           <% end %>
         </div>
