@@ -61,10 +61,10 @@ class UsersController < ApplicationController
 
 
   def notifications
-   if current_user
-    @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
-    @notifications_count = current_user.notifications.where("read = :state", :state => false).count
-  end
+    if current_user
+      @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
+      @notifications_count = current_user.notifications.where("read = :state", :state => false).count
+    end
   end
 
   def new
@@ -140,13 +140,13 @@ class UsersController < ApplicationController
     @page = @current_page * 9
     type = params[:type]
     if type
-       if type == 'video'
-	    @gnibs = @user.feed.offset(@page).limit(9).where("video = true")
-       else
-           @gnibs = @user.feed.offset(@page).limit(9).where("video is null")
-       end
+      if type == 'video'
+        @gnibs = @user.feed.offset(@page).limit(9).where("video = true")
+      else
+        @gnibs = @user.feed.offset(@page).limit(9).where("video is null")
+      end
     else
-    @gnibs = @user.feed.offset(@page).limit(9)
+      @gnibs = @user.feed.offset(@page).limit(9)
     end
     @counts = @user.feed.count
     @page_count = (@counts / 9).ceil;
@@ -273,22 +273,21 @@ class UsersController < ApplicationController
     regnibbed_gnibs = @user.gniblings.order("updated_at DESC").offset(page).limit(9)
     type = params[:type]
     if type
-       if type == 'video'
-puts 'video priv'
-	        @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9).where("video = true")
-@counts =  Gnib.where("user_id = ? or id in (?) and video = true",@user.id.to_s,regnibbed_gnibs).count
-       else
-puts 'articles priv'
-              @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id))
-.offset(page).limit(9).where("video is null")
-@counts =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
-       end
+      if type == 'video'
+        puts 'video priv'
+        @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9).where("video = true")
+        @counts =  Gnib.where("user_id = ? or id in (?) and video = true",@user.id.to_s,regnibbed_gnibs).count
+      else
+        puts 'articles priv'
+        @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9).where("video is null")
+        @counts =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
+      end
     else
-puts 'unspecified priv'
-    @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9)
-    @counts =  Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs).count
+      puts 'unspecified priv'
+      @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9)
+      @counts =  Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs).count
     end
-   # @gnibs = @user.gnibs.offset(page).limit(9)    
+    # @gnibs = @user.gnibs.offset(page).limit(9)
     puts sent_page
     puts page
     puts @gnibs.count
