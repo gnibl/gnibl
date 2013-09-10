@@ -36,7 +36,7 @@
     </div>
     <button class="gnib" style="background:transparent; border: 0px none; margin-top: 0px; border-radius: 0px"
             data-gnib-id="<%=gnib.id%>"
-            onclick="doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
+            onclick="resetCurrentIndex(<%= gnib.id%>); doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
                         return false;">
               <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}",
                 :style=>"height: 100%; border-radius: 0px !important; margin-top: 0px !important;")%>

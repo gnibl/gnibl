@@ -418,6 +418,15 @@
         var gnib_id = gnibs[gnib_index];
         doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
       }
+
+      function resetCurrentIndex(gnib_id) {
+        gnib_index = gnibs.indexOf(gnib_id);
+        console.log('resetCurrentIndex: '+gnib_index);
+      }
+      function resetGnibs(new_gnibs){
+        gnibs = new_gnibs;
+        gnib_index = 0;
+      }
     </script>
     <div id="gnibl-modal-mp" class="gnibl-modal-mp" style="overflow-y: auto; width: 100% "></div>
   </body>

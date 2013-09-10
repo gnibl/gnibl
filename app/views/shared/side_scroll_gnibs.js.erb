@@ -1,1 +1,8 @@
 $('#gnib_panel').append('<%= escape_javascript(render  @gnibs) %>');
+var new_gnibs = new Array();
+<% if @gnibs %>
+  <% @gnibs.each do |gnib| %>
+    new_gnibs.push(<%=gnib.id%>);
+  <% end %>
+  resetGnibs(new_gnibs);
+<% end %>
