@@ -149,6 +149,9 @@ class UsersController < ApplicationController
       @gnibs = @user.feed.offset(@page).limit(9)
     end
     @counts = @user.feed.count
+#this value should be used for display only
+    regnibbed_gnibs = @user.gniblings.order("updated_at DESC")
+    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     notifications();

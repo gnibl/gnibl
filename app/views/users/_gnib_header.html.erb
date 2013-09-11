@@ -25,7 +25,7 @@
         <td class="prof-not-bd right-radius" <% if current_user && request.path == "/users/#{current_user.html_safe_username}" %> style="background: rgba(0, 0, 0, 0.2)" <% end %> >
 <% if current_user %>
           <a href="/users/<%=@user.html_safe_username%>">
-            My gnibs(<%=@counts%>)
+            My gnibs(<%=@mygnibs_count%>)
           </a>
 <% else %>
           <a href="#">
