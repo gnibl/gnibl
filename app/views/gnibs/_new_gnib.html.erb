@@ -128,11 +128,11 @@
     margin-bottom: 0px;
   }
   .content-url-comment{
-    width: 90%; margin: auto;
+    width: 100% !important;
+    height: 160px !important;
+    margin: 0px !important;
     background: rgba(0, 0, 0, 0.6);
-    margin-top: 5px;
     display: none;
-    margin-bottom: 5px;
     position: relative;
     border-bottom-right-radius: 25px;
   }
@@ -144,6 +144,16 @@
     color: #17aeff;
     height: 99%;
     border-radius: 5px
+  }
+  .gnibl-icon{
+    width: 70px !important;
+    height: 30px !important;
+    bottom: 0px !important;
+    margin: 0px !important;
+    right: 0px !important;
+    background: rgb(23, 174, 255) !important;
+    border-radius: 2px !important;
+    position: absolute !important;
   }
 </style>
 <% if @gnib %>
@@ -178,8 +188,10 @@
         <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
           :class=>"comment-field", :id=>"gnib_description",
           :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
-        <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
-          :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
+        <%= f.submit "Gnib It!", :class=>"gnibl-icon", :id=>"submitButton",
+          :style=>"width: 90px !important; height: 35px !important;
+    bottom: 0px; right: 0px; position: absolute; margib: 0px !important; background: rgba(23, 174, 255, 0.8) !important;
+    border-radius: 2px !important; color: white; font-weight: bold",
           :onclick=>"sanitize();", :title=>"Gnib"%>
       </div>
     </div>
