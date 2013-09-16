@@ -147,43 +147,43 @@
   }
 </style>
 <% if @gnib %>
-<%= form_for(@gnib) do |f| %>
-  <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
-  <input id="current_term_34783784980" type="hidden" name="term" value=""/>
-  <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
-  <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
-  <div id="new_gnib_727272727_<%=@gnib.id%>"
-       class="gnib-thumbnail new_gnib_thumbnail"
-       style="float: left;  position: relative; margin-top: 1px; margin-bottom: -1px">
-    <div id="content_url" style="margin-top: -10px; padding-top: 0px">
-      <h3 style="padding-top: 6px">Gnib something</h3>
-      <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"Add url...",
-        :class=>"paste-content-field",
-        :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
-      <div id="find-image-panel" align="center" style="width: 100%">
-        <button class="find-image" onclick="return ajaxSubmit();">Find Image</button>
+  <%= form_for(@gnib) do |f| %>
+    <input id="current_url_34783784980" type="hidden" name="current_url" value=""/>
+    <input id="current_term_34783784980" type="hidden" name="term" value=""/>
+    <input id="current_uid_34783784980" type="hidden" name="uid" value=""/>
+    <input id="current_page_3447384734883" type="hidden" name="page" value=""/>
+    <div id="new_gnib_727272727_<%=@gnib.id%>"
+         class="gnib-thumbnail new_gnib_thumbnail"
+         style="float: left;  position: relative; margin-top: 1px; margin-bottom: -1px">
+      <div id="content_url" style="margin-top: -10px; padding-top: 0px">
+        <h3 style="padding-top: 6px">Gnib something</h3>
+        <%= f.text_field :link,  :id=>"paste_content_url_input", :placeholder=>"Add url...",
+          :class=>"paste-content-field",
+          :onchange=>"return ajaxSubmit();", :onkeypress=>"return onKeyPress(event);" %>
+        <div id="find-image-panel" align="center" style="width: 100%">
+          <button class="find-image" onclick="return ajaxSubmit();">Find Image</button>
+        </div>
+        <div id="select-image-panel" align="center" style="width: 100%; display: none">
+          <button class="find-image" onclick="return onSelectImageClicked();">Select Image</button>
+        </div>
+        <br/>
+        <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto; z-index: 1000"/>
       </div>
-      <div id="select-image-panel" align="center" style="width: 100%; display: none">
-        <button class="find-image" onclick="return onSelectImageClicked();">Select Image</button>
+      <div id="content_url_images">
       </div>
-      <br/>
-      <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto; z-index: 1000"/>
+      <div id="gnib_description_1" class="content-url-comment content-url-image">
+        <%= f.hidden_field :imageurl, :id=>"content_url_field" %>
+        <%= f.hidden_field :video, :id => "is_video_field", :value => 'false'%>
+        <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
+        <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
+          :class=>"comment-field", :id=>"gnib_description",
+          :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
+        <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
+          :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
+          :onclick=>"sanitize();", :title=>"Gnib"%>
+      </div>
     </div>
-    <div id="content_url_images">
-    </div>
-    <div id="gnib_description_1" class="content-url-comment content-url-image">
-      <%= f.hidden_field :imageurl, :id=>"content_url_field" %>
-      <%= f.hidden_field :video, :id => "is_video_field", :value => 'false'%>
-      <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
-      <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
-        :class=>"comment-field", :id=>"gnib_description",
-        :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
-      <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
-        :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
-        :onclick=>"sanitize();", :title=>"Gnib"%>
-    </div>
-  </div>
-<% end %>
+  <% end %>
 <% end%>
 <script type="text/javascript">
   document.getElementById('current_page_3447384734883').value = current_page;
@@ -217,5 +217,14 @@
     if (e && e.keyCode === 13) {
       return ajaxSubmit();
     }
+  }
+  $('#new_gnib').on('submit',
+          function() {
+            $('#submitButton').attr("disabled", "disabled");
+            return true;
+          });
+
+  function enableButton() {
+    $('#submitButton').removeAttr("disabled");
   }
 </script>
