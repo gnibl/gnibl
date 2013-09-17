@@ -24,17 +24,24 @@ module GniblUtil
   end
 
   def send_notifications_on_upvote_comment(gnib,upvoter)
+	if upvoter.id == gnib.user.id
+	return
+	end
     gnib_action_upvote = 6
     user_id = gnib.user.id
     gnib_id = gnib.id
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id and gnib_action = :gnib_action", :user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote)
     if nots.empty?
-      message = upvoter.name+" has upvoted your comment"
+      message = upvoter.name+" has upvoted a comment"
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
     else
       prev_notification = nots[0]
-      prev_upvoter_name = prev_notification.message.split(" ")[0]
-      message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your comments"
+      if prev_notification.read?
+          message = upvoter.name + " has upvoted a comment"
+      else
+          prev_upvoter_name = prev_notification.message.split(" ")[0]
+          message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted comments"
+      end      
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
     end
@@ -50,8 +57,12 @@ module GniblUtil
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
     else
       prev_notification = nots[0]
-      prev_upvoter_name = prev_notification.message.split(" ")[0]
-      message = regnibber.name + ", "+prev_upvoter_name+ " have regnibbed your gnib"
+      if prev_notification.read?
+          message = regnibber.name + " has regnibbed your gnib"
+      else
+          prev_regnibber_name = prev_notification.message.split(" ")[0]
+      message = regnibber.name + ", "+prev_regnibber_name+ " have regnibbed your gnib"
+      end        
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
     end
@@ -69,8 +80,13 @@ module GniblUtil
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
     else
       prev_notification = nots[0]
-      prev_upvoter_name = prev_notification.message.split(" ")[0]
-      message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your gnib"
+      if prev_notification.read?
+	  message = upvoter.name +  " has upvoted your gnib"       
+      else
+	prev_upvoter_name = prev_notification.message.split(" ")[0]
+        message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your gnib"      
+      end
+      
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
     end
@@ -83,7 +99,7 @@ module GniblUtil
     send_notifications_ontags(@gnib,comment.user, comment.description)
     gnib_owner_id = @gnib.user.id
     commenter_id = comment.user.id
-    unless commenter_id == gnib_owner_id
+    unless commenter_id == gnib_owner_id #commented on your own
       notify_gnibler(@gnib, comment)
     end
   end

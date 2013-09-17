@@ -149,6 +149,10 @@ class UsersController < ApplicationController
       @gnibs = @user.feed.offset(@page).limit(9)
     end
     @counts = @user.feed.count
+#this value should be used for display only
+    regnibbed_gnibs = @user.gniblings.order("updated_at DESC")
+   @feed_count = @counts
+    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     notifications();
@@ -175,6 +179,8 @@ class UsersController < ApplicationController
     @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
     @page_count = (@counts / 10.0).ceil;
+    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
+    @feed_count = @user.feed.count
     notifications();
     if sent_current_page
       respond_to do |format|
@@ -195,6 +201,8 @@ class UsersController < ApplicationController
     @page *= 10;
     @users = User.all(:offset => @page, :limit =>10)
     @counts = User.all.count
+    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
+    @feed_count = @user.feed.count
     @page_count = (@counts / 10.0).ceil;
     notifications();
     if sent_page
@@ -294,6 +302,10 @@ class UsersController < ApplicationController
     puts @counts
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
+
+    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) ",@user.id.to_s,regnibbed_gnibs).count
+    @feed_count = @user.feed.count
+
     notifications();
     if sent_page
       respond_to do |format|

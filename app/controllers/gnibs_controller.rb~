@@ -141,7 +141,7 @@ class GnibsController < ApplicationController
   def display
     gnib_id = params[:gnib_id]
     #@gnibs = Gnib.where("id = ?",gnib_id)
-    @gnibs =Gnib.all(:limit => 4)
+    @gnibs = []
     gnib = Gnib.find(gnib_id)
     @gnibs[0] = gnib
     @user = gnib.user

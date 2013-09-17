@@ -101,6 +101,7 @@ class UsersController < ApplicationController
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
     @page_count = (@counts / 9.0).ceil;
+   set_gnib_count(@user)
     notifications();
     render 'index'
   end
@@ -150,8 +151,7 @@ class UsersController < ApplicationController
     end
     @counts = @user.feed.count
 #this value should be used for display only
-    regnibbed_gnibs = @user.gniblings.order("updated_at DESC")
-    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
+    set_gnib_count(@user)
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     notifications();
@@ -163,6 +163,11 @@ class UsersController < ApplicationController
     end
   end
 
+def set_gnib_count(user)
+    regnibbed_gnibs = user.gniblings.order("updated_at DESC")
+    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",user.id.to_s,regnibbed_gnibs).count
+    @feed_count = user.feed.count
+end
 
   def gnibblings
     #show all people the user is gnibbling/following
@@ -178,6 +183,7 @@ class UsersController < ApplicationController
     @users = @user.followed_users.offset(@page).limit(10)
     @counts = @user.followed_users.count
     @page_count = (@counts / 10.0).ceil;
+    set_gnib_count(@user)
     notifications();
     if sent_current_page
       respond_to do |format|
@@ -198,6 +204,7 @@ class UsersController < ApplicationController
     @page *= 10;
     @users = User.all(:offset => @page, :limit =>10)
     @counts = User.all.count
+    set_gnib_count(@user)
     @page_count = (@counts / 10.0).ceil;
     notifications();
     if sent_page
@@ -297,6 +304,7 @@ class UsersController < ApplicationController
     puts @counts
     @page_count = (@counts / 9.0).ceil;
     @gnib = @user.gnibs.build
+    set_gnib_count(@user)
     notifications();
     if sent_page
       respond_to do |format|
