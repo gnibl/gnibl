@@ -250,16 +250,29 @@
           </td>
         <% end %>
         <td style="vertical-align: top; padding: 1%; text-align: center">
-          <form action="/gnibs/search" method="get" style="margin-right: 20px; margin-top: 30px">
-            <div style="width: 300px; float: right">
-              <input id="search-box" class="search-box"
-                     style="width: 250px !important; min-width: 250px !important; max-width: 250px !important; right: 0px; float: left"
-                     name="term" type="text" placeholder="Search gnibs"/>
-              <div class="what" title="Search any gnibs or gniblers" style="float: left; margin-left: 5px">?</div>
-            </div>
-            <div style="clear: both"></div>
-            <input value="" type="submit" class="gnibl-file-log search-gnibl" title="search gnibs/gniblers"/>
-          </form>
+          <% if request.path == "/users/#{@user.html_safe_username}/followers" || request.path == "/users/#{@user.html_safe_username}/gnibblings" || request.path == "/users/search"%>
+            <form action="/users/search" method="get" style="margin-right: 20px; margin-top: 30px">
+              <div style="width: 300px; float: right">
+                <input id="search-box" class="search-box"
+                       style="width: 250px !important; min-width: 250px !important; max-width: 250px !important; right: 0px; float: left"
+                       name="uid" type="text" placeholder="Search gniblers"/>
+                <div class="what" title="Search gniblers" style="float: left; margin-left: 5px">?</div>
+              </div>
+              <div style="clear: both"></div>
+              <input value="" type="submit" class="gnibl-file-log search-gnibl" title="search gniblers"/>
+            </form>
+          <% else %>
+            <form action="/gnibs/search" method="get" style="margin-right: 20px; margin-top: 30px">
+              <div style="width: 300px; float: right">
+                <input id="search-box" class="search-box"
+                       style="width: 250px !important; min-width: 250px !important; max-width: 250px !important; right: 0px; float: left"
+                       name="term" type="text" placeholder="Search gnibs"/>
+                <div class="what" title="Search any gnibs" style="float: left; margin-left: 5px">?</div>
+              </div>
+              <div style="clear: both"></div>
+              <input value="" type="submit" class="gnibl-file-log search-gnibl" title="search gnibs"/>
+            </form>
+          <% end %>
         </td>
       </tr>
     </tbody>

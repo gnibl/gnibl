@@ -150,6 +150,7 @@ class UsersController < ApplicationController
       @gnibs = @user.feed.offset(@page).limit(9)
     end
     @counts = @user.feed.count
+
 #this value should be used for display only
     set_gnib_count(@user)
     @page_count = (@counts / 9).ceil;
