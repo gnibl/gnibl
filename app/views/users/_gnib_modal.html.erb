@@ -172,7 +172,7 @@
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal"
          style=" width: 600px; margin: auto;  position: relative;">
       <div class="gnib-title">
-        <%= gnib.title %>
+        <%= URI.unescape(gnib.title) %>
       </div>
       <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px">
         <button title="gnib it!" class="gnib-gnib-button btn-modal" style="float: none"

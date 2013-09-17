@@ -42,8 +42,11 @@
     </button>
     <div  class="thumbnail-view" style="overflow: hidden; bottom: 0px; ; border-radius: 10px; display: block; height: auto; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
-        <a target="_blank" href="<%=gnib.link%>" <%if gnib.title %> title = "<%= raw gnib.title.html_safe%>" <% end %> style="color: #17aeff;">
-           <%= raw gnib.short_title.html_safe%>
+        <a target="_blank" href="<%=gnib.link%>" <%if gnib.title %>
+ title = "<%= URI.unescape("#{gnib.title.html_safe}") %>" <% end %> style="color: #17aeff;">
+<% if gnib.short_title %>
+           <%=  URI.unescape("#{gnib.short_title.html_safe}") %>
+<% end %>
         </a>
 
       </div>
