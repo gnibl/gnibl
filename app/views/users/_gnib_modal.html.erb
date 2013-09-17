@@ -172,7 +172,7 @@
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal"
          style=" width: 600px; margin: auto;  position: relative;">
       <div class="gnib-title">
-        <%= gnib.title %>
+        <%= URI.unescape(gnib.title) %>
       </div>
       <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px">
         <button title="gnib it!" class="gnib-gnib-button btn-modal" style="float: none"
@@ -199,6 +199,7 @@
              <% if gnib.video %>
           <iframe width="600" height="400" src="<%= gnib.youtube_embeddable_url %>" frameborder="0" allowfullscreen> </iframe>
         <% end %>
+ 
       </div>
     </div>
     <% unless gnib.video %>
@@ -211,6 +212,7 @@
         <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: block; margin: auto; position: relative">
           <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
             <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
+ 
           </div>
           <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
                style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">

@@ -6,7 +6,7 @@
         <td class="prof-not-bd left-radius" <% if current_user && request.path == "/users/#{current_user.html_safe_username}/feed" %> style="background: rgba(0, 0, 0, 0.2)" <% end %> >
 
 <% if current_user %>
-          <a href="/users/<%=current_user.html_safe_username%>/feed">Gnibfeeds(<%=current_user.feed.count%>)</a>
+          <a href="/users/<%=current_user.html_safe_username%>/feed">Gnibfeeds(<%=@feed_count%>)</a>
 <% else %>
    <a href="#">Gnibfeeds</a>
 <% end %>
