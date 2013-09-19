@@ -32,15 +32,15 @@ module GniblUtil
     gnib_id = gnib.id
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id and gnib_action = :gnib_action", :user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote)
     if nots.empty?
-      message = upvoter.name+" has upvoted your comment"
+      message = upvoter.name+" has upvoted a comment"
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :gnib_action =>gnib_action_upvote, :read => false, :message => message)
     else
       prev_notification = nots[0]
       if prev_notification.read?
-          message = upvoter.name + " has upvoted your comment"
+          message = upvoter.name + " has upvoted a comment"
       else
           prev_upvoter_name = prev_notification.message.split(" ")[0]
-          message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your comment"
+          message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted comments"
       end      
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
