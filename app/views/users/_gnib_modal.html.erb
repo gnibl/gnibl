@@ -180,9 +180,10 @@
       <div class="gnib-title">
         <%= URI.unescape(gnib.title) %>
       </div>
-      <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px">
-        <button title="gnib it!" class="gnib-gnib-button btn-modal" style="float: none"
-                onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"></button>
+      <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px; width: 22%">
+        <button title="gnib it!" class="btn btn-primary btn-large" style="float: none; margin: 10px 1px 1px 1px; background-size: 100% 100%; padding: 2px !important;
+                  width: 100%; height: 38px; font-size: 17px"
+                onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');">Gnib It!</button>
       </div>
       <div style="width: 20%; margin-right: 10px; top: 5px; position: absolute; right: 10px">
         <button title="<%= gnib.upvotedby(current_user)%>" class="gnib-gnib-button up-button" style="border-left: none !important"
