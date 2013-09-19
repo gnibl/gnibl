@@ -155,6 +155,18 @@
     border-radius: 2px !important;
     position: absolute !important;
   }
+  .gnibl-comment-count{
+    width: 70px !important;
+    height: 30px !important;
+    bottom: 0px !important;
+    margin: 0px !important;
+    left: 0px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px !important;
+    position: absolute !important;
+    border: 0px none;
+    text-align: center;
+  }
 </style>
 <% if @gnib %>
   <%= form_for(@gnib) do |f| %>
@@ -187,12 +199,13 @@
         <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
         <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
           :class=>"comment-field", :id=>"gnib_description",
-          :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
+          :onkeypress => "return enforceMaxlength('gnib_description', 140, 'comment-count');", :maxlength => "140"%>
         <%= f.submit "Gnib It!", :class=>"gnibl-icon", :id=>"submitButton",
           :style=>"width: 90px !important; height: 35px !important;
     bottom: 0px; right: 0px; position: absolute; margib: 0px !important; background: rgba(23, 174, 255, 0.8) !important;
     border-radius: 2px !important; color: white; font-weight: bold",
           :onclick=>"sanitize();", :title=>"Gnib"%>
+        <input type="text" id="comment-count" class="gnibl-comment-count"/>
       </div>
     </div>
   <% end %>

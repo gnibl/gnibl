@@ -203,9 +203,12 @@
         var dialog = document.getElementById('gnib_something_dialog');
         dialog.style.display = 'none';
       }
-      function enforceMaxlength(id, maxlength) {
+      function enforceMaxlength(id, maxlength, count_id) {
         var obj = document.getElementById(id);
         console.log('id:' + id);
+        if (count_id && obj) {
+          $('#' + count_id).val(obj.value.length+"/"+maxlength);
+        }
         if (obj) {
           return obj.value.length <= maxlength;
         }
@@ -421,9 +424,9 @@
 
       function resetCurrentIndex(gnib_id) {
         gnib_index = gnibs.indexOf(gnib_id);
-        console.log('resetCurrentIndex: '+gnib_index);
+        console.log('resetCurrentIndex: ' + gnib_index);
       }
-      function resetGnibs(new_gnibs){
+      function resetGnibs(new_gnibs) {
         gnibs = new_gnibs;
         gnib_index = 0;
       }
