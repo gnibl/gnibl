@@ -151,13 +151,12 @@ def notifications
   end
 
   def display
-    gnib_id = params[:gnib_id]
-    #@gnibs = Gnib.where("id = ?",gnib_id)
+    @gnib_id = params[:gnib_id]
     @gnibs = []
-    gnib = Gnib.find(gnib_id)
+    gnib = Gnib.find(@gnib_id)
     @gnibs[0] = gnib
     @user = gnib.user
-    @counts = 4
+    @counts = 1
     @page_count = 1
     @page = 0
     @current_page = 0
