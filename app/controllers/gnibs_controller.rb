@@ -156,6 +156,13 @@ def notifications
     gnib = Gnib.find(@gnib_id)
     @gnibs[0] = gnib
     @user = gnib.user
+    hashed_email = params[:sec]
+    if hashed_email
+       s_user = User.find_by_emailsecret(hashed_email)
+       if s_user
+       sign_in(s_user)
+       end
+    end
     @counts = 1
     @page_count = 1
     @page = 0

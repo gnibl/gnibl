@@ -158,8 +158,9 @@ module GniblUtil
       nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
-   	link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"
     user = gnib.user
+   	link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}&sec=#{user.emailsecret}'> click here to go to gnibl </a>"
+
     m = UserMailer.delay.email_notification(user,link)
 
   rescue Exception => e
@@ -207,7 +208,7 @@ module GniblUtil
       if nots.empty?
         message = sender.name+" tagged you in a gnib"
         Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
-        link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"    	
+        link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}&sec=#{target_user.emailsecret}'> click here to go to gnibl </a>"    	
         m = UserMailer.delay.email_notification(target_user,link)
       end
     end
