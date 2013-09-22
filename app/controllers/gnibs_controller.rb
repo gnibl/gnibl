@@ -160,7 +160,9 @@ def notifications
     if hashed_email
        s_user = User.find_by_emailsecret(hashed_email)
        if s_user
-       sign_in(s_user)
+       sign_in(s_user);
+       @user = current_user
+       notifications();
        end
     end
     @counts = 1
