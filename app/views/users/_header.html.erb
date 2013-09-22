@@ -120,7 +120,11 @@
         </td>
         <td class="centered on-dent" style="width: 14.3%">
           <div id="setting-header" class="setting-header" style="display: block">
+<% if current_user %>
             <%= link_to "logout", "/signout", :style => "color: #17aeff; font-weight: bold;"%>
+<% else %>
+            <%= link_to "signin", "/signin", :style => "color: #17aeff; font-weight: bold;"%>
+<% end %>
           </div>
         </td>
       </tr>
