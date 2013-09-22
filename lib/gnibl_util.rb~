@@ -17,7 +17,7 @@ module GniblUtil
     else
       prev_notification = nots[0]
       prev_upvoter_name = prev_notification.message.split(" ")[0]
-      message = regnibber.name + ", "+prev_upvoter_name+ " are gnibbling you"
+      message = regnibber.name + "is gnibbling you"
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
     end
@@ -40,7 +40,7 @@ module GniblUtil
           message = upvoter.name + " has upvoted a comment"
       else
           prev_upvoter_name = prev_notification.message.split(" ")[0]
-          message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted comments"
+          message = upvoter.name + " has have upvoted comments"
       end      
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
@@ -61,7 +61,7 @@ module GniblUtil
           message = regnibber.name + " has regnibbed your gnib"
       else
           prev_regnibber_name = prev_notification.message.split(" ")[0]
-      message = regnibber.name + ", "+prev_regnibber_name+ " have regnibbed your gnib"
+      message = regnibber.name + " has regnibbed your gnib"
       end        
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
@@ -84,7 +84,7 @@ module GniblUtil
 	  message = upvoter.name +  " has upvoted your gnib"       
       else
 	prev_upvoter_name = prev_notification.message.split(" ")[0]
-        message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your gnib"      
+        message = upvoter.name + " has upvoted your gnib"      
       end
       
       prev_notification.update_attribute("message",message)

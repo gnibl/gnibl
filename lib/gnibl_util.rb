@@ -40,7 +40,7 @@ module GniblUtil
           message = upvoter.name + " has upvoted a comment"
       else
           prev_upvoter_name = prev_notification.message.split(" ")[0]
-          message = upvoter.name + " has have upvoted comments"
+          message = upvoter.name + " has upvoted comments"
       end      
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
