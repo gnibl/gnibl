@@ -150,10 +150,10 @@ module GniblUtil
     gnib_id = gnib.id
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => user_id, :gnib_id => gnib_id)
     if nots.empty?
-      message = "@"+comment.user.name+" commented on your gnib "
+      message =  comment.user.name+" commented on your gnib "
       Notification.create(:user_id => user_id, :gnib_id => gnib_id, :message => message)
     else
-      user_name = "@"+comment.user.name
+      user_name =  comment.user.name
       message = user_name +", "+nots[0].message
       nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
@@ -185,10 +185,10 @@ module GniblUtil
     nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => past_commenter_id, :gnib_id => gnib_id)
     message = ''
     if nots.empty?
-      message = "@"+commenter_name+" posted a comment "
+      message =  commenter_name+" posted a comment "
       Notification.create(:user_id => past_commenter_id, :gnib_id => gnib_id, :message => message)
     else
-      message = "@"+commenter_name+" posted a comment " +", "+nots[0].message
+      message =  commenter_name+" posted a comment " +", "+nots[0].message
       nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
@@ -200,12 +200,12 @@ module GniblUtil
     sender = from
     target_users = sender.followers.where("name ilike :to or surname ilike :to or username ilike :to", :to => "%"+to+"%")
     gnib_id = gnib.id
-    message = "@"+sender.name + " has tagged you "
+    message = sender.name + " has tagged you "
     target_users.each do |target_user|
       user_id = target_user.id
       nots = Notification.where("user_id = :user_id and gnib_id = :gnib_id", :user_id => user_id, :gnib_id => gnib_id)
       if nots.empty?
-        message = "@"+sender.name+" tagged you in a gnib"
+        message = sender.name+" tagged you in a gnib"
         Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
         link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"    	
         m = UserMailer.delay.email_notification(target_user,link)
