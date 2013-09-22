@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903202429) do
+ActiveRecord::Schema.define(:version => 20130922105526) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20130903202429) do
     t.integer  "city_id"
     t.boolean  "validated"
     t.string   "validation_code"
+    t.string   "emailsecret"
   end
 
 end

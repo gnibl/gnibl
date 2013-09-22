@@ -17,7 +17,7 @@ module GniblUtil
     else
       prev_notification = nots[0]
       prev_upvoter_name = prev_notification.message.split(" ")[0]
-      message = regnibber.name + ", "+prev_upvoter_name+ " are gnibbling you"
+      message = regnibber.name + "is gnibbling you"
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
     end
@@ -40,7 +40,7 @@ module GniblUtil
           message = upvoter.name + " has upvoted a comment"
       else
           prev_upvoter_name = prev_notification.message.split(" ")[0]
-          message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted comments"
+          message = upvoter.name + " has upvoted comments"
       end      
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
@@ -61,7 +61,7 @@ module GniblUtil
           message = regnibber.name + " has regnibbed your gnib"
       else
           prev_regnibber_name = prev_notification.message.split(" ")[0]
-      message = regnibber.name + ", "+prev_regnibber_name+ " have regnibbed your gnib"
+      message = regnibber.name + " has regnibbed your gnib"
       end        
       prev_notification.update_attribute("message",message)
       prev_notification.update_attribute("read",false)
@@ -84,7 +84,7 @@ module GniblUtil
 	  message = upvoter.name +  " has upvoted your gnib"       
       else
 	prev_upvoter_name = prev_notification.message.split(" ")[0]
-        message = upvoter.name + ", "+prev_upvoter_name+ " have upvoted your gnib"      
+        message = upvoter.name + " has upvoted your gnib"      
       end
       
       prev_notification.update_attribute("message",message)
@@ -158,8 +158,9 @@ module GniblUtil
       nots[0].update_attribute("message",message)
       nots[0].update_attribute("read",false)
     end
-   	link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"
     user = gnib.user
+   	link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}&sec=#{user.emailsecret}'> click here to go to gnibl </a>"
+
     m = UserMailer.delay.email_notification(user,link)
 
   rescue Exception => e
@@ -207,7 +208,7 @@ module GniblUtil
       if nots.empty?
         message = sender.name+" tagged you in a gnib"
         Notification.create(:user_id => target_user.id, :gnib_id => gnib.id, :message => message)
-        link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}'> click here to go to gnibl </a>"    	
+        link = message +"</br> <a href = 'http://www.gnibl.com/gnibs/display?gnib_id=#{gnib_id}&sec=#{target_user.emailsecret}'> click here to go to gnibl </a>"    	
         m = UserMailer.delay.email_notification(target_user,link)
       end
     end

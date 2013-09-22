@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
   end
 
   def like(gnib_id)
+#   @existing_like = gniblings.where("gnib_id = ? and user_id = ?", gnib_id,)
     @liking = gniblings.find_by_gnib_id(gnib_id)
     if @liking
       @liking.update_attribute("count", @liking.count + 1)

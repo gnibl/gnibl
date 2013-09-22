@@ -16,6 +16,8 @@ module SessionsHelper
     end
   end
 
+
+
   def sign_in(user)
     self.current_user = user
   end

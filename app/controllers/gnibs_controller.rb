@@ -151,13 +151,21 @@ def notifications
   end
 
   def display
-    gnib_id = params[:gnib_id]
-    #@gnibs = Gnib.where("id = ?",gnib_id)
+    @gnib_id = params[:gnib_id]
     @gnibs = []
-    gnib = Gnib.find(gnib_id)
+    gnib = Gnib.find(@gnib_id)
     @gnibs[0] = gnib
     @user = gnib.user
-    @counts = 4
+    hashed_email = params[:sec]
+    if hashed_email
+       s_user = User.find_by_emailsecret(hashed_email)
+       if s_user
+       sign_in(s_user);
+       @user = current_user
+       notifications();
+       end
+    end
+    @counts = 1
     @page_count = 1
     @page = 0
     @current_page = 0
