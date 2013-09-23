@@ -1,8 +1,8 @@
 <%= render "users/gnib_view" %>
 <script type="text/javascript">
-$(document).ready(function() {
-gnib_id = <%= @gnib_id %>
-//alert('done, show modal '+gnib_id); 
- 
-});
+  $(document).ready(function() {
+    gnib_id = <%= @gnib_id %>
+//alert('done, show modal '+gnib_id);
+    doAjaxSubmit({gnib_id: gnib_id}, '/gnibs/retcomment');
+  });
 </script>
