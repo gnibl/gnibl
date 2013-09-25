@@ -259,7 +259,7 @@ end
     @user = User.find_by_email(user_email)
     message = ""
     if @user	
-	@user.update_attribute(:secretcode,secretcode)
+	@user.update_attribute(:secretcode,secretcode)	
     send_secretcode_email(url,@user)
     message = "Kindly check your email address "+user_email+" for instructions on how to log in to gnibl"
     else	
