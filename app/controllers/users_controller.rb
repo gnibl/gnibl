@@ -271,10 +271,12 @@ end
  end
 
   def loginsecretcode
-   validation_code = [:code]
+   validation_code = params[:code]
+	puts "validation code #{validation_code}"
    @user = User.find_by_secretcode(validation_code)
    if @user
-      signin(@user)
+      sign_in(@user)
+	redirect_to "/users/#{@user.username}"
    else
    redirect_to "/"
    end
