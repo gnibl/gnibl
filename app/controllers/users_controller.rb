@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   end
 
   def create
-
     city = City.find 1
     ip = request.remote_ip
     city_id = 1
@@ -27,7 +26,6 @@ class UsersController < ApplicationController
     unless city
       city = City.find(city_id) #default city id 1
     end
-
     #    params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
@@ -41,20 +39,16 @@ class UsersController < ApplicationController
     rescue => error
       puts error
     end
-    @message = "over"
+    message = "over"
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
-      @message = "check your email for instructions "+@user.email
+      message = "sucess" 
     else
-      @message = "Signup failed"
-
+      message = "failed"
     end
-
     respond_to do |format|
-      format.json{render :json => @message}
-      format.js {render :js => "$('#vermsgpanel').show()"}
-      format.html{ render :json => @message}
+      format.js {render :json => message.to_json}
     end
 
   end
