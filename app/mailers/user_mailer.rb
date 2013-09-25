@@ -24,6 +24,18 @@ class UserMailer < ActionMailer::Base
       :body => message)
 end
 
+ def send_secretlogin_code(url,user)
+   message = "Password Reset, 
+            <a href = 'http://#{url}/users/loginsecretcode?code=#{user.secretcode}'>
+            click this link</a> 
+           to log in to your gnibl account and get gnibbing"
+   to = user.name+"<"+user.email+">"
+   mail(:to => to,
+      :subject=> "Password Reset: Gnibl.com ",
+      :content_type => "text/html",
+      :body => message)
+end
+
 def email_notification(user,message)
 	to = user.name + "<"+ user.email + ">"
 	mail(:to => to,

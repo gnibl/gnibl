@@ -11,6 +11,8 @@ Gnibl::Application.routes.draw do
       get :following, :followers, :feed, :next_gnibs, :next_feed, :notifications, :gnibblings, :next_gnibblings
     end
     collection do
+	get 'sendsecretcode'
+	get 'loginsecretcode'
       get 'validateemail'
       get 'search'
       get 'test'

@@ -14,11 +14,13 @@ gem 'aws-sdk'
 gem 'rmagick'
 gem 'nokogiri'
 gem 'geoip'
+gem 'vimeo'
 #gem 'ruby' , '1.9.2'
 #gem 'ruby', '2.0.0'
 
 gem 'jquery-rails','2.0.2'
 gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 group :development, :test do
        gem 'rspec-rails'
@@ -38,6 +40,9 @@ end
 #group :production do
 gem 'pg'
 #end
+
+#google analytics
+gem 'google-analytics-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

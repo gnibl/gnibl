@@ -14,6 +14,7 @@ gem 'aws-sdk'
 gem 'rmagick'
 gem 'nokogiri'
 gem 'geoip'
+#gem 'vimeo'
 #gem 'ruby' , '1.9.2'
 #gem 'ruby', '2.0.0'
 

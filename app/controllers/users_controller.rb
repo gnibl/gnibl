@@ -251,6 +251,34 @@ end
     end
     redirect_to current_path
   end
+ 
+ def sendsecretcode
+    secretcode = getRandomString
+    user_email = params[:email]
+    url = request.host_with_port	
+    @user = User.find_by_email(user_email)
+    message = ""
+    if @user	
+	@user.update_attribute(:secretcode,secretcode)
+    send_secretcode_email(url,@user)
+    message = "Kindly check your email address "+user_email+" for instructions on how to log in to gnibl"
+    else	
+    message = "That email address is not registered, kindly signup or use the email address you used to sign up"
+    end
+    respond_to do | format |
+       format.js {render :json => message.to_json}
+    end
+ end
+
+  def loginsecretcode
+   validation_code = [:code]
+   @user = User.find_by_secretcode(validation_code)
+   if @user
+      signin(@user)
+   else
+   redirect_to "/"
+   end
+  end
 
   def validateemail
     validation_code = params[:code]

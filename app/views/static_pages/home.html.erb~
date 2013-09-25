@@ -17,6 +17,7 @@
         $('#buttonhide').click(function(){
             $(".slidingnav").slideUp();
             $('.buttongnib').addClass('plus').show();
+$('#mainframe').show();
 	});
         $('.buttongnib').click(function() {
 
@@ -24,6 +25,15 @@
           $(this).removeClass("plus");
           $(this).removeClass("minus");
         });
+	
+	$('#forgotpassword').click( function(){
+	user_email = $('#session_email').val();
+//	alert('send forgot password ajax here '+user_email)	 
+	 doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
+									alert( response);
+		});
+
+	});
       });
     </script>
 
@@ -35,7 +45,7 @@
       <div>
         <%= form_for(:session, :url => sessions_path) do |f| %>
           <div align="center" style="padding-top:2%">
-            <%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Email'%>
+            <%= f.text_field :email, :class => 'hintTextbox sp_class', :placeholder => 'Email'%>
           </div>
           <div align="center" style="padding-top:2%">
             <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password'%>
@@ -58,7 +68,7 @@
 
           <div align="center" style="padding-top:2%">
 
-<a href="#" class="links" style="color: gray">
+<a href="#"  id = "forgotpassword" class="links" style="color: gray">
 
 Forgot your password ?
 

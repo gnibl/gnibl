@@ -150,14 +150,9 @@ class UsersController < ApplicationController
       @gnibs = @user.feed.offset(@page).limit(9)
     end
     @counts = @user.feed.count
-<<<<<<< HEAD
+
 #this value should be used for display only
     set_gnib_count(@user)
-=======
-    #this value should be used for display only
-    regnibbed_gnibs = @user.gniblings.order("updated_at DESC")
-    @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
->>>>>>> 10018784cbf7858c8923b7287f72258c48a4c879
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
     notifications();
@@ -255,6 +250,33 @@ end
       end
     end
     redirect_to current_path
+  end
+ 
+ def sendsecretcode
+    secretcode = getRandomString
+    user_email = params[:email]
+    url = request.host_with_port	
+    @user = User.find_by_email(user_email)
+    message = ""
+    if @user	
+    send_secretcode_email(url,@user)
+    message = "Kindly check your email address "+user_email+" for instructions on how to log in to gnibl"
+    else	
+    message = "That email address is not registered, kindly signup or use the email address you used to sign up"
+    end
+    respond_to do | format |
+       format.js {render :json => message.to_json}
+    end
+ end
+
+  def loginsecretcode
+   validation_code = [:code]
+   @user = User.find_by_secretcode(validation_code)
+   if @user
+      signin(@user)
+   else
+   redirect_to "/"
+   end
   end
 
   def validateemail

@@ -219,6 +219,11 @@ module GniblUtil
     m.deliver
   end
 
+  def send_secretcode_email(url,user)
+   m = UserMailer::send_secretlogin_code(url, user)
+    m.deliver
+   end
+
   def invite_by_mail(gnib, email)
     @gnib =gnib
     m = UserMailer::invite_to_gnibl(@gnib,email)
