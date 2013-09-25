@@ -25,12 +25,11 @@ class UserMailer < ActionMailer::Base
 end
 
 def email_notification(user,message)
-	link = message +"</br> <a href = 'http://www.gnibl.com/users/#{user.username}'> click here to go to gnibl </a>"
 	to = user.name + "<"+ user.email + ">"
 	mail(:to => to,
              :subject=> "Gnibl: "+message[0..15],
              :content_type => "text/html",
-             :body => link)
+             :body => message)
 end
 
 end

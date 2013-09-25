@@ -24,7 +24,7 @@ Gnibl::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
   resources :gnibs, :constraints => {:id=> /[^\/]+/}  do
     member do
-      get :retcomment, :comment, :gnibpicks, :gnibstream, :upvotecomment, :display
+      get :retcomment, :comment, :gnibpicks, :gnibstream, :upvotecomment
     end
     collection do
       get 'search'
@@ -36,7 +36,7 @@ Gnibl::Application.routes.draw do
       get 'paste_content_url'
       get 'paste_image_url'
       get 'upvotegnib'
-#      get 'display'
+      get 'display'
     end
   end
 

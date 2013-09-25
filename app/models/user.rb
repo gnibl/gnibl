@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   attr_accessible :name,:surname, :city, :birthday, :email, 
                   :password,  :password_confirmation,:avatar, 
                   :username, :description, :validated, :validation_code,
-                  :emailsecret
+                  :emailsecret, :secretcode
                   
   has_secure_password
 

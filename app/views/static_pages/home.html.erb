@@ -7,10 +7,19 @@
 
       $(document).ready(function() {
         $('#new_user').bind('ajax:success', function(data, status, xhr) {
- $('#mainframe').show();
+ //$('#mainframe').show();
+
+str = ''+status
+if (str.indexOf('\"success\"') == 0){
+$('#mainframe').show();
+}else{
+alert('Registration Failed, kindly ensure you enter a valid email address and fill all fields');
+}
         });
-        $('#new_user').bind('ajax:failure', function(data, status, xhr) {
-          alert('FAILED to register, please try again');
+         $('#new_user').bind('ajax:fail', function(data, status, xhr) {
+ //$('#mainframe').show();
+alert('status is  faile');
+
         });
         $(".slidingnav").hide();
         $('.buttongnib').addClass('plus').show();
@@ -25,6 +34,14 @@ $('#mainframe').show();
           $(this).removeClass("plus");
           $(this).removeClass("minus");
         });
+	
+	$('#forgotpassword').click( function(){
+	user_email = $('#session_email').val();	 
+	 doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
+									alert( response);
+		});
+
+	});
       });
     </script>
 
@@ -36,7 +53,7 @@ $('#mainframe').show();
       <div>
         <%= form_for(:session, :url => sessions_path) do |f| %>
           <div align="center" style="padding-top:2%">
-            <%= f.text_field :email, :class => 'hintTextbox', :placeholder => 'Email'%>
+            <%= f.text_field :email, :class => 'hintTextbox sp_class', :placeholder => 'Email'%>
           </div>
           <div align="center" style="padding-top:2%">
             <%= f.password_field :password, :class => 'hintTextbox', :placeholder => 'Enter your password'%>
@@ -59,7 +76,7 @@ $('#mainframe').show();
 
           <div align="center" style="padding-top:2%">
 
-<a href="#" class="links" style="color: gray">
+<a href="#"  id = "forgotpassword" class="links" style="color: gray">
 
 Forgot your password ?
 

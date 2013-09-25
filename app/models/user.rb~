@@ -11,16 +11,19 @@
 class User < ActiveRecord::Base
   attr_accessible :name,:surname, :city, :birthday, :email, 
                   :password,  :password_confirmation,:avatar, 
-                  :username, :description, :validated, :validation_code
+                  :username, :description, :validated, :validation_code,
+                  :emailsecret
                   
   has_secure_password
 
   mount_uploader :avatar, AvatarUploader
 
   before_save do |user|
+	require 'digest/md5'
     user.email = email.downcase
     user.username = user.email
     user.username = user.username.gsub(/(@.+)/, "")
+    user.emailsecret =  Digest::MD5.hexdigest(user.email)
   end
   validates :birthday, :presence => true
   validates :name, :presence => true, :length => { :maximum => 80 }

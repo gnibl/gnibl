@@ -14,7 +14,6 @@ class UsersController < ApplicationController
   end
 
   def create
-
     city = City.find 1
     ip = request.remote_ip
     city_id = 1
@@ -27,7 +26,6 @@ class UsersController < ApplicationController
     unless city
       city = City.find(city_id) #default city id 1
     end
-
     #    params[:user]['city'] = city
     params[:user]['validated'] = 'false'
     validation_code = getRandomString #random regex
@@ -41,20 +39,16 @@ class UsersController < ApplicationController
     rescue => error
       puts error
     end
-    @message = "over"
+    message = "over"
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
-      @message = "check your email for instructions "+@user.email
+      message = "sucess" 
     else
-      @message = "Signup failed"
-
+      message = "failed"
     end
-
     respond_to do |format|
-      format.json{render :json => @message}
-      format.js {render :js => "$('#vermsgpanel').show()"}
-      format.html{ render :json => @message}
+      format.js {render :json => message.to_json}
     end
 
   end
@@ -250,6 +244,36 @@ end
       end
     end
     redirect_to current_path
+  end
+ 
+ def sendsecretcode
+    secretcode = getRandomString
+    user_email = params[:email]
+    url = request.host_with_port	
+    @user = User.find_by_email(user_email)
+    message = ""
+    if @user	
+	@user.update_attribute(:secretcode,secretcode)	
+    send_secretcode_email(url,@user)
+    message = "Kindly check your email address "+user_email+" for instructions on how to log in to gnibl"
+    else	
+    message = "That email address is not registered, kindly signup or use the email address you used to sign up"
+    end
+    respond_to do | format |
+       format.js {render :json => message.to_json}
+    end
+ end
+
+  def loginsecretcode
+   validation_code = params[:code]
+	puts "validation code #{validation_code}"
+   @user = User.find_by_secretcode(validation_code)
+   if @user
+      sign_in(@user)
+	redirect_to "/users/#{@user.username}"
+   else
+   redirect_to "/"
+   end
   end
 
   def validateemail
