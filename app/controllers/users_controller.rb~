@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     #DEBUG remove this
   end
 
-  def create_ba
+  def create
     city = City.find 1
     ip = request.remote_ip
     city_id = 1
@@ -45,14 +45,11 @@ class UsersController < ApplicationController
       send_verification_email(url, @user)
       message = "sucess" 
     else
-      message = "failed"
-
+	message = "failed: "	
+	@user.errors.each do |attrib, error| 
+	message = message + attrib + " "+ error[0]+ "\n" 
+	end      
     end
-end
-def create
-message = "failed"
-job = message.to_json
-#puts "json == #{job}"
     respond_to do |format|
       format.js {render :json => message.to_json}
     end
