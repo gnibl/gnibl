@@ -18,7 +18,7 @@ alert('Registration Failed, kindly ensure you enter a valid email address and fi
         });
          $('#new_user').bind('ajax:fail', function(data, status, xhr) {
  //$('#mainframe').show();
-alert('status is  faile');
+alert('status is  failed');
 
         });
         $(".slidingnav").hide();
@@ -26,7 +26,6 @@ alert('status is  faile');
         $('#buttonhide').click(function(){
             $(".slidingnav").slideUp();
             $('.buttongnib').addClass('plus').show();
-$('#mainframe').show();
 	});
         $('.buttongnib').click(function() {
 
