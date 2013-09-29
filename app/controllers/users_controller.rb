@@ -45,7 +45,8 @@ class UsersController < ApplicationController
       send_verification_email(url, @user)
       message = "sucess" 
     else
-      message = "failed"
+	message = "failed: "	
+	message = message + @user.errors.full_messages[0]
     end
     respond_to do |format|
       format.js {render :json => message.to_json}

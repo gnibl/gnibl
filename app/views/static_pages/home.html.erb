@@ -13,12 +13,12 @@ str = ''+status
 if (str.indexOf('\"success\"') == 0){
 $('#mainframe').show();
 }else{
-alert('Registration Failed, kindly ensure you enter a valid email address and fill all fields');
+alert(str);
 }
         });
          $('#new_user').bind('ajax:fail', function(data, status, xhr) {
  //$('#mainframe').show();
-alert('status is  faile');
+alert('status is  failed');
 
         });
         $(".slidingnav").hide();
@@ -26,7 +26,6 @@ alert('status is  faile');
         $('#buttonhide').click(function(){
             $(".slidingnav").slideUp();
             $('.buttongnib').addClass('plus').show();
-$('#mainframe').show();
 	});
         $('.buttongnib').click(function() {
 

@@ -65,8 +65,8 @@
                <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile" )%>
         </div>
         <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-             style="max-width: 50%; left: 48%; top: 32%; position: absolute;
-             text-align: left; margin-bottom: 10px; overflow: hidden; font-size: 10px ">
+             style="left: 35%; top: 32%; position: absolute;
+             text-align: left; margin-bottom: 10px; overflow: hidden; font-size: 12px ">
           <p><%= gnib.parsed_description%></p>
           <% if gnib.title.length < 1 %>
             <p><a target="_blank" href="<%= gnib.link %>">go to link</a></p>

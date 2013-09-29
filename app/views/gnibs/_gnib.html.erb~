@@ -43,9 +43,9 @@
     <div  class="thumbnail-view" style="overflow: hidden; bottom: 0px; ; border-radius: 10px; display: block; height: auto; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px">
       <div style="color: #17aeff; font-size: 15px; font-weight: bold; height: 40px; display: table-cell; vertical-align: middle; padding-left: 5px">
         <a target="_blank" href="<%=gnib.link%>" <%if gnib.title %>
- title = "<%= URI.unescape("#{gnib.title.html_safe}") %>" <% end %> style="color: #17aeff;">
+ title = "<%= CGI.unescapeHTML(URI.unescape("#{gnib.title.html_safe}")) %>" <% end %> style="color: #17aeff;">
 <% if gnib.short_title %>
-           <%=  h(CGI.unescapeHTML(URI.unescape("#{gnib.short_title.html_safe}"))) %>
+           <%=  CGI.unescapeHTML(URI.unescape("#{gnib.short_title.html_safe}")) %>
 <% end %>
         </a>
 
@@ -62,8 +62,8 @@
                <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile" )%>
         </div>
         <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-             style="max-width: 50%; left: 48%; top: 32%; position: absolute;
-             text-align: left; margin-bottom: 10px; overflow: hidden; font-size: 10px ">
+             style="left: 35%; top: 32%; position: absolute;
+             text-align: left; margin-bottom: 10px; overflow: hidden; font-size: 14px ">
           <p><%= gnib.parsed_description%></p>
           <% if gnib.title.length < 1 %>
             <p><a target="_blank" href="<%= gnib.link %>">go to link</a></p>
