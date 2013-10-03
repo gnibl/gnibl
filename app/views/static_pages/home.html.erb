@@ -94,6 +94,14 @@ Forgot your password ?
             <div class="slidingnav" style="display: block;">
 
               <div class="registerdiv">
+		<div align = "right" style="padding-top:2%; padding-right:5%">       
+<a href = "#">
+<span id = "buttonhide" style = "font-size: 12px; color: black" >
+
+<img src="<%= image_path('arrow_up.png')%>" height = "50px" width = "50px"/>
+</span>
+</a>
+ </div>
                 <%= form_for(@user, :remote => true) do |f| %>
                   <div align="center" style="padding-top:0%">
                     <%= f.text_field :name, :class => 'hintTextbox', :placeholder => 'First name' , :style=>"width: 40%" %>
@@ -144,14 +152,7 @@ Forgot your password ?
                           <td><span class="agree">I agree to </span><span class="gender">gnibl</span><span class="agree"> Terms</span>
 </td>
                         </tr>
-<tr><td></td><td>
-<a href = "#">
-<span id = "buttonhide" style = "font-size: 12px; color: black" >
 
-<img src="<%= image_path('arrow_up.png')%>" height = "50px" width = "50px"/>
-</span>
-</a>
-</td></tr>
                       </table>
                     </div>
                   </div>
