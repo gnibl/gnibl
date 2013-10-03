@@ -7,41 +7,80 @@
 
       $(document).ready(function() {
         $('#new_user').bind('ajax:success', function(data, status, xhr) {
- //$('#mainframe').show();
-
-str = ''+status
-if (str.indexOf('\"success\"') == 0){
-$('#mainframe').show();
-}else{
-alert(str);
-}
-        });
-         $('#new_user').bind('ajax:fail', function(data, status, xhr) {
- //$('#mainframe').show();
-alert('status is  failed');
-
-        });
+						str = ''+status
+						if (str.contains("success")){
+						//alert(str);							
+						$('#mainframe').show();
+						}else{
+							//alert("Error: "+str);
+							markAsErrored(str);
+						}
+				        }// end anonymous function
+				);
+         $('#new_user').bind('ajax:fail', function(data, status, xhr) {  
+					alert('status is  failed');
+					
+		        });// end of bind
         $(".slidingnav").hide();
         $('.buttongnib').addClass('plus').show();
         $('#buttonhide').click(function(){
-            $(".slidingnav").slideUp();
-            $('.buttongnib').addClass('plus').show();
-	});
+          	  $(".slidingnav").slideUp();
+          	  $('.buttongnib').addClass('plus').show();
+		});
         $('.buttongnib').click(function() {
-
-          $(".slidingnav").slideDown();
-          $(this).removeClass("plus");
-          $(this).removeClass("minus");
-        });
+         		 $(".slidingnav").slideDown();
+	        	  $(this).removeClass("plus");
+        		  $(this).removeClass("minus");
+       		 });
 	
 	$('#forgotpassword').click( function(){
-	user_email = $('#session_email').val();	 
-	 doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
+			user_email = $('#session_email').val();	 
+			doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
 									alert( response);
-		});
+									});
 
-	});
-      });
+			});
+      });//end document.ready
+
+function resetErrorFields(){
+//clear all previous error indicators
+	$('#user_surname').removeClass('errorfield');
+	$('#user_surname_error').hide();
+	$('#user_name').removeClass('errorfield');
+	$('#user_name_error').hide();
+	$('#user_email').removeClass('errorfield');
+	$('#user_email_error').hide();
+	$('#user_birthday').removeClass('errorfield');
+	$('#user_birthday_error').hide();
+	$('#user_password').removeClass('errorfield');
+	$('#user_password_error').hide();
+	$('#user_password_confirmation').removeClass('errorfield');
+	$('#user_password_confirmation_error').hide();
+}
+
+function markAsErrored(str){
+resetErrorFields();
+	if (str.contains("Surname")){
+		$('#user_surname').addClass('errorfield');
+		$('#user_surname_error').show();
+	}else if (str.contains("Name")){
+		$('#user_name').addClass('errorfield');
+		$('#user_name_error').show();
+	}else if (str.contains("Email")){
+		$('#user_email').addClass('errorfield');
+		$('#user_email_error').show();
+	}else if (str.contains("digest")){
+		$('#user_password').addClass('errorfield');
+		$('#user_password_error').show();
+	}else if (str.contains("match")){
+		$('#user_password_confirmation').addClass('errorfield');
+		$('#user_password_confirmation_error').show();
+	}else if (str.contains("Birthday")){
+		$('#user_birthday').addClass('errorfield');
+		$('#user_birthday_error').show();
+	}
+}
+
     </script>
 
   </head>
@@ -104,10 +143,13 @@ Forgot your password ?
  </div>
                 <%= form_for(@user, :remote => true) do |f| %>
                   <div align="center" style="padding-top:0%">
-                    <%= f.text_field :name, :class => 'hintTextbox', :placeholder => 'First name' , :style=>"width: 40%" %>
+                    <%= f.text_field :name, :class => 'hintTextbox ', :placeholder => 'First name' , 
+				:style=>"width: 40%;" %>			
                     <%= f.text_field :surname, :class => 'hintTextbox', :placeholder => 'Last name', :style=>"width: 40%" %>
+			<div id = "user_name_error" class = "errormessage"> Enter a valid first name </div>
+			<div id = "user_surname_error" class = "errormessage"> Enter a valid surname </div>
                   </div>
-                  <div align="center" style="padding-top:2%">
+                  <div align="center" style="padding-top:2%" id = "user_birthday">
                     <%= f.date_select :birthday,
                       :start_year => 1970, :style=>"display: table-cell",
                       :order => [ :day, :month, :year],
@@ -115,6 +157,7 @@ Forgot your password ?
                       :html_options => {class: "datefield"}
                     %>
                     </div>
+			<div id = "user_birthday_error" class="errormessage"> select a valid birthday</div>
                     <div  align="center" style="padding-top:0%">
                       <table border="0">
                         <tr>
@@ -134,16 +177,16 @@ Forgot your password ?
 
                     <div align="center" style="padding-top:2%">
                       <%= f.text_field :email , :class => 'hintTextbox', :placeholder => 'Your Email' %>
-
                     </div>
-
+			<div id = "user_email_error"  class = "errormessage">That email is invalid or taken</div>
                     <div align="center" style="padding-top:2%">
                       <%= f.password_field :password , :class => 'hintTextbox', :placeholder => 'password'%>
                     </div>
-
+			<div id = "user_password_error"  class = "errormessage"> Enter a valid password</div>
                     <div align="center" style="padding-top:2%">
                       <%= f.password_field :password_confirmation , :class => 'hintTextbox', :placeholder => 'confirm password'%>
                     </div>
+			<div id = "user_password_confirmation_error"  class = "errormessage"> match passwords</div>
                     <div  align="center" style="padding-top:0%">     <table border="0">
                         <tr>
                           <td><label>
