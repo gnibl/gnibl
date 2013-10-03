@@ -100,7 +100,6 @@ width: 18%;
 height: 18%;
 background: rgba(0, 0, 0, 0.6);
 font-size: 18px;
-margin-top: 40px;
 padding: 10px;
 color: white;
 }
@@ -154,6 +153,9 @@ border:2px solid #F6F6EA;
 opacity:0.9;
 filter:alpha(opacity=60); /* For IE8 and earlier */
 }
+
+
+
 /* to display content on the top */
 /* font size right div on login */
 
@@ -243,6 +245,19 @@ INPUT.hintTextboxActive { color: #000; }
 	*/
 
 
+/* mark fields as containing error*/
+
+.errorfield{
+ border-style: solid !important; 
+border-color: red !important; 
+border-width: 2px !important;
+}
+
+.errormessage{
+color: red;
+font-size: 11px;
+display: none;
+}
 
 .buttongnibpost {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3B9BA0), color-stop(1, #3B9BA0) );

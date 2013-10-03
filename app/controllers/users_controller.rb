@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
-      message = "sucess" 
+      message = "success" 
     else
 	message = "failed: "	
 	message = message + @user.errors.full_messages[0]
