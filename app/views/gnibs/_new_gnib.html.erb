@@ -177,12 +177,16 @@
       <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
       <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
         :class=>"comment-field", :id=>"gnib_description",
-        :onkeypress => "return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
+        :onkeypress => " charCounter(); return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
       <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
         :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
         :onclick=>"sanitize();", :title=>"Gnib"%>
-    </div>
+<div id="gnib_description_counter" 
+		 style="width: 20px !important; height: 20px !important;
+		 z-index: 1001; bottom: 13px; left: 0px; position:absolute ;"> 140</div>
   </div>
+    </div>
+	
 <% end %>
 <% end%>
 <script type="text/javascript">
@@ -217,5 +221,9 @@
     if (e && e.keyCode === 13) {
       return ajaxSubmit();
     }
+}
+function charCounter(){
+var num = $('#gnib_description').val().length;
+$('div#gnib_description_counter').text(140 - num);
   }
 </script>
