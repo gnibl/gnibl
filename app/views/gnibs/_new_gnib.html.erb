@@ -189,6 +189,7 @@
           <button class="find-image" onclick="return onSelectImageClicked();">Select Image</button>
         </div>
         <br/>
+        <br/>
         <img id="373737_busy_image" src="<%=image_path('ajax-loader.gif')%>" style="display: none; width: 20px; height: auto; z-index: 1000"/>
       </div>
       <div id="content_url_images">
@@ -199,13 +200,13 @@
         <%= f.hidden_field :title, :id => "title_field", :class => 'title_field'%>
         <%= f.text_area :description, :placeholder => "Add a comment", :rows => "3",
           :class=>"comment-field", :id=>"gnib_description",
-          :onkeypress => "return enforceMaxlength('gnib_description', 140, 'comment-count');", :maxlength => "140"%>
-        <%= f.submit "Gnib It!", :class=>"gnibl-icon", :id=>"submitButton",
-          :style=>"width: 90px !important; height: 35px !important;
-    bottom: 0px; right: 0px; position: absolute; margib: 0px !important; background: rgba(23, 174, 255, 0.8) !important;
-    border-radius: 2px !important; color: white; font-weight: bold",
+          :onkeypress => " charCounter(); return enforceMaxlength('gniblDescription', 140);", :maxlength => "140"%>
+        <%= f.submit "", :class=>"gnibl-icon", :id=>"submitButton",
+          :style=>"width: 40px !important; height: 40px !important; bottom: -13px; right: 0px; position: absolute",
           :onclick=>"sanitize();", :title=>"Gnib"%>
-        <input type="text" id="comment-count" class="gnibl-comment-count"/>
+        <div id="gnib_description_counter"
+             style="width: 20px !important; height: 20px !important;
+             z-index: 1001; bottom: 13px; left: 0px; position:absolute ;"> 140</div>
       </div>
     </div>
   <% end %>
@@ -242,6 +243,10 @@
     if (e && e.keyCode === 13) {
       return ajaxSubmit();
     }
+  }
+  function charCounter() {
+    var num = $('#gnib_description').val().length;
+    $('div#gnib_description_counter').text(140 - num);
   }
   $('#new_gnib').on('submit',
           function() {
