@@ -172,7 +172,7 @@
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal"
          style=" width: 600px; margin: auto;  position: relative;">
       <div class="gnib-title">
-        <%= h(gnib.title) %>
+        <%= URI.unescape(gnib.title) %>
       </div>
       <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px">
         <button title="gnib it!" class="gnib-gnib-button btn-modal" style="float: none"
@@ -210,12 +210,12 @@
           <span style="font-size: 15px">  {<%= counts %> comments}</span>
         </div>
         <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: block; margin: auto; position: relative">
-          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="  float: left; margin-bottom: 10px">
             <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
  
           </div>
           <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-               style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+               style="max-width: 55%; left: 30%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
             <p><%= gnib.parsed_description%></p>
             <% if gnib.link %>
               <p><a target="_blank" href="<%= gnib.link %>">go to link</a></p>
@@ -233,11 +233,11 @@
           <span style="font-size: 15px">  {<%= counts %> comments}</span>
         </div>
         <div id="thumbnail-modal-view-mod_<%=gnib.id%>" style="width: 100%; display: block; margin: auto">
-          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style=" float: left; margin-bottom: 10px">
             <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
           </div>
           <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-               style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+               style="max-width: 55%; left: 30%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
             <p><%= gnib.parsed_description%></p>
             <% if gnib.link %>
               <p><a target="_blank" href="<%= gnib.link %>">go to link</a></p>

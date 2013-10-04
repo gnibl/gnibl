@@ -19,13 +19,13 @@
        class="gnib-thumbnail" style="margin-bottom: 0px; padding-bottom: 0px; float: left;">
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control"
          style="border-top-left-radius: 5px; border-top-right-radius: 5px; height: 50px">
- <div id = "regnib_counts" style="position: absolute; margin-top:15px; margin-left:5px "> 
+ <div id = "regnib_counts" style="position: absolute; margin-top:17px; margin-left:5px "> 
 <% if gnib.gniblings.count > 0 %>
 <%= gnib.gniblings.count %>
 <% end %>
 </div>
   <button id="regnib" class="btn btn-large btn-primary" style ="font-size: 16px; padding: 5px 10px; min-width: 100px;
-								 text-align: left; margin-top:12px; margin-left: 25px"
+								 text-align: left; margin-top:13px; margin-left: 25px"
  onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');">
  <% if gnib.gniblings.count > 1 %>REGNIBS <%else %>REGNIB <%end%>
   </button>
@@ -78,7 +78,7 @@
                <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile" )%>
         </div>
         <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-             style="left: 35%; top: 32%; position: absolute;
+             style="left: 35%; top: 32%; position: absolute; margin-right: 10px;
              text-align: left; margin-bottom: 10px; overflow: hidden; font-size: 12px ">
           <p><%= gnib.parsed_description%></p>
           <% if gnib.title.length < 1 %>
