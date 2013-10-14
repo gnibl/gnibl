@@ -14,13 +14,13 @@ class GnibsController < ApplicationController
     false
   end
 
-def set_gnib_count(user)
+  def set_gnib_count(user)
     regnibbed_gnibs = user.gniblings.order("updated_at DESC")
     @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",user.id.to_s,regnibbed_gnibs).count
     @feed_count = user.feed.count
-end
+  end
 
-def notifications
+  def notifications
     if current_user
       @notifications = current_user.notifications.limit(5)#.where("read = :state", :state => false)
       @notifications_count = current_user.notifications.where("read = :state", :state => false).count
@@ -158,12 +158,12 @@ def notifications
     @user = gnib.user
     hashed_email = params[:sec]
     if hashed_email
-       s_user = User.find_by_emailsecret(hashed_email)
-       if s_user
-       sign_in(s_user);
-       @user = current_user
-       notifications();
-       end
+      s_user = User.find_by_emailsecret(hashed_email)
+      if s_user
+        sign_in(s_user);
+        @user = current_user
+        notifications();
+      end
     end
     @counts = 1
     @page_count = 1
@@ -194,7 +194,10 @@ def notifications
       puts 'unspecified'
       @gnibs = Gnib.all(:limit => 9, :offset => @page)
     end
-
+    #Currently displays all gnibs, but when we have too many gnibs, this cannot be appropriate.
+    #This will require us to change how we get the hold of gnib ids to be displayed for the gnib carousel.
+    #@Kenn, please advise on how to get hold of gnib ids only in an array, instead of reading the entire gnibs from the database.
+    @all_gnibs = Gnib.all
     @user = current_user
 
     set_gnib_count(@user)
@@ -203,7 +206,7 @@ def notifications
     @current_page = 0;
     @gnib = @user.gnibs.build
     @page_count = (@counts / 9.0).ceil;
-    
+
     if current_page
       respond_to do |format|
         format.js {render "shared/side_scroll_gnibs"}
@@ -353,9 +356,11 @@ def notifications
     @user = current_user
     @gnib = @user.gnibs.build
     @gnibs = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')").limit(15)
+    #for modal carousel
+    @all_gnibs = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')")
     @counts = Gnib.where("to_tsvector(title) @@ plainto_tsquery('"+term+"')").count
     @page_count = (@counts / 9).ceil;
-       set_gnib_count(@user)
+    set_gnib_count(@user)
     notifications();
   end
 

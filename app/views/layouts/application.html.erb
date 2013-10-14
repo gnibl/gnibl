@@ -401,8 +401,8 @@
     <script type="text/javascript">
       var gnibs = new Array();
       var gnib_index = 0;
-<% if @gnibs %>
-  <% @gnibs.each do |gnib| %>
+<% if @all_gnibs %>
+  <% @all_gnibs.each do |gnib| %>
           gnibs.push(<%=gnib.id%>);
   <% end %>
 <% end %>

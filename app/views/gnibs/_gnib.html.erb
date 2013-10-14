@@ -44,14 +44,20 @@
               Up<% if gnib.upvotegnibs.count > 1%>s<% end %>
             </span>
           </button>
+          <button title="gnib it!" class="gnib-gnib-button"
+                  style="float: right; border-left: 2px solid white !important; position: relative; border-radius: 0px;
+                  background-size: 42px 42px; margin: auto !important; background-position: 10px;
+                  width: 65px; height: 50px; font-size: 17px"
+                  onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');">
+          </button>
         <% end %>
       <% end %>
     </div>
     <button class="gnib" style="background:transparent; border: 0px none; margin-top: 0px; border-radius: 0px"
             data-gnib-id="<%=gnib.id%>"
             onclick="resetCurrentIndex(<%= gnib.id%>);
-       doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
-       return false;">
+                    doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/retcomment');
+                    return false;">
               <%= image_tag(image_path(gnib.imageurl), :class => 'gnib', :id=>"gnib_#{gnib.id}",
                 :style=>"height: 100%; border-radius: 0px !important; margin-top: 0px !important;")%>
     </button>
@@ -89,23 +95,23 @@
   </div>
 
   <script type="text/javascript">
-   var speed = 300;
-   var rollbackSpeed = 600;
-   $('#<%= gnib.id %>').hover(function() {
-     $('#thumbnail-view_<%=gnib.id%>').slideDown(speed, function() {
-       $(this).show();
-     });
-     $('#thumbnail-control_<%=gnib.id%>').slideDown(speed, function() {
-       $(this).show();
-     });
-   },
-           function() {
-             $('#thumbnail-control_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
-               $(this).hide();
-             });
-             $('#thumbnail-view_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
-               $(this).hide();
-             });
-           });
+                var speed = 300;
+                var rollbackSpeed = 600;
+                $('#<%= gnib.id %>').hover(function() {
+                  $('#thumbnail-view_<%=gnib.id%>').slideDown(speed, function() {
+                    $(this).show();
+                  });
+                  $('#thumbnail-control_<%=gnib.id%>').slideDown(speed, function() {
+                    $(this).show();
+                  });
+                },
+                        function() {
+                          $('#thumbnail-control_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+                            $(this).hide();
+                          });
+                          $('#thumbnail-view_<%=gnib.id%>').slideUp(rollbackSpeed, function() {
+                            $(this).hide();
+                          });
+                        });
   </script>
 <% end %>

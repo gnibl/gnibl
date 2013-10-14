@@ -43,10 +43,10 @@ class UsersController < ApplicationController
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
-      message = "success" 
+      message = "success"
     else
-	message = "failed: "	
-	message = message + @user.errors.full_messages[0]
+      message = "failed: "
+      message = message + @user.errors.full_messages[0]
     end
     respond_to do |format|
       format.js {render :json => message.to_json}
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
     @users = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").limit(9);
     @counts = User.where("\"username\" ILIKE '%"+ uname+"%' OR \"name\" ILIKE '%"+uname+"%'").count
     @page_count = (@counts / 9.0).ceil;
-   set_gnib_count(@user)
+    set_gnib_count(@user)
     notifications();
     render 'index'
   end
@@ -124,7 +124,7 @@ class UsersController < ApplicationController
       format.js {render "shared/gnibs"}
     end
   end
-
+  #@Kenn, this method is misplaced! Can we see if we can move it the gnib/gniblling controller without breaking anything?
   def feed
     username = User.correct_username_from_safe_html_username(params[:id])
     @user = User.find_by_username(username)
@@ -145,8 +145,10 @@ class UsersController < ApplicationController
       @gnibs = @user.feed.offset(@page).limit(9)
     end
     @counts = @user.feed.count
-
-#this value should be used for display only
+    #Represents all feeds. This is used in the gnib modal carousel.
+    #if carousel fails anywherem please ensure that this value is set.
+    @all_gnibs = @user.feed
+    #this value should be used for display only
     set_gnib_count(@user)
     @page_count = (@counts / 9).ceil;
     @gnib = @user.gnibs.build
@@ -159,11 +161,11 @@ class UsersController < ApplicationController
     end
   end
 
-def set_gnib_count(user)
+  def set_gnib_count(user)
     regnibbed_gnibs = user.gniblings.order("updated_at DESC")
     @mygnibs_count =  Gnib.where("user_id = ? or id in (?) and video != true",user.id.to_s,regnibbed_gnibs).count
     @feed_count = user.feed.count
-end
+  end
 
   def gnibblings
     #show all people the user is gnibbling/following
@@ -246,35 +248,35 @@ end
     end
     redirect_to current_path
   end
- 
- def sendsecretcode
+
+  def sendsecretcode
     secretcode = getRandomString
     user_email = params[:email]
-    url = request.host_with_port	
+    url = request.host_with_port
     @user = User.find_by_email(user_email)
     message = ""
-    if @user	
-	@user.update_attribute(:secretcode,secretcode)	
-    send_secretcode_email(url,@user)
-    message = "Kindly check your email address "+user_email+" for instructions on how to log in to gnibl"
-    else	
-    message = "That email address is not registered, kindly signup or use the email address you used to sign up"
+    if @user
+      @user.update_attribute(:secretcode,secretcode)
+      send_secretcode_email(url,@user)
+      message = "Kindly check your email address "+user_email+" for instructions on how to log in to gnibl"
+    else
+      message = "That email address is not registered, kindly signup or use the email address you used to sign up"
     end
     respond_to do | format |
-       format.js {render :json => message.to_json}
+      format.js {render :json => message.to_json}
     end
- end
+  end
 
   def loginsecretcode
-   validation_code = params[:code]
-	puts "validation code #{validation_code}"
-   @user = User.find_by_secretcode(validation_code)
-   if @user
+    validation_code = params[:code]
+    puts "validation code #{validation_code}"
+    @user = User.find_by_secretcode(validation_code)
+    if @user
       sign_in(@user)
-	redirect_to "/users/#{@user.username}"
-   else
-   redirect_to "/"
-   end
+      redirect_to "/users/#{@user.username}"
+    else
+      redirect_to "/"
+    end
   end
 
   def validateemail
@@ -312,15 +314,18 @@ end
       if type == 'video'
         puts 'video priv'
         @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9).where("video = true")
+        @all_gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id));
         @counts =  Gnib.where("user_id = ? or id in (?) and video = true",@user.id.to_s,regnibbed_gnibs).count
       else
         puts 'articles priv'
         @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9).where("video is null")
+        @all_gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id))
         @counts =  Gnib.where("user_id = ? or id in (?) and video != true",@user.id.to_s,regnibbed_gnibs).count
       end
     else
       puts 'unspecified priv'
       @gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id)).offset(page).limit(9)
+      @all_gnibs = Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs.map(&:gnib_id))
       @counts =  Gnib.where("user_id = ? or id in (?)",@user.id.to_s,regnibbed_gnibs).count
     end
     # @gnibs = @user.gnibs.offset(page).limit(9)

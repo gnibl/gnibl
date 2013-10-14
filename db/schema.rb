@@ -127,10 +127,10 @@ ActiveRecord::Schema.define(:version => 20130925183540) do
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.string   "email"
+    t.string   "city"
     t.string   "avatar"
     t.string   "description"
     t.string   "username"
-    t.integer  "city"
     t.string   "surname"
     t.datetime "birthday"
     t.integer  "city_id"
