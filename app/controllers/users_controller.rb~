@@ -14,6 +14,14 @@ class UsersController < ApplicationController
   end
 
   def create
+message = " "
+message = "success"
+    respond_to do |format|
+      format.js {render :json => message.to_json}
+    end
+end
+
+def blind
     city = City.find 1
     ip = request.remote_ip
     city_id = 1
@@ -39,11 +47,11 @@ class UsersController < ApplicationController
     rescue => error
       puts error
     end
-    message = "over"
+    message = " "
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
-      message = "sucess" 
+      message = "success" 
     else
 	message = "failed: "	
 	message = message + @user.errors.full_messages[0]

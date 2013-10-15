@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     rescue => error
       puts error
     end
-    message = "over"
+    message = " "
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)

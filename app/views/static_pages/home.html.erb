@@ -6,6 +6,30 @@
     <script type="text/javascript">
 
       $(document).ready(function() {
+var count = 0;
+        $('#loginform').bind('ajax:success', function(data, status, xhr) {
+
+						str = ''+status;
+						if(str.contains('fail')){
+						count = count + 1;
+						if ( count > 1){
+				$('#loginfail').show();
+						   }else {
+							markAsErroredSignin();							
+						}
+						}
+
+						 
+				        }// end anonymous function
+				);
+
+   $('#loginform').bind('ajax:fail', function(data, status, xhr) {
+						 
+						alert("Fail Response");
+						 
+				        }// end anonymous function
+				);
+
         $('#new_user').bind('ajax:success', function(data, status, xhr) {
 						str = ''+status
 						if (str.contains("success")){
@@ -13,6 +37,7 @@
 						$('#mainframe').show();
 						}else{
 							//alert("Error: "+str);
+							 
 							markAsErrored(str);
 						}
 				        }// end anonymous function
@@ -41,6 +66,12 @@
 
 			});
       });//end document.ready
+
+function markAsErroredSignin(){
+$('#session_email').addClass('errorfield');
+	//	$('#user_surname_error').show();
+$('#session_password').addClass('errorfield');
+}
 
 function resetErrorFields(){
 //clear all previous error indicators
@@ -89,7 +120,7 @@ resetErrorFields();
       <div align="center" style="padding-top:2%"><img src="<%= image_path('logognibl.png')%>" width="130" height="130" /></div>
       <div align="center" style="padding-top:2%"><img src="<%= image_path('gnibltext.png')%>" /></div>
       <div>
-        <%= form_for(:session, :url => sessions_path) do |f| %>
+        <%= form_for(:session, :url => sessions_path, :remote => true , html: { :id => "loginform"}) do |f| %>
           <div align="center" style="padding-top:2%">
             <%= f.text_field :email, :class => 'hintTextbox sp_class', :placeholder => 'Email'%>
           </div>

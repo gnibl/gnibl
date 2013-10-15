@@ -102,6 +102,19 @@
         Cheers! verify your email and begin
       </div>
     </div>
+
+ <div class="frame-outer" id = "loginfail">
+      <div class = "loginfail-panel" id="loginfailpanel">
+        </br></br>
+        Send password reset email
+<form>
+<input id="session_email" class="hintTextbox sp_class" type="text" size="30" placeholder="Email" name="session[email]"></input>
+</br> </br>
+<input id = "forgotpassword" class="buttonlogin" type="submit" value=" Send Email " name="commit"></input>
+</form>
+      </div>
+    </div>
+
     <div id="modelessAjaxLoading" style="position: fixed; bottom: 5px; right: 4px; background: none; display: none">
       <%= image_tag(image_path('loading.gif'), :height=>"40", :width=>"60") %>
     </div>

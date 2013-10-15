@@ -1,5 +1,14 @@
 class SessionsController < ApplicationController
   def create
+message = "fail"
+puts 'Responding to login'
+respond_to do |format|
+	puts 'responding to js '+message.to_json
+      format.js {render :json => message.to_json}
+    end
+end
+
+def blind
     puts "Current user#{current_user}"
     if signed_in?
       redirect_to "/users/#{current_user.html_safe_username}/feed"
@@ -24,12 +33,11 @@ class SessionsController < ApplicationController
         puts "Username: #{user.html_safe_username}"
         redirect_to "/users/#{user.username}/feed"
       else
-        user = User.find_by_username('guest')
-        sign_in(user)
-#        puts "failed to authenticate:................"
-#        flash.now[:error] = "Invalid email/password combination"
-#        redirect_to "/"
-        redirect_to "/users/#{user.username}/feed"
+   #     user = User.find_by_username('guest')
+   #     sign_in(user)
+        puts "failed to authenticate:................"
+        flash.now[:error] = "Invalid email/password combination"
+        redirect_to "/"
       end
     end
   end

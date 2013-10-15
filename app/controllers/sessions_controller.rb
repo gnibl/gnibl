@@ -1,5 +1,13 @@
 class SessionsController < ApplicationController
   def create
+message = "fail"
+puts 'Responding to login'
+respond_to do |format|
+      format.js {render :json => message.to_json}
+    end
+end
+
+def blind
     puts "Current user#{current_user}"
     if signed_in?
       redirect_to "/users/#{current_user.html_safe_username}/feed"
@@ -29,7 +37,6 @@ class SessionsController < ApplicationController
         puts "failed to authenticate:................"
         flash.now[:error] = "Invalid email/password combination"
         redirect_to "/"
-        redirect_to "/users/#{user.username}/feed"
       end
     end
   end
