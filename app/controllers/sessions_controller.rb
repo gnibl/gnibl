@@ -1,13 +1,5 @@
 class SessionsController < ApplicationController
   def create
-message = "fail"
-puts 'Responding to login'
-respond_to do |format|
-      format.js {render :json => message.to_json}
-    end
-end
-
-def blind
     puts "Current user#{current_user}"
     if signed_in?
       redirect_to "/users/#{current_user.html_safe_username}/feed"
@@ -21,23 +13,25 @@ def blind
         @auth = Authorization.create_from_hash(auth,current_user,data)
       end
       sign_in(@auth.user)
-      redirect_to "/users/#{user.html_safe_username}"
+      redirect_to "/users/#{user.html_safe_username}" && return
     else
       #sign in normally via email/password
       user = User.find_by_email(params[:session][:email])
-      puts "enteredpassword #{params[:session][:password]}"
+      #puts "enteredpassword #{params[:session][:password]}"
+	message = ""
       if user && user.validated && user.authenticate(params[:session][:password])
         sign_in(user)
         puts "signing in user: #{user.html_safe_username}"
-        puts "Username: #{user.html_safe_username}"
-        redirect_to "/users/#{user.username}/feed"
+        message = "users/#{user.username}/feed"
+	puts "going past redirect statement"
       else
-   #     user = User.find_by_username('guest')
-   #     sign_in(user)
-        puts "failed to authenticate:................"
-        flash.now[:error] = "Invalid email/password combination"
-        redirect_to "/"
-      end
+	puts "signin failed"
+	message = "fail"
+	puts 'Login failed'
+	end
+	respond_to do |format|
+	      format.js {render :json => message.to_json}
+	   end
     end
   end
   def new

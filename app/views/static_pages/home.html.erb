@@ -6,17 +6,26 @@
     <script type="text/javascript">
 
       $(document).ready(function() {
+
+        $('#retrievalform').bind('ajax:success', function(data, status, xhr) {
+alert(status);												 
+				        }// end anonymous function
+				);
+
+
+
 var count = 0;
         $('#loginform').bind('ajax:success', function(data, status, xhr) {
-
-						str = ''+status;
-						if(str.contains('fail')){
+						str = ''+status; 
+						if(str == "fail" || JSON.parse(status) == "fail" ){
 						count = count + 1;
 						if ( count > 1){
-				$('#loginfail').show();
+						      $('#loginfail').show();
 						   }else {
 							markAsErroredSignin();							
 						}
+						}else{
+						window.location = JSON.parse(status);
 						}
 
 						 
@@ -58,13 +67,14 @@ var count = 0;
         		  $(this).removeClass("minus");
        		 });
 	
-	$('#forgotpassword').click( function(){
-			user_email = $('#session_email').val();	 
-			doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
-									alert( response);
-									});
+	//$('#forgotpassword').click( function(){
+			//user_email = $('#session_email').val();	
+	//alert('hello'); 
+			//doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
+			//						alert( response);
+			//						});
 
-			});
+	//		});
       });//end document.ready
 
 function markAsErroredSignin(){

@@ -248,6 +248,7 @@ end
   end
  
  def sendsecretcode
+puts "sending secret code"
     secretcode = getRandomString
     user_email = params[:email]
     url = request.host_with_port	

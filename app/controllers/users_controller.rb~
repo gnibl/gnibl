@@ -14,14 +14,6 @@ class UsersController < ApplicationController
   end
 
   def create
-message = " "
-message = "success"
-    respond_to do |format|
-      format.js {render :json => message.to_json}
-    end
-end
-
-def blind
     city = City.find 1
     ip = request.remote_ip
     city_id = 1

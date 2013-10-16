@@ -107,10 +107,10 @@
       <div class = "loginfail-panel" id="loginfailpanel">
         </br></br>
         Send password reset email
-<form>
-<input id="session_email" class="hintTextbox sp_class" type="text" size="30" placeholder="Email" name="session[email]"></input>
+<form id="retrievalform" method="post" data-remote="true" action="/secretcode" accept-charset="UTF-8">
+<input id="session_email" class="hintTextbox sp_class" type="text" size="30" placeholder="Email" name="email"></input>
 </br> </br>
-<input id = "forgotpassword" class="buttonlogin" type="submit" value=" Send Email " name="commit"></input>
+<input class="buttonlogin" type="submit" value=" Send Email " name="commit"></input>
 </form>
       </div>
     </div>
