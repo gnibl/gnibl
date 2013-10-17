@@ -54,6 +54,7 @@ Gnibl::Application.routes.draw do
     end
   end
 
+ match "/secretcode", :to => "users#sendsecretcode"
   match "/signup", :to => "users#new"
 
   match "/help", :to => "static_pages#help"

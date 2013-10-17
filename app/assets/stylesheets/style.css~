@@ -104,7 +104,17 @@ padding: 10px;
 color: white;
 }
 
-
+div.loginfail-panel{
+position: absolute; 
+top: 43%; 
+left: 40%; 
+width: 25%; 
+height: 18%;
+background: rgba(0, 0, 0, 0.6);
+font-size: 18px;
+padding: 10px;
+color: white;
+}
 
 /*div tag with logo left div tag */
 
@@ -255,7 +265,7 @@ border-width: 2px !important;
 
 .errormessage{
 color: red;
-font-size: 11px;
+font-size: 12px;
 display: none;
 }
 

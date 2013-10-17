@@ -2,6 +2,21 @@
   <button class="dialog-close-icon" onclick="getElementById('gnibl-modal-mp').style.display = 'none';" style="border: 0px none"></button>
 </div>
 <style type="text/css">
+
+  #regnib.btn-primary:hover,
+  #regnib.btn-primary:focus,
+  #regnib.btn-primary:active,
+  #regnib.btn-primary.active,
+  #regnib.btn-primary.disabled,
+  #regnib.btn-primary[disabled]{
+    background: rgb(23, 174, 255) !important;
+    color: white;
+  }
+  #regnib.btn-primary{
+    background: rgb(23, 174, 255) !important;
+    color: white;
+  }
+
   .thumbnail-control.control-modal{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -109,7 +124,7 @@
   .gnibl-modal-gnib-it-logo{
     text-align: center;
     vertical-align: middle;
-    width: 12%;
+    width: 25%;
     position: absolute;
     right: 20%;
     border-left: 2px solid #aaa !important;
@@ -180,12 +195,19 @@
       <div class="gnib-title">
         <%= URI.unescape(gnib.title) %>
       </div>
-      <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px; width: 12%">
-        <button title="gnib it!" class="gnib-gnib-button"
-                style="float: none; margin: 10px 1px 1px 1px; background-size: 100% 100%; padding: 2px !important;
-                  width: 40px; height: 40px; font-size: 17px"
-                onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');"></button>
+      <div class="gnibl-modal-gnib-it-logo" style="top: 0px; height: 59px">
+        <div id = "regnib_counts" style="position: absolute; margin-top:17px; margin-left:5px ">
+          <% if gnib.gniblings.count > 0 %>
+            <%= gnib.gniblings.count %>
+          <% end %>
+        </div>
+        <button id="regnib" class="btn btn-large btn-primary" style ="font-size: 16px; padding: 5px 10px; min-width: 100px;
+                text-align: left; margin-top:13px; margin-left: 25px"
+                onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gniblings/create');">
+          <% if gnib.gniblings.count > 1 %>REGNIBS <%else %>REGNIB <%end%>
+        </button>
       </div>
+
       <div style="width: 20%; margin-right: 10px; top: 5px; position: absolute; right: 10px">
         <button title="<%= gnib.upvotedby(current_user)%>" class="gnib-gnib-button up-button" style="border-left: none !important"
                 onclick="return doAjaxSubmit({gnib_id: '<%= gnib.id %>'}, '/gnibs/upvotegnib');">
@@ -223,12 +245,12 @@
           <span style="font-size: 15px">  {<%= counts %> comments}</span>
         </div>
         <div id="thumbnail-modal-view_<%=gnib.id%>" style="width: 100%; display: block; margin: auto; position: relative">
-          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="  float: left; margin-bottom: 10px">
             <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
 
           </div>
           <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-               style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+               style=" left: 30%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
             <p><%= gnib.parsed_description%></p>
             <% if gnib.link %>
               <p><a target="_blank" href="<%= gnib.link %>">go to link</a></p>
@@ -246,11 +268,11 @@
           <span style="font-size: 15px">  {<%= counts %> comments}</span>
         </div>
         <div id="thumbnail-modal-view-mod_<%=gnib.id%>" style="width: 100%; display: block; margin: auto">
-          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style="width: 40%; float: left; margin-bottom: 10px">
+          <div id="thumbnail-desc_<%=gnib.id%>" class="thumbnail-desc" style=" float: left; margin-bottom: 10px">
             <%=image_tag(image_path(gnib.user.avatar_url), :class=>"thumbnail-user-profile modal-profile")%>
           </div>
           <div id="thumbnail-desc-msg_<%=gnib.id%>" class="thumbnail-msg"
-               style="max-width: 55%; left: 40%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
+               style="  left: 30%; top: 40%; position: absolute; text-align: left; margin-bottom: 10px; overflow: hidden; ">
             <p><%= gnib.parsed_description%></p>
             <% if gnib.link %>
               <p><a target="_blank" href="<%= gnib.link %>">go to link</a></p>

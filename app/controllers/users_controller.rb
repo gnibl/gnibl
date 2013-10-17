@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     rescue => error
       puts error
     end
-    message = "over"
+    message = " "
     if is_saved
       url = request.host_with_port
       send_verification_email(url, @user)
@@ -248,8 +248,8 @@ class UsersController < ApplicationController
     end
     redirect_to current_path
   end
-
   def sendsecretcode
+    puts "sending secret code"
     secretcode = getRandomString
     user_email = params[:email]
     url = request.host_with_port

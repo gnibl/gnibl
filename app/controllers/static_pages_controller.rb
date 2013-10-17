@@ -10,6 +10,7 @@ class StaticPagesController < ApplicationController
       return
     end
     @user = User.new
+     
   end
 
   def help
