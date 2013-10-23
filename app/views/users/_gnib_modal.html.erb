@@ -187,11 +187,15 @@
     left: 10px;
     top: 8px;
   }
+  .thumbnail-control.control-modal{
+    top: auto;
+    left: auto;
+  }
 </style>
 <div align="center" style="width: 96%; margin: 2%; z-index: 44990002; height: 100% ">
   <div id="gnibl-view" class="gnibl-modal-view" >
     <div id="thumbnail-control_<%=gnib.id%>" class="thumbnail-control control-modal"
-         style=" width: 550px; margin: auto;  position: relative;">
+         style=" width: 550px; margin: auto; ">
       <div class="gnib-title">
         <%= URI.unescape(gnib.title) %>
       </div>
