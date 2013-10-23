@@ -297,7 +297,7 @@ class GnibsController < ApplicationController
     end
     @gnib = Gnib.find(@gnib_id)
     respond_to do |format|
-      format.js {render "shared/gnib_modal"}
+      format.js {render "shared/gnib_modal_on_comment"}
     end
   end
 

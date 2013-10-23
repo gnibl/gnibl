@@ -1,0 +1,2 @@
+$('#comment-panel').html('<%= escape_javascript(render :partial=>"users/gnib_modal_comment_section", :locals =>{:gnib => @gnib, :comments => @comments, :counts => @counts}) %>');
+$('#gnibl-modal-user-section_comments_counts').html('{<%= @counts %> comments}');
