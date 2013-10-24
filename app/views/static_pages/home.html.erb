@@ -7,6 +7,15 @@
 
       $(document).ready(function() {
 
+
+$(document).ajaxStop(function(){
+$('body').css('cursor','default');
+});
+
+$(document).ajaxStart(function(){
+$('body').css('cursor','progress');
+}); 
+
         $('#retrievalform').bind('ajax:success', function(data, status, xhr) {
 alert(status);												 
 				        }// end anonymous function

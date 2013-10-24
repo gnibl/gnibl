@@ -7,6 +7,15 @@
 
       $(document).ready(function() {
 
+
+$(document).ajaxStop(function(){
+$('body').css('cursor','progress');
+});
+
+$(document).ajaxStart(function(){
+$('body').css('cursor','progress');
+}); 
+
         $('#retrievalform').bind('ajax:success', function(data, status, xhr) {
 alert(status);												 
 				        }// end anonymous function
@@ -67,14 +76,14 @@ var count = 0;
         		  $(this).removeClass("minus");
        		 });
 	
-	$('#forgotpassword').click( function(){
+	//$('#forgotpassword').click( function(){
 			//user_email = $('#session_email').val();	
-	alert('hello'); 
+	//alert('hello'); 
 			//doAjaxSubmit({email: user_email}, '/users/sendsecretcode', function(response){
 			//						alert( response);
 			//						});
 
-			});
+	//		});
       });//end document.ready
 
 function markAsErroredSignin(){
